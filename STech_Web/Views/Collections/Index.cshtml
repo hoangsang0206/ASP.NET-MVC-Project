@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = ViewBag.CateName;
+}
+
+@model List<STech_Web.Models.Product>
+
+<section class="breadcrumb">
+    <ul class="breadcrumb-list d-flex">
+        @foreach (var item in ViewBag.Breadcrumb)
+        {
+            <li class="breadcrumb-item">
+                @if (item.BreadcrumbLink == "")
+                {
+                    <span>@item.BreadcrumbName</span>
+                }
+                else
+                {
+                    <a href="@item.BreadcrumbLink">
+                        @item.BreadcrumbName
+                    </a>
+                }
+            </li>
+        }
+    </ul>
+</section>
+
+<section class="filter-products">
+    <div class="filter-box  d-flex justify-content-between">
+        <div class="filter-button-list">
+
+        </div>
+        <div class="sort-dropdown-box d-flex justify-content-end">
+            <div class="sort-dropdown">
+                <button class="sort-dropdown-btn">
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                    Sắp xếp theo: <span id="sort-value">@ViewBag.SortName</span>
+                </button>
+                <div class="sort-dropdown-content">
+                    <!--------------------------->
+                    @if (ViewBag.FilterType != null)
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=random&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter">
+                            <div class="sort-dropdown-content-item">
+                                Ngẫu nhiên
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=random">
+                            <div class="sort-dropdown-content-item">
+                                Ngẫu nhiên
+                            </div>
+                        </a>
+                    }
+                    <!--------------------------->
+                    @if (ViewBag.FilterType != null)
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=price-ascending&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter">
+                            <div class="sort-dropdown-content-item">
+                                Giá tăng dần
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=price-ascending">
+                            <div class="sort-dropdown-content-item">
+                                Giá tăng dần
+                            </div>
+                        </a>
+                    }
+                    <!--------------------------->
+                    @if (ViewBag.FilterType != null)
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=price-descending&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter">
+                            <div class="sort-dropdown-content-item">
+                                Giá giảm dần
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=price-descending">
+                            <div class="sort-dropdown-content-item">
+                                Giá giảm dần
+                            </div>
+                        </a>
+                    }
+                    <!--------------------------->
+                    @if (ViewBag.FilterType != null)
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=name-az&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter">
+                            <div class="sort-dropdown-content-item">
+                                Tên A-Z
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=name-az">
+                            <div class="sort-dropdown-content-item">
+                                Tên A-Z
+                            </div>
+                        </a>
+                    }
+                    <!--------------------------->
+                    @if (ViewBag.FilterType != null)
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=name-za&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter">
+                            <div class="sort-dropdown-content-item">
+                                Tên Z - A
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/collections/@ViewBag.cateID?sort=name-za">
+                            <div class="sort-dropdown-content-item">
+                                Tên Z - A
+                            </div>
+                        </a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="filter-item-list">
+        @foreach (var item in Model)
+        {
+            <div class="filter-item">
+                <div class="product-box">
+                    <a href="/product/@item.ProductID" class="product-link">
+                        <div class="product-image lazy-loading">
+                            <img lazy-src="@item.ImgSrc" alt="" class="product-img">
+                        </div>
+                    </a>
+                    <a href="/product/@item.ProductID" class="product-link">
+                        <div class="product-name">
+                            @item.ProductName
+                        </div>
+                    </a>
+                    <div class="product-original-price">
+                        @if (item.Cost != null || item.Cost.ToString().Length > 0)
+                        {
+                            decimal cost = Convert.ToDecimal(item.Cost);
+                            <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                        }
+                        else
+                        {
+                            <span style="visibility: hidden">0</span>
+                        }
+                    </div>
+                    <div class="product-price">
+                        @{
+                            decimal price = Convert.ToDecimal(item.Price);
+
+                        }
+                        @price.ToString("#,###", ViewBag.cul)đ
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>

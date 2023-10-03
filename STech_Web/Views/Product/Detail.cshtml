@@ -1,0 +1,81 @@
+﻿@model STech_Web.Models.Product
+
+<section class="breadcrumb">
+    <ul class="breadcrumb-list d-flex">
+        @foreach (var item in ViewBag.Breadcrumb)
+        {
+            <li class="breadcrumb-item">
+                @if (item.BreadcrumbLink == "")
+                {
+                    <span>@item.BreadcrumbName</span>
+                }
+                else
+                {
+                    <a href="@item.BreadcrumbLink">
+                        @item.BreadcrumbName
+                    </a>
+                }
+            </li>
+        }
+    </ul>
+</section>
+
+<section class="product-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-5 col-md-12 col-sm-12 col-12 product-detail-box product-gallery">
+                <img src="@Model.ImgSrc" alt="" />
+            </div>
+            <div class="col-lg-7 col-md-12 col-sm-12 col-12 product-detail-box product-info">
+                <div class="product-info-name">
+                    <h3>@Model.ProductName</h3>
+                </div>
+                <div class="product-info-original-price">
+                    @if (Model.Cost != null || Model.Cost.ToString().Length > 0)
+                    {
+                        decimal cost = Convert.ToDecimal(Model.Cost);
+                        <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                    }
+                </div>
+                <div class="product-info-price">
+                    @{ 
+                        decimal price = Convert.ToDecimal(Model.Price);
+                    }
+                    <h2>@price.ToString("#,###", ViewBag.cul)đ</h2>
+                </div>
+                <div class="product-gift my-3">
+                    <div class="product-gift-header d-flex align-items-center">
+                        <i class="fa-solid fa-gift"></i>
+                        <span>Quà tặng khuyến mãi</span>
+                    </div>
+                    <div class="product-gift-content">
+                        <ul class="product-gift-list">
+                            <li class="product-gift-item">
+                                <a href="#">Quà 1</a>
+                            </li>
+                            <li class="product-gift-item">
+                                <a href="#">Quà 2</a>
+                            </li>
+                            <li class="product-gift-item">
+                                <a href="#">Quà 3</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="product-action d-flex gap-2 my-2 align-items-center">
+                    <div class="buy-action">
+                        <button class="buy-action-btn">
+                            <h4>MUA NGAY</h4>
+                            <span>Giao tận nơi hoặc nhận tại cửa hàng</span>
+                        </button>
+                    </div>
+                    <div class="add-to-cart-action">
+                        <button class="add-to-cart-btn">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
