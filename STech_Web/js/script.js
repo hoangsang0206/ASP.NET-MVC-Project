@@ -216,25 +216,73 @@ $(".sort-dropdown-btn").click(() => {
 
 //------------------------------------------------------
 
+//Show search width 100% in mobile
+
+//$(document).ready(function () {
+//    $('#search').on('focus', () => {
+//        const windowWidth = $(window).width();
+//        if (windowWidth < 768) {
+//            $('.header-box').css('display', 'none');
+//            $('.header-btn').css('display', 'none');
+
+//            $('.search').css('width', '100%');
+//        }
+//    })
+//})
 
 //---AJAX---------------------------------------------------
 
 //---AJAX autocomplete search----------------------------
 $("#search").keyup(function () {
     var searchText = $(this).val();
-    if (searchText != '') {
+    if (searchText.length > 0) {
         $.ajax({
             url: 'api/collections',
             type: 'GET',
             data: {
                 id: searchText
             },
-            success: function (response) {
-                console.log(response)
+            success: function (responses) {
+                $('.ajax-search-autocomplete').css('display', 'block');
+                $('.ajax-search-autocomplete').empty();
+                if (responses == null || responses.length <= 0) {
+                    $('.ajax-search-autocomplete').css('display', 'none');
+                }
+                else {
+                    for (let i = 0; i <= responses.length && i < 6; i++) {
+                        const product = responses[i];
+                        if (product != null) {
+                            const strHTML = `<a href="/product/${product.ProductID}"> 
+                                    <div class="ajax-search-item d-flex justify-content-between align-items-center">
+                                        <div class="ajax-search-item-info">
+                                            <div class="ajax-search-item-name d-flex align-items-center">
+                                                <h3>${product.ProductName}</h3>
+                                            </div>
+                                            <div class="ajax-search-item-price d-flex align-items-center">
+                                                <h3>${product.Price.toLocaleString("vi-VN") + 'đ'}</h3>
+                                                <h4>${product.Cost.toLocaleString("vi-VN") + 'đ'}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="ajax-search-item-image">
+                                            <img src="${product.ImgSrc}" alt="" />
+                                        </div>
+                                    </div>
+                                </a>`;
+
+                            $('.ajax-search-autocomplete').append(strHTML);
+                        }
+
+                        
+
+                    }
+                }
+            },
+            error: () => {
+                $('.ajax-search-autocomplete').css('display', 'none');
             }
         })
     }
     else {
-
+        $('.ajax-search-autocomplete').css('display', 'none');
     }
 })

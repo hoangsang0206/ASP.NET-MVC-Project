@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiController\BrandsController.cs" />
+    <Compile Include="ApiController\CollectionsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CollectionsController.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Models\Brand.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BrandAPI.cs" />
     <Compile Include="Models\Breadcrumb.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -210,6 +212,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductAPI.cs" />
     <Compile Include="Models\ProductDescription.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

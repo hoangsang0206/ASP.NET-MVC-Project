@@ -1,6 +1,7 @@
 ﻿using STech_Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Mapping;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -43,9 +44,19 @@ namespace STech_Web.Controllers
             }
             else
             {
+                productsSort = products;
+                var r = new Random();
+
+                for (int i = 0; i < productsSort.Count; i++)
+                {
+                    int j = r.Next(i + 1);
+                    Product p = productsSort[j];
+                    productsSort[j] = productsSort[i];
+                    productsSort[i] = p;
+                }
+
                 ViewBag.SortName = "Ngẫu nhiên";
-                productsSort =  products;
-            }    
+            }
 
             return productsSort;
 
@@ -57,39 +68,46 @@ namespace STech_Web.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
 
             List<Product> products = new List<Product>();
+
             if (string.IsNullOrWhiteSpace(search) == false)
             {
-               //products = db.Products.Where(t => t.ProductName.Contains(search)).ToList();
+                //products = db.Products.Where(t => t.ProductName.Contains(search)).ToList();
 
                 products = db.Products.SearchName(search).ToList();
             }
 
-            if(sort.Length > 0)
+            if (sort.Length > 0)
             {
                 products = Sort(sort, products);
-            }    
+            }
 
             ViewBag.searchValue = search;
-            ViewBag.products = products;
+
             return View(products);
         }
 
         //Lọc sản phẩm
-        public List<Product> Filter(List<Product> products, string filterType = "", string value = "")
+        public List<Product> FilterByCate(List<Product> products, string filterType = "", string value = "")
         {
             List<Product> productsFilter = new List<Product>();
+            string filterName = "";
 
             //Lọc sản phẩm theo thương hiệu
             if (filterType == "brand")
             {
-
                 productsFilter = products.Where(t => t.Brand.BrandID == value).ToList();
+
+                if(productsFilter.Count > 0)
+                {
+                    Product product = productsFilter[1];
+                    filterName = product.Brand.BrandName;
+                }     
             }
             //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
             else if (filterType == "sbrand")
             {
                 productsFilter = products.SearchName(value).ToList();
-            }    
+            }
             //Lọc sản phẩm theo giá cho trước
             else if (filterType == "price")
             {
@@ -110,7 +128,8 @@ namespace STech_Web.Controllers
                     productsFilter = products.Where(t => t.Price < 15000000).ToList();
                 }
             }
-            
+
+            ViewBag.filterName = filterName;
 
             return productsFilter;
         }
@@ -118,30 +137,41 @@ namespace STech_Web.Controllers
         //Lọc sản phẩm theo id danh mục
         public ActionResult GetProductByID(string id = "", string sort = "", string filtertype = "", string filter = "")
         {
-
+            //Lấy danh sách sản phẩm theo danh mục
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Product> products = db.Products.Where(t => t.Category.CateID == id).ToList();
 
-            if(sort.Length > 0)
+            //Lấy danh mục của danh sách sản phẩm
+            Category cate = db.Categories.Where(t => t.CateID == id).FirstOrDefault();
+            //--------
+            string breadcrumbItem = cate.CateName;
+
+            //Sắp xếp danh sách sản phẩm
+            if (sort.Length > 0)
             {
                 products = Sort(sort, products);
-            }    
+            }
 
-            if(filter.Length > 0 && filtertype.Length > 0)
+            //Lọc danh sách sản phẩm
+            if (filter.Length > 0 && filtertype.Length > 0)
             {
-                products = Filter(products, filtertype, filter);
+                products = FilterByCate(products, filtertype, filter);
                 ViewBag.FilterType = filtertype;
                 ViewBag.Filter = filter;
-            }    
+                if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
+                {
+                    breadcrumbItem += " " + ViewBag.filterName;
+                }
+            }
 
-            Category cate = db.Categories.Where(t => t.CateID == id).FirstOrDefault();
-
+            //Tạo danh sách Breadcrumb
             List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
-            breadcrumb.Add( new Breadcrumb("Trang chủ", "/"));
-            breadcrumb.Add(new Breadcrumb(cate.CateName, ""));
+            breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
+            breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
 
+            //-----------
             ViewBag.cateID = id;
-            ViewBag.CateName = cate.CateName;
+            ViewBag.title = breadcrumbItem;
             ViewBag.Breadcrumb = breadcrumb;
 
             return View("Index", products);

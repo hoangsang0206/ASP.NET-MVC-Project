@@ -126,11 +126,15 @@
                                 </div>
                             </a>
                             <div class="product-original-price">
-                                @{
+                                @if (item.Product.Cost.ToString().Length > 0)
+                                {
                                     decimal cost = Convert.ToDecimal(item.Product.Cost);
-
+                                    <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                                 }
-                                @cost.ToString("#,###", ViewBag.cul)đ
+                                else
+                                {
+                                    <span style="visibility: hidden">0</span>
+                                }
                             </div>
                             <div class="product-price">
                                 @{
