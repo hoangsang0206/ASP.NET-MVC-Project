@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using STech_Web.Models;
+﻿using STech_Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 
 namespace STech_Web.ApiContronllers
 {
@@ -17,7 +15,7 @@ namespace STech_Web.ApiContronllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Brand> brands = db.Brands.ToList();
-
+            
             return brands;
         }
     }

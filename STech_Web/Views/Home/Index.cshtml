@@ -4,7 +4,7 @@
 }
 
 <section class="menu">
-    @{ 
+    @{
         Html.RenderPartial("Megamenu_Partial");
     }
     <div class="slider">
@@ -43,6 +43,7 @@
         </div>
     </div>
 </section>
+
 <section class="policy">
     <div class="policy-item">
         <i class="fa-solid fa-truck-fast policy-icon"></i>
@@ -73,6 +74,7 @@
         </div>
     </div>
 </section>
+
 <section class="banner-1">
     <div class="banner-1-content">
         <a href="#">
@@ -90,66 +92,72 @@
         </a>
     </div>
 </section>
-<section class="sale">
-    <div class="sale-header">
-        <div class="countdown">
-            <div class="countdown-item countdown-day">6</div>
-            <span class="countdown-colon">:</span>
-            <div class="countdown-item countdown-hour">12</div>
-            <span class="countdown-colon">:</span>
-            <div class="countdown-item countdown-minute">59</div>
-            <span class="countdown-colon">:</span>
-            <div class="countdown-item countdown-second">59</div>
+
+@if (ViewBag.Sales.Count > 0)
+{
+    <section class="sale">
+        <div class="sale-header">
+            <div class="countdown">
+                <div class="countdown-item countdown-day">6</div>
+                <span class="countdown-colon">:</span>
+                <div class="countdown-item countdown-hour">12</div>
+                <span class="countdown-colon">:</span>
+                <div class="countdown-item countdown-minute">59</div>
+                <span class="countdown-colon">:</span>
+                <div class="countdown-item countdown-second">59</div>
+            </div>
+            <i class="fa-sharp fa-solid fa-bolt fa-beat-fade"></i>
+            <h2>FLASH SALE</h2>
         </div>
-        <i class="fa-sharp fa-solid fa-bolt fa-beat-fade"></i>
-        <h2>FLASH SALE</h2>
-    </div>
-    <div class="sale-content">
-        <div class="sale-slick-slider">
-            @foreach (var item in ViewBag.Sales)
-            {
-                <div class="slick-slider-item">
-                    <div class="product-box">
-                        <a href="/product/@item.Product.ProductID" class="product-link">
-                            <div class="product-image lazy-loading">
-                                <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
-                            </div>
-                        </a>
-                        <a href="/product/@item.Product.ProductID" class="product-link">
-                            <div class="product-name">
-                                @item.Product.ProductName
-                            </div>
-                        </a>
-                        <div class="product-original-price">
-                            @{
-                                decimal cost = Convert.ToDecimal(item.Product.Cost);
+        <div class="sale-content">
+            <div class="sale-slick-slider">
+                @foreach (var item in ViewBag.Sales)
+                {
+                    <div class="slick-slider-item">
+                        <div class="product-box">
+                            <a href="/product/@item.Product.ProductID" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                                </div>
+                            </a>
+                            <a href="/product/@item.Product.ProductID" class="product-link">
+                                <div class="product-name">
+                                    @item.Product.ProductName
+                                </div>
+                            </a>
+                            <div class="product-original-price">
+                                @{
+                                    decimal cost = Convert.ToDecimal(item.Product.Cost);
 
-                            }
-                            @cost.ToString("#,###", ViewBag.cul)đ
-                        </div>
-                        <div class="product-price">
-                            @{
-                                decimal price = Convert.ToDecimal(item.Product.Price);
+                                }
+                                @cost.ToString("#,###", ViewBag.cul)đ
+                            </div>
+                            <div class="product-price">
+                                @{
+                                    decimal price = Convert.ToDecimal(item.Product.Price);
 
-                            }
-                            @price.ToString("#,###", ViewBag.cul)đ
+                                }
+                                @price.ToString("#,###", ViewBag.cul)đ
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+
 <section class="banner-2">
     @foreach (var banner in ViewBag.Banner1)
     {
         <div class="banner-2-content">
             <a href="@banner.BannerLink">
                 <img src="@banner.BannerImgSrc" alt="">
-            </a>   
+            </a>
         </div>
     }
 </section>
+
 <section class="section-categories">
     <div class="section-header">
         <h2 class="section-title">
@@ -389,6 +397,7 @@
         </div>
     </div>
 </section>
+
 <section class="section-collection">
     <div class="section-header">
         <div class="section-header-box">
@@ -406,10 +415,11 @@
     </div>
     <div class="section-content">
         <div class="collection-slick-slider">
-            
+
         </div>
     </div>
 </section>
+
 <section class="section-collection">
     <div class="section-header">
         <div class="section-header-box">
@@ -448,7 +458,7 @@
                                 <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                             }
                             else
-                            { 
+                            {
                                 <span style="visibility: hidden">0</span>
                             }
                         </div>
@@ -464,6 +474,7 @@
         </div>
     </div>
 </section>
+
 <section class="section-collection">
     <div class="section-header">
         <div class="section-header-box">
@@ -507,6 +518,7 @@
         </div>
     </div>
 </section>
+
 <section class="section-collection">
     <div class="section-header">
         <div class="section-header-box">
@@ -550,6 +562,7 @@
         </div>
     </div>
 </section>
+
 <section class="section-brands">
     <div class="section-header">
         <h2 class="section-title">
