@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace STech_Web.Controllers
 {
@@ -63,7 +64,7 @@ namespace STech_Web.Controllers
         }
 
         //Tìm kiếm sản phẩm
-        public ActionResult Search(string search = "", string sort = "")
+        public ActionResult Search(string search = "", string sort = "", int page = 1)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
 
@@ -72,7 +73,6 @@ namespace STech_Web.Controllers
             if (string.IsNullOrWhiteSpace(search) == false)
             {
                 //products = db.Products.Where(t => t.ProductName.Contains(search)).ToList();
-
                 products = db.Products.SearchName(search).ToList();
             }
 
@@ -81,8 +81,21 @@ namespace STech_Web.Controllers
                 products = Sort(sort, products);
             }
 
-            ViewBag.searchValue = search;
 
+            //Paging ------
+            int NoOfProductPerPage = 2;
+            int NoOfPages = Convert.ToInt32(Math.Ceiling(
+                Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
+            int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
+            ViewBag.Page = page;
+            ViewBag.NoOfPages = NoOfPages;
+            products = products.Skip(NoOfProductToSkip).Take(NoOfProductPerPage).ToList();
+
+            //----------
+            ViewBag.searchValue = search;
+            ViewBag.sortValue = sort;
+
+            //return
             return View(products);
         }
 
@@ -135,16 +148,29 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm theo id danh mục
-        public ActionResult GetProductByID(string id = "", string sort = "", string filtertype = "", string filter = "")
+        public ActionResult GetProduct(string id = "", string sort = "", string filtertype = "", string filter = "", int page = 1)
         {
             //Lấy danh sách sản phẩm theo danh mục
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.Where(t => t.Category.CateID == id).ToList();
+            List<Product> products = new List<Product>();
 
-            //Lấy danh mục của danh sách sản phẩm
-            Category cate = db.Categories.Where(t => t.CateID == id).FirstOrDefault();
+            string breadcrumbItem = "";
+
+            if (id == "all")
+            {
+                products = db.Products.ToList();
+                breadcrumbItem = "Tất cả sản phẩm";
+            }
+            else
+            {
+                products = db.Products.Where(t => t.Category.CateID == id).ToList();
+
+                //Lấy danh mục của danh sách sản phẩm
+                Category cate = db.Categories.Where(t => t.CateID == id).FirstOrDefault();
+                //
+                breadcrumbItem = cate.CateName;
+            }
             //--------
-            string breadcrumbItem = cate.CateName;
 
             //Sắp xếp danh sách sản phẩm
             if (sort.Length > 0)
@@ -169,10 +195,20 @@ namespace STech_Web.Controllers
             breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
             breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
 
+            //Paging ------
+            int NoOfProductPerPage = 20;
+            int NoOfPages = Convert.ToInt32(Math.Ceiling(
+                Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
+            int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
+            ViewBag.Page = page;
+            ViewBag.NoOfPages = NoOfPages;
+            products = products.Skip(NoOfProductToSkip).Take(NoOfProductPerPage).ToList();
+
             //-----------
             ViewBag.cateID = id;
             ViewBag.title = breadcrumbItem;
             ViewBag.Breadcrumb = breadcrumb;
+            ViewBag.sortValue = sort;
 
             return View("Index", products);
         }

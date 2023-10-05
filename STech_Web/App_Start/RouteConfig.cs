@@ -16,7 +16,7 @@ namespace STech_Web
             routes.MapRoute(
              name: "Filter",
              url: "collections/{id}",
-             defaults: new { controller = "Collections", action = "GetProductByID", id = UrlParameter.Optional }
+             defaults: new { controller = "Collections", action = "GetProduct", id = UrlParameter.Optional }
            );
 
             routes.MapRoute(

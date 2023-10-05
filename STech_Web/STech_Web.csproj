@@ -134,6 +134,10 @@
     <Content Include="images\delivery\ghtk-logo.png" />
     <Content Include="images\emotes\404.png" />
     <Content Include="images\emotes\genshin-impact-emote.png" />
+    <Content Include="images\icons\chevron-left.png" />
+    <Content Include="images\icons\chevron-right.png" />
+    <Content Include="images\icons\double-chevron-left.png" />
+    <Content Include="images\icons\double-chevron-right.png" />
     <Content Include="images\logo\favicon.ico" />
     <Content Include="images\logo\stech-logo-mobile.png" />
     <Content Include="images\logo\stech-logo.png" />

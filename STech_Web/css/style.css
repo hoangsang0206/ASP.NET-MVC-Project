@@ -1092,13 +1092,13 @@ footer {
         padding: 0;
     }
 
-        .cart-btn ion-icon {
-            font-size: 2.1rem;
-        }
+    .cart-btn ion-icon {
+        font-size: 2.1rem;
+    }
 
-        .cart-btn span {
-            display: none;
-        }
+    .cart-btn span {
+        display: none;
+    }
 
     .cart-count-holder {
         top: -10%;
@@ -1125,9 +1125,9 @@ footer {
         padding: 0.7rem 0 4rem 0;
     }
 
-        footer * {
-            font-size: 0.95rem;
-        }
+    footer * {
+        font-size: 0.95rem;
+    }
 
     .footer-col {
         overflow: hidden;
@@ -1174,6 +1174,24 @@ footer {
 
     .to-top-btn {
         display: none;
+    }
+
+    .error-404-message {
+        justify-content: center;
+    }
+
+    .error-404-message h3 {
+        font-size: 1rem;
+    }
+
+    .error-404-message p {
+        font-size: 0.9rem;
+    }
+
+    .to-home-page-btn {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        font-size: 0.9rem;
     }
 }
 

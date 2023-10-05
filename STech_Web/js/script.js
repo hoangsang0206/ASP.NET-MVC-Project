@@ -237,7 +237,7 @@ $("#search").keyup(function () {
     var searchText = $(this).val();
     if (searchText.length > 0) {
         $.ajax({
-            url: 'api/collections',
+            url: '/api/collections',
             type: 'GET',
             data: {
                 id: searchText
@@ -285,4 +285,8 @@ $("#search").keyup(function () {
     else {
         $('.ajax-search-autocomplete').css('display', 'none');
     }
+})
+
+$("#search").on('blur', () => {
+    $('.ajax-search-autocomplete').css('display', 'none');
 })

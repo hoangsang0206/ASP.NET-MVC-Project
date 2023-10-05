@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace STech_Web
+namespace STech_Web.ApiControllers
 {
     public class CollectionsController : ApiController
     {
