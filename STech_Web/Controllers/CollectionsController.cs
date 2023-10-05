@@ -63,6 +63,20 @@ namespace STech_Web.Controllers
 
         }
 
+        public List<Product> Pagination(List<Product> products, int page)
+        {
+            //Paging ------
+            int NoOfProductPerPage = 20;
+            int NoOfPages = Convert.ToInt32(Math.Ceiling(
+                Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
+            int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
+            ViewBag.Page = page;
+            ViewBag.NoOfPages = NoOfPages;
+            products = products.Skip(NoOfProductToSkip).Take(NoOfProductPerPage).ToList();
+
+            return products;
+        }
+
         //Tìm kiếm sản phẩm
         public ActionResult Search(string search = "", string sort = "", int page = 1)
         {
@@ -81,15 +95,9 @@ namespace STech_Web.Controllers
                 products = Sort(sort, products);
             }
 
-
-            //Paging ------
-            int NoOfProductPerPage = 2;
-            int NoOfPages = Convert.ToInt32(Math.Ceiling(
-                Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
-            int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
-            ViewBag.Page = page;
-            ViewBag.NoOfPages = NoOfPages;
-            products = products.Skip(NoOfProductToSkip).Take(NoOfProductPerPage).ToList();
+            //Paging -----
+            products = Pagination(products, page);
+           
 
             //----------
             ViewBag.searchValue = search;
@@ -196,13 +204,7 @@ namespace STech_Web.Controllers
             breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
 
             //Paging ------
-            int NoOfProductPerPage = 20;
-            int NoOfPages = Convert.ToInt32(Math.Ceiling(
-                Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
-            int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
-            ViewBag.Page = page;
-            ViewBag.NoOfPages = NoOfPages;
-            products = products.Skip(NoOfProductToSkip).Take(NoOfProductPerPage).ToList();
+            products = Pagination(products, page);
 
             //-----------
             ViewBag.cateID = id;

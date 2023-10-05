@@ -98,13 +98,13 @@
     <section class="sale">
         <div class="sale-header">
             <div class="countdown">
-                <div class="countdown-item countdown-day">6</div>
+                <div class="countdown-item" id="countdown-days">00</div>
                 <span class="countdown-colon">:</span>
-                <div class="countdown-item countdown-hour">12</div>
+                <div class="countdown-item" id="countdown-hours">00</div>
                 <span class="countdown-colon">:</span>
-                <div class="countdown-item countdown-minute">59</div>
+                <div class="countdown-item" id="countdown-minutes">00</div>
                 <span class="countdown-colon">:</span>
-                <div class="countdown-item countdown-second">59</div>
+                <div class="countdown-item" id="countdown-seconds">00</div>
             </div>
             <i class="fa-sharp fa-solid fa-bolt fa-beat-fade"></i>
             <h2>FLASH SALE</h2>
@@ -620,3 +620,33 @@
         </div>
     </div>
 </section>
+
+<script>
+    var endDate = new Date("@ViewBag.Countdown.endDate".toString());
+
+    function updateCountdown() {
+        var timeRemaining = endDate - Date.now(); //millisecond
+        //Tổng số mili giây trong 1 ngày: 1000 * 60 * 60 * 24
+        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        //Số giờ còn lại trong ngày
+        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        //Số phút còn lại giờ
+        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        //Số giây còn lại trong phút
+        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        //$(".countdown-day").text(String(days).padStart(2, "0"));
+        //$(".countdown-hour").text(String(hours).padStart(2, "0"));
+        //$(".countdown-minute").text(String(minutes).padStart(2, "0"));
+        //$(".countdown-second").text(String(seconds).padStart(2, "0"));
+
+        document.getElementById("countdown-days").innerText = String(days).padStart(2, "0");
+        document.getElementById("countdown-hours").innerText = String(hours).padStart(2, "0");
+        document.getElementById("countdown-minutes").innerText = String(minutes).padStart(2, "0");
+        document.getElementById("countdown-seconds").innerText = String(seconds).padStart(2, "0");
+
+    }
+
+    setInterval(updateCountdown, 1000);
+
+</script>

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
+using System.Xml;
 
 namespace STech_Web.Controllers
 {
@@ -20,6 +22,10 @@ namespace STech_Web.Controllers
             List<Slider> sliders = db.Sliders.ToList();
             List<Banner1> banner1 = db.Banner1.ToList();
 
+            //Countdown -------
+            Countdown();
+
+            //----------
             ViewBag.Sales = sales;
             ViewBag.LaptopOutStandings = laptopOutStandings;
             ViewBag.Sliders = sliders;
@@ -30,6 +36,20 @@ namespace STech_Web.Controllers
             ViewBag.cul = cul;
 
             return View();
+        }
+
+        public void Countdown() 
+        {
+            XmlDocument read = new XmlDocument();
+            string filePath = Server.MapPath("~/XmlFile/Countdown.xml");
+            read.Load(filePath);
+            XmlNode node = read.SelectSingleNode("/Countdown");
+
+            string endDate = node["endDate"].InnerText;
+
+            Countdown countdown = new Countdown(endDate);
+
+            ViewBag.Countdown = countdown;
         }
     }
 }

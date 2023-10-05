@@ -290,3 +290,5 @@ $("#search").keyup(function () {
 $("#search").on('blur', () => {
     $('.ajax-search-autocomplete').css('display', 'none');
 })
+
+

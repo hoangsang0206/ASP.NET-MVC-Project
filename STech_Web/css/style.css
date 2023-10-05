@@ -542,7 +542,7 @@ hidden-menu .megamenu-item:hover .megamenu-content,
 
 .megamenu-content {
     background: #fffffff1;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(1px);
     padding: 0.7rem 0;
     position: absolute;
     width: 79.7%;
@@ -553,6 +553,7 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     overflow: hidden;
     display: none;
     grid-template-columns: 20% 20% 20% 20% 20%;
+    box-shadow: 1px 1px 5px #9e9e9e;
 }
 
 .megamenu-content-item {

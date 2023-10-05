@@ -158,6 +158,7 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config" />
+    <Content Include="XmlFile\Countdown.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiController\BrandsController.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Countdown.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
