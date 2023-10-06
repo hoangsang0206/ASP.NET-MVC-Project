@@ -176,12 +176,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="UserName" Type="nvarchar" MaxLength="20" />
     <Property Name="UserPassword" Type="nvarchar" MaxLength="20" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB\APP_DATA\DATABASESTECH.MDF.dbo.WareHouse' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="WareHouse">
-          <Property Name="ProductID" Type="varchar" MaxLength="50" />
-          <Property Name="Quantity" Type="int" />
-        </EntityType>-->
+  <EntityType Name="WareHouse">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
   <EntityType Name="WareHouseImport">
     <Key>
       <PropertyRef Name="ImportID" />
@@ -419,9 +420,18 @@ warning 6013: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <!--Errors Found During Generation:
-error 6004: The table 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB\APP_DATA\DATABASESTECH.MDF.dbo.WareHouse' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_WareHouse_Pro" />-->
+  <Association Name="FK_WareHouse_Pro">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="WareHouse">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DatabaseSTechModelStoreContainer">
     <EntitySet Name="BillDetail" EntityType="Self.BillDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
@@ -440,6 +450,7 @@ error 6004: The table 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB\APP_DA
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WareHouseImport" EntityType="Self.WareHouseImport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banner1" EntityType="Self.Banner1" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -530,6 +541,10 @@ error 6004: The table 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB\APP_DA
     <AssociationSet Name="FK_Spec_Pro" Association="Self.FK_Spec_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="Specifications" EntitySet="Specifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="WareHouse" EntitySet="WareHouse" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

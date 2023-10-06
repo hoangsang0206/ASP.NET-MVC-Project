@@ -125,10 +125,15 @@
                                     @item.Product.ProductName
                                 </div>
                             </a>
+                            @{ double discountPercent = 0; }
                             <div class="product-original-price">
                                 @if (item.Product.Cost.ToString().Length > 0)
                                 {
                                     decimal cost = Convert.ToDecimal(item.Product.Cost);
+
+                                    discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
+                                        / Convert.ToDouble(item.Product.Cost)) * 100;
+
                                     <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                                 }
                                 else
@@ -136,12 +141,20 @@
                                     <span style="visibility: hidden">0</span>
                                 }
                             </div>
-                            <div class="product-price">
+                            <div class="product-price d-flex align-items-center">
                                 @{
                                     decimal price = Convert.ToDecimal(item.Product.Price);
 
                                 }
-                                @price.ToString("#,###", ViewBag.cul)đ
+
+                                <span>@price.ToString("#,###", ViewBag.cul)đ</span>
+
+                                @if (discountPercent > 0)
+                                {
+                                    <div class="product-discount-percent">
+                                        @( "-" + (int)discountPercent + "%" )
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -458,10 +471,15 @@
                                 @item.Product.ProductName
                             </div>
                         </a>
+
+                        @{ double discountPercent = 0; }
                         <div class="product-original-price">
                             @if (item.Product.Cost != null || item.Product.Cost.ToString().Length > 0)
                             {
                                 decimal cost = Convert.ToDecimal(item.Product.Cost);
+
+                                discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
+                                    / Convert.ToDouble(item.Product.Cost)) * 100;
                                 <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                             }
                             else
@@ -469,11 +487,17 @@
                                 <span style="visibility: hidden">0</span>
                             }
                         </div>
-                        <div class="product-price">
+                        <div class="product-price d-flex align-items-center">
                             @{
                                 decimal price = Convert.ToDecimal(item.Product.Price);
                             }
-                            @price.ToString("##,###", ViewBag.cul)đ
+                            <span>@price.ToString("##,###", ViewBag.cul)đ</span>
+                            @if (discountPercent > 0)
+                            {
+                                <div class="product-discount-percent">
+                                    @( "-" + (int)discountPercent + "%" )
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -578,41 +602,14 @@
         </h2>
     </div>
     <div class="brand-collections">
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/asus-logo.png" alt="Asus Logo">
-            </a>
-        </div>
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/razer-logo.jpg" alt="Razer Logo">
-            </a>
-        </div>
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/logitech-logo.png" alt="Logitech Logo">
-            </a>
-        </div>
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/pulsar-logo.png" alt="Pulsar Logo">
-            </a>
-        </div>
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/glorious-logo.png" alt="Glorious Logo">
-            </a>
-        </div>
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/hyperx-logo.png" alt="Hyperx Logo">
-            </a>
-        </div>
-        <div class="brand-item">
-            <a href="#">
-                <img src="/images/brands/steelseries-logo.png" alt="Steelseries Logo">
-            </a>
-        </div>
+        @foreach (var brand in ViewBag.Brands)
+        {
+            <div class="brand-item">
+                <a href="#">
+                    <img src="@brand.BrandImgSrc" alt="@brand.BrandName + Logo">
+                </a>
+            </div>
+        }
     </div>
 </section>
 

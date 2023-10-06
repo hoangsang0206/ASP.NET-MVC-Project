@@ -42,6 +42,7 @@ namespace STech_Web.Models
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<Specification> Specifications { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
+        public virtual DbSet<WareHouse> WareHouses { get; set; }
         public virtual DbSet<WareHouseImport> WareHouseImports { get; set; }
         public virtual DbSet<Banner1> Banner1 { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }

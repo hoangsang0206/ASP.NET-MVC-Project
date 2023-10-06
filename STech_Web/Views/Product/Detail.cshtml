@@ -31,17 +31,27 @@
                     <h3>@Model.ProductName</h3>
                 </div>
                 <div class="product-info-original-price">
+                    @{ double discountPercent = 0; }
                     @if (Model.Cost != null || Model.Cost.ToString().Length > 0)
                     {
                         decimal cost = Convert.ToDecimal(Model.Cost);
                         <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+
+                        discountPercent = ((Convert.ToDouble(Model.Cost) - Convert.ToDouble(Model.Price)) 
+                            / Convert.ToDouble(Model.Cost)) * 100;
                     }
                 </div>
-                <div class="product-info-price">
+                <div class="product-info-price d-flex align-items-center">
                     @{ 
                         decimal price = Convert.ToDecimal(Model.Price);
                     }
                     <h2>@price.ToString("#,###", ViewBag.cul)đ</h2>
+                    @if(discountPercent > 0)
+                    {
+                        <div class="product-info-discount-percent">
+                            @( "-" + (int)discountPercent + "%" )
+                        </div>
+                    }
                 </div>
                 <div class="product-gift my-3">
                     <div class="product-gift-header d-flex align-items-center">
@@ -63,17 +73,28 @@
                     </div>
                 </div>
                 <div class="product-action d-flex gap-2 my-2 align-items-center">
-                    <div class="buy-action">
-                        <button class="buy-action-btn">
-                            <h4>MUA NGAY</h4>
-                            <span>Giao tận nơi hoặc nhận tại cửa hàng</span>
-                        </button>
-                    </div>
-                    <div class="add-to-cart-action">
-                        <button class="add-to-cart-btn">
-                            <i class="fa-solid fa-cart-plus"></i>
-                        </button>
-                    </div>
+                    @if (Model.WareHouse.ProductID != null && Model.WareHouse.Quantity > 0)
+                    {
+                        <div class="buy-action">
+                            <button class="buy-action-btn">
+                                <h4>MUA NGAY</h4>
+                                <span>Giao tận nơi hoặc nhận tại cửa hàng</span>
+                            </button>
+                        </div>
+                        <div class="add-to-cart-action">
+                            <button class="add-to-cart-btn">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="buy-action">
+                            <button class="buy-action-btn" disabled>
+                                <h4>HẾT HÀNG</h4>
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

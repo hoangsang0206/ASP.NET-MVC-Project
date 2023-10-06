@@ -21,9 +21,14 @@ namespace STech_Web.ApiControllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Product> products = db.Products.SearchName(id).ToList();
             List<ProductAPI> productAPIs = new List<ProductAPI>();
-
+            
             foreach (Product p in products)
             {
+                if(p.Cost == null)
+                {
+                    p.Cost = 0;
+                }
+
                 ProductAPI productAPI =
                     new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
 

@@ -113,8 +113,8 @@
     justify-content: center;
 }
 
-.slick-slider-item {
-    padding: 0 0.3rem;
+.slick-slider-item:not(:last-child) {
+    padding: 0 0.5rem 0 0;
 }
 
 .product-box {
@@ -155,16 +155,32 @@
 }
 
 .product-original-price {
-    text-decoration: line-through;
-    color: #6d6e72;
-    line-height: normal;
     margin-top: 0.7rem;
 }
 
-.product-price {
+.product-original-price span {
+    text-decoration: line-through;
+    color: #6d6e72;
+    line-height: normal;  
+}
+
+.product-price span {
     color: #e30019;
     font-weight: 600;
     font-size: 1.2rem;
+}
+
+.product-discount-percent {
+    display: grid;
+    place-items: center;
+    color: #e30019;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border: 1px solid #e30019;
+    border-radius: 0.2rem;
+    padding: 0.1rem 0.3rem;
+    margin-left: 1rem;
+    background: none;
 }
 
 .product-link {
@@ -460,10 +476,15 @@
 
     .countdown-item {
         font-size: 0.9rem;
+        padding: 0.2rem 0.3rem;
     }
 
-    .sale-item, .collection-item {
-        padding: 0.4rem;
+    .sale {
+        padding: 1rem 0.4rem;
+    }
+
+    .slick-slider-item:not(:last-child) {
+        padding: 0 0.3rem 0 0;
     }
 
     .sale-item-name {
@@ -509,6 +530,10 @@
         width: 100%;
     }
 
+    .section-collection {
+        padding: 1rem 0.4rem;
+    }
+
     .section-categories-items {
         overflow-x: scroll;
     }
@@ -521,21 +546,6 @@
         padding: 0.8rem;
     }
 
-    /*.brand-collections {
-        display: grid;
-        grid-template-columns: 30% 30% 30% 30% 30% 30% 30%;
-        gap: 1.5rem;
-        overflow-x: scroll;
-    }
-
-    .brand-item {
-        width: auto;
-    }
-
-        .brand-item img {
-            width: 80%;
-        }
-*/
     .brand-item:not(:first-child, :last-child) {
         padding: 0 1rem;
     }
@@ -546,6 +556,25 @@
 
     .brand-item:last-child {
         padding-left: 1rem;
+    }
+
+    .brand-item img {
+        width: 100%;
+    }
+
+    .product-original-price span {
+        margin-top: 0.7rem;
+        font-size: 0.8rem;
+    }
+
+    .product-price span {
+        font-size: 1rem;
+    }
+
+    .product-discount-percent {
+        font-size: 0.7rem;
+        padding: 0.1rem 0.2rem;
+        margin-left: 0.4rem;
     }
 
 }

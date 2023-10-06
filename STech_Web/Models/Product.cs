@@ -63,5 +63,6 @@ namespace STech_Web.Models
         public virtual ICollection<Sale> Sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Specification> Specifications { get; set; }
+        public virtual WareHouse WareHouse { get; set; }
     }
 }

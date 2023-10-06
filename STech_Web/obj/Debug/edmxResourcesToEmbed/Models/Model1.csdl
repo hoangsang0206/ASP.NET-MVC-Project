@@ -162,6 +162,7 @@
     <NavigationProperty Name="ProductPromotions" Relationship="Self.FK_Promotion_Pro" FromRole="Products" ToRole="ProductPromotion" />
     <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
     <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
+    <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
   </EntityType>
   <EntityType Name="Sale">
     <Key>
@@ -191,6 +192,14 @@
     <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="UserPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_Account_Customer" FromRole="UserAccount" ToRole="Customers" />
+  </EntityType>
+  <EntityType Name="WareHouse">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_WareHouse_Pro" FromRole="WareHouse" ToRole="Products" />
   </EntityType>
   <EntityType Name="WareHouseImport">
     <Key>
@@ -447,6 +456,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_WareHouse_Pro">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="WareHouse">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DatabaseSTechEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
     <EntitySet Name="Bills" EntityType="Self.Bill" />
@@ -465,6 +486,7 @@
     <EntitySet Name="Sales" EntityType="Self.Sale" />
     <EntitySet Name="Specifications" EntityType="Self.Specification" />
     <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
+    <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
     <EntitySet Name="WareHouseImports" EntityType="Self.WareHouseImport" />
     <EntitySet Name="Banner1" EntityType="Self.Banner1" />
     <EntitySet Name="Sliders" EntityType="Self.Slider" />
@@ -543,6 +565,10 @@
     <AssociationSet Name="FK_Spec_Pro" Association="Self.FK_Spec_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="Specifications" EntitySet="Specifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="WareHouse" EntitySet="WareHouses" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

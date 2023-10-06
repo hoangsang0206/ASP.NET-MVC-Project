@@ -30,6 +30,20 @@
     color: #e30019;
     font-weight: bold;
     font-size: 2rem;
+    margin: 0;
+}
+
+.product-info-discount-percent {
+    display: grid;
+    place-items: center;
+    color: #e30019;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid #e30019;
+    border-radius: 0.2rem;
+    padding: 0.1rem 0.3rem;
+    margin-left: 1rem;
+    background: none;
 }
 
 .buy-action-btn {
@@ -38,6 +52,10 @@
     border-radius: 0.2rem;
     padding: 0.7rem 3rem;
     background: #e30019;
+}
+
+.buy-action-btn:disabled {
+    padding: 0.9rem 5rem;
 }
 
 .buy-action-btn h4 {
@@ -57,6 +75,11 @@
 
 .add-to-cart-btn i {
     font-size: 2rem;
+}
+
+button:disabled {
+    background: #bcbec2;
+    border: none;
 }
 
 .product-gift {

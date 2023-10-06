@@ -250,6 +250,9 @@
     <Compile Include="Models\UserAccount.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WareHouse.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WareHouseImport.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
