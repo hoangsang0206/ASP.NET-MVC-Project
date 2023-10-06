@@ -161,8 +161,9 @@
     <Content Include="XmlFile\Countdown.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiController\BrandsController.cs" />
-    <Compile Include="ApiController\CollectionsController.cs" />
+    <Compile Include="ApiControllers\BrandsController.cs" />
+    <Compile Include="ApiControllers\CollectionsController.cs" />
+    <Compile Include="ApiControllers\TestAPIController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CollectionsController.cs" />

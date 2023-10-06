@@ -10,7 +10,7 @@ namespace STech_Web.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        public ActionResult Detail(string id)
+        public ActionResult Detail(string id="")
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Product product = db.Products.Where(t => t.ProductID == id)

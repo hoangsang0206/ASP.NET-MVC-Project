@@ -386,19 +386,13 @@
 }
 
 .brand-collections {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    width: 100%;
     margin: 1rem 0;
 }
 
 .brand-collections .slick-track {
     display: flex;
     align-items: center;
-}
-
-.brand-item {
-    width: auto;
 }
 
 .brand-item:not(:first-child, :last-child) {
@@ -413,7 +407,7 @@
 }
 
 .brand-item img {
-    width: 100%;
+    width: 90%;
 }
 
 

@@ -291,4 +291,23 @@ $("#search").on('blur', () => {
     $('.ajax-search-autocomplete').css('display', 'none');
 })
 
+// -------------------------------------
+$('.submit-testAPI').click(() => {
+    var value = $('#testAPI').val();
+    console.log(value);
 
+    $.ajax({
+        type: 'POST',
+        url: '/api/testapi',
+        data: {
+            id: value
+        },
+        success: (response) => {
+            console.log(response)
+        },
+        error: (err) => {
+            console.log(err)
+        }
+    })
+
+})

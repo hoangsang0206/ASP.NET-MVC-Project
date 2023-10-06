@@ -42,32 +42,37 @@
                     Sắp xếp theo: <span id="sort-value">@ViewBag.SortName</span>
                 </button>
                 <div class="sort-dropdown-content">
-   
+
                     <a href="/search/@ViewBag.searchValue?sort=random&page=@ViewBag.Page">
                         <div class="sort-dropdown-content-item @( ViewBag.sortValue == "random" ? "active" : "" )">
                             Ngẫu nhiên
                         </div>
                     </a>
+
                     <a href="/search/@ViewBag.searchValue?sort=price-ascending&page=@ViewBag.Page">
                         <div class="sort-dropdown-content-item @( ViewBag.sortValue == "price-ascending" ? "active" : "" )">
                             Giá tăng dần
                         </div>
                     </a>
+
                     <a href="/search/@ViewBag.searchValue?sort=price-descending&page=@ViewBag.Page">
                         <div class="sort-dropdown-content-item @( ViewBag.sortValue == "price-descending" ? "active" : "" )">
                             Giá giảm dần
                         </div>
                     </a>
+
                     <a href="/search/@ViewBag.searchValue?sort=name-az&page=@ViewBag.Page">
                         <div class="sort-dropdown-content-item @( ViewBag.sortValue == "name-az" ? "active" : "" )">
                             Tên A - Z
                         </div>
                     </a>
+
                     <a href="/search/@ViewBag.searchValue?sort=name-za&page=@ViewBag.Page">
                         <div class="sort-dropdown-content-item @( ViewBag.sortValue == "name-za" ? "active" : "" )">
                             Name Z - A
                         </div>
                     </a>
+
                 </div>
             </div>
         </div>

@@ -673,6 +673,7 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     position: static;
     padding: 0 0 1rem 2rem;
     width: 100%;
+    box-shadow: none;
 }
 
 .mobile-sidebar .megamenu-item-title {
