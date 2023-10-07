@@ -206,7 +206,7 @@ $(document).ready(lazyLoading);
 //})
 
 
- //---Show order dropdown content-----------------------
+ //---Show order dropdown content---------------------------
 $(".sort-dropdown-btn").click(() => {
     $(".sort-dropdown-content").toggleClass("showDropdown");
     $(".sort-dropdown-content").click(() => {
@@ -214,21 +214,77 @@ $(".sort-dropdown-btn").click(() => {
     })
 })
 
-//------------------------------------------------------
+//----------------------------------------------------------
+//---Save search history to Local Storage-------------------
+$(document).ready(function () {
+    $('.search-form').submit(() => {
+        var searchText = $('#search').val();
+
+        var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+        if (searchHistory.length > 15) {
+            searchHistory.shift();
+        }
+
+        if (searchText.length > 0 || searchText != null) {
+            searchHistory.push(searchText);
+        }
+
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    })
+})
 
 //Show search width 100% in mobile
+$(document).ready(function () {
+    $('#search').on('click', () => {
+        const windowWidth = $(window).width();
+        if (windowWidth <= 768) {
+            $('.header-box').css('display', 'none');
+            $('.header-btn').css('display', 'none');
+            $('body').css('overflow', 'hidden');
+            $('.search').css('width', '100%');
+            $('.close-search').css('display', 'block');
+            $('.search-history').css('display', 'block');
+        }
 
-//$(document).ready(function () {
-//    $('#search').on('focus', () => {
-//        const windowWidth = $(window).width();
-//        if (windowWidth < 768) {
-//            $('.header-box').css('display', 'none');
-//            $('.header-btn').css('display', 'none');
+        $('.close-search').click(() => {
+            $('.header-box').css('display', 'flex');
+            $('.header-btn').css('display', 'block');
+            $('body').css('overflow', 'scroll');
+            $('.search').css('width', '60%');
+            $('.close-search').css('display', 'none');
+            $('.ajax-search-autocomplete').css('display', 'none');
+            $('.search-history').css('display', 'none');
+        })
 
-//            $('.search').css('width', '100%');
-//        }
-//    })
-//})
+        var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+        console.log(searchHistory.length)
+
+        $('.search-history-list').empty();
+        if (searchHistory.length > 0) {
+            $('.search-history').css('padding', '0 0 1rem 0');
+            $('.search-history').children('h4').css('display', 'none');
+
+            for (var i = 0; i < searchHistory.length; i++) {
+                $('.search-history-list').append(`<a href="/search/${searchHistory[i]}">`
+                    + `<li class="search-history-list-item">`
+                    + searchHistory[i] + '</li>' + '</a>');
+            }
+        }
+        else {
+            $('.search-history').children('h4').css('display', 'block');
+        }
+
+        $('.clear-search-history').click(() => {
+            $('.search-history-list').empty();
+            localStorage.removeItem('searchHistory');
+            $('.search-history').css('padding', '1rem');
+            $('.search-history').children('h4').css('display', 'block');
+        })
+    })
+
+})
 
 //---AJAX---------------------------------------------------
 
@@ -243,13 +299,17 @@ $("#search").keyup(function () {
                 id: searchText
             },
             success: function (responses) {
+                var maxItems = window.innerWidth <= 768 ? 25 : 6
+
                 $('.ajax-search-autocomplete').css('display', 'block');
                 $('.ajax-search-autocomplete').empty();
+
                 if (responses == null || responses.length <= 0) {
                     $('.ajax-search-autocomplete').css('display', 'none');
+                    $('.ajax-search-autocomplete').empty();
                 }
                 else {
-                    for (let i = 0; i <= responses.length && i < 6; i++) {
+                    for (let i = 0; i <= responses.length && i < maxItems; i++) {
                         const product = responses[i];
                         if (product != null) {
                             const strHTML = `<a href="/product/${product.ProductID}"> 
@@ -271,14 +331,11 @@ $("#search").keyup(function () {
 
                             $('.ajax-search-autocomplete').append(strHTML);
                         }
-
-                        
-
                     }
                 }
             },
             error: () => {
-                $('.ajax-search-autocomplete').css('display', 'none');
+                 $('.ajax-search-autocomplete').css('display', 'none');
             }
         })
     }
@@ -288,8 +345,11 @@ $("#search").keyup(function () {
 })
 
 $("#search").on('blur', () => {
-    $('.ajax-search-autocomplete').css('display', 'none');
+    if (window.innerWidth > 768) {
+        $('.ajax-search-autocomplete').css('display', 'none');
+    } 
 })
+
 
 // -------------------------------------
 $('.submit-testAPI').click(() => {

@@ -55,13 +55,25 @@
                     <span>Danh mục</span>
                 </div>
 
-                <div class="search">
+                <div class="search d-flex align-items-center">
+                    <div class="close-search flex-column align-items-center">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </div>
                     <form action="/search" method="get" class="search-form">
-                        <input type="search" id="search" name="search" class="search-box" placeholder="Bạn cần tìm gì?" required autocomplete="off" />
+                        <input type="text" id="search" name="search" class="search-box" placeholder="Bạn cần tìm gì?" required autocomplete="off" />
                         <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                     <div class="ajax-search-autocomplete">
                         
+                    </div>
+                    <div class="search-history">
+                        <h4>Lịch sử tìm kiếm:</h4>
+                        <ul class="search-history-list">
+
+                        </ul>
+                        <div class="clear-search-history d-flex align-items-center justify-content-center">
+                            Xóa lịch sử tìm kiếm
+                        </div>
                     </div>
                 </div>
                 
@@ -98,25 +110,6 @@
             </div>
         </div>
     </header>
-
-
-    <div class="mobile-search">
-        <div class="mobile-search-header">
-            <div class="close-search">
-
-            </div>
-            <form action="/search" method="post" class="search-form">
-                <input type="search" id="search" name="search" class="search-box" placeholder="Bạn cần tìm gì?" required autocomplete="off" />
-                <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
-        </div>
-        <div class="mobile-search-ajax">
-            <div class="ajax-mb-search-autocomplete">
-
-            </div>
-        </div>
-    </div>
-
 
     <nav>
         <div class="container-xxl">

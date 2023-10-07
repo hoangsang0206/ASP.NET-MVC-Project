@@ -115,7 +115,6 @@ header {
 
 #header a {
     text-decoration: none;
-    color: #ffff;
 }
 
 .header-box {
@@ -163,6 +162,16 @@ header {
 
 .search-form {
     display: flex; 
+    width: 90%;
+}
+
+.close-search {
+    width: 10%;
+    display: none;
+}
+
+.close-search i {
+    font-size: 2rem;
 }
 
 .search-box {
@@ -256,12 +265,49 @@ header {
     aspect-ratio: 1;
 }
 
-.mobile-search {
+.search-history {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 5rem);
+    background: #ffffff;
+    padding: 1rem;
 }
 
-.showMobileSearch {
-    display: block;
+.search-history * {
+    color: #000000;
+}
+
+.search-history h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.search-history-list {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+}
+
+.search-history-list-item {
+    padding: 0.7rem 1.1rem;
+    border-bottom: 1px solid #dddddd;
+    font-size: 1rem;
+    overflow: hidden;
+}
+
+.search-history-list-item a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.clear-search-history {
+    color: #036cfb;
+    padding: 0.8rem 1.1rem;
+    font-size: 1rem;
 }
 
 .order-check {
@@ -270,6 +316,7 @@ header {
 }
 
     .order-check a {
+        color: #ffffff;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -300,6 +347,7 @@ header {
 }
 
     .cart-btn a {
+        color: #ffffff;
         display: flex;
         align-items: center;
     }
@@ -335,6 +383,7 @@ header {
 }
 
     .login-btn a {
+        color: #ffffff;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -594,7 +643,7 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     left: -100%;
     opacity: 0;
     transition: all .4s ease;
-    z-index: 12;
+    z-index: 22;
     overflow-y: scroll;
 }
 
@@ -1030,7 +1079,7 @@ footer {
     } */
 
     header {
-        position: static;
+        position: relative;
     }
 
     #header {
@@ -1072,10 +1121,22 @@ footer {
 
     .search {
         width: 60%;
+        position: static;
     }
 
     .search-btn i {
         font-size: 1.1rem;
+    }
+
+    .ajax-search-autocomplete {
+        left: 0;
+        margin-top: 0;
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        height: calc(100vh - 5rem);
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
 
     .header-hotline {
@@ -1175,7 +1236,11 @@ footer {
     }
 
     .to-top-btn {
-        display: none;
+        bottom: 5rem;
+    }
+
+    .overlay {
+        z-index: 21;
     }
 
     .error-404-message {

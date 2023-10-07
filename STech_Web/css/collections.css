@@ -2,6 +2,7 @@
     background: #ffffff;
     padding: 0 0.5rem 1rem 0.5rem;
     border-radius: 0.2rem;
+    overflow-x: hidden;
 }
 
 .search-value {
