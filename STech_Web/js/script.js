@@ -222,7 +222,7 @@ $(document).ready(function () {
 
         var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
-        if (searchHistory.length > 15) {
+        if (searchHistory.length > 13) {
             searchHistory.shift();
         }
 
@@ -239,32 +239,30 @@ $(document).ready(function () {
     $('#search').on('click', () => {
         const windowWidth = $(window).width();
         if (windowWidth <= 768) {
-            $('.header-box').css('display', 'none');
-            $('.header-btn').css('display', 'none');
+            $('.header-box').hide();
+            $('.header-btn').hide();
             $('body').css('overflow', 'hidden');
             $('.search').css('width', '100%');
-            $('.close-search').css('display', 'block');
-            $('.search-history').css('display', 'block');
+            $('.close-search').show();
+            $('.search-history').show();
         }
 
         $('.close-search').click(() => {
             $('.header-box').css('display', 'flex');
-            $('.header-btn').css('display', 'block');
+            $('.header-btn').show();
             $('body').css('overflow', 'scroll');
             $('.search').css('width', '60%');
-            $('.close-search').css('display', 'none');
-            $('.ajax-search-autocomplete').css('display', 'none');
-            $('.search-history').css('display', 'none');
+            $('.close-search').hide();
+            $('.ajax-search-autocomplete').hide();
+            $('.search-history').hide();
         })
 
         var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
-        console.log(searchHistory.length)
-
         $('.search-history-list').empty();
         if (searchHistory.length > 0) {
             $('.search-history').css('padding', '0 0 1rem 0');
-            $('.search-history').children('h4').css('display', 'none');
+            $('.search-history').children('h4').hide();
 
             for (var i = 0; i < searchHistory.length; i++) {
                 $('.search-history-list').append(`<a href="/search/${searchHistory[i]}">`
@@ -273,14 +271,14 @@ $(document).ready(function () {
             }
         }
         else {
-            $('.search-history').children('h4').css('display', 'block');
+            $('.search-history').children('h4').show();
         }
 
         $('.clear-search-history').click(() => {
             $('.search-history-list').empty();
             localStorage.removeItem('searchHistory');
             $('.search-history').css('padding', '1rem');
-            $('.search-history').children('h4').css('display', 'block');
+            $('.search-history').children('h4').show();
         })
     })
 
@@ -301,11 +299,11 @@ $("#search").keyup(function () {
             success: function (responses) {
                 var maxItems = window.innerWidth <= 768 ? 25 : 6
 
-                $('.ajax-search-autocomplete').css('display', 'block');
+                $('.ajax-search-autocomplete').show();
                 $('.ajax-search-autocomplete').empty();
 
                 if (responses == null || responses.length <= 0) {
-                    $('.ajax-search-autocomplete').css('display', 'none');
+                    $('.ajax-search-autocomplete').hide();
                     $('.ajax-search-autocomplete').empty();
                 }
                 else {
@@ -335,19 +333,22 @@ $("#search").keyup(function () {
                 }
             },
             error: () => {
-                 $('.ajax-search-autocomplete').css('display', 'none');
+                $('.ajax-search-autocomplete').hide();
             }
         })
     }
     else {
-        $('.ajax-search-autocomplete').css('display', 'none');
+        $('.ajax-search-autocomplete').hide();
     }
-})
 
-$("#search").on('blur', () => {
-    if (window.innerWidth > 768) {
-        $('.ajax-search-autocomplete').css('display', 'none');
-    } 
+    $(document).on('click', (e) => {
+        if (window.innerWidth > 768) {
+            var ajaxSearch = $('.ajax-search-autocomplete');
+            if (!$(e.target).closest('.ajax-search-autocomplete').length) {
+                ajaxSearch.hide();
+            }
+        }
+    })
 })
 
 
