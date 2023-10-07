@@ -371,4 +371,82 @@ $('.submit-testAPI').click(() => {
         }
     })
 
+});
+
+
+//---Show password -----------------------------
+var passwordInputArr = $('input[name=password]').toArray();
+
+console.log(passwordInputArr)
+console.log(passwordInputArr.length)
+
+passwordInputArr.forEach(item => {
+    var _item = $(item);
+    var togglePassword = _item.siblings('.toggle-password');
+
+    _item.focus(() => {
+        togglePassword.css('display', 'grid');
+        togglePassword.click(() => {
+            if (_item.attr('type') === 'password') {
+                _item.attr('type', 'text');
+                togglePassword.addClass('hiddenEyeSlash');
+            }
+            else {
+                _item.attr('type', 'password');
+                togglePassword.removeClass('hiddenEyeSlash');
+            }
+        })
+    })
+
+    _item.blur(() => {
+
+        _item.attr('type', 'password');
+        togglePassword.removeClass('hiddenEyeSlash');
+
+        if (_item.val().length <= 0) {
+            togglePassword.css('display', 'none');
+        }
+        else {
+            togglePassword.css('display', 'grid');
+        }
+    })
+});
+
+//--Open login, register form -------------------------
+$('.action-login-btn').click(() => {
+    $('.login').css('visibility', 'visible');
+    $('.form-container').addClass('showForm');
+})
+
+
+$('.login').on('click', (e) => {
+    if (!$(e.target).closest('.form-container').length) {
+        $(e.target).css('visibility', 'hidden');
+        $('.form-container').removeClass('showForm');
+    }
+})
+
+$('.action-register-btn').click(() => {
+    $('.register').css('visibility', 'visible');
+    $('.form-container').addClass('showForm');
+})
+
+$('.register').on('click', (e) => {
+    if (!$(e.target).closest('.form-container').length) {
+        $(e.target).css('visibility', 'hidden');
+        $('.form-container').removeClass('showForm');
+    }
+})
+
+
+//--Close login, register form ----------------------------------
+$('.close-login').click(() => {
+    $('.login').css('visibility', 'hidden');
+    $('.form-container').removeClass('showForm');
+})
+
+$('.close-register').click(() => {
+    $('.register').css('visibility', 'hidden');
+    $('.form-container').removeClass('showForm');
+
 })

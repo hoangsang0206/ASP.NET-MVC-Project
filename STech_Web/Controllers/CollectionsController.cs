@@ -108,7 +108,7 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm
-        public List<Product> FilterByCate(List<Product> products, string filterType = "", string value = "")
+        public List<Product> Filter(List<Product> products, string filterType, string value, string sbrand)
         {
             List<Product> productsFilter = new List<Product>();
             string filterName = "";
@@ -156,7 +156,7 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm theo id danh mục
-        public ActionResult GetProduct(string id = "", string sort = "", string filtertype = "", string filter = "", int page = 1)
+        public ActionResult GetProduct(string id = "", string sort = "", string filtertype = "", string filter = "", string sbrand = "", int page = 1)
         {
             //Lấy danh sách sản phẩm theo danh mục
             DatabaseSTechEntities db = new DatabaseSTechEntities();
@@ -189,7 +189,7 @@ namespace STech_Web.Controllers
             //Lọc danh sách sản phẩm
             if (filter.Length > 0 && filtertype.Length > 0)
             {
-                products = FilterByCate(products, filtertype, filter);
+                products = Filter(products, filtertype, filter, sbrand);
                 ViewBag.FilterType = filtertype;
                 ViewBag.Filter = filter;
                 if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
