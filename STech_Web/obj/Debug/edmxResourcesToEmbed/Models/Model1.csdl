@@ -16,14 +16,12 @@
       <PropertyRef Name="BillID" />
     </Key>
     <Property Name="BillID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="EmpID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="CusID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CusID" Type="Int32" />
     <Property Name="DateCreate" Type="DateTime" Precision="0" />
     <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Bill" FromRole="Bills" ToRole="BillDetail" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_Bill_Cus" FromRole="Bills" ToRole="Customers" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK_Bill_Emp" FromRole="Bills" ToRole="Employees" />
   </EntityType>
   <EntityType Name="Brand">
     <Key>
@@ -48,25 +46,12 @@
     <Key>
       <PropertyRef Name="CusID" />
     </Key>
-    <Property Name="CusID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CusName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="CusAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Cus" FromRole="Customers" ToRole="Bills" />
-    <NavigationProperty Name="UserAccounts" Relationship="Self.FK_Account_Customer" FromRole="Customers" ToRole="UserAccount" />
-  </EntityType>
-  <EntityType Name="Employee">
-    <Key>
-      <PropertyRef Name="EmpID" />
-    </Key>
-    <Property Name="EmpID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="EmpName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="EmpAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Emp" FromRole="Employees" ToRole="Bills" />
-    <NavigationProperty Name="WareHouseImports" Relationship="Self.FK_Imp_Emp" FromRole="Employees" ToRole="WareHouseImport" />
   </EntityType>
   <EntityType Name="ImportDetail">
     <Key>
@@ -77,7 +62,6 @@
     <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Quantity" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="WareHouseImport" Relationship="Self.FK_ImpDetail_Imp" FromRole="ImportDetail" ToRole="WareHouseImport" />
     <NavigationProperty Name="Product" Relationship="Self.FK_ImpDetail_Pro" FromRole="ImportDetail" ToRole="Products" />
   </EntityType>
   <EntityType Name="ProductDescription">
@@ -183,16 +167,6 @@
     <Property Name="SpecValue" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Product" Relationship="Self.FK_Spec_Pro" FromRole="Specifications" ToRole="Products" />
   </EntityType>
-  <EntityType Name="UserAccount">
-    <Key>
-      <PropertyRef Name="AccountID" />
-    </Key>
-    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CusID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="UserPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Customer" Relationship="Self.FK_Account_Customer" FromRole="UserAccount" ToRole="Customers" />
-  </EntityType>
   <EntityType Name="WareHouse">
     <Key>
       <PropertyRef Name="ProductID" />
@@ -200,17 +174,6 @@
     <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Quantity" Type="Int32" />
     <NavigationProperty Name="Product" Relationship="Self.FK_WareHouse_Pro" FromRole="WareHouse" ToRole="Products" />
-  </EntityType>
-  <EntityType Name="WareHouseImport">
-    <Key>
-      <PropertyRef Name="ImportID" />
-    </Key>
-    <Property Name="ImportID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="EmpID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="DateImport" Type="DateTime" Precision="0" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK_Imp_Emp" FromRole="WareHouseImport" ToRole="Employees" />
-    <NavigationProperty Name="ImportDetails" Relationship="Self.FK_ImpDetail_Imp" FromRole="WareHouseImport" ToRole="ImportDetail" />
   </EntityType>
   <EntityType Name="Banner1">
     <Key>
@@ -264,18 +227,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Bill_Emp">
-    <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-    <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employees">
-        <PropertyRef Name="EmpID" />
-      </Principal>
-      <Dependent Role="Bills">
-        <PropertyRef Name="EmpID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Pro_Brand">
     <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
     <End Role="Products" Type="Self.Product" Multiplicity="*" />
@@ -297,42 +248,6 @@
       </Principal>
       <Dependent Role="Products">
         <PropertyRef Name="CateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Account_Customer">
-    <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-    <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customers">
-        <PropertyRef Name="CusID" />
-      </Principal>
-      <Dependent Role="UserAccount">
-        <PropertyRef Name="CusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Imp_Emp">
-    <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-    <End Role="WareHouseImport" Type="Self.WareHouseImport" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employees">
-        <PropertyRef Name="EmpID" />
-      </Principal>
-      <Dependent Role="WareHouseImport">
-        <PropertyRef Name="EmpID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ImpDetail_Imp">
-    <End Role="WareHouseImport" Type="Self.WareHouseImport" Multiplicity="1" />
-    <End Role="ImportDetail" Type="Self.ImportDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WareHouseImport">
-        <PropertyRef Name="ImportID" />
-      </Principal>
-      <Dependent Role="ImportDetail">
-        <PropertyRef Name="ImportID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -474,7 +389,6 @@
     <EntitySet Name="Brands" EntityType="Self.Brand" />
     <EntitySet Name="Categories" EntityType="Self.Category" />
     <EntitySet Name="Customers" EntityType="Self.Customer" />
-    <EntitySet Name="Employees" EntityType="Self.Employee" />
     <EntitySet Name="ImportDetails" EntityType="Self.ImportDetail" />
     <EntitySet Name="ProductDescriptions" EntityType="Self.ProductDescription" />
     <EntitySet Name="ProductDetails" EntityType="Self.ProductDetail" />
@@ -485,9 +399,7 @@
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Sales" EntityType="Self.Sale" />
     <EntitySet Name="Specifications" EntityType="Self.Specification" />
-    <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
     <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
-    <EntitySet Name="WareHouseImports" EntityType="Self.WareHouseImport" />
     <EntitySet Name="Banner1" EntityType="Self.Banner1" />
     <EntitySet Name="Sliders" EntityType="Self.Slider" />
     <AssociationSet Name="FK_BillDetail_Bill" Association="Self.FK_BillDetail_Bill">
@@ -502,10 +414,6 @@
       <End Role="Customers" EntitySet="Customers" />
       <End Role="Bills" EntitySet="Bills" />
     </AssociationSet>
-    <AssociationSet Name="FK_Bill_Emp" Association="Self.FK_Bill_Emp">
-      <End Role="Employees" EntitySet="Employees" />
-      <End Role="Bills" EntitySet="Bills" />
-    </AssociationSet>
     <AssociationSet Name="FK_Pro_Brand" Association="Self.FK_Pro_Brand">
       <End Role="Brands" EntitySet="Brands" />
       <End Role="Products" EntitySet="Products" />
@@ -513,18 +421,6 @@
     <AssociationSet Name="FK_Pro_Cate" Association="Self.FK_Pro_Cate">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Account_Customer" Association="Self.FK_Account_Customer">
-      <End Role="Customers" EntitySet="Customers" />
-      <End Role="UserAccount" EntitySet="UserAccounts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Imp_Emp" Association="Self.FK_Imp_Emp">
-      <End Role="Employees" EntitySet="Employees" />
-      <End Role="WareHouseImport" EntitySet="WareHouseImports" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ImpDetail_Imp" Association="Self.FK_ImpDetail_Imp">
-      <End Role="WareHouseImport" EntitySet="WareHouseImports" />
-      <End Role="ImportDetail" EntitySet="ImportDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_ImpDetail_Pro" Association="Self.FK_ImpDetail_Pro">
       <End Role="Products" EntitySet="Products" />

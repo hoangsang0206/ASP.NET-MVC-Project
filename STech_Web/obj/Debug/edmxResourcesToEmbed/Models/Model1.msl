@@ -14,7 +14,6 @@
       <EntityTypeMapping TypeName="DatabaseSTechModel.Bill">
         <MappingFragment StoreEntitySet="Bills">
           <ScalarProperty Name="BillID" ColumnName="BillID" />
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
           <ScalarProperty Name="CusID" ColumnName="CusID" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
           <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
@@ -49,17 +48,6 @@
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="CusAddress" ColumnName="CusAddress" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.Employee">
-        <MappingFragment StoreEntitySet="Employees">
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="EmpAddress" ColumnName="EmpAddress" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -162,31 +150,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserAccounts">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.UserAccount">
-        <MappingFragment StoreEntitySet="UserAccount">
-          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-          <ScalarProperty Name="CusID" ColumnName="CusID" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="WareHouses">
       <EntityTypeMapping TypeName="DatabaseSTechModel.WareHouse">
         <MappingFragment StoreEntitySet="WareHouse">
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="WareHouseImports">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.WareHouseImport">
-        <MappingFragment StoreEntitySet="WareHouseImport">
-          <ScalarProperty Name="ImportID" ColumnName="ImportID" />
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="DateImport" ColumnName="DateImport" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -99,3 +99,5 @@ D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Owin.Host.Syste
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Owin.Security.xml
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Owin.Security.Cookies.xml
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Owin.Security.OAuth.xml
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.IdentityMigration.init.resources
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.csproj.GenerateResource.cache

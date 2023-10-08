@@ -30,7 +30,6 @@ namespace STech_Web.Models
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<ImportDetail> ImportDetails { get; set; }
         public virtual DbSet<ProductDescription> ProductDescriptions { get; set; }
         public virtual DbSet<ProductDetail> ProductDetails { get; set; }
@@ -41,9 +40,7 @@ namespace STech_Web.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<Specification> Specifications { get; set; }
-        public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<WareHouse> WareHouses { get; set; }
-        public virtual DbSet<WareHouseImport> WareHouseImports { get; set; }
         public virtual DbSet<Banner1> Banner1 { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
     }

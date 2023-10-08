@@ -18,10 +18,9 @@ namespace STech_Web.Models
         public Customer()
         {
             this.Bills = new HashSet<Bill>();
-            this.UserAccounts = new HashSet<UserAccount>();
         }
     
-        public string CusID { get; set; }
+        public int CusID { get; set; }
         public string CusName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
@@ -29,7 +28,5 @@ namespace STech_Web.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAccount> UserAccounts { get; set; }
     }
 }

@@ -122,10 +122,15 @@
                             @item.ProductName
                         </div>
                     </a>
+
+                    @{ double discountPercent = 0; }
                     <div class="product-original-price">
                         @if (item.Cost.ToString().Length > 0)
                         {
                             decimal cost = Convert.ToDecimal(item.Cost);
+
+                            discountPercent = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                / Convert.ToDouble(item.Cost)) * 100;
                             <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                         }
                         else
@@ -133,12 +138,18 @@
                             <span style="visibility: hidden">0</span>
                         }
                     </div>
-                    <div class="product-price">
+                    <div class="product-price d-flex align-items-center">
                         @{
                             decimal price = Convert.ToDecimal(item.Price);
 
                         }
-                        @price.ToString("#,###", ViewBag.cul)đ
+                        <span>@price.ToString("#,###", ViewBag.cul)đ</span>
+                        @if (discountPercent > 0)
+                        {
+                            <div class="product-discount-percent">
+                                @( "-" + (int)discountPercent + "%" )
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

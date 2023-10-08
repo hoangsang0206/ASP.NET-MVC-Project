@@ -9,6 +9,6 @@ namespace STech_Web.Identity
 {
     public class AppDBContext : IdentityDbContext<AppUser>
     {
-        public AppDBContext() : base("DatabaseSTechEntities") { }
+        public AppDBContext() : base("DatabaseSTechEntities_1") { }
     }
 }

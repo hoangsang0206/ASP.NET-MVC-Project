@@ -21,8 +21,7 @@ namespace STech_Web.Models
         }
     
         public string BillID { get; set; }
-        public string EmpID { get; set; }
-        public string CusID { get; set; }
+        public Nullable<int> CusID { get; set; }
         public Nullable<System.DateTime> DateCreate { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public string Status { get; set; }
@@ -30,6 +29,5 @@ namespace STech_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual Employee Employee { get; set; }
     }
 }
