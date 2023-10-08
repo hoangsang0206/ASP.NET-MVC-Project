@@ -463,7 +463,7 @@ header {
     color: #ffffff !important;
 }
 
-.login, .register {
+.login, .register, .forgot-password, .reset-password {
     width: 100vw;
     height: 100vh;
     background: #00000075;

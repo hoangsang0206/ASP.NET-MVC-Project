@@ -352,7 +352,7 @@ $("#search").keyup(function () {
 })
 
 
-// -------------------------------------
+// ----------------------------------------------------------------
 $('.submit-testAPI').click(() => {
     var value = $('#testAPI').val();
     console.log(value);
@@ -374,7 +374,7 @@ $('.submit-testAPI').click(() => {
 });
 
 
-//---Show password -----------------------------
+//---Show password ------------------------------------------------------
 var passwordInputArr = $('input[name=password]').toArray();
 
 console.log(passwordInputArr)
@@ -412,41 +412,75 @@ passwordInputArr.forEach(item => {
     })
 });
 
-//--Open login, register form -------------------------
+//--Show form ----------------------------------------------------------------
 $('.action-login-btn').click(() => {
     $('.login').css('visibility', 'visible');
-    $('.form-container').addClass('showForm');
-})
-
-
-$('.login').on('click', (e) => {
-    if (!$(e.target).closest('.form-container').length) {
-        $(e.target).css('visibility', 'hidden');
-        $('.form-container').removeClass('showForm');
-    }
+    $('.login .form-container').addClass('showForm');
 })
 
 $('.action-register-btn').click(() => {
     $('.register').css('visibility', 'visible');
-    $('.form-container').addClass('showForm');
+    $('.register .form-container').addClass('showForm');
 })
 
-$('.register').on('click', (e) => {
-    if (!$(e.target).closest('.form-container').length) {
-        $(e.target).css('visibility', 'hidden');
-        $('.form-container').removeClass('showForm');
-    }
+$('.login-btn a').click(() => {
+    $('.login').css('visibility', 'visible');
+    $('.login .form-container').addClass('showForm');
 })
 
+//---
+var formArr = [$('.login'), $('.register'), $('.register'), $('.forgot-password'), $('.reset-password')];
 
-//--Close login, register form ----------------------------------
-$('.close-login').click(() => {
+formArr.forEach(form => {
+    var _form = $(form);
+    _form.on('click', (e) => {
+        if (!$(e.target).closest('.form-container').length) {
+            $(e.target).css('visibility', 'hidden');
+            $('.form-container').removeClass('showForm');
+        }
+    })
+
+    //--CLose form -----
+    _form.find('.close-form').click(() => {
+        _form.css('visibility', 'hidden');
+        _form.find('.form-container').removeClass('showForm');
+    })
+})
+
+ //------------------------
+$('.register-now-link').click(() => {
     $('.login').css('visibility', 'hidden');
-    $('.form-container').removeClass('showForm');
+    $('.login .form-container').removeClass('showForm');
+    $('.register').css('visibility', 'visible');
+    $('.register .form-container').addClass('showForm');
+    
+}) 
+
+$('.login-now-link').click(() => {
+    $('.register').css('visibility', 'hidden');
+    $('.register .form-container').removeClass('showForm');
+    $('.login').css('visibility', 'visible');
+    $('.login .form-container').addClass('showForm');
 })
 
-$('.close-register').click(() => {
-    $('.register').css('visibility', 'hidden');
-    $('.form-container').removeClass('showForm');
+$('.forgot-password-link').click(() => {
+    $('.login').css('visibility', 'hidden');
+    $('.login .form-container').removeClass('showForm');
+    $('.forgot-password').css('visibility', 'visible');
+    $('.forgot-password .form-container').addClass('showForm');
+})
 
+$('.back-to-login-link').click(() => {
+    $('.forgot-password').css('visibility', 'hidden');
+    $('.forgot-password .form-container').removeClass('showForm');
+    $('.login').css('visibility', 'visible');
+    $('.login .form-container').addClass('showForm');
+})
+
+$('.forgot-password-form').on('submit', (e) => {
+    e.preventDefault();
+    $('.forgot-password').css('visibility', 'hidden');
+    $('.forgot-password .form-container').removeClass('showForm');
+    $('.reset-password').css('visibility', 'visible');
+    $('.reset-password .form-container').addClass('showForm');
 })
