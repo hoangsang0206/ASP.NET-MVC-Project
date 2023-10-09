@@ -114,6 +114,7 @@ namespace STech_Web.Controllers
         {
             List<Product> productsFilter = new List<Product>();
             string filterName = "";
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
 
             //Lọc sản phẩm theo thương hiệu
             if (filterType == "brand")
@@ -121,10 +122,14 @@ namespace STech_Web.Controllers
                 productsFilter = products.Where(t => t.Brand.BrandID == value).ToList();
 
 
-                if (productsFilter.Count > 0 || productsFilter != null)
+                if (productsFilter.Count > 0)
                 {
                     Product product = productsFilter[0];
                     filterName = product.Brand.BrandName;
+                }
+                else
+                {
+                    filterName = textInfo.ToTitleCase(value);
                 }
             }
             //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
@@ -133,12 +138,16 @@ namespace STech_Web.Controllers
                 //productsFilter = products.SearchName(sbrand).ToList();
                 productsFilter = products.Where(t => t.Brand.BrandID == value && t.ProductName.ToLower().Contains(sbrand)).ToList();
 
-                if (productsFilter.Count > 0 || productsFilter != null)
+                if (productsFilter.Count > 0)
                 {
                     Product product = productsFilter[0];
                     Regex regex = new Regex(sbrand, RegexOptions.IgnoreCase);
                     Match match = regex.Match(product.ProductName);
                     filterName = product.Brand.BrandName + " " + match.Value;
+                }
+                else
+                {
+                    filterName = textInfo.ToTitleCase(value) + " " + textInfo.ToTitleCase(sbrand);
                 }
             }
             //Lọc sản phẩm theo giá cho trước
@@ -199,7 +208,7 @@ namespace STech_Web.Controllers
             }
 
             //Lọc danh sách sản phẩm
-            if (filter.Length > 0 && filtertype.Length > 0)
+            if ((products != null) && (filter.Length > 0 && filtertype.Length > 0))
             {
                 products = Filter(products, filtertype, filter, sbrand);
                 ViewBag.FilterType = filtertype;

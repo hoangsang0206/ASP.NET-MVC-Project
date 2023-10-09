@@ -286,6 +286,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\Login.cs" />
+    <Compile Include="ViewModel\Register.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
