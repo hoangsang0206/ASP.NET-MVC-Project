@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -118,16 +120,26 @@ namespace STech_Web.Controllers
             {
                 productsFilter = products.Where(t => t.Brand.BrandID == value).ToList();
 
-                if(productsFilter.Count > 0)
+
+                if (productsFilter.Count > 0 || productsFilter != null)
                 {
-                    Product product = productsFilter[1];
+                    Product product = productsFilter[0];
                     filterName = product.Brand.BrandName;
-                }     
+                }
             }
             //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
             else if (filterType == "sbrand")
             {
-                productsFilter = products.SearchName(value).ToList();
+                //productsFilter = products.SearchName(sbrand).ToList();
+                productsFilter = products.Where(t => t.Brand.BrandID == value && t.ProductName.ToLower().Contains(sbrand)).ToList();
+
+                if (productsFilter.Count > 0 || productsFilter != null)
+                {
+                    Product product = productsFilter[0];
+                    Regex regex = new Regex(sbrand, RegexOptions.IgnoreCase);
+                    Match match = regex.Match(product.ProductName);
+                    filterName = product.Brand.BrandName + " " + match.Value;
+                }
             }
             //Lọc sản phẩm theo giá cho trước
             else if (filterType == "price")

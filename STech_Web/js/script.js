@@ -377,9 +377,6 @@ $('.submit-testAPI').click(() => {
 //---Show password ------------------------------------------------------
 var passwordInputArr = $('input[name=password]').toArray();
 
-console.log(passwordInputArr)
-console.log(passwordInputArr.length)
-
 passwordInputArr.forEach(item => {
     var _item = $(item);
     var togglePassword = _item.siblings('.toggle-password');
