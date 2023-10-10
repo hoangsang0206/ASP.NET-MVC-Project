@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/style.css?Version=1" />
     <link rel="stylesheet" type="text/css" href="~/css/collections.css?Version=1" />
     <link rel="stylesheet" type="text/css" href="~/css/product.css?Version=1" />
+    <link rel="stylesheet" type="text/css" href="~/css/account.css?Version=1" />
 
     <!--------------------------------------------------------------------------->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
@@ -29,6 +30,8 @@
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" defer></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js" defer></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.js" defer></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.unobtrusive.js" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
     <script type="text/javascript" src="/js/script.js?Version=2" defer></script>
 </head>
@@ -100,144 +103,63 @@
                         </a>
                     </div>
                 </div>
-                <div class="login-btn position-relative">
-                    <a href="#">
-                        <i class="fa-regular fa-user header-icon login-btn"></i>
-                        <span>Đăng<br /> nhập</span>
-                    </a>
-                    <div class="login-info-box position-absolute">
-                        <h4>Đăng nhập/Đăng ký</h4>
-                        <div class="login-register-btn-box d-flex align-items-center">
-                            <button class="action-login-btn position-relative">
-                                Đăng nhập
-                            </button>
-                            <button class="action-register-btn position-relative">
-                                Đăng ký
-                            </button>
-                        </div>
+                <div class="login-btn-box position-relative">
+                    <div class="login-btn">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="/account" class="logged-link">
+                                <i class="fa-regular fa-user header-icon login-btn"></i>
+                                <span>@User.Identity.Name</span>
+                            </a>
+                            <div class="login-info-box account-logged position-absolute">
+                                <a href="/account">
+                                    <div class="login-info-name">
+                                        <img src="/images/icons/hello.png" alt="" />
+                                        <span> Xin chào, @User.Identity.Name</span>
+                                    </div>
+                                </a>
+                                <hr />
+                                <a href="/account/orders">
+                                    <div class="login-info-order">
+                                        <i class="fa-regular fa-clipboard"></i>
+                                        <span>Đơn hàng của tôi</span>
+                                    </div>
+                                </a>          
+                                <hr />
+                                <div class="login-info-logout d-flex align-items-center">
+                                    <ion-icon name="log-out-outline"></ion-icon>
+                                    <span>Đăng xuất</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a href="#" class="login-link">
+                                <i class="fa-regular fa-user header-icon login-btn"></i>
+                                <span>Đăng<br /> nhập</span>
+                            </a>
+
+                            <div class="login-info-box position-absolute">
+                                <h4>Đăng nhập/Đăng ký</h4>
+                                <div class="login-register-btn-box d-flex align-items-center">
+                                    <button class="action-login-btn position-relative">
+                                        Đăng nhập
+                                    </button>
+                                    <button class="action-register-btn position-relative">
+                                        Đăng ký
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!--FORM ---------------------------------------->
-    <div class="login position-fixed">
-        <div class="form-container position-relative">
-            <div class="close-form close-login position-absolute">
-                <i class="fa-solid fa-xmark"></i>
-            </div>
-            <h3 class="form-header text-center m-0">ĐĂNG NHẬP</h3>
-            <form action="/" method="post" class="login-form">
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="login-username" name="username" value="" class="form-input" required autocomplete="off"/>
-                    <label for="login-username" class="input-label position-absolute">Tên đăng nhập</label>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="password" id="login-password" name="password" value="" class="form-input" required />
-                    <label for="login-password" class="input-label position-absolute">Mật khẩu</label>
-                    <div class="toggle-password position-absolute">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-                <div class="forgot-password-box text-end">
-                    <a href="#" class="forgot-password-link">Quên mật khẩu ?</a>
-                </div>
-                <button type="submit" class="form-submit-btn">ĐĂNG NHẬP</button>
-                <div class="form-bottom text-center">
-                    <span>Bạn chưa có tài khoản</span>
-                    <a href="#" class="register-now-link">Đăng ký ngay</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="register position-fixed">
-        <div class="form-container position-relative">
-            <div class="close-form close-register position-absolute">
-                <i class="fa-solid fa-xmark"></i>
-            </div>
-            <h3 class="form-header text-center m-0">ĐĂNG KÝ</h3>
-            <form action="/" method="post" class="register-form">
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="register-username" name="username" value="" class="form-input" required autocomplete="off" />
-                    <label for="register-username" class="input-label position-absolute">Tên đăng nhập</label>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="password" id="register-password" name="password" value="" class="form-input" required />
-                    <label for="register-password" class="input-label position-absolute">Mật khẩu</label>
-                    <div class="toggle-password position-absolute">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="password" id="re-enter-password" name="password" value="" class="form-input" required />
-                    <label for="re-enter-password" class="input-label position-absolute">Nhập lại khẩu</label>
-                    <div class="toggle-password position-absolute">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="email" id="register-email" name="email" value="" class="form-input" required />
-                    <label for="register-email" class="input-label position-absolute">Email</label>
-                </div>
-                <button type="submit" class="form-submit-btn">ĐĂNG KÝ</button>
-                <div class="form-bottom text-center">
-                    <span>Đã có tài khoản</span>
-                    <a href="#" class="login-now-link">Đăng nhập</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="forgot-password position-fixed">
-        <div class="form-container position-relative">
-            <div class="close-form close-forgot-password position-absolute">
-                <i class="fa-solid fa-xmark"></i>
-            </div>
-            <h3 class="form-header text-center m-0">QUÊN MẬT KHẨU</h3>
-            <form action="/" method="post" class="forgot-password-form">
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="email" id="forgot-password-email" name="username" value="" class="form-input" required autocomplete="off" />
-                    <label for="forgot-password-email" class="input-label position-absolute">Email</label>
-                </div>
-                <div class="back-to-login-box text-start">
-                    <a href="#" class="back-to-login-link">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        Quay lại
-                    </a>
-                </div>
-                <button type="submit" class="form-submit-btn">XÁC NHẬN</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="reset-password position-fixed">
-        <div class="form-container position-relative">
-            <div class="close-form close-register position-absolute">
-                <i class="fa-solid fa-xmark"></i>
-            </div>
-            <h3 class="form-header text-center m-0">ĐẶT LẠI MẬT KHẨU</h3>
-            <form action="/" method="post" class="reset-password-form">
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="password" id="reset-password" name="password" value="" class="form-input" required />
-                    <label for="reset-password" class="input-label position-absolute">Mật khẩu</label>
-                    <div class="toggle-password position-absolute">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="password" id="re-enter-reset-password" name="password" value="" class="form-input" required />
-                    <label for="re-enter-reset-password" class="input-label position-absolute">Nhập lại khẩu</label>
-                    <div class="toggle-password position-absolute">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-                <button type="submit" class="form-submit-btn">ĐẶT LẠI MẬT KHẨU</button>
-            </form>
-        </div>
-    </div>
-    <!------------------------------------------------>
+    @{ 
+        Html.RenderPartial("Account_Partial");
+    }
 
     <nav>
         <div class="container-xxl">
@@ -292,10 +214,20 @@
             <ion-icon name="chatbubbles-outline" class="bottom-nav-icon"></ion-icon>
             <span>Tư vấn</span>
         </a>
-        <a href="#" class="bottom-nav-link bottom-nav-account d-flex flex-column align-items-center justify-content-center">
-            <ion-icon name="person-outline" class="bottom-nav-icon"></ion-icon>
-            <span>Tài khoản</span>
-        </a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/account" class="bottom-nav-link d-flex flex-column align-items-center justify-content-center">
+                <ion-icon name="person-outline" class="bottom-nav-icon"></ion-icon>
+                <span>@User.Identity.Name</span>
+            </a>
+        }
+        else
+        {
+            <a href="#" class="bottom-nav-link bottom-nav-account d-flex flex-column align-items-center justify-content-center">
+                <ion-icon name="person-outline" class="bottom-nav-icon"></ion-icon>
+                <span>Tài khoản</span>
+            </a>
+        }
     </nav>
 
     <div class="mobile-sidebar">

@@ -200,7 +200,6 @@ namespace STech_Web.Controllers
                 breadcrumbItem = cate.CateName;
             }
             //--------
-
             //Sắp xếp danh sách sản phẩm
             if (sort.Length > 0)
             {

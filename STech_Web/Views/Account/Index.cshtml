@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Tài khoản";
+}
+
+<section class="account d-flex">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="account-left-side">
+            <div class="account-name d-flex align-items-center">
+                <ion-icon name="person-circle-outline"></ion-icon>
+                <span>@User.Identity.Name</span>
+            </div>
+            <hr />
+            <div class="account-nav">
+                <ul class="account-nav-list">
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-user account-list-icon"></i>
+                            <span>Thông tin tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-location-dot account-list-icon"></i>
+                            <span>Sổ địa chỉ</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-bag-shopping account-list-icon"></i>
+                            <span>Quản lý đơn hàng</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#" class="account-logout">
+                            <i class="fa-solid fa-right-from-bracket account-list-icon"></i>
+                            <span>Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="account-right-side">
+            <div class="account-right-box" id="account-info-update">
+                <form action="#" method="post">
+
+                </form>
+            </div>
+        </div>
+    }
+</section>
+

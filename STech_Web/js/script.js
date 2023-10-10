@@ -359,9 +359,9 @@ $('.submit-testAPI').click(() => {
 
     $.ajax({
         type: 'POST',
-        url: '/api/testapi',
+        url: '/Home/ApiTest',
         data: {
-            id: value
+            value: value
         },
         success: (response) => {
             console.log(response)
@@ -375,7 +375,7 @@ $('.submit-testAPI').click(() => {
 
 
 //---Show password ------------------------------------------------------
-var passwordInputArr = $('input[name=password]').toArray();
+var passwordInputArr = $('input[name="Password"], input[name="ConfirmPassword"]').toArray();
 
 passwordInputArr.forEach(item => {
     var _item = $(item);
@@ -409,6 +409,7 @@ passwordInputArr.forEach(item => {
     })
 });
 
+
 //--Show form ----------------------------------------------------------------
 $('.action-login-btn').click(() => {
     $('.login').css('visibility', 'visible');
@@ -420,9 +421,33 @@ $('.action-register-btn').click(() => {
     $('.register .form-container').addClass('showForm');
 })
 
-$('.login-btn a').click(() => {
+$('.login-btn .login-link').click(() => {
     $('.login').css('visibility', 'visible');
     $('.login .form-container').addClass('showForm');
+})
+
+$('.bottom-nav-account').click(() => {
+    $('.login').css('visibility', 'visible');
+    $('.login .form-container').addClass('showForm');
+})
+
+//-----
+
+$('.login-info-logout, .account-logout').on('click', () => {
+    $('.logout-confirm').css('visibility', 'visible');
+    $('.logout-confirm-box').addClass('showLogoutConfirm');
+})
+
+$('.logout-confirm').click((e) => {
+    if (!(e.target).closest('.logout-confirm-box')) {
+        $(e.target).css('visibility', 'hidden');
+        $('.logout-confirm-box').removeClass('showLogoutConfirm');
+    }
+})
+
+$('.logout-confirm-no').click(() => {
+    $('.logout-confirm').css('visibility', 'hidden');
+    $('.logout-confirm-box').removeClass('showLogoutConfirm');
 })
 
 //---
@@ -431,7 +456,7 @@ var formArr = [$('.login'), $('.register'), $('.register'), $('.forgot-password'
 formArr.forEach(form => {
     var _form = $(form);
     _form.on('click', (e) => {
-        if (!$(e.target).closest('.form-container').length) {
+        if (!$(e.target).closest('.form-container')) {
             $(e.target).css('visibility', 'hidden');
             $('.form-container').removeClass('showForm');
         }

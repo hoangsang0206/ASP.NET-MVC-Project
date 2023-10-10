@@ -1,0 +1,70 @@
+﻿.account {
+    column-gap: 1rem;
+}
+
+.account-left-side {
+    background: #ffffff;
+    border-radius: 0.2rem;
+    width: 26%;
+}
+
+.account-right-side {
+    width: calc(74% - 1rem);
+}
+
+.account-left-side hr {
+    margin: 1rem 0;
+}
+
+.account-name {
+    padding: 1rem 1.6rem 0 1.6rem;
+}
+
+.account-nav {
+    padding: 0 1.6rem 1rem 1.6rem;
+}
+
+.account-name ion-icon {
+    font-size: 3.5rem;
+    padding: 0;
+    margin-right: 1rem;
+}
+
+.account-name span {
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.account-nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.account-nav-list-item {
+    padding: 1rem 0;
+}
+
+.account-nav-list-item a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.account-nav-list-item a:hover {
+    color: #e30019;
+}
+
+.account-nav-list-item span {
+    font-size: 1.1rem;
+}
+
+.account-list-icon {
+    font-size: 1.3rem;
+    margin-right: 0.6rem;
+}
+
+.account-right-box {
+    width: 100%;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    background: #ffffff;
+}

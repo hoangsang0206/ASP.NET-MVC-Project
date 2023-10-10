@@ -383,13 +383,18 @@ header {
     color: #000000;
 }
 
+.login-btn-box {
+    max-width: 9%;
+}
+
 .login-btn {
     border-radius: 0.25rem;
     background: #be1529;
     padding: 0.1rem 1rem;
+    overflow: hidden;
 }
 
-.login-btn a {
+.login-btn > a {
     color: #ffffff;
     display: flex;
     flex-direction: row;
@@ -397,17 +402,23 @@ header {
     align-items: center;
     font-weight: 500;
     font-size: 1.1rem;
+    overflow: hidden;
 }
+
 
 .login-btn i {
     margin-right: 0.6rem;
     padding: 0;
 }
 
+.logged-link {
+    padding: 0.5rem 0.2rem;
+}
+
 .login-info-box {
     top: 135%;
     right: 0;
-    width: 250%;    
+    width: 250%;
     padding: 1.2rem 1rem 1.5rem 1rem;
     background: #ffffff;
     border-radius: 0.2rem;
@@ -438,6 +449,46 @@ header {
     margin: 0;
 }
 
+.login-info-box a:hover span {
+    text-decoration: underline;
+}
+
+.login-info-box hr {
+    margin: 0.6rem 0;
+}
+
+.login-info-box .login-info-name img {
+    width: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+ .login-info-order i {
+    font-size: 1.5rem;
+    margin-right: 0.8rem;
+}
+
+.login-info-box .login-info-logout {
+    cursor: pointer;
+}
+
+.login-info-box .login-info-logout:hover {
+    text-decoration: underline;
+}
+
+.login-info-box .login-info-logout ion-icon {
+    font-size: 1.5rem;
+    margin-right: 0.7rem;
+    padding: 0;
+}
+
+.login-info-box .logout-link {
+    color: #000000;
+}
+
+.login-info-box .logout-link:hover {
+    text-decoration: underline !important;
+}
+
 .login-btn:hover .login-info-box {
     transform: scale(1);
     opacity: 1;
@@ -463,7 +514,7 @@ header {
     color: #ffffff !important;
 }
 
-.login, .register, .forgot-password, .reset-password {
+.login, .register, .forgot-password, .reset-password, .logout-confirm {
     width: 100vw;
     height: 100vh;
     background: #00000075;
@@ -592,6 +643,58 @@ header {
     font-size: 1.5rem;
 }
 
+.logout-confirm-box {
+    width: 30%;
+    background: #ffffff;
+    padding: 2rem 2rem 1.5rem 2rem;
+    border-radius: 0.3rem;
+    cursor: auto;
+    opacity: 0;
+    transform: scale(0);
+    transition: all .3s ease;
+}
+
+.showLogoutConfirm {
+    opacity: 1;
+    transform: scaleZ(1);
+}
+
+.logout-confirm-box i {
+    font-size: 4rem;
+    color: #ff6606;
+    margin-bottom: 1rem;
+}
+
+.logout-confirm-box span {
+    font-size: 1.1rem;
+}
+
+.logout-confirm-btn-box {
+    width: 90%;
+    margin-top: 1.5rem;
+}
+
+.logout-confirm-btn-box button {
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 0.2rem;
+    width: 49%;
+    font-weight: 500;
+}
+
+.logout-confirm-no:hover {
+    background: #d4d4d4;
+}
+
+.logout-confirm-yes {
+    background: #e30019;
+    color: #ffffff;
+}
+
+.logout-confirm-yes:hover {
+    outline: 2px solid #fba5a5;
+}
+
 nav {
     background-color: #ffff;
     color: #000000;
@@ -654,6 +757,10 @@ nav {
     padding: 0.5rem 0.3rem;
     color: #000000;
     text-decoration: none;
+}
+
+.bottom-nav-account {
+    overflow: hidden;
 }
 
 .bottom-nav-link span {
@@ -1344,6 +1451,10 @@ footer {
 
     .login-btn {
         display: none;
+    }
+
+    .form-container {
+        width: 90%;
     }
 
     .cart-btn {

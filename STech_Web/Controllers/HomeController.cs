@@ -53,5 +53,11 @@ namespace STech_Web.Controllers
 
             ViewBag.Countdown = countdown;
         }
+
+        public ActionResult ApiTest(string value)
+        {
+
+            return Json(new {success = true});
+        }
     }
 }
