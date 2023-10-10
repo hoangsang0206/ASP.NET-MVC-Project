@@ -50,7 +50,7 @@ namespace STech_Web
             {
                 var user = new AppUser();
                 user.UserName = "admin";
-                user.Email = "lehoangsang02062003@gmail.com";
+                user.Email = "admin@lehoangsang.com";
                 string password = "admin@2001210561";
 
                 var checkUser = userManager.Create(user, password);

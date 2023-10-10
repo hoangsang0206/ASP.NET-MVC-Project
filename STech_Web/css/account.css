@@ -12,6 +12,10 @@
     width: calc(74% - 1rem);
 }
 
+.account-right-side * {
+    font-size: 1.1rem;
+}
+
 .account-left-side hr {
     margin: 1rem 0;
 }
@@ -67,4 +71,59 @@
     border-radius: 0.2rem;
     padding: 1rem;
     background: #ffffff;
+}
+
+.account-right-box h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.user-form-box {
+    padding: 0.5rem 0;
+    width: 80%;
+    column-gap: 2.5rem;
+}
+
+.user-input-label {
+    width: 15%;
+}
+
+.user-form-box input[type="text"], .user-form-box input[type="email"] {
+    border: 1px solid #cfcfcf;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    outline: none;
+    width: 50%;
+}
+
+.user-form-box input[type="date"] {
+    border: 1px solid #cfcfcf;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    outline: none;
+    width: 30%;
+}
+
+.input-radio label {
+    margin-left: 0.5rem;
+}
+
+#Gender2 {
+    margin-left: 2rem;
+}
+
+.user-form-submit {
+    padding: 0.5rem 1.3rem;
+    border: none;
+    outline: none;
+    background: #e30019;
+    border-radius: 0.3rem;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.user-form-submit:hover {
+    outline: 2px solid #fba5a5;
 }

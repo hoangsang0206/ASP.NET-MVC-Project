@@ -300,8 +300,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\Login.cs" />
-    <Compile Include="ViewModel\Register.cs" />
+    <Compile Include="ViewModel\LoginVM.cs" />
+    <Compile Include="ViewModel\RegisterVM.cs" />
+    <Compile Include="ViewModel\UpdateUserVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
