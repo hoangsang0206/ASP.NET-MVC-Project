@@ -1,0 +1,140 @@
+﻿@font-face {
+    font-family: 'SF Pro Display';
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Bold.otf');
+    font-weight: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Medium.otf');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Light.otf');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Regular.otf');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 0.97rem;
+    /*font-family: 'Roboto', sans-serif;*/
+    font-family: 'SF Pro Display';
+}
+
+:root {
+    --body-color: #e3e9f7;
+    --sidebar-color: #ffffff;
+    --primary-color: #695cfe;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #dddddd;
+    --text-color: #707070;
+
+    /* -- transition --*/
+    --tran-02: all .2s ease;
+    --tran-03: all .3s ease;
+    --tran-04: all .4s ease;
+    --tran-05: all .5s ease;
+}
+
+body {
+    background: var(--body-color);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 270px;
+    padding: 1rem 1.5rem;
+    height: 100vh;
+    background: var(--sidebar-color);
+}
+
+.sidebar .toggle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -2rem;
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--sidebar-color);
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.logo-box img {
+    width: 40px;
+}
+
+.header-text {
+    margin-left: 0.5rem;
+}
+
+.company-name {
+    font-size: 1.6rem;
+    line-height: normal;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.student-name {
+    font-size: 0.93rem;
+    color: var(--text-color);
+}
+
+.menu-bar {
+    margin-top: 3rem;
+}
+
+.menu-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.menu-item:not(:first-child) {
+    margin-top: 1rem;
+}
+
+.menu-item a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 0.3rem;
+    transition: var(--tran-02);
+}
+
+.menu-item a:hover {
+    background: var(--primary-color);
+    color: var(--sidebar-color)
+}
+
+.menu-item span {
+    font-size: 1.2rem;
+    line-height: normal;
+}
+
+.menu-icon {
+    font-size: 1.5rem;
+    display: grid;
+    place-items: center;
+}

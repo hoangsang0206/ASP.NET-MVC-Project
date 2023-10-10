@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!-------------------------------------->
+    <link rel="shortcut icon" href="~/images/logo/favicon.ico" type="image/x-icon">
+    <!--Box icon----->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <!------------CSS------------>
+    <link rel="stylesheet" type="text/css" href="~/Areas/Admin/css/style.css" />
+    <!--------------------------------------------------------------------------->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" defer></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js" defer></script>
+
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <header  class="position-relative">
+            <div class="logo-text d-flex align-items-center">
+                <div class="logo-box">
+                    <img src="/images/logo/stech-logo-colors.png" alt="STech logo" />
+                </div>
+                <div class="header-text d-flex flex-column justify-content-center">
+                    <span class="company-name">STech</span>
+                    <span class="student-name">by Lê Hoàng Sang</span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class='bx bx-home menu-icon'></i>
+                            <span>Tổng quan</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class='bx bx-home menu-icon'></i>
+                            <span>Danh mục</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class='bx bx-home menu-icon'></i>
+                            <span>Sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class='bx bx-home menu-icon'></i>
+                            <span>Hãng</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class='bx bx-home menu-icon'></i>
+                            <span>Đơn hàng</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class='bx bx-home menu-icon'></i>
+                            <span>Quản lý tài khoản</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-menu">
+
+            </div>
+        </div>
+
+    </nav>
+
+    <main>
+
+        @RenderBody()
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

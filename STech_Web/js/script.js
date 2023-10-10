@@ -352,28 +352,6 @@ $("#search").keyup(function () {
 })
 
 
-// ----------------------------------------------------------------
-$('.submit-testAPI').click(() => {
-    var value = $('#testAPI').val();
-    console.log(value);
-
-    $.ajax({
-        type: 'POST',
-        url: '/Home/ApiTest',
-        data: {
-            value: value
-        },
-        success: (response) => {
-            console.log(response)
-        },
-        error: (err) => {
-            console.log(err)
-        }
-    })
-
-});
-
-
 //---Show password ------------------------------------------------------
 var passwordInputArr = $('input[name="Password"], input[name="ConfirmPassword"]').toArray();
 
