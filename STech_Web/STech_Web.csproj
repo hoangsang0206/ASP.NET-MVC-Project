@@ -176,7 +176,16 @@
     <Content Include="images\payment\mastercard.png" />
     <Content Include="images\payment\momo.png" />
     <Content Include="images\payment\visa.png" />
+    <Content Include="js\account.js" />
     <Content Include="js\script.js" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -187,7 +196,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.0.js" />
     <Content Include="Scripts\jquery-1.8.0.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -217,18 +225,16 @@
     <Compile Include="IdentityMigration\202310081805216_init.designer.cs">
       <DependentUpon>202310081805216_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="IdentityMigration\202310100635356_init1.cs" />
+    <Compile Include="IdentityMigration\202310100635356_init1.designer.cs">
+      <DependentUpon>202310100635356_init1.cs</DependentUpon>
+    </Compile>
     <Compile Include="IdentityMigration\Configuration.cs" />
     <Compile Include="Identity\AppDBContext.cs" />
     <Compile Include="Identity\AppUser.cs" />
     <Compile Include="Identity\AppUserManager.cs" />
     <Compile Include="Identity\AppUserStore.cs" />
     <Compile Include="Models\Banner1.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Bill.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BillDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Brand.cs">
@@ -240,9 +246,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Countdown.cs" />
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ImportDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -307,13 +310,6 @@
     <Content Include="fonts\SFProDisplay\SF-Pro-Display-Medium.otf" />
     <Content Include="fonts\SFProDisplay\SF-Pro-Display-Regular.otf" />
     <Content Include="fonts\SFProDisplay\SF-Pro-Display-Semibold.otf" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <None Include="packages.config" />
     <Content Include="Views\Collections\Index.cshtml" />
     <Content Include="Views\Collections\Search.cshtml" />
@@ -336,6 +332,9 @@
   <ItemGroup>
     <EmbeddedResource Include="IdentityMigration\202310081805216_init.resx">
       <DependentUpon>202310081805216_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IdentityMigration\202310100635356_init1.resx">
+      <DependentUpon>202310100635356_init1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

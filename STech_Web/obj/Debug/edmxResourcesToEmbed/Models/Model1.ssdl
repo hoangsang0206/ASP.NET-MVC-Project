@@ -10,25 +10,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="BannerImgSrc" Type="nvarchar(max)" />
     <Property Name="BannerLink" Type="nvarchar(max)" />
   </EntityType>
-  <EntityType Name="BillDetail">
-    <Key>
-      <PropertyRef Name="BillID" />
-      <PropertyRef Name="ProductID" />
-    </Key>
-    <Property Name="BillID" Type="varchar" MaxLength="20" Nullable="false" />
-    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Quantity" Type="int" />
-  </EntityType>
-  <EntityType Name="Bills">
-    <Key>
-      <PropertyRef Name="BillID" />
-    </Key>
-    <Property Name="BillID" Type="varchar" MaxLength="20" Nullable="false" />
-    <Property Name="CusID" Type="int" />
-    <Property Name="DateCreate" Type="date" />
-    <Property Name="TotalPrice" Type="money" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" />
-  </EntityType>
   <EntityType Name="Brands">
     <Key>
       <PropertyRef Name="BrandID" />
@@ -45,16 +26,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </Key>
     <Property Name="CateID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CateName" Type="nvarchar" MaxLength="100" />
-  </EntityType>
-  <EntityType Name="Customers">
-    <Key>
-      <PropertyRef Name="CusID" />
-    </Key>
-    <Property Name="CusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CusName" Type="nvarchar" MaxLength="60" />
-    <Property Name="Phone" Type="varchar" MaxLength="20" />
-    <Property Name="Email" Type="nvarchar" MaxLength="100" />
-    <Property Name="CusAddress" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="ImportDetail">
     <Key>
@@ -163,42 +134,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
-  <Association Name="FK_Bill_Cus">
-    <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
-    <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customers">
-        <PropertyRef Name="CusID" />
-      </Principal>
-      <Dependent Role="Bills">
-        <PropertyRef Name="CusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_BillDetail_Bill">
-    <End Role="Bills" Type="Self.Bills" Multiplicity="1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Bills">
-        <PropertyRef Name="BillID" />
-      </Principal>
-      <Dependent Role="BillDetail">
-        <PropertyRef Name="BillID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_BillDetail_Pro">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="BillDetail">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Des_Pro">
     <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
     <End Role="ProductDescription" Type="Self.ProductDescription" Multiplicity="*" />
@@ -356,11 +291,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="DatabaseSTechModelStoreContainer">
-    <EntitySet Name="BillDetail" EntityType="Self.BillDetail" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ImportDetail" EntityType="Self.ImportDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductDescription" EntityType="Self.ProductDescription" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
@@ -386,18 +318,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     [Slider].[SliderLink] AS [SliderLink]
     FROM [dbo].[Slider] AS [Slider]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK_Bill_Cus" Association="Self.FK_Bill_Cus">
-      <End Role="Customers" EntitySet="Customers" />
-      <End Role="Bills" EntitySet="Bills" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BillDetail_Bill" Association="Self.FK_BillDetail_Bill">
-      <End Role="Bills" EntitySet="Bills" />
-      <End Role="BillDetail" EntitySet="BillDetail" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BillDetail_Pro" Association="Self.FK_BillDetail_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="BillDetail" EntitySet="BillDetail" />
-    </AssociationSet>
     <AssociationSet Name="FK_Des_Pro" Association="Self.FK_Des_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductDescription" EntitySet="ProductDescription" />

@@ -1,26 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DatabaseSTechModelStoreContainer" CdmEntityContainer="DatabaseSTechEntities">
-    <EntitySetMapping Name="BillDetails">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.BillDetail">
-        <MappingFragment StoreEntitySet="BillDetail">
-          <ScalarProperty Name="BillID" ColumnName="BillID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Bills">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.Bill">
-        <MappingFragment StoreEntitySet="Bills">
-          <ScalarProperty Name="BillID" ColumnName="BillID" />
-          <ScalarProperty Name="CusID" ColumnName="CusID" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Brands">
       <EntityTypeMapping TypeName="DatabaseSTechModel.Brand">
         <MappingFragment StoreEntitySet="Brands">
@@ -37,17 +17,6 @@
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="CateID" ColumnName="CateID" />
           <ScalarProperty Name="CateName" ColumnName="CateName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.Customer">
-        <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="CusID" ColumnName="CusID" />
-          <ScalarProperty Name="CusName" ColumnName="CusName" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="CusAddress" ColumnName="CusAddress" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

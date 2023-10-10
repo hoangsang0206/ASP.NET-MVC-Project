@@ -67,11 +67,13 @@ namespace STech_Web.Controllers
                 var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                 authenManager.SignIn(new AuthenticationProperties(), userIdentity);
 
-                return Redirect("/");
+                //return Redirect("/");
+                return Json(new { success = true });
             }
             else
             {
-                return Redirect("/");
+                //return Redirect("/");
+                return Json(new { success = false });
             }
         }
 

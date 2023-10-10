@@ -25,11 +25,8 @@ namespace STech_Web.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BillDetail> BillDetails { get; set; }
-        public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<ImportDetail> ImportDetails { get; set; }
         public virtual DbSet<ProductDescription> ProductDescriptions { get; set; }
         public virtual DbSet<ProductDetail> ProductDetails { get; set; }

@@ -17,7 +17,6 @@ namespace STech_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.BillDetails = new HashSet<BillDetail>();
             this.ImportDetails = new HashSet<ImportDetail>();
             this.ProductDescriptions = new HashSet<ProductDescription>();
             this.ProductDetails = new HashSet<ProductDetail>();
@@ -39,8 +38,6 @@ namespace STech_Web.Models
         public string BrandID { get; set; }
         public string CateID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillDetail> BillDetails { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -632,6 +632,10 @@ header {
     padding: 0.6rem 0;
 }
 
+.form-submit-btn:hover {
+    outline: 2px solid #fba5a5;
+}
+
 .close-form {
     padding: 0;
     top: 0.8rem;
@@ -695,6 +699,16 @@ header {
     outline: 2px solid #fba5a5;
 }
 
+.form-error {
+    margin-bottom: 1rem;
+    border-radius: 0.2rem;
+    background: #fff3cd;
+    padding: 0.5rem 1rem;
+    display: none;
+}
+
+
+/* ------------------------------------ */
 nav {
     background-color: #ffff;
     color: #000000;
