@@ -632,7 +632,7 @@ header {
     padding: 0.6rem 0;
 }
 
-.form-submit-btn:hover {
+.form-submit-btn:not(:disabled):hover {
     outline: 2px solid #fba5a5;
 }
 

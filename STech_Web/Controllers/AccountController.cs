@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using STech_Web.Models;
 using STech_Web.ViewModel;
 using STech_Web.Identity;
+using STech_Web.Filters;
 using System.Web.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -17,6 +18,7 @@ namespace STech_Web.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+        [UserAuthorization]
         public ActionResult Index()
         {
             return View();
@@ -111,6 +113,11 @@ namespace STech_Web.Controllers
                 var authenManager = HttpContext.GetOwinContext().Authentication;
                 var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                 authenManager.SignIn(new AuthenticationProperties(), userIdentity);
+
+                if(userManager.IsInRole(user.Id, "admin"))
+                {
+                    return Json(new { success = true, redirectUrl = "/admin/dashboard" });
+                }
 
                 //return Redirect("/");
                 return Json(new { success = true, redirectUrl = "/account" });

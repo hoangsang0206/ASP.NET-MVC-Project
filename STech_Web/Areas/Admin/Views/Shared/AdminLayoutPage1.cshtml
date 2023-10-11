@@ -21,12 +21,14 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js" defer></script>
 
+    <script type="text/javascript" src="/Areas/Admin/js/script.js" defer></script>
+
 </head>
 
 <body>
 
     <nav class="sidebar">
-        <header  class="position-relative">
+        <header class="position-relative">
             <div class="logo-text d-flex align-items-center">
                 <div class="logo-box">
                     <img src="/images/logo/stech-logo-colors.png" alt="STech logo" />
@@ -45,60 +47,73 @@
             <div class="menu">
                 <ul class="menu-list">
                     <li class="menu-item">
-                        <a href="#">
+                        <a href="/admin/dashboard">
                             <i class='bx bx-home menu-icon'></i>
-                            <span>Tổng quan</span>
+                            <span class="sidebar-text">Tổng quan</span>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#">
-                            <i class='bx bx-home menu-icon'></i>
-                            <span>Danh mục</span>
+                            <i class='bx bx-category menu-icon'></i>
+                            <span class="sidebar-text">Danh mục</span>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#">
-                            <i class='bx bx-home menu-icon'></i>
-                            <span>Sản phẩm</span>
+                            <i class='bx bx-laptop menu-icon'></i>
+                            <span class="sidebar-text">Sản phẩm</span>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#">
-                            <i class='bx bx-home menu-icon'></i>
-                            <span>Hãng</span>
+                            <i class='bx bx-purchase-tag-alt menu-icon'></i>
+                            <span class="sidebar-text">Hãng sản xuất</span>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#">
-                            <i class='bx bx-home menu-icon'></i>
-                            <span>Đơn hàng</span>
+                            <i class='bx bx-notepad menu-icon'></i>
+                            <span class="sidebar-text">Đơn hàng</span>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#">
-                            <i class='bx bx-home menu-icon'></i>
-                            <span>Quản lý tài khoản</span>
+                            <i class='bx bx-user-circle menu-icon'></i>
+                            <span class="sidebar-text">Quản lý tài khoản</span>
                         </a>
                     </li>
                 </ul>
             </div>
+        </div>
 
-            <div class="bottom-menu">
-
+        <div class="bottom-menu">
+            <div>
+                <a href="/">
+                    <i class='bx bx-left-arrow-alt menu-icon'></i>
+                    <span class="sidebar-text">Về trang bán hàng</span>
+                </a>
+            </div>
+            <div>
+                <a href="/admin/login/logout">
+                    <i class='bx bx-log-out menu-icon'></i>
+                    <span class="sidebar-text">Đăng xuất</span>
+                </a>
             </div>
         </div>
 
     </nav>
 
     <main>
+        <section class="main-content">
 
-        @RenderBody()
+            @RenderBody()
 
-    </main>
+        </section>
 
-    <footer>
-
-    </footer>
+        <footer>
+            <span>Copyright &copy; Lê Hoàng Sang - Trường Đại học Công thương Tp.HCM</span>
+        </footer>
+    </main> 
 
 </body>
 

@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.DynamicData;
 using STech_Web.Identity;
+using System.Web.Services.Description;
 
 [assembly: OwinStartup(typeof(STech_Web.Startup))]
 
@@ -20,7 +21,7 @@ namespace STech_Web
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/home")
+                LoginPath = new PathString("/")
             });
 
             this.CreateRolesAndUsers();
