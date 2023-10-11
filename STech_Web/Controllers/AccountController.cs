@@ -44,9 +44,9 @@ namespace STech_Web.Controllers
                 bool containsSpace = Regex.IsMatch(register.Username, @"\s");
                 bool containsSpecialCharacter = Regex.IsMatch(register.Username, @"[^a-zA-Z0-9_]");
 
-                if (register.Username.Length > 10)
+                if (register.Username.Length > 15)
                 {
-                    ModelState.AddModelError("", "Tên đăng nhập phải dưới 11 ký tự.");
+                    ModelState.AddModelError("", "Tên đăng tối đa 15 ký tự.");
                     var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                     //return Redirect("/");
                     return Json(new { success = false, errors = error });

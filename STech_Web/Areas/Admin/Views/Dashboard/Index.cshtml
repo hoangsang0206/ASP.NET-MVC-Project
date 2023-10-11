@@ -3,3 +3,69 @@
     ViewBag.Title = "Quản lý - STech";
 }
 
+<div class="dashboard">
+    <h2>Trang chủ</h2>
+    <div class="breadcrumb">
+        <ul class="breadcrumb-list d-flex">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                Trang chủ
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard-content">
+        <div class="dashboard-top d-flex flex-wrap">
+            <div class="dashboard-box dashboard-products d-flex align-items-center">
+                <div class="left-box">
+                    <i class='bx bxs-joystick'></i>
+                </div>
+                <div class="right-box d-flex flex-column">
+                    <h3>@( ViewBag.productCount > 0 ? ViewBag.productCount : "0" )</h3>
+                    <span>Sản phẩm</span>
+                </div>
+            </div>
+
+            <div class="dashboard-box dashboard-categories d-flex align-items-center">
+                <div class="left-box">
+                    <i class='bx bxs-category'></i>
+                </div>
+                <div class="right-box d-flex flex-column">
+                    <h3>@( ViewBag.categoryCount > 0 ? ViewBag.categoryCount : "0" )</h3>
+                    <span>Danh mục</span>
+                </div>
+            </div>
+
+            <div class="dashboard-box dashboard-brands d-flex align-items-center">
+                <div class="left-box">
+                    <i class='bx bxs-purchase-tag-alt'></i>
+                </div>
+                <div class="right-box d-flex flex-column">
+                    <h3>@( ViewBag.brandCount > 0 ? ViewBag.brandCount : "0" )</h3>
+                    <span>Hãng</span>
+                </div>
+            </div>
+
+            <div class="dashboard-box dashboard-orders d-flex align-items-center">
+                <div class="left-box">
+                    <i class='bx bxs-notepad'></i>
+                </div>
+                <div class="right-box d-flex flex-column">
+                    <h3>0</h3>
+                    <span>Đơn hàng</span>
+                </div>
+            </div>
+
+            <div class="dashboard-box dashboard-total d-flex align-items-center">
+                <div class="left-box">
+                    <i class='bx bxs-dollar-circle'></i>
+                </div>
+                <div class="right-box d-flex flex-column">
+                    <h3>0</h3>
+                    <span>Doanh thu</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1487,6 +1487,10 @@ footer {
         width: 90%;
     }
 
+    .logout-confirm-box {
+        width: 85%;
+    }
+
     .cart-btn {
         padding: 0;
     }

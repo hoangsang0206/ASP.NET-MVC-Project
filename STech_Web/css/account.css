@@ -127,3 +127,31 @@
 .user-form-submit:hover {
     outline: 2px solid #fba5a5;
 }
+
+/*---Responsive --------------------------------------------------------------*/
+/* For mobile (width < 768px) ---------------------------------------------*/
+@media screen and (max-width: 767px) {
+    .account {
+        flex-direction: column-reverse;
+        row-gap: 1rem;
+    }
+
+    .account-left-side, .account-right-side {
+        width: 100%;
+    }
+
+    .user-form-box {
+        width: 100%;
+        column-gap: 1rem;
+    }
+
+        .user-form-box input[type="text"], 
+        .user-form-box input[type="email"], 
+        .user-form-box input[type="date"] {
+            width: calc(73% - 1rem);
+        }
+
+    .user-input-label {
+        width: 27%;
+    }
+}

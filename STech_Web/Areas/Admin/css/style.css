@@ -147,7 +147,7 @@ body {
     transition: var(--tran-02);
 }
 
-.menu-item a:hover {
+.menu-item a:hover, .menu-item a.active {
     background: var(--primary-color);
     color: var(--sidebar-color)
 }
@@ -181,8 +181,9 @@ main {
     position: relative;
     left: 270px;
     width: calc(100% - 270px);
-    padding: 1rem 1.5rem;
+    padding: 1.5rem 2rem 1.5rem 3rem;
     transition: var(--tran-03);
+    overflow-x: hidden;
 }
 
 .sidebar.close ~ main {
@@ -192,6 +193,7 @@ main {
 
 .main-content {
     width: 100%;
+    overflow: hidden;
 }
 
 footer {
@@ -289,4 +291,183 @@ footer {
     font-size: 1rem;
     margin-right: 0.5rem;
     color: #e30019;
+}
+
+footer span {
+    white-space: nowrap;
+}
+
+/* -------------- Dashboard page ---------------------*/
+.dashboard {
+    overflow: hidden;
+}
+
+.dashboard h2 {
+    white-space: nowrap;
+}
+
+.breadcrumb-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.breadcrumb-item {
+    white-space: nowrap;
+    font-size: 1.1rem;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.dashboard-content {;
+    overflow-x: hidden;
+}
+
+.dashboard-top {
+    gap: 2rem;
+}
+
+.dashboard-box {
+    background: var(--sidebar-color);
+    border-radius: 0.4rem;
+    padding: 1rem 1.2rem;
+    column-gap: 1.5rem;
+    width: 14rem;
+}
+
+.left-box {
+    width: 40%;
+    aspect-ratio: 1;
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    display: grid;
+    place-items: center;
+   
+}
+
+.left-box i {
+    font-size: 2.3rem;  
+}
+
+.dashboard-products .left-box {
+    background: #cce7ff;
+}
+
+.dashboard-products i {
+    color: #1871ca;
+}
+
+.dashboard-categories .left-box {
+    background: #d0c8ff;
+}
+
+.dashboard-categories i {
+    color: #695cfe;
+}
+
+.dashboard-brands .left-box {
+    background: #fff1c7;
+}
+
+.dashboard-brands i {
+    color: #f0bf58;
+}
+
+.dashboard-orders .left-box {
+    background: #b6efd1;
+}
+
+.dashboard-orders i {
+    color: #488655;
+}
+
+.dashboard-total .left-box {
+    background: #ffd2d2;
+}
+
+.dashboard-total i {
+    color: #c74746;
+}
+
+.right-box {
+    width: calc(60% - 1rem);
+}
+
+.right-box h3 {
+    line-height: normal;
+    margin: 0;
+}
+
+.right-box span {
+    white-space: nowrap;
+    font-size: 1.1rem;
+}
+
+
+/*---Responsive --------------------------------------------------------------*/
+/* For mobile (width < 768px) ---------------------------------------------*/
+@media screen and (max-width: 767px) {
+    .login-form-box {
+        width: 85%;
+    }
+
+    .sidebar {
+        width: 70vw;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .sidebar.close {
+        width: 60px;
+    }
+
+    .sidebar .toggle {
+        right: -1.4rem;
+        top: 140%;
+    }
+
+    .menu-item a, .bottom-menu a {
+        column-gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    menu-icon {
+        font-size: 1.5rem;
+    }
+
+    .menu-item span, .bottom-menu span {
+        font-size: 1rem;
+    }
+
+    main {
+        left: 60vw;
+        width: calc(100% - 60vw);
+        padding: 1rem 1.2rem;
+    }
+
+    .sidebar.close ~ main {
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+
+    /* -------------- Dashboard page ---------------------*/
+    .dashboard-top {
+        gap: 1rem;
+    }
+
+    .dashboard-box {
+        width: 15rem;
+        padding: 1rem;
+    }
+
+    .left-box {
+        padding: 0.4rem;
+    }
+
+    .left-box i {
+        font-size: 1.5rem;
+    }
+
 }
