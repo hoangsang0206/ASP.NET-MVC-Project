@@ -47,11 +47,8 @@ $('.dashboard-categories').click(() => {
 })
 
 //--AJAX get list brand in category --------------------
-$('.reload-brands').click(() => {
+function reloadCategories() {
     $.ajax({
-        beforeSend: () => {
-            $('.categories-list .loading').css('display', 'grid');
-        },
         type: 'GET',
         url: '/api/categories',
         success: (responses) => {
@@ -60,9 +57,9 @@ $('.reload-brands').click(() => {
                 for (var i = 0; i < responses.length; i++) {
                     var str = `
                         <div>
-                            <input type="radio" id="category-${i+1}" name="category" value="${responses[i].CateID}" />
+                            <input type="radio" id="category-${i + 1}" name="category" value="${responses[i].CateID}" />
                             <div class="categories-label-box">
-                                <label for="category-${i+1}">${responses[i].CateName}</label>
+                                <label for="category-${i + 1}">${responses[i].CateName}</label>
                             </div>
                         </div>
                     `;
@@ -71,11 +68,12 @@ $('.reload-brands').click(() => {
                 }
             }
         },
-        complete: () => {
-            $('.categories-list .loading').hide();
-        },
         error: (err) => { console.log(err) }
     })
+}
+
+$('.reload-categories').click(() => {
+    reloadCategories();
 })
 
 //--AJAX get list product in category --------------------
@@ -89,9 +87,6 @@ $('input[name="category"]').on('change', (e) => {
     var categoryValue = $(e.target).val();
 
     $.ajax({
-        beforeSend: () => {
-            $('.products-cate-list .loading').css('display', 'grid');
-        },
         type: 'GET',
         url: '/api/products',
         data: {
@@ -126,11 +121,76 @@ $('input[name="category"]').on('change', (e) => {
                 }
             }
         },
-        complete: () => {
-            $('.products-cate-list .loading').hide();
-        },
         error: (err) => {
             console.log(err);
+        }
+    })
+})
+
+//---------Add, update, detele category --------------------------------------
+//Add category ---------------------------------------------------
+$('.add-category-btn').click(() => {
+    $('.add-category').css('visibility', 'visible');
+    $('.add-category .form-box').addClass('show');
+})
+
+$('.close-add-category').click(() => {
+    $('.add-category').css('visibility', 'hidden');
+    $('.add-category .form-box').removeClass('show');
+})
+
+$('.add-category').click((e) => {
+    if ($(e.target).closest('.form-box').length <= 0) {
+        $('.add-category').css('visibility', 'hidden');
+        $('.add-category .form-box').removeClass('show');
+    }
+})
+
+$('.add-category-form').submit((e) => {
+    e.preventDefault();
+    var cateID = $('#category-id').val();
+    var cateName = $('#category-name').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/categories/addcategory',
+        data: {
+            CateID: cateID,
+            CateName: cateName
+        },
+        success: (response) => {
+            if (response.success) {
+                console.log(response)
+                $('.add-category-form').unbind('submit').submit();
+            }
+            else {
+                var str = `<span>${response.error}</span>`;
+                $('.add-category .form-error').show();
+                $('.add-category .form-error').empty();
+                $('.add-category .form-error').append(str);
+            }
+        }
+    })
+})
+
+//Delete category ----------------------------------------------------
+$('.delete-category-btn').click(() => {
+    var cateID = $('input[name="category"]:checked').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/categories/deletecategory',
+        data: {
+            CateID: cateID
+        },
+        success: (response) => {
+            if (response.success) {
+                console.log("Xóa thành công");
+                reloadCategories();
+            }
+            else {
+                console.log("Xóa thất bại");
+            }
         }
     })
 })

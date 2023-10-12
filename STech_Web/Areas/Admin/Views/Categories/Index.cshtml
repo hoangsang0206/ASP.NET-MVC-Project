@@ -19,14 +19,14 @@
     </div>
     <div class="categories-content">
         <div class="categories-action d-flex">
-            <a href="#">Thêm</a>
-            <a href="#">Xóa</a>
-            <a href="#">Sửa</a>
+            <button class="add-category-btn">Thêm</button>
+            <button class="delete-category-btn">Xóa</button>
+            <button class="update-category-btn">Sửa</button>
         </div>
         <div class="categories-content-box">
             <div class="box-header d-flex align-items-center justify-content-between">
                 <h5>Danh sách danh mục</h5>
-                <button class="reload-action-btn reload-brands">Tải lại</button>
+                <button class="reload-action-btn reload-categories">Tải lại</button>
             </div>
             <hr />
             <div class="categories-list">
@@ -43,11 +43,6 @@
                         i++;
                     }
                 }
-
-                <div class="loading">
-                    <i class='bx bx-loader-alt bx-spin bx-rotate-90'></i>
-                </div>
-
             </div>
         </div>
         <div class="products-in-category">
@@ -58,10 +53,29 @@
             <hr />
             <div class="products-cate-list">
 
-                <div class="loading">
-                    <i class='bx bx-loader-alt bx-spin bx-rotate-90'></i>
-                </div>
             </div>
         </div>
     </div>
+
+    <div class="add-category">
+        <div class="form-box d-flex flex-column">
+            <div class="close-form close-add-category position-absolute">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h3 class="form-header text-center m-0">THÊM DANH MỤC</h3>
+            <div class="form-error">ERROR</div>
+            <form action="#" method="post" class="add-category-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="category-id" name="category-id" value="" class="form-input" required />
+                    <label for="category-id" class="input-label position-absolute">Mã danh mục</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="category-name" name="category-name" value="" class="form-input" required />
+                    <label for="category-name" class="input-label position-absolute">Tên danh mục</label>
+                </div>
+                <button type="submit" class="form-submit-btn">THÊM DANH MỤC</button>
+            </form>
+        </div>
+    </div>
+
 </div>
