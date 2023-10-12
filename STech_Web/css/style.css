@@ -822,9 +822,13 @@ main {
     cursor: pointer;
 }
 
-    .hidden-menu .slider {
-        display: none;
-    }
+.hidden-menu .menu {
+    z-index: 17;
+}
+
+.hidden-menu .slider {
+    display: none;
+}
 
 .showHiddenMenu {
     display: block;

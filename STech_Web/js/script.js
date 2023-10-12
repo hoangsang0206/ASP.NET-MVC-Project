@@ -1,15 +1,22 @@
 ﻿//Show overlay when click category button -------------------------------------------
 $(".categories-btn").click(() => {
     $(".hidden-menu").toggleClass("showHiddenMenu");
-    $(".hidden-menu").click(() => {
+
+    $(".hidden-menu").click((e) => {
+        if ($(e.target).closest('.hidden-menu-box').length <= 0) {
+            $(e.target).removeClass("showHiddenMenu");
+            $(".overlay").removeClass("showOverlay");
+        }      
+    });
+
+    $(".overlay").toggleClass("showOverlay");
+
+    $(".overlay").click(() => {
         $(".hidden-menu").removeClass("showHiddenMenu");
         $(".overlay").removeClass("showOverlay");
     });
-    $(".overlay").toggleClass("showOverlay");
-    $(".overlay").click(() => {
-        $(".hidden-menu").removeClass("showHiddenMenu");
-    });
 });
+
 $(".overlay").click(() => {
     $(".overlay").removeClass("showOverlay");
 });
@@ -434,7 +441,7 @@ var formArr = [$('.login'), $('.register'), $('.register'), $('.forgot-password'
 formArr.forEach(form => {
     var _form = $(form);
     _form.on('click', (e) => {
-        if (!$(e.target).closest('.form-container')) {
+        if ($(e.target).closest('.form-container').length <= 0) {
             $(e.target).css('visibility', 'hidden');
             $('.form-container').removeClass('showForm');
         }
