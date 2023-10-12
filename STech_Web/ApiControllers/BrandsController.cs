@@ -27,8 +27,8 @@ namespace STech_Web
 
                 brandAPIs.Add(brandAPI);
             }
-            return brandAPIs;
 
+            return brandAPIs;
         }
     }
 }

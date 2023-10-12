@@ -1609,3 +1609,19 @@ footer {
 /* For tablet (767 < width < 1024px) ---------------------------------------------*/
 @media screen and (min-width: 768px) and (max-width: 1023px) {
 }
+
+/* For desktop - custom scrollbar ------------------------------------------------*/
+@media screen and (min-width: 1024px) {
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #b0b0b0;
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #c3c3c3;
+    }
+}

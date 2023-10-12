@@ -3,4 +3,65 @@
     ViewBag.Title = "Quản lý danh mục";
 }
 
-<h1>Quán lý danh mục</h1>
+@model List<STech_Web.Models.Category>
+
+<div class="categories">
+    <h2 class="title">Danh mục sản phẩm</h2>
+    <div class="breadcrumb">
+        <ul class="breadcrumb-list d-flex">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                Danh mục
+            </li>
+        </ul>
+    </div>
+    <div class="categories-content">
+        <div class="categories-action d-flex">
+            <a href="#">Thêm</a>
+            <a href="#">Xóa</a>
+            <a href="#">Sửa</a>
+        </div>
+        <div class="categories-content-box">
+            <div class="box-header d-flex align-items-center justify-content-between">
+                <h5>Danh sách danh mục</h5>
+                <button class="reload-action-btn reload-brands">Tải lại</button>
+            </div>
+            <hr />
+            <div class="categories-list">
+                @{
+                    int i = 1;
+                    foreach (var item in Model)
+                    {
+                        <div>
+                            <input type="radio" id="category-@i" name="category" value="@item.CateID" />
+                            <div class="categories-label-box">
+                                <label for="category-@i">@item.CateName</label>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                }
+
+                <div class="loading">
+                    <i class='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+                </div>
+
+            </div>
+        </div>
+        <div class="products-in-category">
+            <div class="box-header d-flex align-items-center justify-content-between">
+                <h5>Sản phẩm thuộc danh mục</h5>
+                <button class="remove-action-btn">Bỏ chọn</button>
+            </div>
+            <hr />
+            <div class="products-cate-list">
+
+                <div class="loading">
+                    <i class='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -219,8 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BrandsController.cs" />
+    <Compile Include="ApiControllers\CategoriesController.cs" />
     <Compile Include="ApiControllers\CollectionsController.cs" />
-    <Compile Include="ApiControllers\TestAPIController.cs" />
+    <Compile Include="ApiControllers\ProductsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryAPI.cs" />
     <Compile Include="Models\Countdown.cs" />
     <Compile Include="Models\ImportDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
