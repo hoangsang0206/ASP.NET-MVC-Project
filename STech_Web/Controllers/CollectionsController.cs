@@ -212,6 +212,7 @@ namespace STech_Web.Controllers
                 products = Filter(products, filtertype, filter, sbrand);
                 ViewBag.FilterType = filtertype;
                 ViewBag.Filter = filter;
+                ViewBag.Sbrand = sbrand;
                 if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
                 {
                     breadcrumbItem += " " + ViewBag.filterName;

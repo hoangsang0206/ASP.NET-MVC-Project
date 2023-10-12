@@ -113,8 +113,13 @@ $('.user-update-form').submit((e) => {
     var dob = $('#DOB').val();
     var userID = $('#userID').val();
 
-    function closeUpdateErr() {
-        $('.update-error').empty();
+    var isExcuted = false;
+    function closeUpdateErr() {   
+        if (isExcuted == false) {
+            $('.update-error').empty();
+        }
+
+        isExcuted = true;
     }
 
     $.ajax({
@@ -135,6 +140,7 @@ $('.user-update-form').submit((e) => {
                 $('.update-error').append(str);
 
                 setInterval(closeUpdateErr, 7000);
+                isExcuted = false;
             }
             else {
                 $('.update-error').empty();
@@ -147,6 +153,7 @@ $('.user-update-form').submit((e) => {
                 $('.update-error').append(str);
 
                 setInterval(closeUpdateErr, 7000);
+                isExcuted = false;
             }
         },
         error: (err) => { console.log(err) }

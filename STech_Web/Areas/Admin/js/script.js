@@ -8,8 +8,6 @@ $('.admin-login-form').submit((e) => {
     var userName = $('#admin-username').val();
     var password = $('#admin-password').val();
 
-    console.log(userName, password)
-
     $.ajax({
         type: 'POST',
         url: '/account/login',
@@ -41,4 +39,9 @@ $('.admin-login-form').submit((e) => {
         },
         error: (err) => { console.log(err) }
     })
+})
+
+//-------------------------------------------------------
+$('.dashboard-categories').click(() => {
+    window.location.href = '/admin/categories';
 })

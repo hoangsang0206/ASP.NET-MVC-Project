@@ -220,6 +220,32 @@
     color: #1541f5;
 }
 
+.filter-box {
+    margin-left: 0.6rem;
+}
+
+.filter-btn {
+    border-radius: 0.2rem;
+    border: 1px solid #cecece;
+    padding: 0.5rem 0.8rem;
+}
+
+.filter-all-btn {
+    display: flex;
+    align-items: center;
+}
+
+.filter-btn span {
+    font-size: 1rem;
+}
+
+.filter-icon {
+    font-size: 1.3rem;
+    padding: 0;
+    margin-right: 0.5rem;
+    display: grid;
+    place-items: center;
+}
 
 
 /*---Responsive --------------------------------------------------------------*/

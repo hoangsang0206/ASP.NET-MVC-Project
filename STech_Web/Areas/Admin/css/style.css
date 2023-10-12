@@ -171,10 +171,15 @@ body {
 .bottom-menu {
     position: absolute;
     bottom: 1rem;
+    overflow-x: hidden;
 }
 
 .bottom-menu a:hover {
     color: var(--primary-color);
+}
+
+.sidebar hr {
+    margin-top: 4rem;
 }
 
 main {
@@ -337,6 +342,10 @@ footer span {
     width: 14rem;
 }
 
+.dashboard-box:not(:last-child) {
+    cursor: pointer;
+}
+
 .left-box {
     width: 40%;
     aspect-ratio: 1;
@@ -403,6 +412,34 @@ footer span {
 .right-box span {
     white-space: nowrap;
     font-size: 1.1rem;
+}
+
+.dashboard-bottom {
+    margin-top: 2rem;
+    gap: 2rem;
+}
+
+.dashboard-table, .dashboard-bottom-right-content {
+    background: var(--sidebar-color);
+    border-radius: 0.4rem;
+    width: 38rem;
+}
+
+.sidebar.close ~ main .dashboard-table,
+.sidebar.close ~ main .dashboard-bottom-right-content {
+    width: calc(50% - 2rem);
+}
+
+.dashboard-table tr {
+    white-space: nowrap;
+}
+
+.dashboard-table th, .dashboard-table td {
+    padding: 1rem 1rem 0.5rem 2rem;
+ }
+
+.dashboard-bottom-right-content {
+    padding: 1rem 1.4rem;
 }
 
 
