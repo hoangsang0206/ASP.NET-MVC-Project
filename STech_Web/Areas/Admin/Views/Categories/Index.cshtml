@@ -6,7 +6,7 @@
 @model List<STech_Web.Models.Category>
 
 <div class="categories">
-    <h2 class="title">Danh mục sản phẩm</h2>
+    <h2 class="title">Danh mục</h2>
     <div class="breadcrumb">
         <ul class="breadcrumb-list d-flex">
             <li class="breadcrumb-item">
@@ -22,6 +22,7 @@
             <button class="add-category-btn">Thêm</button>
             <button class="delete-category-btn">Xóa</button>
             <button class="update-category-btn">Sửa</button>
+            <div class="categories-action-notice"></div>
         </div>
         <div class="categories-content-box">
             <div class="box-header d-flex align-items-center justify-content-between">
@@ -63,7 +64,7 @@
                 <i class="fa-solid fa-xmark"></i>
             </div>
             <h3 class="form-header text-center m-0">THÊM DANH MỤC</h3>
-            <div class="form-error">ERROR</div>
+            <div class="form-error"></div>
             <form action="#" method="post" class="add-category-form">
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="category-id" name="category-id" value="" class="form-input" required />
@@ -75,6 +76,38 @@
                 </div>
                 <button type="submit" class="form-submit-btn">THÊM DANH MỤC</button>
             </form>
+        </div>
+    </div>
+
+    <div class="update-category">
+        <div class="form-box d-flex flex-column">
+            <div class="close-form close-update-category position-absolute">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h3 class="form-header text-center m-0">SỬA DANH MỤC</h3>
+            <div class="form-error"></div>
+            <form action="#" method="post" class="update-category-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="update-category-id" name="category-id" value="" class="form-input" required />
+                    <label for="update-category-id" class="input-label position-absolute">Mã danh mục</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="update-category-name" name="category-name" value="" class="form-input" required />
+                    <label for="update-category-name" class="input-label position-absolute">Tên danh mục</label>
+                </div>
+                <button type="submit" class="form-submit-btn">SỬA DANH MỤC</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="delete-cate-confirm position-fixed">
+        <div class="delete-cate-confirm-box d-flex d-flex flex-column align-items-center">
+            <i class="fa-regular fa-circle-question"></i>
+            <span>Xóa danh mục này?</span>
+            <div class="delete-cate-confirm-btn-box d-flex justify-content-between">
+                <button class="delete-cate-confirm-no">Không</button>
+                <button class="delete-cate-confirm-yes">Đồng ý</button>
+            </div>
         </div>
     </div>
 

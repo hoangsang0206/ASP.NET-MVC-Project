@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="#" class="@( ViewBag.ActiveNav == "products" ? "active" : "" )">
+                        <a href="/admin/products" class="@( ViewBag.ActiveNav == "products" ? "active" : "" )">
                             <i class='bx bx-laptop menu-icon'></i>
                             <span class="sidebar-text">Sản phẩm</span>
                         </a>
@@ -85,12 +85,12 @@
                             <span class="sidebar-text">Quản lý tài khoản</span>
                         </a>
                     </li>
-                     <li class="menu-item">
-                         <a href="#" class="@( ViewBag.ActiveNav == "others" ? "active" : "" )">
-                             <i class='bx bx-dots-horizontal-rounded menu-icon'></i>
-                             <span class="sidebar-text">Khác</span>
-                         </a>
-                     </li>
+                    <li class="menu-item">
+                        <a href="#" class="@( ViewBag.ActiveNav == "others" ? "active" : "" )">
+                            <i class='bx bx-dots-horizontal-rounded menu-icon'></i>
+                            <span class="sidebar-text">Khác</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -120,11 +120,11 @@
             @RenderBody()
 
         </section>
+    </main>
 
-        <footer>
-            <span>Copyright &copy; Lê Hoàng Sang - Trường Đại học Công thương Tp.HCM</span>
-        </footer>
-    </main> 
+    <footer>
+        <span>Copyright &copy; Lê Hoàng Sang - Trường Đại học Công thương Tp.HCM</span>
+    </footer>
 
 </body>
 

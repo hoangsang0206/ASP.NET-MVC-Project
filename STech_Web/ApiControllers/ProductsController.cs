@@ -33,5 +33,14 @@ namespace STech_Web.ApiControllers
 
             return productsApi;
         }
+
+        //Lấy tất cả sản phẩm
+        public List<Product> GetAll()
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = db.Products.ToList();
+
+            return products;
+        }
     }
 }

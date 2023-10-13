@@ -169,9 +169,8 @@ body {
 }
 
 .bottom-menu {
-    position: absolute;
+    overflow: hidden;
     bottom: 1rem;
-    overflow-x: hidden;
 }
 
 .bottom-menu a:hover {
@@ -203,10 +202,19 @@ main {
 }
 
 footer {
+    left: 270px;
+    width: calc(100% - 270px);
     height: 2rem;
     display: grid;
     place-items: center;
-    margin-top: 5rem;
+    position: absolute;
+    bottom: 0;
+    transition: var(--tran-03);
+}
+
+.sidebar.close ~ footer {
+    left: 95px;
+    width: calc(100% - 95px);
 }
 
 
@@ -274,6 +282,14 @@ footer {
     font-weight: 600;
     border-radius: 0.3rem;
     padding: 0.6rem 0;
+}
+
+.form-submit-btn:disabled {
+    background: #bcbec2;
+}
+
+.form-submit-btn:not(:disabled):hover {
+    outline: 2px solid #938afc;
 }
 
 .form-error {
@@ -468,15 +484,15 @@ footer span {
     overflow: hidden;
 }
 
-.categories-content {
+.categories-content, .products-content {
     margin-top: 1rem;
 }
 
-.categories-action {
+.categories-action, .products-action {
     gap: 1rem;
 }
 
-.categories-action button {
+.categories-action button, .products-action button{
     font-size: 1rem;
     color: #000000;
     border-radius: 0.4rem;
@@ -486,9 +502,18 @@ footer span {
     border: none;
 }
 
-.categories-action button:hover {
+.categories-action button:hover,
+.products-action button:hover{
     background: var(--primary-color);
     color: var(--sidebar-color);
+}
+
+.categories-action-notice, .products-action-notice {
+    margin-left: 2rem;
+    border-radius: 0.3rem;
+    background: #fff3cd;
+    padding: 0.5rem 1rem;
+    display: none;
 }
 
 .categories-content-box, .products-in-category {
@@ -564,6 +589,17 @@ input[name="category"]:checked ~ .categories-label-box {
     grid-template-columns: repeat(7, 1fr);
 }
 
+.lazy-loading .product-img {
+    filter: blur(6px);
+    background: #d7d7d7;
+}
+
+.lazy-loading .product-img.img-loaded {
+    filter: none;
+    background: #ffffff;
+    transition: all 1s ease;
+}
+
 .product-box-container {
     padding: 0.15rem;
 }
@@ -609,7 +645,7 @@ input[name="category"]:checked ~ .categories-label-box {
     text-decoration: none;
 }
 
-.add-category {
+.add-category, .update-category, .delete-cate-confirm {
     position: fixed;
     top: 0;
     left: 0;
@@ -623,11 +659,11 @@ input[name="category"]:checked ~ .categories-label-box {
     cursor: pointer;
 }
 
-.form-box {
+.form-box, .delete-cate-confirm-box {
     position: relative;
     background: var(--sidebar-color);
     width: 33%;
-    padding: 1rem 1.6rem;
+    padding: 2rem 2.5rem;
     border-radius: 0.3rem;
     cursor: auto;
     transform: scale(0);
@@ -635,9 +671,13 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-03);
 }
 
-.form-box.show {
+.form-box.show, .delete-cate-confirm-box.show {
     transform: scale(1);
     opacity: 1;
+}
+
+.categories-action-notice {
+    white-space: nowrap;
 }
 
 /* ----Category Action (add, delete, update)*/
@@ -652,6 +692,56 @@ input[name="category"]:checked ~ .categories-label-box {
     font-size: 1.5rem;
     color: #000000;
 }
+
+.delete-cate-confirm-box {
+    width: 30%;
+    background: #ffffff;
+    padding: 2rem 2rem 1.5rem 2rem;
+    border-radius: 0.3rem;
+    cursor: auto;
+    opacity: 0;
+    transform: scale(0);
+    transition: all .3s ease;
+}
+
+.delete-cate-confirm-box i {
+    font-size: 4rem;
+    color: #ff6606;
+    margin-bottom: 1rem;
+}
+
+.delete-cate-confirm-box span {
+    font-size: 1.1rem;
+}
+
+.delete-cate-confirm-btn-box {
+    width: 90%;
+    margin-top: 1.5rem;
+}
+
+.delete-cate-confirm-btn-box button {
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 0.2rem;
+    width: 49%;
+    font-weight: 500;
+}
+
+.delete-cate-confirm-no:hover {
+    background: #d4d4d4;
+}
+
+.delete-cate-confirm-yes {
+    background: var(--primary-color);
+    color: #ffffff;
+}
+
+.delete-cate-confirm-yes:hover {
+    outline: 2px solid #938afc;
+}
+
+/* -------------- Products page ---------------------*/
+
 
 /*-----Product Action (add, delete, update) -------------------*/
 .delete-product-confirm, .update-product {
@@ -670,7 +760,7 @@ input[name="category"]:checked ~ .categories-label-box {
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
     .login-form-box {
-        width: 85%;
+        width: 90%;
     }
 
     .sidebar {
@@ -713,11 +803,18 @@ input[name="category"]:checked ~ .categories-label-box {
     }
 
     footer {
-        overflow-x: scroll;
-        margin-top: 2rem;
+        display: none;
+    }
+
+    .form-box, .delete-cate-confirm-box {
+        width: 90%;
     }
 
     /* -------------- Dashboard page ---------------------*/
+    .box-header h5 {
+        font-size: 1.1rem;
+    }
+
     .dashboard-content {
         margin-top: 2rem;
     }
@@ -754,12 +851,20 @@ input[name="category"]:checked ~ .categories-label-box {
     }
 
     /* -------------- Collections page ---------------------*/
-
     .products-cate-list {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .categories-label-box label {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .categories-content-box h5 {
+        margin-right: 1rem;
+        overflow-x: scroll;
+    }
 }
 
 /* For tablet (767 < width < 1024px) ---------------------------------------------*/

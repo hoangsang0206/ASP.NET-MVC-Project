@@ -112,14 +112,8 @@ $('.user-update-form').submit((e) => {
     var email = $('#Email').val();
     var dob = $('#DOB').val();
     var userID = $('#userID').val();
-
-    var isExcuted = false;
     function closeUpdateErr() {   
-        if (isExcuted == false) {
-            $('.update-error').empty();
-        }
-
-        isExcuted = true;
+        $('.update-error').empty();
     }
 
     $.ajax({
@@ -139,8 +133,10 @@ $('.user-update-form').submit((e) => {
                 $('.update-error').empty();
                 $('.update-error').append(str);
 
-                setInterval(closeUpdateErr, 7000);
-                isExcuted = false;
+                var interval = setInterval(() => {
+                    closeUpdateErr();
+                    clearInterval(interval);
+                }, 5000);
             }
             else {
                 $('.update-error').empty();
@@ -152,8 +148,10 @@ $('.user-update-form').submit((e) => {
                
                 $('.update-error').append(str);
 
-                setInterval(closeUpdateErr, 7000);
-                isExcuted = false;
+                var interval = setInterval(() => {
+                    closeUpdateErr();
+                    clearInterval(interval);
+                }, 4000);
             }
         },
         error: (err) => { console.log(err) }

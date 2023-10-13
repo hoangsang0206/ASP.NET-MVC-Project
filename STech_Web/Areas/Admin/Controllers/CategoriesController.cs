@@ -24,6 +24,7 @@ namespace STech_Web.Areas.Admin.Controllers
             return View(categories);
         }
 
+        //Thêm danh mục
         public ActionResult AddCategory(Category cate)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
@@ -45,12 +46,22 @@ namespace STech_Web.Areas.Admin.Controllers
             return Json(new { success = true});
         }
 
+        //Xóa danh mục
         public ActionResult DeleteCategory(string cateID) 
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Category> categories = db.Categories.ToList();
 
-            foreach(Category c in categories)
+            //Kiểm tra xem danh mục này có sản phẩm không 
+            List<Product> products = db.Products.Where(t => t.CateID == cateID).ToList();
+            if(products.Count > 0)
+            {
+                string error = "Danh mục này đã có " + products.Count + " sản phẩm, không thể xóa";
+                return Json(new { success = false, err = error });
+
+            }
+
+            foreach (Category c in categories)
             {
                 if(c.CateID == cateID)
                 {
@@ -61,7 +72,27 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
             }
 
-            return Json(new { success = false });
+            return Json(new { success = false , err = "Xóa thất bại."});
+        }
+
+        //Sửa danh mục
+        public ActionResult UpdateCategory(Category cate)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Category> categories = db.Categories.ToList();
+
+            foreach (Category c in categories)
+            {
+                if (c.CateID == cate.CateID)
+                {
+                    c.CateName = cate.CateName;
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+            }
+
+            return Json(new { success = false, error = "Sửa thất bại" });
         }
     }
 }

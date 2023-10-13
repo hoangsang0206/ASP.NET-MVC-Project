@@ -1,4 +1,33 @@
-﻿$('.toggle').click(() => {
+﻿//--Lazy loading -------------------------------------------------
+//function loadImg(img) {
+//    const url = img.getAttribute('lazy-src');
+
+//    img.removeAttribute('lazy-src');
+//    img.setAttribute('src', url);
+//    img.classList.add('img-loaded');
+//    //img.parentNode.classList.remove('lazy-loading');
+//}
+
+//function lazyLoading() {
+//    if ('IntersectionObserver' in window) {
+//        var lazyImages = document.querySelectorAll('[lazy-src]');
+//        let observer = new IntersectionObserver((entries => {
+//            entries.forEach(entry => {
+//                if (entry.isIntersecting && !entry.target.classList.contains('img-loaded')) {
+//                    loadImg(entry.target);
+//                }
+//            })
+//        }));
+
+//        lazyImages.forEach(img => {
+//            observer.observe(img);
+//        });
+//    }
+//}
+
+//--------------------------------------------------------------------
+
+$('.toggle').click(() => {
     $('.sidebar').toggleClass('close');
 })
 
@@ -46,7 +75,11 @@ $('.dashboard-categories').click(() => {
     window.location.href = '/admin/categories';
 })
 
-//--AJAX get list brand in category --------------------
+$('.dashboard-products').click(() => {
+    window.location.href = '/admin/products';
+})
+
+//--AJAX get list category --------------------
 function reloadCategories() {
     $.ajax({
         type: 'GET',
@@ -81,6 +114,9 @@ $('.reload-categories').click(() => {
 $('.remove-action-btn').click(() => {
     $('.products-cate-list').empty();
     $('input[name="category"]:checked').prop('checked', false);
+    var str1 = "Sản phẩm thuộc danh mục";
+    $('.products-in-category .box-header h5').empty();
+    $('.products-in-category .box-header h5').append(str1);
 })
 
 $('input[name="category"]').on('change', (e) => {
@@ -95,9 +131,13 @@ $('input[name="category"]').on('change', (e) => {
         success: (responses) => {
             if (responses != null) {
                 $('.products-cate-list').empty();
+                var str1 = "Sản phẩm thuộc danh mục - " + responses.length;
+                $('.products-in-category .box-header h5').empty();
+                $('.products-in-category .box-header h5').append(str1);
+
                 for (var i = 0; i <= responses.length; i++) {
-                    if (responses[i] != null) {
-                        var str = `<div class="product-box-container">
+                    if (responses[i] != null) {  
+                        var str2 = `<div class="product-box-container">
                             <div class="product-box">
                                 <div class="product-image">
                                     <img src="${responses[i].ImgSrc}" class="product-img">
@@ -107,8 +147,8 @@ $('input[name="category"]').on('change', (e) => {
                                 </div>
                                 <div class="product-original-price">
                                     ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
-                                        `<span style="visibility: hidden">0</span>`
-                                    }
+                                `<span style="visibility: hidden">0</span>`
+                            }
                                 </div>
                                 <div class="product-price d-flex align-items-center">
                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
@@ -116,9 +156,16 @@ $('input[name="category"]').on('change', (e) => {
                             </div>
                         </div>`;
 
-                        $('.products-cate-list').append(str);
+                        $('.products-cate-list').append(str2);
                     }
                 }
+
+                //lazyLoading();
+            }
+            else {
+                var str1 = "Sản phẩm thuộc danh mục";
+                $('.products-in-category .box-header h5').empty();
+                $('.products-in-category .box-header h5').append(str1);
             }
         },
         error: (err) => {
@@ -160,7 +207,6 @@ $('.add-category-form').submit((e) => {
         },
         success: (response) => {
             if (response.success) {
-                console.log(response)
                 $('.add-category-form').unbind('submit').submit();
             }
             else {
@@ -174,7 +220,38 @@ $('.add-category-form').submit((e) => {
 })
 
 //Delete category ----------------------------------------------------
+function hideCateNotice() {
+    $('.categories-action-notice').hide();
+}
+
 $('.delete-category-btn').click(() => {
+    var cateID = $('input[name="category"]:checked').val();
+
+    if (cateID == null) {
+        var str = `<span>Chọn danh mục muốn xóa từ danh sách phía dưới.</span>`
+        $('.categories-action-notice').show();
+        $('.categories-action-notice').empty();
+        $('.categories-action-notice').append(str);
+
+        var interval = setInterval(() => {
+            hideCateNotice();
+            clearInterval(interval);
+        }, 4000);
+
+    }
+    else {
+
+        $('.delete-cate-confirm').css('visibility', 'visible');
+        $('.delete-cate-confirm-box').addClass('show');
+    }
+})
+
+$('.delete-cate-confirm-no').click(() => {
+    $('.delete-cate-confirm').css('visibility', 'hidden');
+    $('.delete-cate-confirm-box').removeClass('show');
+})
+
+$('.delete-cate-confirm-yes').click(() => {
     var cateID = $('input[name="category"]:checked').val();
 
     $.ajax({
@@ -185,12 +262,108 @@ $('.delete-category-btn').click(() => {
         },
         success: (response) => {
             if (response.success) {
-                console.log("Xóa thành công");
+                var str = `<span>Xóa thành công.</span>`
+                $('.categories-action-notice').show();
+                $('.categories-action-notice').empty();
+                $('.categories-action-notice').append(str);
+                $('.delete-cate-confirm').css('visibility', 'hidden');
+                $('.delete-cate-confirm-box').removeClass('show');
                 reloadCategories();
+
+                var interval = setInterval(() => {
+                    hideCateNotice();
+                    clearInterval(interval);
+                }, 4000);
             }
             else {
-                console.log("Xóa thất bại");
+                var str = `<span>${response.err}</span>`
+                $('.categories-action-notice').show();
+                $('.categories-action-notice').empty();
+                $('.categories-action-notice').append(str);
+                $('.delete-cate-confirm').css('visibility', 'hidden');
+                $('.delete-cate-confirm-box').removeClass('show');
+
+                var interval = setInterval(() => {
+                    hideCateNotice();
+                    clearInterval(interval);
+                }, 4000);
             }
         }
     })
 })
+
+//Update categories ---------------------------------------------
+$('#update-category-id').on('keydown', (e) => {
+    e.preventDefault();
+})
+
+function setCateValue() {
+    var cateID = $('input[name="category"]:checked').val();
+    var cateName = $('input[name="category"]:checked ~ .categories-label-box label').text();
+
+    $('#update-category-id').val('');
+    $('#update-category-name').val('');
+    $('.update-category .form-error').hide();
+    $('.update-category .form-error').empty();
+    $('.update-category .form-submit-btn').prop('disabled', false);
+
+    if (cateID == null) {
+        var str = `<span>Vui lòng chọn danh mục muốn sửa từ danh sách</span>`;
+        $('.update-category .form-error').show();
+        $('.update-category .form-error').empty();
+        $('.update-category .form-error').append(str);
+        $('.update-category .form-submit-btn').prop('disabled', true);
+
+        return;
+    }
+
+    $('#update-category-id').val(cateID);
+    $('#update-category-name').val(cateName);
+}
+
+$('.update-category-btn').click(() => {
+    $('.update-category').css('visibility', 'visible');
+    $('.update-category .form-box').addClass('show');
+    setCateValue();
+})
+
+$('.close-update-category').click(() => {
+    $('.update-category').css('visibility', 'hidden');
+    $('.update-category .form-box').removeClass('show');
+})
+
+$('.update-category').click((e) => {
+    if ($(e.target).closest('.form-box').length <= 0) {
+        $('.update-category').css('visibility', 'hidden');
+        $('.update-category .form-box').removeClass('show');
+    }
+})
+
+$('.update-category-form').submit((e) => {
+    e.preventDefault();
+    var cateID = $('#update-category-id').val();
+    var cateName = $('#update-category-name').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/categories/updatecategory',
+        data: {
+            CateID: cateID,
+            CateName: cateName
+        },
+        success: (response) => {
+            if (response.success) {
+                $('.update-category-form').unbind('submit').submit();
+            }
+            else {
+                var str = `<span>${response.error}</span>`;
+                $('.update-category .form-error').show();
+                $('.update-category .form-error').empty();
+                $('.update-category .form-error').append(str);
+            }
+        }
+    })
+})
+
+//---------Add, update, detele product --------------------------------------
+//Add category ---------------------------------------------------
