@@ -119,8 +119,10 @@ $('.remove-action-btn').click(() => {
     $('.products-in-category .box-header h5').append(str1);
 })
 
-$('input[name="category"]').on('change', (e) => {
+//$('input[name="category"]').on('change', (e) => {
+$(document).on('change', 'input[name = "category"]', (e) => {
     var categoryValue = $(e.target).val();
+    console.log(categoryValue)
 
     $.ajax({
         type: 'GET',
@@ -136,25 +138,25 @@ $('input[name="category"]').on('change', (e) => {
                 $('.products-in-category .box-header h5').append(str1);
 
                 for (var i = 0; i <= responses.length; i++) {
-                    if (responses[i] != null) {  
+                    if (responses[i] != null) {
                         var str2 = `<div class="product-box-container">
-                            <div class="product-box">
-                                <div class="product-image">
-                                    <img src="${responses[i].ImgSrc}" class="product-img">
-                                </div>
-                                <div class="product-name">
-                                    ${responses[i].ProductName}
-                                </div>
-                                <div class="product-original-price">
-                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                        <div class="product-box">
+                            <div class="product-image">
+                                <img src="${responses[i].ImgSrc}" class="product-img">
+                            </div>
+                            <div class="product-name">
+                                ${responses[i].ProductName}
+                            </div>
+                            <div class="product-original-price">
+                                ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                 `<span style="visibility: hidden">0</span>`
                             }
-                                </div>
-                                <div class="product-price d-flex align-items-center">
-                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
-                                </div>
                             </div>
-                        </div>`;
+                            <div class="product-price d-flex align-items-center">
+                                ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
+                            </div>
+                        </div>
+                    </div>`;
 
                         $('.products-cate-list').append(str2);
                     }
@@ -173,6 +175,7 @@ $('input[name="category"]').on('change', (e) => {
         }
     })
 })
+
 
 //---------Add, update, detele category --------------------------------------
 //Add category ---------------------------------------------------

@@ -488,11 +488,11 @@ footer span {
     margin-top: 1rem;
 }
 
-.categories-action, .products-action {
+.action-box {
     gap: 1rem;
 }
 
-.categories-action button, .products-action button{
+.action-box button {
     font-size: 1rem;
     color: #000000;
     border-radius: 0.4rem;
