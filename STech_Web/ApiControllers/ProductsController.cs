@@ -10,6 +10,26 @@ namespace STech_Web.ApiControllers
 {
     public class ProductsController : ApiController
     {
+        //Lấy tất cả sản phẩm
+        public List<ProductAPI> GetAll()
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = db.Products.ToList();
+            List<ProductAPI> productsAPI = new List<ProductAPI>();
+
+            foreach(Product p in products)
+            {
+                if(p.Cost == null)
+                {
+                    p.Cost = 0;
+                }
+                ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price,(int)p.Warranty, p.BrandID, p.CateID);
+                productsAPI.Add(product);
+            }
+
+            return productsAPI;
+        }
+
         public List<ProductAPI> Get(string cateID)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
@@ -32,15 +52,6 @@ namespace STech_Web.ApiControllers
             }
 
             return productsApi;
-        }
-
-        //Lấy tất cả sản phẩm
-        public List<Product> GetAll()
-        {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.ToList();
-
-            return products;
         }
     }
 }

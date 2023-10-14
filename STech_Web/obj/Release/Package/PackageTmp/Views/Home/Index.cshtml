@@ -1,0 +1,648 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ - STech";
+}
+
+<section class="menu">
+    @{
+        Html.RenderPartial("Megamenu_Partial");
+    }
+    <div class="slider">
+        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                @for (int i = 1; i < ViewBag.Sliders.Count; i++)
+                {
+                    <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="@i" aria-label="Slide @i"></button>
+                }
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="@ViewBag.Sliders[0].SliderLink">
+                        <img src="@ViewBag.Sliders[0].SliderImgSrc" class="d-block w-100" alt="...">
+                    </a>
+                </div>
+                @for (int i = 1; i < ViewBag.Sliders.Count; i++)
+                {
+
+                    <div class="carousel-item">
+                        <a href="@ViewBag.Sliders[i].SliderLink">
+                            <img src="@ViewBag.Sliders[i].SliderImgSrc" class="d-block w-100" alt="...">
+                        </a>
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="policy">
+    <div class="policy-item">
+        <i class="fa-solid fa-truck-fast policy-icon"></i>
+        <div class="policy-content-box">
+            <div class="policy-content">Đảm bảo đúng hẹn</div>
+            <div class="sub-policy-content">Hoàn lại tiền trong 30 ngày</div>
+        </div>
+    </div>
+    <div class="policy-item">
+        <i class="fa-solid fa-wallet policy-icon"></i>
+        <div class="policy-content-box">
+            <div class="policy-content">Miến phí vận chuyển</div>
+            <div class="sub-policy-content">Cho đơn hàng trong bán kính 5km</div>
+        </div>
+    </div>
+    <div class="policy-item">
+        <i class="fa-solid fa-comments policy-icon"></i>
+        <div class="policy-content-box">
+            <div class="policy-content">Hỗ trợ trực tuyến</div>
+            <div class="sub-policy-content">Chúng tôi hỗ trợ 24/24</div>
+        </div>
+    </div>
+    <div class="policy-item">
+        <i class="fa-solid fa-gift policy-icon"></i>
+        <div class="policy-content-box">
+            <div class="policy-content">Khuyến mãi</div>
+            <div class="sub-policy-content">Nhiều khuyến mãi hấp dẫn</div>
+        </div>
+    </div>
+</section>
+
+<section class="banner-1">
+    <div class="banner-1-content">
+        <a href="#">
+            <img src="/images/banner/banner-1-img-1.png" alt="">
+        </a>
+    </div>
+    <div class="banner-1-content">
+        <a href="#">
+            <img src="/images/banner/banner-1-img-1.png" alt="">
+        </a>
+    </div>
+    <div class="banner-1-content">
+        <a href="#">
+            <img src="/images/banner/banner-1-img-1.png" alt="">
+        </a>
+    </div>
+</section>
+
+@if (ViewBag.Sales.Count > 0)
+{
+    <section class="sale">
+        <div class="sale-header">
+            <div class="countdown">
+                <div class="countdown-item" id="countdown-days">00</div>
+                <span class="countdown-colon">:</span>
+                <div class="countdown-item" id="countdown-hours">00</div>
+                <span class="countdown-colon">:</span>
+                <div class="countdown-item" id="countdown-minutes">00</div>
+                <span class="countdown-colon">:</span>
+                <div class="countdown-item" id="countdown-seconds">00</div>
+            </div>
+            <i class="fa-sharp fa-solid fa-bolt fa-beat-fade"></i>
+            <h2>FLASH SALE</h2>
+        </div>
+        <div class="sale-content">
+            <div class="sale-slick-slider">
+                @foreach (var item in ViewBag.Sales)
+                {
+                    <div class="slick-slider-item">
+                        <div class="product-box">
+                            <a href="/product/@item.Product.ProductID" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                                </div>
+                            </a>
+                            <a href="/product/@item.Product.ProductID" class="product-link">
+                                <div class="product-name">
+                                    @item.Product.ProductName
+                                </div>
+                            </a>
+                            @{ double discountPercent = 0; }
+                            <div class="product-original-price">
+                                @if (item.Product.Cost.ToString().Length > 0)
+                                {
+                                    decimal cost = Convert.ToDecimal(item.Product.Cost);
+
+                                    discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
+                                        / Convert.ToDouble(item.Product.Cost)) * 100;
+
+                                    <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                                }
+                                else
+                                {
+                                    <span style="visibility: hidden">0</span>
+                                }
+                            </div>
+                            <div class="product-price d-flex align-items-center">
+                                @{
+                                    decimal price = Convert.ToDecimal(item.Product.Price);
+
+                                }
+
+                                <span>@price.ToString("#,###", ViewBag.cul)đ</span>
+
+                                @if (discountPercent > 0)
+                                {
+                                    <div class="product-discount-percent">
+                                        @( "-" + (int)discountPercent + "%" )
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<section class="banner-2">
+    @foreach (var banner in ViewBag.Banner1)
+    {
+        <div class="banner-2-content">
+            <a href="@banner.BannerLink">
+                <img src="@banner.BannerImgSrc" alt="">
+            </a>
+        </div>
+    }
+</section>
+
+<section class="section-categories">
+    <div class="section-header">
+        <h2 class="section-title">
+            <a href="#">Danh mục sản phẩm</a>
+        </h2>
+        <div class="section-header-link">
+            <a href="/collections/all">Xem tất cả</a>
+        </div>
+    </div>
+    <div class="section-categories-items">
+        <div class="section-categories-row">
+            <div class="category-item-box">
+                <a href="/collections/laptop" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/laptop-1.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Laptop
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/laptop-gaming.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Laptop Gaming
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/monitor.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Màn hình
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/mainboard.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Mainboard
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/cpu.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            CPU
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/vga.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            VGA
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/ram.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            RAM
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/ssd.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Ổ cứng
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/case.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Case
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/cooling.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Tản nhiệt
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/psu.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Nguồn
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/keyboard.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Bàn phím
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/mouse.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Chuột
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/headphone.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Tai nghe
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/chair.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Ghế
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/speaker.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Loa
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/console.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Console
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/accessory.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Phụ kiện
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="category-item-box">
+                <a href="#" class="category-item-link">
+                    <div class="category-item">
+                        <div class="category-item-image">
+                            <img src="https://storage.googleapis.com/stech-product-images/categories/apple.webp" alt="" class="category-item-img">
+                        </div>
+                        <span class="category-item-name">
+                            Apple
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-collection">
+    <div class="section-header">
+        <div class="section-header-box">
+            <h2 class="section-title">
+                <a href="#">Laptop gaming nổi bậc</a>
+            </h2>
+            <div class="section-sub-header-box">
+                <i class="fa-solid fa-truck"></i>
+                <span>Miễn phí giao hàng</span>
+            </div>
+        </div>
+        <div class="section-header-link">
+            <a href="/collections/laptop-gaming">Xem tất cả</a>
+        </div>
+    </div>
+    <div class="section-content">
+        <div class="collection-slick-slider">
+
+        </div>
+    </div>
+</section>
+
+<section class="section-collection">
+    <div class="section-header">
+        <div class="section-header-box">
+            <h2 class="section-title">
+                <a href="#">Laptop văn phòng - đồ họa nổi bậc</a>
+            </h2>
+            <div class="section-sub-header-box">
+                <i class="fa-solid fa-truck"></i>
+                <span>Miễn phí giao hàng</span>
+            </div>
+        </div>
+        <div class="section-header-link">
+            <a href="/collections/laptop">Xem tất cả</a>
+        </div>
+    </div>
+    <div class="section-content">
+        <div class="collection-slick-slider">
+            @foreach (var item in ViewBag.LaptopOutStandings)
+            {
+                <div class="slick-slider-item">
+                    <div class="product-box">
+                        <a href="/product/@item.Product.ProductID" class="product-link">
+                            <div class="product-image lazy-loading">
+                                <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                            </div>
+                        </a>
+                        <a href="/product/@item.Product.ProductID" class="product-link">
+                            <div class="product-name">
+                                @item.Product.ProductName
+                            </div>
+                        </a>
+
+                        @{ double discountPercent = 0; }
+                        <div class="product-original-price">
+                            @if (item.Product.Cost != null || item.Product.Cost.ToString().Length > 0)
+                            {
+                                decimal cost = Convert.ToDecimal(item.Product.Cost);
+
+                                discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
+                                    / Convert.ToDouble(item.Product.Cost)) * 100;
+                                <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                            }
+                            else
+                            {
+                                <span style="visibility: hidden">0</span>
+                            }
+                        </div>
+                        <div class="product-price d-flex align-items-center">
+                            @{
+                                decimal price = Convert.ToDecimal(item.Product.Price);
+                            }
+                            <span>@price.ToString("##,###", ViewBag.cul)đ</span>
+                            @if (discountPercent > 0)
+                            {
+                                <div class="product-discount-percent">
+                                    @( "-" + (int)discountPercent + "%" )
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section-collection">
+    <div class="section-header">
+        <div class="section-header-box">
+            <h2 class="section-title">
+                <a href="#">Chuột nổi bậc</a>
+            </h2>
+            <div class="section-sub-header-box">
+                <i class="fa-solid fa-truck"></i>
+                <span>Miễn phí giao hàng</span>
+            </div>
+        </div>
+        <div class="section-header-link">
+            <a href="#">Xem tất cả</a>
+        </div>
+    </div>
+    <div class="section-content">
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-collection">
+    <div class="section-header">
+        <div class="section-header-box">
+            <h2 class="section-title">
+                <a href="#">Bàn phím nổi bậc</a>
+            </h2>
+            <div class="section-sub-header-box">
+                <i class="fa-solid fa-truck"></i>
+                <span>Miễn phí giao hàng</span>
+            </div>
+        </div>
+        <div class="section-header-link">
+            <a href="#">Xem tất cả</a>
+        </div>
+    </div>
+    <div class="section-content">
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+        <div class="section-content-item">
+            <div class="section-collection-box loading">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-brands">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fa-solid fa-circle-check"></i>
+            <a href="#">Thương hiệu nổi bật</a>
+        </h2>
+    </div>
+    <div class="brand-collections">
+        @foreach (var brand in ViewBag.Brands)
+        {
+            <div class="brand-item">
+                <a href="#">
+                    <img src="@brand.BrandImgSrc" alt="@brand.BrandName Logo">
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    var endDate = new Date("@ViewBag.Countdown.endDate".toString());
+
+    function updateCountdown() {
+        var timeRemaining = endDate - Date.now(); //millisecond
+        //Tổng số mili giây trong 1 ngày: 1000 * 60 * 60 * 24
+        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        //Số giờ còn lại trong ngày
+        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        //Số phút còn lại giờ
+        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        //Số giây còn lại trong phút
+        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        $("#countdown-days").text(String(days).padStart(2, "0"));
+        $("#countdown-hours").text(String(hours).padStart(2, "0"));
+        $("#countdown-minutes").text(String(minutes).padStart(2, "0"));
+        $("#countdown-seconds").text(String(seconds).padStart(2, "0"));
+
+        if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
+            $(".sale").css('display', 'none');
+        }
+
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // -------------------------------------
+    
+
+
+
+</script>

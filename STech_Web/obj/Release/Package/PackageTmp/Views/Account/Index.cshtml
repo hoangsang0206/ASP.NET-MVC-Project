@@ -1,0 +1,127 @@
+﻿@using STech_Web.Identity
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Tài khoản";
+}
+
+<section class="account d-flex">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="account-left-side">
+            <div class="account-name d-flex align-items-center">
+                <ion-icon name="person-circle-outline"></ion-icon>
+                <span>@User.Identity.Name</span>
+            </div>
+            <hr />
+            <div class="account-nav">
+                <ul class="account-nav-list">
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-user account-list-icon"></i>
+                            <span>Thông tin tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-location-dot account-list-icon"></i>
+                            <span>Sổ địa chỉ</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-bag-shopping account-list-icon"></i>
+                            <span>Quản lý đơn hàng</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-key account-list-icon"></i>
+                            <span>Đổi mật khẩu</span>
+                        </a>
+                    </li>
+                    <li class="account-nav-list-item">
+                        <a href="#" class="account-logout">
+                            <i class="fa-solid fa-right-from-bracket account-list-icon"></i>
+                            <span>Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="account-right-side">
+            <div class="account-right-box" id="account-info-update">
+                <h3>Thông tin tài khoản</h3>
+                <form action="#" method="post" class="user-update-form">
+                    @{
+                        var appDbContext = new AppDBContext();
+                        var userStore = new AppUserStore(appDbContext);
+                        var userManager = new AppUserManager(userStore);
+                        var user = userManager.FindById(User.Identity.GetUserId());
+                    }
+                    <div class="user-form-box d-flex align-items-center">
+                        <div class="user-input-label text-end">
+                            <span>Họ tên</span>
+                        </div>
+                        <input type="text" id="UserFulName" name="UserFulName" value="@user.UserFullName" />
+                    </div>
+                    <div class="user-form-box d-flex align-items-center">
+                        <div class="user-input-label text-end">
+                            <span>Giới tính</span>
+                        </div>
+                        <div class="input-radio d-flex align-items-center">
+                            @if (user.Gender == "Nam")
+                            {
+                                <input type="radio" id="Gender1" name="Gender" value="Nam" checked />
+                                <label for="Gender1">Nam</label>
+                                <input type="radio" id="Gender2" name="Gender" value="Nữ" />
+                                <label for="Gender2">Nữ</label>
+                            }
+                            else if (user.Gender == "Nữ")
+                            {
+                                <input type="radio" id="Gender1" name="Gender" value="Nam" />
+                                <label for="Gender1">Nam</label>
+                                <input type="radio" id="Gender2" name="Gender" value="Nữ" checked />
+                                <label for="Gender2">Nữ</label>
+                            }
+                            else
+                            {
+                                <input type="radio" id="Gender1" name="Gender" value="Nam" />
+                                <label for="Gender1">Nam</label>
+                                <input type="radio" id="Gender2" name="Gender" value="Nữ" />
+                                <label for="Gender2">Nữ</label>
+                            }
+                        </div>
+                    </div>
+                    <div class="user-form-box d-flex align-items-center">
+                        <div class="user-input-label text-end">
+                            <span>Số điện thoại</span>
+                        </div>
+                        <input type="text" id="PhoneNumber" name="PhoneNumber" value="@user.PhoneNumber" />
+                    </div>
+                    <div class="user-form-box d-flex align-items-center">
+                        <div class="user-input-label text-end">
+                            <span>Email</span>
+                        </div>
+                        <input type="email" id="Email" name="Email" value="@user.Email" />
+                    </div>
+                    <div class="user-form-box d-flex align-items-center">
+                        <div class="user-input-label text-end">
+                            <span>Ngày sinh</span>
+                        </div>
+                        <input type="date" id="DOB" name="DOB" value="@( user.DOB.HasValue ? user.DOB.Value.ToString("yyyy-MM-dd") : "")" />
+                    </div>
+                    <input type="hidden" id="userID" name="userID" value="@User.Identity.GetUserId()" />
+                    <div class="user-form-box d-flex align-items-center">
+                        <div class="user-input-label text-end"></div>
+                        <button type="submit" class="user-form-submit">LƯU THAY ĐỔI</button>
+                    </div>
+                </form>
+                <div class="update-error mt-3">
+
+                </div>
+            </div>  
+        </div>
+    }
+</section>
+

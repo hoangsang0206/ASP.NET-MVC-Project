@@ -1,0 +1,134 @@
+﻿
+<!--FORM ---------------------------------------->
+<div class="login position-fixed">
+    <div class="form-container position-relative">
+        <div class="close-form close-login position-absolute">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h3 class="form-header text-center m-0">ĐĂNG NHẬP</h3>
+        <div class="form-error"></div>
+        <form action="#" method="post" class="login-form">
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="text" id="login-username" name="Username" value="" class="form-input" required autocomplete="off" />
+                <label for="login-username" class="input-label position-absolute">Tên đăng nhập</label>
+            </div>
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="password" id="login-password" name="Password" value="" class="form-input" required />
+                <label for="login-password" class="input-label position-absolute">Mật khẩu</label>
+                <div class="toggle-password position-absolute">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="forgot-password-box text-end">
+                <a href="#" class="forgot-password-link">Quên mật khẩu ?</a>
+            </div>
+            <button type="submit" class="form-submit-btn">ĐĂNG NHẬP</button>
+            <div class="form-bottom text-center">
+                <span>Bạn chưa có tài khoản</span>
+                <a href="#" class="register-now-link">Đăng ký ngay</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="register position-fixed">
+    <div class="form-container position-relative">
+        <div class="close-form close-register position-absolute">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h3 class="form-header text-center m-0">ĐĂNG KÝ</h3>
+        <div class="form-error"></div>
+        <form action="#" method="post" class="register-form">
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="text" id="register-username" name="Username" value="" class="form-input" required autocomplete="off" />
+                <label for="register-username" class="input-label position-absolute">Tên đăng nhập</label>
+            </div>
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="password" id="register-password" name="Password" value="" class="form-input" required />
+                <label for="register-password" class="input-label position-absolute">Mật khẩu</label>
+                <div class="toggle-password position-absolute">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="password" id="re-enter-password" name="ConfirmPassword" value="" class="form-input" required />
+                <label for="re-enter-password" class="input-label position-absolute">Nhập lại mật khẩu</label>
+                <div class="toggle-password position-absolute">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="email" id="register-email" name="Email" value="" class="form-input" required />
+                <label for="register-email" class="input-label position-absolute">Email</label>
+            </div>
+            <button type="submit" class="form-submit-btn">ĐĂNG KÝ</button>
+            <div class="form-bottom text-center">
+                <span>Đã có tài khoản</span>
+                <a href="#" class="login-now-link">Đăng nhập</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="forgot-password position-fixed">
+    <div class="form-container position-relative">
+        <div class="close-form close-forgot-password position-absolute">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h3 class="form-header text-center m-0">QUÊN MẬT KHẨU</h3>
+        <div class="form-error"></div>
+        <form action="/" method="post" class="forgot-password-form">
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="text" id="forgot-password-username" name="username" value="" class="form-input" required autocomplete="off" />
+                <label for="forgot-password-username" class="input-label position-absolute">Tên đăng nhập</label>
+            </div>
+            <div class="back-to-login-box text-start">
+                <a href="#" class="back-to-login-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay lại
+                </a>
+            </div>
+            <button type="submit" class="form-submit-btn" disabled>ĐANG CẬP NHẬT</button>
+        </form>
+    </div>
+</div>
+
+<div class="reset-password position-fixed">
+    <div class="form-container position-relative">
+        <div class="close-form close-register position-absolute">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h3 class="form-header text-center m-0">ĐẶT LẠI MẬT KHẨU</h3>
+        <div class="form-error"></div>
+        <form action="/" method="post" class="reset-password-form">
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="password" id="reset-password" name="password" value="" class="form-input" required />
+                <label for="reset-password" class="input-label position-absolute">Mật khẩu</label>
+                <div class="toggle-password position-absolute">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="form-input-box position-relative d-flex align-items-center">
+                <input type="password" id="re-enter-reset-password" name="password" value="" class="form-input" required />
+                <label for="re-enter-reset-password" class="input-label position-absolute">Nhập lại khẩu</label>
+                <div class="toggle-password position-absolute">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <button type="submit" class="form-submit-btn" disabled>ĐANG CẬP NHẬT</button>
+        </form>
+    </div>
+</div>
+
+<div class="logout-confirm position-fixed">
+    <div class="logout-confirm-box d-flex d-flex flex-column align-items-center">
+        <i class="fa-regular fa-circle-question"></i>
+        <span>Bạn chắc chắn muốn đăng xuất?</span>
+        <div class="logout-confirm-btn-box d-flex justify-content-between">
+            <button class="logout-confirm-no">Không</button>
+            <button class="logout-confirm-yes" onclick="window.location.href='/account/logout'">Đồng ý</button>
+        </div>
+    </div>
+</div>
+
+<!------------------------------------------------>
