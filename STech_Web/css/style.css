@@ -524,7 +524,6 @@ header {
     visibility: hidden;
     place-items: center;
     z-index: 30;
-    cursor: pointer;
 }
 
 .form-container {
@@ -1623,5 +1622,9 @@ footer {
 
     ::-webkit-scrollbar-thumb:hover {
         background: #c3c3c3;
+    }
+
+    .container-xxl {
+        width: 1300px !important;
     }
 }

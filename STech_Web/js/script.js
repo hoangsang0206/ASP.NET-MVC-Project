@@ -440,12 +440,12 @@ var formArr = [$('.login'), $('.register'), $('.register'), $('.forgot-password'
 
 formArr.forEach(form => {
     var _form = $(form);
-    _form.on('click', (e) => {
-        if ($(e.target).closest('.form-container').length <= 0) {
-            $(e.target).css('visibility', 'hidden');
-            $('.form-container').removeClass('showForm');
-        }
-    })
+//    _form.on('click', (e) => {
+//        if ($(e.target).closest('.form-container').length <= 0) {
+//            $(e.target).css('visibility', 'hidden');
+//            $('.form-container').removeClass('showForm');
+//        }
+//    })
 
     //--CLose form -----
     _form.find('.close-form').click(() => {

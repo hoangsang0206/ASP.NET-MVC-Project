@@ -19,46 +19,39 @@ $('.register-form').submit((e) => {
     var password = $('#register-password').val();
     var confirmPassword = $('#re-enter-password').val();
     var email = $('#register-email').val();
-    if (password !== confirmPassword) {
-        var str = `<span>Xác nhận mật khẩu không đúng</span>`
-        $('.register .form-error').show();
-        $('.register .form-error').empty();
-        $('.register .form-error').append(str);
-    }
-    else {
-        $.ajax({
-            type: 'POST',
-            url: '/account/register',
-            data: {
-                Username: userName,
-                Password: password,
-                Email: email
-            },
-            success: (response) => {
-                if (response.success) {
-                    $('.register .form-error').hide();
-                    $('.register .form-error').empty();
-                    $('.register-form').unbind('submit').submit();
-                    window.location.href = response.redirectUrl;
-                }
-                else {
-                    var str = '<ul>';
-                    $.each(response.errors, (index, value) => {
-                        str += `<li>
-                        <i class="fa-solid fa-circle-exclamation" ></i>`
-                            + value + '</li>';
-                    })
+    $.ajax({
+        type: 'POST',
+        url: '/account/register',
+        data: {
+            Username: userName,
+            Password: password,
+            ConfirmPassword: confirmPassword,
+            Email: email
+        },
+        success: (response) => {
+            if (response.success) {
+                $('.register .form-error').hide();
+                $('.register .form-error').empty();
+                $('.register-form').unbind('submit').submit();
+                window.location.href = response.redirectUrl;
+            }
+            else {
+                var str = '<ul>';
+                $.each(response.errors, (index, value) => {
+                    str += `<li>
+                    <i class="fa-solid fa-circle-exclamation" ></i>`
+                        + value + '</li>';
+                })
 
-                    str += '</li>';
+                str += '</li>';
 
-                    $('.register .form-error').show();
-                    $('.register .form-error').empty();
-                    $('.register .form-error').append(str);
-                }
-            },
-            error: (err) => { console.log(err) }
-        })
-    }
+                $('.register .form-error').show();
+                $('.register .form-error').empty();
+                $('.register .form-error').append(str);
+            }
+        },
+        error: (err) => { console.log(err) }
+    })
 })
 
 

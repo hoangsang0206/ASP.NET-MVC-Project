@@ -18,19 +18,49 @@
 
     <div class="products-content">
         <div class="action-box products-action d-flex">
-            <button class="add-product-btn">Thêm</button>
-            <button class="delete-product-btn">Xóa</button>
-            <button class="update-product-btn">Sửa</button>
+            <button class="add-product-btn" onclick="window.location.href = '#addproduct'">Thêm</button>
             <div class="products-action-notice"></div>
         </div>
 
         <div class="products-content-box">
-            <div class="product-content-header">
-                <form action="#" method="post" class="search-products">
-                    <input type="text" id="search" name="search" placeholder="Tìm kiếm sản phẩm" />
-
+            <div class="product-content-header d-flex justify-content-between">
+                <form action="#" method="post" class="search-products d-flex">
+                    <input type="text" id="search" name="search" placeholder="Nhập tên sản phẩm" required autocomplete="off" />
+                    <button type="submit" class="submit-search">
+                        <i class='bx bx-search'></i>
+                    </button>
                 </form>
+
+                <select class="get-product-by-cate" id="cateID">
+                    <option value="" selected>Sản phẩm theo danh mục</option>
+                    @foreach (var cate in ViewBag.Categories)
+                    {
+                        <option value="@cate.CateID">@cate.CateName</option>
+                    }
+                </select>
+
+                <select class="get-product-by-brand" id="brandID">
+                    <option value="" selected>Sản phẩm theo hãng</option>
+                    @foreach (var brand in ViewBag.Brands)
+                    {
+                        <option value="@brand.BrandID">@brand.BrandName</option>
+                    }
+                </select>
+
+                <button class="get-all-poduct">Tất cả sản phẩm</button>
+
+                <button class="reload-products">
+                    Bỏ chọn
+                </button>
+
             </div>
+            
+            <hr />
+
+            <div class="product-list">
+                
+            </div>
+
         </div>
 
     </div>

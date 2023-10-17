@@ -29,6 +29,18 @@ namespace STech_Web.Controllers
         {
             if(ModelState.IsValid)
             {
+                //Các thông tin không được bỏ trống
+                if (register.Username == null ||
+                    register.Password == null ||
+                    register.ConfirmPassword == null ||
+                    register.Email == null)
+                {
+                    ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin.");
+                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    //return Redirect("/");
+                    return Json(new { success = false, errors = error });
+                }
+
                 var appDbContext = new AppDBContext();
                 var userStore = new AppUserStore(appDbContext);
                 var userManager = new AppUserManager(userStore);
@@ -44,6 +56,7 @@ namespace STech_Web.Controllers
                 bool containsSpace = Regex.IsMatch(register.Username, @"\s");
                 bool containsSpecialCharacter = Regex.IsMatch(register.Username, @"[^a-zA-Z0-9_]");
 
+                //Tên đăng nhập không quá 15 ký tự
                 if (register.Username.Length > 15)
                 {
                     ModelState.AddModelError("", "Tên đăng tối đa 15 ký tự.");
@@ -52,9 +65,19 @@ namespace STech_Web.Controllers
                     return Json(new { success = false, errors = error });
                 }
 
+                //Tên đăng nhập không chứa khoảng trắng và ký tự đặc biệt
                 if (containsSpace || containsSpecialCharacter)
                 {
                     ModelState.AddModelError("", "Tên đăng nhập không chứa ký tự đặc biệt trừ '_'.");
+                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    //return Redirect("/");
+                    return Json(new { success = false, errors = error });
+                }
+
+                //Xác nhận mật khẩu phải trùng với mật khẩu
+                if(register.Password != register.ConfirmPassword)
+                {
+                    ModelState.AddModelError("", "Xác nhận mật khẩu không đúng.");
                     var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                     //return Redirect("/");
                     return Json(new { success = false, errors = error });
@@ -103,6 +126,15 @@ namespace STech_Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginVM login)
         {
+            //Tên đăng nhập và mật khẩu không để trống
+            if (login.Username == null || login.Password == null)
+            {
+                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin.");
+                var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                //return Redirect("/");
+                return Json(new { success = false, errors = error });
+            }
+
             var appDbContext = new AppDBContext();
             var userStore = new AppUserStore(appDbContext);
             var userManager = new AppUserManager(userStore);
