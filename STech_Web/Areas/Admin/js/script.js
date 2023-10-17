@@ -1,29 +1,29 @@
 ﻿//--Lazy loading -------------------------------------------------
-//function loadImg(img) {
-//    const url = img.getAttribute('lazy-src');
+function loadImg(img) {
+    const url = img.getAttribute('lazy-src');
 
-//    img.removeAttribute('lazy-src');
-//    img.setAttribute('src', url);
-//    img.classList.add('img-loaded');
-//    //img.parentNode.classList.remove('lazy-loading');
-//}
+    img.removeAttribute('lazy-src');
+    img.setAttribute('src', url);
+    img.classList.add('img-loaded');
+    //img.parentNode.classList.remove('lazy-loading');
+}
 
-//function lazyLoading() {
-//    if ('IntersectionObserver' in window) {
-//        var lazyImages = document.querySelectorAll('[lazy-src]');
-//        let observer = new IntersectionObserver((entries => {
-//            entries.forEach(entry => {
-//                if (entry.isIntersecting && !entry.target.classList.contains('img-loaded')) {
-//                    loadImg(entry.target);
-//                }
-//            })
-//        }));
+function lazyLoading() {
+    if ('IntersectionObserver' in window) {
+        var lazyImages = document.querySelectorAll('[lazy-src]');
+        let observer = new IntersectionObserver((entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('img-loaded')) {
+                    loadImg(entry.target);
+                }
+            })
+        }));
 
-//        lazyImages.forEach(img => {
-//            observer.observe(img);
-//        });
-//    }
-//}
+        lazyImages.forEach(img => {
+            observer.observe(img);
+        });
+    }
+}
 
 if (window.innerWidth < 768) {
     $('.sidebar').addClass('close');
@@ -110,23 +110,39 @@ function reloadCategories() {
 }
 
 $('.reload-categories').click(() => {
-    reloadCategories();
+    $('.loading').css('display', 'grid');
+    reloadCategories();   
+    hideLoading();
 })
 
 //--AJAX get list product in category --------------------
 
 $('.remove-action-btn').click(() => {
+    $('.loading').css('display', 'grid');
+
     $('.products-cate-list').empty();
+    $('.products-cate-list').css('height', 'auto');
     $('input[name="category"]:checked').prop('checked', false);
     var str1 = "Sản phẩm thuộc danh mục";
     $('.products-in-category .box-header h5').empty();
     $('.products-in-category .box-header h5').append(str1);
+ 
+    hideLoading();
 })
+
+//Hide loading --
+function hideLoading() {
+    var interval = setInterval(() => {
+        $('.loading').hide();
+        clearInterval(interval);
+    }, 800);
+}
 
 //$('input[name="category"]').on('change', (e) => {
 $(document).on('change', 'input[name = "category"]', (e) => {
     var categoryValue = $(e.target).val();
-    console.log(categoryValue)
+
+    $('.loading').css('display', 'grid');
 
     $.ajax({
         type: 'GET',
@@ -135,18 +151,31 @@ $(document).on('change', 'input[name = "category"]', (e) => {
             cateID: categoryValue
         },
         success: (responses) => {
+
+            hideLoading();
+            
             if (responses != null) {
                 $('.products-cate-list').empty();
                 var str1 = "Sản phẩm thuộc danh mục - " + responses.length;
                 $('.products-in-category .box-header h5').empty();
                 $('.products-in-category .box-header h5').append(str1);
 
+                if (responses.length > 14) {
+                    $('.products-cate-list').css('height', '40rem');
+                }
+                else if (responses.length > 7) {
+                    $('.products-cate-list').css('height', '36.5rem');
+                }
+                else {
+                    $('.products-cate-list').css('height', 'auto');
+                }
+
                 for (var i = 0; i <= responses.length; i++) {
                     if (responses[i] != null) {
                         var str2 = `<div class="product-box-container">
-                        <div class="product-box">
-                            <div class="product-image">
-                                <img src="${responses[i].ImgSrc}" class="product-img">
+                        <div class="product-box position-relative">
+                            <div class="product-image lazy-loading">
+                                <img lazy-src="${responses[i].ImgSrc}" class="product-img">
                             </div>
                             <div class="product-name">
                                 ${responses[i].ProductName}
@@ -159,6 +188,12 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                             <div class="product-price d-flex align-items-center">
                                 ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                             </div>
+                            <button class="update-product-btn product-hidden-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="delete-product-btn product-hidden-btn">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </button>
                         </div>
                     </div>`;
 
@@ -166,7 +201,7 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                     }
                 }
 
-                //lazyLoading();
+                lazyLoading();
             }
             else {
                 var str1 = "Sản phẩm thuộc danh mục";
@@ -175,6 +210,8 @@ $(document).on('change', 'input[name = "category"]', (e) => {
             }
         },
         error: (err) => {
+            hideLoading();
+
             console.log(err);
         }
     })
@@ -373,4 +410,160 @@ $('.update-category-form').submit((e) => {
 })
 
 //---------Add, update, detele product --------------------------------------
-//Add category ---------------------------------------------------
+//Get product list ---------------------------------------------------
+//Reload ----------------------------
+$('.reload-products').click(() => {
+    $('.loading').css('display', 'grid');
+
+    $('.product-list').empty();
+    $('.product-list').css('height', '20rem');
+    $('#search').val('');
+    $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
+
+    hideLoading();
+})
+//Search ----------------------------
+$('.search-products').submit((e) => {
+    e.preventDefault();
+    var searchText = $('#search').val();
+
+    if (searchText.length > 0) {
+        $('.loading').css('display', 'grid');
+        $.ajax({
+            type: 'GET',
+            url: '/api/products',
+            data: {
+                name: searchText
+            },
+            success: (responses) => {
+                hideLoading();
+                if (responses != null) {
+                    $('.product-list').empty();
+                    if (responses.length > 14) {
+                        $('.product-list').css('height', '40rem');
+                    }
+                    else if (responses.length > 7) {
+                        $('.product-list').css('height', '36.5rem');
+                    }
+                    else {
+                        $('.product-list').css('height', '20rem');
+                    }
+
+                    var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
+                    $('.total-result').empty();
+                    $('.total-result').append(str1);
+
+                    for (var i = 0; i <= responses.length; i++) {
+                        if (responses[i] != null) {
+                            var str2 = `<div class="product-box-container">
+                                            <div class="product-box position-relative">
+                                                <div class="product-image lazy-loading">
+                                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                </div>
+                                                <div class="product-name">
+                                                    ${responses[i].ProductName}
+                                                </div>
+                                                <div class="product-original-price">
+                                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                                        `<span style="visibility: hidden">0</span>`
+                                                    }
+                                                </div>
+                                                <div class="product-price d-flex align-items-center">
+                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
+                                                </div>
+                                                <button class="update-product-btn product-hidden-btn">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn">
+                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                            </div>
+                                        </div>`;
+
+                            $('.product-list').append(str2);
+                        }
+                    }
+
+                    lazyLoading();
+                }
+                else {
+                    
+                }
+            },
+            error: (err) => {
+                hideLoading();
+                console.log(err);
+            }
+        })
+    }
+})
+
+//Get all product -------------------
+$('.get-all-poduct').click(() => {
+    $('.loading').css('display', 'grid');
+    $.ajax({
+        type: 'GET',
+        url: '/api/products',
+        success: (responses) => {
+            hideLoading();
+            if (responses != null) {
+                $('.product-list').empty();
+                if (responses.length > 14) {
+                    $('.product-list').css('height', '40rem');
+                }
+                else if (responses.length > 7) {
+                    $('.product-list').css('height', '36.5rem');
+                }
+                else {
+                    $('.product-list').css('height', '20rem');
+                }
+
+                var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
+                $('.total-result').empty();
+                $('.total-result').append(str1);
+
+                for (var i = 0; i <= responses.length; i++) {
+                    if (responses[i] != null) {
+                        var str2 = `<div class="product-box-container">
+                                            <div class="product-box position-relative">
+                                                <div class="product-image lazy-loading">
+                                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                </div>
+                                                <div class="product-name">
+                                                    ${responses[i].ProductName}
+                                                </div>
+                                                <div class="product-original-price">
+                                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                `<span style="visibility: hidden">0</span>`
+                            }
+                                                </div>
+                                                <div class="product-price d-flex align-items-center">
+                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
+                                                </div>
+                                                <button class="update-product-btn product-hidden-btn">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn">
+                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                            </div>
+                                        </div>`;
+
+                        $('.product-list').append(str2);
+                    }
+                }
+
+                lazyLoading();
+            }
+            else {
+
+            }
+        },
+        error: (err) => {
+            hideLoading();
+            console.log(err);
+        }
+    })
+})
+
+//Add product --------------------------------------------------------

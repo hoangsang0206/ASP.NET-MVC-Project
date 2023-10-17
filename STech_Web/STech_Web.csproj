@@ -223,7 +223,6 @@
   <ItemGroup>
     <Compile Include="ApiControllers\BrandsController.cs" />
     <Compile Include="ApiControllers\CategoriesController.cs" />
-    <Compile Include="ApiControllers\CollectionsController.cs" />
     <Compile Include="ApiControllers\ProductsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

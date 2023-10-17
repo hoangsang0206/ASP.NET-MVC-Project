@@ -298,10 +298,10 @@ $("#search").keyup(function () {
     var searchText = $(this).val();
     if (searchText.length > 0) {
         $.ajax({
-            url: '/api/collections',
+            url: '/api/products',
             type: 'GET',
             data: {
-                id: searchText
+                name: searchText
             },
             success: function (responses) {
                 var maxItems = window.innerWidth <= 768 ? 25 : 6

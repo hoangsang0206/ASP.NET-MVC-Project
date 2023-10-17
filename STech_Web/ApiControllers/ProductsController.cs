@@ -11,26 +11,56 @@ namespace STech_Web.ApiControllers
     public class ProductsController : ApiController
     {
         //Lấy tất cả sản phẩm
-        public List<ProductAPI> GetAll()
+        public List<ProductAPI> Get()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Product> products = db.Products.ToList();
             List<ProductAPI> productsAPI = new List<ProductAPI>();
 
-            foreach(Product p in products)
+            foreach (Product p in products)
             {
-                if(p.Cost == null)
+                if (p.Cost == null)
                 {
                     p.Cost = 0;
                 }
-                ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price,(int)p.Warranty, p.BrandID, p.CateID);
+                ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
                 productsAPI.Add(product);
             }
 
             return productsAPI;
         }
 
-        public List<ProductAPI> Get(string cateID)
+        //Lấy sản phẩm theo tên
+        public List<ProductAPI> GetByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return null;
+            }
+
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = db.Products.SearchName(name).ToList();
+            List<ProductAPI> productAPIs = new List<ProductAPI>();
+
+            foreach (Product p in products)
+            {
+                if (p.Cost == null)
+                {
+                    p.Cost = 0;
+                }
+
+                ProductAPI productAPI =
+                    new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+
+                productAPIs.Add(productAPI);
+            }
+
+            return productAPIs;
+
+        }
+    
+        //Lấy sản phẩm theo danh mục
+        public List<ProductAPI> GetByCategory(string cateID)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Product> products = db.Products.Where(t => t.CateID == cateID).ToList();
@@ -52,6 +82,12 @@ namespace STech_Web.ApiControllers
             }
 
             return productsApi;
+        }
+
+        //Lấy sản phẩm theo hãng
+        public List<ProductAPI> GetByBrand(string brandID)
+        {
+            return null;
         }
     }
 }
