@@ -30,7 +30,7 @@ namespace STech_Web.ApiControllers
             return productsAPI;
         }
 
-        //Lấy sản phẩm theo tên
+        //Lấy sản phẩm theo tên (tìm kiếm)
         public List<ProductAPI> GetByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -58,19 +58,20 @@ namespace STech_Web.ApiControllers
             return productAPIs;
 
         }
-    
+
         //Lấy sản phẩm theo danh mục
         public List<ProductAPI> GetByCategory(string cateID)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.Where(t => t.CateID == cateID).ToList();
+            List<Product> products  = db.Products.Where(t => t.CateID == cateID).ToList();
+           
             List<ProductAPI> productsApi = new List<ProductAPI>();
 
             if (products.Count > 0)
             {
                 foreach (Product p in products)
                 {
-                    if(p.Cost == null)
+                    if (p.Cost == null)
                     {
                         p.Cost = 0;
                     }
@@ -78,7 +79,7 @@ namespace STech_Web.ApiControllers
                     ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
 
                     productsApi.Add(product);
-            }
+                }
             }
 
             return productsApi;
@@ -87,7 +88,65 @@ namespace STech_Web.ApiControllers
         //Lấy sản phẩm theo hãng
         public List<ProductAPI> GetByBrand(string brandID)
         {
-            return null;
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = db.Products.Where(t => t.BrandID == brandID).ToList();
+            List<ProductAPI> productsApi = new List<ProductAPI>();
+
+            if (products.Count > 0)
+            {
+                foreach (Product p in products)
+                {
+                    if (p.Cost == null)
+                    {
+                        p.Cost = 0;
+                    }
+
+                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+
+                    productsApi.Add(product);
+                }
+            }
+
+            return productsApi;
         }
+        
+        //Lấy sản phẩm theo danh mục và hãng
+        public List<ProductAPI> GetByCategoryAndBrand(string CateID, string BrandID)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = new List<Product>();
+            List<ProductAPI> productsApi = new List<ProductAPI>();
+
+            if (BrandID == null)
+            {
+                products = db.Products.Where(t => t.CateID == CateID).ToList();
+            }
+            else if(CateID == null)
+            {
+                products = db.Products.Where(t => t.BrandID == BrandID).ToList();
+            }
+            else
+            {
+                products = db.Products.Where(t => t.CateID == CateID && t.BrandID == BrandID).ToList();
+            }
+
+            if (products.Count > 0)
+            {
+                foreach (Product p in products)
+                {
+                    if (p.Cost == null)
+                    {
+                        p.Cost = 0;
+                    }
+
+                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+
+                    productsApi.Add(product);
+                }
+            }
+
+            return productsApi;
+        }
+    
     }
 }

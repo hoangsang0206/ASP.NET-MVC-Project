@@ -135,7 +135,7 @@ function hideLoading() {
     var interval = setInterval(() => {
         $('.loading').hide();
         clearInterval(interval);
-    }, 800);
+    }, 600);
 }
 
 //$('input[name="category"]').on('change', (e) => {
@@ -162,9 +162,6 @@ $(document).on('change', 'input[name = "category"]', (e) => {
 
                 if (responses.length > 14) {
                     $('.products-cate-list').css('height', '40rem');
-                }
-                else if (responses.length > 7) {
-                    $('.products-cate-list').css('height', '36.5rem');
                 }
                 else {
                     $('.products-cate-list').css('height', 'auto');
@@ -254,7 +251,10 @@ $('.add-category-form').submit((e) => {
                 $('.add-category-form').unbind('submit').submit();
             }
             else {
-                var str = `<span>${response.error}</span>`;
+                var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                    ${response.error}
+                </span>`;
                 $('.add-category .form-error').show();
                 $('.add-category .form-error').empty();
                 $('.add-category .form-error').append(str);
@@ -268,13 +268,20 @@ function hideCateNotice() {
     $('.categories-action-notice').hide();
 }
 
+function showCateNotice() {
+    $('.categories-action-notice').css('display', 'flex');
+}
+
 $('.delete-category-btn').click(() => {
     var cateID = $('input[name="category"]:checked').val();
 
     if (cateID == null) {
-        var str = `<span>Chọn danh mục muốn xóa từ danh sách phía dưới.</span>`
-        $('.categories-action-notice').show();
+        var str = `<span>
+            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+            Chọn danh mục muốn xóa từ danh sách phía dưới.
+        </span>`
         $('.categories-action-notice').empty();
+        showCateNotice();
         $('.categories-action-notice').append(str);
 
         var interval = setInterval(() => {
@@ -307,8 +314,8 @@ $('.delete-cate-confirm-yes').click(() => {
         success: (response) => {
             if (response.success) {
                 var str = `<span>Xóa thành công.</span>`
-                $('.categories-action-notice').show();
                 $('.categories-action-notice').empty();
+                showCateNotice();
                 $('.categories-action-notice').append(str);
                 $('.delete-cate-confirm').css('visibility', 'hidden');
                 $('.delete-cate-confirm-box').removeClass('show');
@@ -320,9 +327,12 @@ $('.delete-cate-confirm-yes').click(() => {
                 }, 4000);
             }
             else {
-                var str = `<span>${response.err}</span>`
-                $('.categories-action-notice').show();
+                var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                    ${response.err}
+                    </span>`
                 $('.categories-action-notice').empty();
+                showCateNotice();
                 $('.categories-action-notice').append(str);
                 $('.delete-cate-confirm').css('visibility', 'hidden');
                 $('.delete-cate-confirm-box').removeClass('show');
@@ -352,7 +362,10 @@ function setCateValue() {
     $('.update-category .form-submit-btn').prop('disabled', false);
 
     if (cateID == null) {
-        var str = `<span>Vui lòng chọn danh mục muốn sửa từ danh sách</span>`;
+        var str = `<span>
+            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+            Vui lòng chọn danh mục muốn sửa từ danh sách
+        </span>`;
         $('.update-category .form-error').show();
         $('.update-category .form-error').empty();
         $('.update-category .form-error').append(str);
@@ -416,6 +429,7 @@ $('.reload-products').click(() => {
     $('.loading').css('display', 'grid');
 
     $('.product-list').empty();
+    $('.total-result').empty();
     $('.product-list').css('height', '20rem');
     $('#search').val('');
     $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
@@ -429,6 +443,7 @@ $('.search-products').submit((e) => {
 
     if (searchText.length > 0) {
         $('.loading').css('display', 'grid');
+        $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
         $.ajax({
             type: 'GET',
             url: '/api/products',
@@ -442,11 +457,11 @@ $('.search-products').submit((e) => {
                     if (responses.length > 14) {
                         $('.product-list').css('height', '40rem');
                     }
-                    else if (responses.length > 7) {
-                        $('.product-list').css('height', '36.5rem');
+                    else if (responses.length <= 0) {
+                        $('.product-list').css('height', '20rem');
                     }
                     else {
-                        $('.product-list').css('height', '20rem');
+                        $('.product-list').css('height', 'auto');
                     }
 
                     var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
@@ -501,9 +516,86 @@ $('.search-products').submit((e) => {
 //Get all product -------------------
 $('.get-all-poduct').click(() => {
     $('.loading').css('display', 'grid');
+    $('#search').val('');
+    $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
     $.ajax({
         type: 'GET',
         url: '/api/products',
+        success: (responses) => {
+            hideLoading();
+            if (responses != null) {
+                $('.product-list').empty();
+                if (responses.length > 14) {
+                    $('.product-list').css('height', '40rem');
+                }
+                else if (responses.length > 7) {
+                    $('.product-list').css('height', '36.5rem');
+                }
+                else {
+                    $('.product-list').css('height', '20rem');
+                }
+
+                var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
+                $('.total-result').empty();
+                $('.total-result').append(str1);
+
+                for (var i = 0; i <= responses.length; i++) {
+                    if (responses[i] != null) {
+                        var str2 = `<div class="product-box-container">
+                                            <div class="product-box position-relative">
+                                                <div class="product-image lazy-loading">
+                                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                </div>
+                                                <div class="product-name">
+                                                    ${responses[i].ProductName}
+                                                </div>
+                                                <div class="product-original-price">
+                                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                `<span style="visibility: hidden">0</span>`
+                            }
+                                                </div>
+                                                <div class="product-price d-flex align-items-center">
+                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
+                                                </div>
+                                                <button class="update-product-btn product-hidden-btn">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn">
+                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                            </div>
+                                        </div>`;
+
+                        $('.product-list').append(str2);
+                    }
+                }
+
+                lazyLoading();
+            }
+            else {
+
+            }
+        },
+        error: (err) => {
+            hideLoading();
+            console.log(err);
+        }
+    })
+})
+
+//Get product by category or by brand
+$('#cateID, #brandID').on('change', () => {
+    var cateID = $('#cateID').val();
+    var brandID = $('#brandID').val();
+    $('.loading').css('display', 'grid');
+
+    $.ajax({
+        type: 'GET',
+        url: '/api/products',
+        data: {
+            CateID: cateID,
+            BrandID: brandID
+        },
         success: (responses) => {
             hideLoading();
             if (responses != null) {
