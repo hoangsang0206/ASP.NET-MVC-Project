@@ -269,7 +269,11 @@ $('.add-category-form').submit((e) => {
         },
         success: (response) => {
             if (response.success) {
-                $('.add-category-form').unbind('submit').submit();
+                $('#category-id').val('');
+                $('#category-name').val('');
+                checkInputValid($('#category-id'));
+                checkInputValid($('#category-name'));
+                showOkForm();
             }
             else {
                 var str = `<span>
@@ -433,7 +437,7 @@ $('.update-category-form').submit((e) => {
         },
         success: (response) => {
             if (response.success) {
-                $('.update-category-form').unbind('submit').submit();
+                showUpdateOkForm();
             }
             else {
                 var str = `<span>${response.error}</span>`;
@@ -723,6 +727,26 @@ $('.close-product-form').click(() => {
     $('.product-form-container').removeClass('showForm');
 }) 
 
+function showOkForm() {
+    $('.complete-notice').css('visibility', 'visible');
+    $('.complete-notice .complete-notice-box').addClass('showForm');
+
+    $('.complete-notice-box button').click(() => {
+        $('.complete-notice').css('visibility', 'hidden');
+        $('.complete-notice .complete-notice-box').removeClass('showForm');
+    })
+}
+
+function showUpdateOkForm() {
+        $('.complete-update-notice').css('visibility', 'visible');
+        $('.complete-update-notice .complete-notice-box').addClass('showForm');
+
+        $('.complete-notice-box button').click(() => {
+            $('.complete-update-notice').css('visibility', 'hidden');
+            $('.complete-update-notice .complete-notice-box').removeClass('showForm');
+        })
+}
+
 //Add product --------------------------------
 $('.add-product-form').submit((e) => {
     var productID = $('.add-product #ProductID').val();
@@ -739,6 +763,21 @@ $('.add-product-form').submit((e) => {
     var imgSrc3 = $('#add-product-image-3').val();
     var imgSrc4 = $('#add-product-image-4').val();
     e.preventDefault();
+
+    //Clear input value
+    function clearInputVal() {
+        const inputFormArr = $('.add-product input').toArray();
+        inputFormArr.forEach((input) => {
+            $(input).val('');
+            checkInputValid($(input));
+        })
+
+        const selectArr = $('.add-product select').toArray();
+        selectArr.forEach((select) => {
+            $(select).prop('selectedIndex', 0);
+        })
+    }
+
     $.ajax({
         type: 'POST',
         url: '/admin/products/addproduct',
@@ -758,8 +797,12 @@ $('.add-product-form').submit((e) => {
             imgSrc4: imgSrc4
         },
         success: (responses) => {
+            
             if (responses.success) {
-                $('.add-product-form').unbind('submit').submit();
+                $('.add-product .form-error').empty();
+                $('.add-product .form-error').hide();
+                clearInputVal();
+                showOkForm();
             }
             else {
                 var str = `<span>
@@ -771,7 +814,22 @@ $('.add-product-form').submit((e) => {
                 $('.add-product .form-error').append(str);
             }
         },
-        error: (err) => { //console.log(err)
+        error: (err) => {
+            console.log(err);
         }
+    })
+})
+
+//----
+$('.add-product-form').on('reset', () => {
+    const inputFormArr = $('.add-product input').toArray();
+    inputFormArr.forEach((input) => {
+        $(input).val('');
+        checkInputValid($(input));
+    })
+
+    const selectArr = $('.add-product select').toArray();
+    selectArr.forEach((select) => {
+        $(select).prop('selectedIndex', 0);
     })
 })

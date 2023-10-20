@@ -200,6 +200,7 @@ main {
     display: none;
     place-items: center;
     background: #00000075;
+    z-index: 70;
 }
 
 .sidebar.close ~ main .loading {
@@ -978,7 +979,9 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-04);
 }
 /*-----Product Action (add, delete, update) -------------------*/
-.delete-product-confirm, .update-product, .add-product {
+.delete-product-confirm, .update-product,
+.add-product, .complete-notice,
+.complete-update-notice {
     position: fixed;
     top: 0;
     left: 0;
@@ -989,6 +992,10 @@ input[name="category"]:checked ~ .categories-label-box {
     visibility: hidden;
     place-items: center;
     z-index: 55;
+}
+
+.complete-notice, .complete-update-notice {
+    z-index: 60 !important;
 }
 
 .add-product .form-error {
@@ -1008,7 +1015,42 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-03);
 }
 
-.product-form-container.showForm {
+.complete-notice-box {
+    gap: 1rem;
+    width: 30%;
+    padding: 2rem;
+    border-radius: 0.3rem;
+    background: #ffffff;
+    transform: scale(0);
+    opacity: 0;
+    transition: var(--tran-02);
+}
+
+.complete-notice-box i {
+    font-size: 5rem;
+    color: #ff8a00;
+}
+
+.complete-notice-box span {
+    font-size: 1.2rem;
+}
+
+.complete-notice-box button {
+    padding: 0.7rem 1.8rem;
+    border-radius: 0.3rem;
+    border: none;
+    background: var(--primary-color);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.complete-notice-box button:hover {
+    outline: 2px solid #938afc;
+}
+
+.product-form-container.showForm,
+.complete-notice-box.showForm {
     transform: scale(1);
     opacity: 1;
 }

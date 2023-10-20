@@ -28,8 +28,8 @@ namespace STech_Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddProduct(Product product, int quantity, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
         {
-            //Kiểm tra dữ liệu
-            if (product.ProductID == null || product.ProductName == null || product.ImgSrc == null || product.Price == null)
+            //Kiểm tra dữ liệu không để trống
+            if (product.ProductID == null || product.ProductName == null || product.ImgSrc == null || product.Cost == null)
             {
                 return Json(new { success = false, error = "Vui lòng nhập đầy đủ thông tin." });
             }
@@ -38,7 +38,8 @@ namespace STech_Web.Areas.Admin.Controllers
             {
                 return Json(new { success = false, error = "Mã sản phẩm không được chứa khoảng trắng." });
             }
-
+            
+            //Số lượng và thời gian bảo hành >= 0
             if (quantity < 0)
             {
                 return Json(new { success = false, error = "Số lượng phải lớn hơn 0." });
@@ -49,8 +50,24 @@ namespace STech_Web.Areas.Admin.Controllers
                 return Json(new { success = false, error = "Thời gian bảo hành không được nhỏ hơn 0." });
             }
 
+            //Giá khuyến mãi < giá gốc
+            if(product.Price >= product.Cost)
+            {
+                return Json(new { success = false, error = "Giá khuyến mãi phải thấp hơn giá gốc." });
+            }
+
             //--------------
             DatabaseSTechEntities db = new DatabaseSTechEntities();
+            //Kiểm tra xem sản phẩm đã tồn tại chưa
+            List<Product> products = db.Products.ToList();
+            foreach(Product p in products) 
+            {
+                if (p.ProductID == product.ProductID)
+                {
+                    return Json(new { success = false, error = "Sản phẩm này đã tồn tại." });
+                }
+            }
+            
             //---
             WareHouse wh = new WareHouse();
             wh.ProductID = product.ProductID;
@@ -87,6 +104,13 @@ namespace STech_Web.Areas.Admin.Controllers
                 imgDetail.ImgDetailSrc = imgSrc4;
 
                 db.ProductImgDetails.Add(imgDetail);
+            }
+
+            //---
+            if(product.Price == null)
+            {
+                product.Price = product.Cost;
+                product.Cost = null;
             }
             //---
             db.Products.Add(product);
