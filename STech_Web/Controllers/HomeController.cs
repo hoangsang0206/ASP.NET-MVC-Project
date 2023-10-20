@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml;
+using System.Collections.Specialized;
 
 namespace STech_Web.Controllers
 {
@@ -47,10 +48,13 @@ namespace STech_Web.Controllers
             read.Load(filePath);
             XmlNode node = read.SelectSingleNode("/Countdown");
 
+            string startDate = node["startDate"].InnerText;
             string endDate = node["endDate"].InnerText;
 
-            Countdown countdown = new Countdown(endDate);
+            Countdown countdown = new Countdown(startDate, endDate);
 
+            ViewBag.CurrentDate = DateTime.Now;
+            ViewBag.StartDate = DateTime.Parse(countdown.startDate);
             ViewBag.Countdown = countdown;
         }
 

@@ -587,6 +587,7 @@ $('.get-all-poduct').click(() => {
 $('#cateID, #brandID').on('change', () => {
     var cateID = $('#cateID').val();
     var brandID = $('#brandID').val();
+    $('#search').val('');
     $('.loading').css('display', 'grid');
 
     $.ajax({

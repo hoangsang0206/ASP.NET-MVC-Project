@@ -351,7 +351,7 @@ footer {
     font-size: 1.1rem;
 }
 
-.form-input:focus ~ .input-label, .form-input:valid ~ .input-label {
+.form-input:focus ~ .input-label , .form-input:valid ~ .input-label  {
     transform: translateY(-110%);
     font-size: 0.8rem;
 }
@@ -616,7 +616,6 @@ footer span {
 }
 
 .categories-action-notice, .products-action-notice {
-    margin-left: 2rem;
     border-radius: 0.3rem;
     background: #fff3cd;
     padding: 0.5rem 1rem;
@@ -980,7 +979,7 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-04);
 }
 /*-----Product Action (add, delete, update) -------------------*/
-.delete-product-confirm, .update-product {
+.delete-product-confirm, .update-product, .add-product {
     position: fixed;
     top: 0;
     left: 0;
@@ -988,9 +987,38 @@ input[name="category"]:checked ~ .categories-label-box {
     height: 100vh;
     background: #00000075;
     display: grid;
+    visibility: visible;
     place-items: center;
+    z-index: 55;
+    cursor: pointer;
 }
 
+.add-product-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.product-form-container {
+    width: 95%;
+    height: 90%;
+    padding: 2rem;
+    border-radius: 0.3rem;
+    background: var(--sidebar-color);
+}
+
+.left-form, .right-form {
+    width: 50%;
+    padding: 0 0.5rem 0 0;
+}
+
+.form-btn-box {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.form-submit-btn.product-submit-btn {
+    width: 25%;
+}
 
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
@@ -1107,6 +1135,10 @@ input[name="category"]:checked ~ .categories-label-box {
 
     .categories-content-box h5 {
         margin-right: 1rem;
+        overflow-x: scroll;
+    }
+
+    .categories-action-notice, .products-action-notice {
         overflow-x: scroll;
     }
 }

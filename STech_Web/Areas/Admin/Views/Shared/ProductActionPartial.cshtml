@@ -16,3 +16,60 @@
 <div class="update-product">
 
 </div>
+
+<div class="add-product">
+    <div class="product-form-container">
+        <div class="close-form close-add-product position-absolute">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h3 class="form-header text-center m-0">THÊM SẢN PHẨM</h3>
+        <div class="form-error"></div>
+        <form action="#" method="post" class="add-product-form d-flex flex-wrap">
+
+            <div class="left-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-id" name="add-product-id" value="" class="form-input" required />
+                    <label for="add-product-id" class="input-label position-absolute">Mã sản phẩm</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-name" name="add-product-name" value="" class="form-input" required />
+                    <label for="add-product-name" class="input-label position-absolute">Tên sản phẩm</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-cost" name="add-product-cost" value="" class="form-input" required />
+                    <label for="add-product-cost" class="input-label position-absolute">Giá</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-price" name="add-product-price" value="" class="form-input" required />
+                    <label for="add-product-price" class="input-label position-absolute">Giá khuyến mãi</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <select class="form-input" id="add-product-cate">
+                        <option value="" selected>Danh mục</option>
+                        @foreach (var cate in ViewBag.Categories)
+                        {
+                            <option value="@cate.CateID">@cate.CateName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <select class="form-input" id="add-product-brand">
+                        <option value="" selected>Hãng</option>
+                        @foreach (var brand in ViewBag.Brands)
+                        {
+                            <option value="@brand.BrandID">@brand.BrandName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="right-form">
+
+            </div>  
+
+            <div class="form-btn-box">
+                <button type="submit" class="form-submit-btn product-submit-btn">THÊM SẢN PHẨM</button>
+            </div>
+        </form>
+    </div>
+</div>
