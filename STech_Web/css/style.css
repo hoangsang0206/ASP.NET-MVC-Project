@@ -418,7 +418,7 @@ header {
 .login-info-box {
     top: 135%;
     right: 0;
-    width: 250%;
+    min-width: 250%;
     padding: 1.2rem 1rem 1.5rem 1rem;
     background: #ffffff;
     border-radius: 0.2rem;
@@ -447,6 +447,10 @@ header {
 .login-info-box h4 {
     font-size: 1rem;
     margin: 0;
+}
+
+.login-info-box a {
+    white-space: nowrap;
 }
 
 .login-info-box a:hover span {
@@ -570,7 +574,7 @@ header {
     font-size: 1.1rem;
 }
 
-.form-input:focus ~ .input-label, .form-input:valid ~ .input-label {
+.form-input:focus ~ .input-label, .form-input.input-valid ~ .input-label {
     transform: translateY(-110%);
     font-size: 0.8rem;
 }
@@ -842,7 +846,7 @@ main {
 .sidebar {
     width: 20%;
     border-radius: 0.2rem;
-    background: #ffff;
+    background: none;
     z-index: 2;
 }
 
@@ -850,6 +854,8 @@ main {
     padding: 0;
     list-style-type: none;
     margin: 0;
+    background: #ffffff;
+    border-radius: 0.2rem;
 }
 
 .megamenu-item-box {

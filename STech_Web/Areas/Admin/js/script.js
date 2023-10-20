@@ -35,6 +35,26 @@ $('.toggle').click(() => {
     $('.sidebar').toggleClass('close');
 })
 
+//-------------------------------------------------------------------
+function checkInputValid(_input) {
+    if (_input.val().length > 0) {
+        _input.addClass('input-valid');
+    }
+    else {
+        _input.removeClass('input-valid');
+    }
+}
+
+const inputArr = $('.form-input').toArray();
+inputArr.forEach((input) => {
+    var _input = $(input);
+
+    _input.on({
+        focus: () => { checkInputValid(_input) },
+        change: () => { checkInputValid(_input) }
+    });
+})
+
 // --- Admin login with ajax ----------------------------------------
 $('.admin-login-form').submit((e) => {
     e.preventDefault();
@@ -185,6 +205,7 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                             <div class="product-price d-flex align-items-center">
                                 ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                             </div>
+                            <input type="hidden" name="productID" value="${responses[i].ProductID}" />
                             <button class="update-product-btn product-hidden-btn">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
@@ -376,6 +397,8 @@ function setCateValue() {
 
     $('#update-category-id').val(cateID);
     $('#update-category-name').val(cateName);
+    checkInputValid($('#update-category-id'));
+    checkInputValid($('#update-category-name'));
 }
 
 $('.update-category-btn').click(() => {
@@ -486,6 +509,7 @@ $('.search-products').submit((e) => {
                                                 <div class="product-price d-flex align-items-center">
                                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                                                 </div>
+                                                <input type="hidden" name="productID" value="${responses[i].ProductID}" />
                                                 <button class="update-product-btn product-hidden-btn">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
@@ -557,6 +581,7 @@ $('.get-all-poduct').click(() => {
                                                 <div class="product-price d-flex align-items-center">
                                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                                                 </div>
+                                                <input type="hidden" name="productID" value="${responses[i].ProductID}" />
                                                 <button class="update-product-btn product-hidden-btn">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
@@ -633,6 +658,7 @@ $('#cateID, #brandID').on('change', () => {
                                                 <div class="product-price d-flex align-items-center">
                                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                                                 </div>
+                                                <input type="hidden" name="productID" value="${responses[i].ProductID}" />
                                                 <button class="update-product-btn product-hidden-btn">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
@@ -660,3 +686,92 @@ $('#cateID, #brandID').on('change', () => {
 })
 
 //Add product --------------------------------------------------------
+//Check quantity > 0
+$('#add-product-quantity').keyup(() => {
+    var inputVal = $('#add-product-quantity').val();
+    if (isNaN(inputVal)) {
+        var str = `<span>
+            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+            Số lượng không hợp lệ.
+        </span>`;
+        $('.add-product .form-error').empty();
+        $('.add-product .form-error').show();
+        $('.add-product .form-error').append(str);
+    } else if (inputVal < 0) {
+        var str = `<span>
+            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+            Số lượng không được nhỏ hơn 0.
+        </span>`;
+        $('.add-product .form-error').empty();
+        $('.add-product .form-error').show();
+        $('.add-product .form-error').append(str);
+    }
+    else {
+        $('.add-product .form-error').empty();
+        $('.add-product .form-error').hide();
+    }
+})
+
+//--Show/hide form product--------------------
+$('.add-product-btn').click(() => {
+    $('.add-product').css('visibility', 'visible');
+    $('.product-form-container').addClass('showForm');
+})
+
+$('.close-product-form').click(() => {
+    $('.add-product').css('visibility', 'hidden');
+    $('.product-form-container').removeClass('showForm');
+}) 
+
+//Add product --------------------------------
+$('.add-product-form').submit((e) => {
+    var productID = $('.add-product #ProductID').val();
+    var productName = $('.add-product #ProductName').val();
+    var productCost = $('.add-product #Cost').val();
+    var productPrice = $('.add-product #Price').val();
+    var cateID = $('.add-product #CateID').val();
+    var brandID = $('.add-product #BrandID').val();
+    var imgSrc = $('.add-product #ImgSrc').val();
+    var warranty = $('.add-product #Warranty').val();
+    var quantity = $('#add-product-quantity').val();
+    var imgSrc1 = $('#add-product-image-1').val();
+    var imgSrc2 = $('#add-product-image-2').val();
+    var imgSrc3 = $('#add-product-image-3').val();
+    var imgSrc4 = $('#add-product-image-4').val();
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: '/admin/products/addproduct',
+        data: {
+            'ProductID': productID,
+            'ProductName': productName,
+            'Cost': productCost,
+            'Price': productPrice,
+            'CateID': cateID,
+            'BrandID': brandID,
+            'ImgSrc': imgSrc,
+            'Warranty': warranty,
+            quantity: quantity,
+            imgSrc1: imgSrc1,
+            imgSrc2: imgSrc2,
+            imgSrc3: imgSrc3,
+            imgSrc4: imgSrc4
+        },
+        success: (responses) => {
+            if (responses.success) {
+                $('.add-product-form').unbind('submit').submit();
+            }
+            else {
+                var str = `<span>
+                        <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                        ${responses.error}
+                    </span>`;
+                $('.add-product .form-error').empty();
+                $('.add-product .form-error').show();
+                $('.add-product .form-error').append(str);
+            }
+        },
+        error: (err) => { //console.log(err)
+        }
+    })
+})

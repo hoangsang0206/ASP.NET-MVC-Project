@@ -18,8 +18,8 @@
 </div>
 
 <div class="add-product">
-    <div class="product-form-container">
-        <div class="close-form close-add-product position-absolute">
+    <div class="product-form-container position-relative">
+        <div class="close-form close-product-form position-absolute">
             <i class="fa-solid fa-xmark"></i>
         </div>
         <h3 class="form-header text-center m-0">THÊM SẢN PHẨM</h3>
@@ -28,23 +28,23 @@
 
             <div class="left-form">
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-id" name="add-product-id" value="" class="form-input" required />
-                    <label for="add-product-id" class="input-label position-absolute">Mã sản phẩm</label>
+                    <input type="text" id="ProductID" name="ProductID" value="" class="form-input" required />
+                    <label for="ProductID" class="input-label position-absolute">Mã sản phẩm</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-name" name="add-product-name" value="" class="form-input" required />
-                    <label for="add-product-name" class="input-label position-absolute">Tên sản phẩm</label>
+                    <input type="text" id="ProductName" name="ProductName" value="" class="form-input" required />
+                    <label for="ProductName" class="input-label position-absolute">Tên sản phẩm</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-cost" name="add-product-cost" value="" class="form-input" required />
-                    <label for="add-product-cost" class="input-label position-absolute">Giá</label>
+                    <input type="text" id="Cost" name="Cost" value="" class="form-input" required />
+                    <label for="Cost" class="input-label position-absolute">Giá</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-price" name="add-product-price" value="" class="form-input" required />
-                    <label for="add-product-price" class="input-label position-absolute">Giá khuyến mãi</label>
+                    <input type="text" id="Price" name="Price" value="" class="form-input" />
+                    <label for="Price" class="input-label position-absolute">Giá khuyến mãi</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <select class="form-input" id="add-product-cate">
+                    <select class="form-input select-input" id="CateID" name="CateID">
                         <option value="" selected>Danh mục</option>
                         @foreach (var cate in ViewBag.Categories)
                         {
@@ -53,7 +53,7 @@
                     </select>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <select class="form-input" id="add-product-brand">
+                    <select class="form-input select-input" id="BrandID" name="BrandID">
                         <option value="" selected>Hãng</option>
                         @foreach (var brand in ViewBag.Brands)
                         {
@@ -61,14 +61,42 @@
                         }
                     </select>
                 </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="number" id="Warranty" name="Warranty" value="" class="form-input" min="0" required />
+                    <label for="add-product-quantity" class="input-label position-absolute">Thời gian bảo hành (tháng)</label>
+                </div>
             </div>
 
             <div class="right-form">
-
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="number" id="add-product-quantity" value="" class="form-input" min="0" required />
+                    <label for="add-product-quantity" class="input-label position-absolute">Số lượng</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="ImgSrc" name="ImgSrc" value="" class="form-input" required />
+                    <label for="ImgSrc" class="input-label position-absolute">Đường dẫn hình ảnh chính</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-1" value="" class="form-input" />
+                    <label for="add-product-image-1" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 1</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-2" value="" class="form-input" />
+                    <label for="add-product-image-2" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 2</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-3" value="" class="form-input" />
+                    <label for="add-product-image-3" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 3</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-4" value="" class="form-input" />
+                    <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 4</label>
+                </div>
             </div>  
 
-            <div class="form-btn-box">
+            <div class="form-btn-box d-flex gap-3">
                 <button type="submit" class="form-submit-btn product-submit-btn">THÊM SẢN PHẨM</button>
+                <button type="reset" class="form-submit-reset">Nhập lại</button>
             </div>
         </form>
     </div>

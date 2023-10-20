@@ -271,7 +271,7 @@ $(document).ready(function () {
             $('.search-history').css('padding', '0 0 1rem 0');
             $('.search-history').children('h4').hide();
 
-            for (var i = 0; i < searchHistory.length; i++) {
+            for (var i = searchHistory.length - 1; i >= 0; i--) {
                 $('.search-history-list').append(`<a href="/search/${searchHistory[i]}">`
                     + `<li class="search-history-list-item">`
                     + searchHistory[i] + '</li>' + '</a>');
@@ -358,6 +358,25 @@ $("#search").keyup(function () {
     })
 })
 
+//-----------------------------------------------------------------------
+function checkInputValid(_input) {
+    if (_input.val().length > 0) {
+        _input.addClass('input-valid');
+    }
+    else {
+        _input.removeClass('input-valid');
+    }
+}
+
+const inputArr = $('.form-input').toArray();
+inputArr.forEach((input) => {
+    var _input = $(input);
+
+    _input.on({
+        focus: () => { checkInputValid(_input) },
+        change: () => { checkInputValid(_input) }
+    });
+})
 
 //---Show password ------------------------------------------------------
 var passwordInputArr = $('input[name="Password"], input[name="ConfirmPassword"]').toArray();
