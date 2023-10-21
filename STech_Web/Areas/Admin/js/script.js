@@ -105,10 +105,12 @@ $('.dashboard-products').click(() => {
 
 //--AJAX get list category --------------------
 function reloadCategories() {
+    $('.loading').css('display', 'grid');
     $.ajax({
         type: 'GET',
         url: '/api/categories',
         success: (responses) => {
+            hideLoading();
             if (responses != null) {
                 $('.categories-list').empty();
                 for (var i = 0; i < responses.length; i++) {
@@ -125,14 +127,15 @@ function reloadCategories() {
                 }
             }
         },
-        error: (err) => { console.log(err) }
+        error: (err) => {
+            hideLoading();
+            console.log(err)
+        }
     })
 }
 
 $('.reload-categories').click(() => {
-    $('.loading').css('display', 'grid');
     reloadCategories();   
-    hideLoading();
 })
 
 //--AJAX get list product in category --------------------
@@ -171,9 +174,7 @@ $(document).on('change', 'input[name = "category"]', (e) => {
             cateID: categoryValue
         },
         success: (responses) => {
-
             hideLoading();
-            
             if (responses != null) {
                 $('.products-cate-list').empty();
                 var str1 = "Sản phẩm thuộc danh mục - " + responses.length;
@@ -191,12 +192,16 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                     if (responses[i] != null) {
                         var str2 = `<div class="product-box-container">
                         <div class="product-box position-relative">
-                            <div class="product-image lazy-loading">
-                                <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                            </div>
-                            <div class="product-name">
-                                ${responses[i].ProductName}
-                            </div>
+                            <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                </div>
+                            </a>
+                            <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                <div class="product-name">
+                                    ${responses[i].ProductName}
+                                </div>
+                            </a>
                             <div class="product-original-price">
                                 ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                 `<span style="visibility: hidden">0</span>`
@@ -205,12 +210,11 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                             <div class="product-price d-flex align-items-center">
                                 ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                             </div>
-                            <input type="hidden" name="productID" value="${responses[i].ProductID}" />
-                            <button class="update-product-btn product-hidden-btn">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                            <button class="delete-product-btn product-hidden-btn">
+                            <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
                                 <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </button>
+                            <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
+                                <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
                     </div>`;
@@ -229,7 +233,6 @@ $(document).on('change', 'input[name = "category"]', (e) => {
         },
         error: (err) => {
             hideLoading();
-
             console.log(err);
         }
     })
@@ -259,7 +262,7 @@ $('.add-category-form').submit((e) => {
     e.preventDefault();
     var cateID = $('#category-id').val();
     var cateName = $('#category-name').val();
-
+    $('.loading').css('display', 'grid');
     $.ajax({
         type: 'POST',
         url: '/admin/categories/addcategory',
@@ -268,12 +271,16 @@ $('.add-category-form').submit((e) => {
             CateName: cateName
         },
         success: (response) => {
+            hideLoading();
             if (response.success) {
-                $('#category-id').val('');
-                $('#category-name').val('');
                 checkInputValid($('#category-id'));
                 checkInputValid($('#category-name'));
-                showOkForm();
+                var interval = setInterval(() => {
+                    showOkForm();
+                    $('#category-id').val('');
+                    $('#category-name').val('');
+                    clearInterval(interval);
+                }, 620);
             }
             else {
                 var str = `<span>
@@ -284,11 +291,20 @@ $('.add-category-form').submit((e) => {
                 $('.add-category .form-error').empty();
                 $('.add-category .form-error').append(str);
             }
+        },
+        error: () => {
+            hideLoading();
         }
     })
 })
 
 //Delete category ----------------------------------------------------
+$('.delete-cate-confirm').click((e) => {
+    if ($(e.target).closest('.delete-cate-confirm-box').length <= 0) {
+        $('.delete-cate-confirm').css('visibility', 'hidden');
+        $('.delete-cate-confirm .delete-cate-confirm-box').removeClass('show');
+    }
+})
 function hideCateNotice() {
     $('.categories-action-notice').hide();
 }
@@ -329,7 +345,7 @@ $('.delete-cate-confirm-no').click(() => {
 
 $('.delete-cate-confirm-yes').click(() => {
     var cateID = $('input[name="category"]:checked').val();
-
+    $('.loading').css('display', 'grid');
     $.ajax({
         type: 'POST',
         url: '/admin/categories/deletecategory',
@@ -337,6 +353,7 @@ $('.delete-cate-confirm-yes').click(() => {
             CateID: cateID
         },
         success: (response) => {
+            hideLoading();
             if (response.success) {
                 var str = `<span>Xóa thành công.</span>`
                 $('.categories-action-notice').empty();
@@ -367,6 +384,9 @@ $('.delete-cate-confirm-yes').click(() => {
                     clearInterval(interval);
                 }, 4000);
             }
+        },
+        error: () => {
+            hideLoading();
         }
     })
 })
@@ -427,7 +447,7 @@ $('.update-category-form').submit((e) => {
     e.preventDefault();
     var cateID = $('#update-category-id').val();
     var cateName = $('#update-category-name').val();
-
+    $('.loading').css('display', 'grid');
     $.ajax({
         type: 'POST',
         url: '/admin/categories/updatecategory',
@@ -436,8 +456,12 @@ $('.update-category-form').submit((e) => {
             CateName: cateName
         },
         success: (response) => {
+            hideLoading();
             if (response.success) {
-                showUpdateOkForm();
+                var interval = setInterval(() => {
+                    showUpdateOkForm();
+                    clearInterval(interval);
+                }, 620);
             }
             else {
                 var str = `<span>${response.error}</span>`;
@@ -445,6 +469,9 @@ $('.update-category-form').submit((e) => {
                 $('.update-category .form-error').empty();
                 $('.update-category .form-error').append(str);
             }
+        },
+        error: () => {
+            hideLoading();
         }
     })
 })
@@ -454,14 +481,12 @@ $('.update-category-form').submit((e) => {
 //Reload ----------------------------
 $('.reload-products').click(() => {
     $('.loading').css('display', 'grid');
-
+    hideLoading();
     $('.product-list').empty();
     $('.total-result').empty();
     $('.product-list').css('height', '20rem');
     $('#search').val('');
     $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
-
-    hideLoading();
 })
 //Search ----------------------------
 $('.search-products').submit((e) => {
@@ -499,12 +524,16 @@ $('.search-products').submit((e) => {
                         if (responses[i] != null) {
                             var str2 = `<div class="product-box-container">
                                             <div class="product-box position-relative">
-                                                <div class="product-image lazy-loading">
-                                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                                                </div>
-                                                <div class="product-name">
-                                                    ${responses[i].ProductName}
-                                                </div>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-image lazy-loading">
+                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                    </div>
+                                                </a>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-name">
+                                                        ${responses[i].ProductName}
+                                                    </div>
+                                                </a>
                                                 <div class="product-original-price">
                                                     ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                                         `<span style="visibility: hidden">0</span>`
@@ -513,12 +542,11 @@ $('.search-products').submit((e) => {
                                                 <div class="product-price d-flex align-items-center">
                                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                                                 </div>
-                                                <input type="hidden" name="productID" value="${responses[i].ProductID}" />
-                                                <button class="update-product-btn product-hidden-btn">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                                <button class="delete-product-btn product-hidden-btn">
+                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
                                                     <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
+                                                    <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>
                                         </div>`;
@@ -571,26 +599,28 @@ $('.get-all-poduct').click(() => {
                     if (responses[i] != null) {
                         var str2 = `<div class="product-box-container">
                                             <div class="product-box position-relative">
-                                                <div class="product-image lazy-loading">
-                                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                                                </div>
-                                                <div class="product-name">
-                                                    ${responses[i].ProductName}
-                                                </div>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-image lazy-loading">
+                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                    </div>
+                                                </a>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-name">
+                                                        ${responses[i].ProductName}
+                                                    </div>
+                                                </a>
                                                 <div class="product-original-price">
                                                     ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
-                                `<span style="visibility: hidden">0</span>`
-                            }
+                                                    `<span style="visibility: hidden">0</span>`}
                                                 </div>
                                                 <div class="product-price d-flex align-items-center">
                                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                                                 </div>
-                                                <input type="hidden" name="productID" value="${responses[i].ProductID}" />
-                                                <button class="update-product-btn product-hidden-btn">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                                <button class="delete-product-btn product-hidden-btn">
+                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
                                                     <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
+                                                    <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>
                                         </div>`;
@@ -648,12 +678,16 @@ $('#cateID, #brandID').on('change', () => {
                     if (responses[i] != null) {
                         var str2 = `<div class="product-box-container">
                                             <div class="product-box position-relative">
-                                                <div class="product-image lazy-loading">
-                                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                                                </div>
-                                                <div class="product-name">
-                                                    ${responses[i].ProductName}
-                                                </div>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-image lazy-loading">
+                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                    </div>
+                                                </a>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-name">
+                                                        ${responses[i].ProductName}
+                                                    </div>
+                                                </a>
                                                 <div class="product-original-price">
                                                     ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                 `<span style="visibility: hidden">0</span>`
@@ -662,12 +696,11 @@ $('#cateID, #brandID').on('change', () => {
                                                 <div class="product-price d-flex align-items-center">
                                                     ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
                                                 </div>
-                                                <input type="hidden" name="productID" value="${responses[i].ProductID}" />
-                                                <button class="update-product-btn product-hidden-btn">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                                <button class="delete-product-btn product-hidden-btn">
+                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
                                                     <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
+                                                    <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>
                                         </div>`;
@@ -757,11 +790,11 @@ $('.add-product-form').submit((e) => {
     var brandID = $('.add-product #BrandID').val();
     var imgSrc = $('.add-product #ImgSrc').val();
     var warranty = $('.add-product #Warranty').val();
-    var quantity = $('#add-product-quantity').val();
-    var imgSrc1 = $('#add-product-image-1').val();
-    var imgSrc2 = $('#add-product-image-2').val();
-    var imgSrc3 = $('#add-product-image-3').val();
-    var imgSrc4 = $('#add-product-image-4').val();
+    var quantity = $('.add-product #add-product-quantity').val();
+    var imgSrc1 = $('.add-product #add-product-image-1').val();
+    var imgSrc2 = $('.add-product #add-product-image-2').val();
+    var imgSrc3 = $('.add-product #add-product-image-3').val();
+    var imgSrc4 = $('.add-product #add-product-image-4').val();
     e.preventDefault();
 
     //Clear input value
@@ -777,7 +810,7 @@ $('.add-product-form').submit((e) => {
             $(select).prop('selectedIndex', 0);
         })
     }
-
+    $('.loading').css('display', 'grid');
     $.ajax({
         type: 'POST',
         url: '/admin/products/addproduct',
@@ -797,12 +830,15 @@ $('.add-product-form').submit((e) => {
             imgSrc4: imgSrc4
         },
         success: (responses) => {
-            
+            hideLoading();
             if (responses.success) {
                 $('.add-product .form-error').empty();
                 $('.add-product .form-error').hide();
-                clearInputVal();
-                showOkForm();
+                var interval = setInterval(() => {
+                    clearInputVal();
+                    showOkForm();
+                    clearInterval(interval);
+                }, 620);
             }
             else {
                 var str = `<span>
@@ -812,10 +848,17 @@ $('.add-product-form').submit((e) => {
                 $('.add-product .form-error').empty();
                 $('.add-product .form-error').show();
                 $('.add-product .form-error').append(str);
+
+                var interval = setInterval(() => {
+                    $('.add-product .form-error').empty();
+                    $('.add-product .form-error').hide();
+                    clearInterval(interval)
+                }, 8000)
             }
         },
         error: (err) => {
             console.log(err);
+            hideLoading();
         }
     })
 })
@@ -831,5 +874,114 @@ $('.add-product-form').on('reset', () => {
     const selectArr = $('.add-product select').toArray();
     selectArr.forEach((select) => {
         $(select).prop('selectedIndex', 0);
+    })
+})
+
+//-------
+$(document).ready(() => {
+    var productDetailInput = $('.product-detail-form input').toArray();
+    productDetailInput.forEach((input) => {
+        checkInputValid($(input));
+    })
+})
+
+//Update product --------------------------------
+$('.product-detail-form').submit((e) => {
+    e.preventDefault();
+    var productID = $('.product-detail-form #ProductID').val();
+    var productName = $('.product-detail-form #ProductName').val();
+    var productCost = $('.product-detail-form #Cost').val();
+    var productPrice = $('.product-detail-form #Price').val();
+    var cateID = $('.product-detail-form #CateID').val();
+    var brandID = $('.product-detail-form #BrandID').val();
+    var imgSrc = $('.product-detail-form #ImgSrc').val();
+    var warranty = $('.product-detail-form #Warranty').val();
+    var quantity = $('.product-detail-form #add-product-quantity').val();
+    var imgSrc1 = $('.product-detail-form #add-product-image-1').val();
+    var imgSrc2 = $('.product-detail-form #add-product-image-2').val();
+    var imgSrc3 = $('.product-detail-form #add-product-image-3').val();
+    var imgSrc4 = $('.product-detail-form #add-product-image-4').val();
+    $('.loading').css('display', 'grid');
+    $.ajax({
+        type: 'POST',
+        url: '/admin/products/updateproduct',
+        data: {
+            'ProductID': productID,
+            'ProductName': productName,
+            'Cost': productCost,
+            'Price': productPrice,
+            'CateID': cateID,
+            'BrandID': brandID,
+            'ImgSrc': imgSrc,
+            'Warranty': warranty,
+            quantity: quantity,
+            imgSrc1: imgSrc1,
+            imgSrc2: imgSrc2,
+            imgSrc3: imgSrc3,
+            imgSrc4: imgSrc4
+        },
+        success: (responses) => {
+            hideLoading();
+            if (responses.success) {
+                $('.product-detail .form-error').empty();
+                $('.product-detail .form-error').hide();
+                var interval = setInterval(() => {
+                    showUpdateOkForm();
+                    clearInterval(interval);
+                }, 620);
+            }
+            else {
+                var str = `<span>
+                        <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                        ${responses.error}
+                    </span>`;
+                $('.product-detail .form-error').empty();
+                $('.product-detail .form-error').show();
+                $('.product-detail .form-error').append(str);
+
+                var interval = setInterval(() => {
+                    $('.add-product .form-error').empty();
+                    $('.add-product .form-error').hide();
+                    clearInterval(interval)
+                }, 8000)
+            }
+        },
+        error: () => {
+            hideLoading();
+        }
+    })
+})
+
+//Delete product --------------------------------
+    $('.delete-product-btn').click(() => {
+    $('.delete-product-confirm').css('visibility', 'visible');
+    $('.delete-confirm-box').addClass('show');
+    //----------
+    $('.cancel-delete').click(() => {
+        $('.delete-product-confirm').css('visibility', 'hidden');
+        $('.delete-confirm-box').removeClass('show');
+    })
+    //----------
+    $('.confirm-delete').click((e) => {
+        var productID = "";
+            //----------
+        $('.loading').css('display', 'grid');
+        $.ajax({
+            type: 'POST',
+            url: '/admin/products/deleteproduct',
+            data: {
+                id: productID
+            },
+            success: (res) => {
+                hideLoading();
+
+            },
+            error: () => {
+                hideLoading();
+            }
+        })
+
+        $('.delete-product-confirm').css('visibility', 'hidden');
+        $('.delete-confirm-box').removeClass('show');
     })
 })

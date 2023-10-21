@@ -31,13 +31,11 @@ namespace STech_Web.Areas.Admin.Controllers
             List<Category> categories = db.Categories.ToList();
 
             //Kiểm tra category đã tồn tại chưa
-            foreach (Category c in categories)
+            Category category = db.Categories.FirstOrDefault(t => t.CateID == cate.CateID);
+
+            if (category != null)
             {
-                if(c.CateID == cate.CateID)
-                {
-                    string err = "Danh mục này đã tồn tại";
-                    return Json(new { success = false, error = err });
-                }    
+                return Json(new { success = false, error = "Danh mục này đã tồn tại." });
             }
 
             db.Categories.Add(cate);
@@ -50,7 +48,6 @@ namespace STech_Web.Areas.Admin.Controllers
         public ActionResult DeleteCategory(string cateID) 
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Category> categories = db.Categories.ToList();
 
             //Kiểm tra xem danh mục này có sản phẩm không 
             List<Product> products = db.Products.Where(t => t.CateID == cateID).ToList();
@@ -61,38 +58,41 @@ namespace STech_Web.Areas.Admin.Controllers
 
             }
 
-            foreach (Category c in categories)
+            //Kiểm tra xem danh mục có tồn tại không
+            Category category = db.Categories.FirstOrDefault(t => t.CateID == cateID);
+            if (category == null)
             {
-                if(c.CateID == cateID)
-                {
-                    db.Categories.Remove(c);
-                    db.SaveChanges();
-
-                    return Json(new { success = true });
-                }
+                return Json(new { success = false, error = "Danh mục này không tồn tại." });
             }
 
-            return Json(new { success = false , err = "Xóa thất bại."});
+            db.Categories.Remove(category);
+            db.SaveChanges();
+
+            return Json(new { success = true });
         }
 
         //Sửa danh mục
         public ActionResult UpdateCategory(Category cate)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Category> categories = db.Categories.ToList();
+            Category category = db.Categories.FirstOrDefault(t => t.CateID == cate.CateID);
 
-            foreach (Category c in categories)
+            //Kiểm tra xem danh mục có tồn tại không
+            if (category == null)
             {
-                if (c.CateID == cate.CateID)
-                {
-                    c.CateName = cate.CateName;
-                    db.SaveChanges();
-
-                    return Json(new { success = true });
-                }
+                return Json(new { success = false, error = "Danh mục này không tồn tại." });
             }
 
-            return Json(new { success = false, error = "Sửa thất bại" });
+            //------
+            if (cate.CateName == null || cate.CateName.Length <= 0)
+            {
+                return Json(new { success = false, error = "Tên danh mục không được  để trống." });
+            }
+
+            category.CateName = cate.CateName;
+            db.SaveChanges();
+
+            return Json(new { success = true });
         }
     }
 }

@@ -1,0 +1,121 @@
+﻿@model STech_Web.Models.Product
+@{
+    ViewBag.Title = Model.ProductName;
+}
+
+<div class="product-detail-page">
+    <h2 class="title">Thông tin sản phẩm</h2>
+    <div class="breadcrumb">
+        <ul class="breadcrumb-list d-flex">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/admin/products">Sản phẩm</a>
+            </li>
+            <li class="breadcrumb-item">
+                @Model.ProductName
+            </li>
+        </ul>
+    </div>
+
+    <div class="product-detail">
+        <div class="form-error"></div>
+        <form action="#" method="post" class="product-detail-form d-flex flex-wrap">
+            <div class="left-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="ProductID" name="ProductID" value="@Model.ProductID" class="form-input" required />
+                    <label for="ProductID" class="input-label position-absolute">Mã sản phẩm</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="ProductName" name="ProductName" value="@Model.ProductName" class="form-input" required />
+                    <label for="ProductName" class="input-label position-absolute">Tên sản phẩm</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="Cost" name="Cost" value="@(Model.Cost == null ? Model.Price.ToString() : Model.Cost.ToString())" class="form-input" required />
+                    <label for="Cost" class="input-label position-absolute">Giá</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="Price" name="Price" value="@(Model.Cost == null ? "" : Model.Price.ToString())" class="form-input" />
+                    <label for="Price" class="input-label position-absolute">Giá khuyến mãi</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <select class="form-input select-input" id="CateID" name="CateID">
+                        @foreach (var cate in ViewBag.Categories)
+                        {
+                            if (Model.CateID == cate.CateID)
+                            {
+                                <option value="@cate.CateID" selected>@cate.CateName</option>
+                            }
+                            else
+                            {
+                                <option value="@cate.CateID">@cate.CateName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <select class="form-input select-input" id="BrandID" name="BrandID">
+                        <option value="" selected>Hãng</option>
+                        @foreach (var brand in ViewBag.Brands)
+                        {
+                            if (Model.BrandID == brand.BrandID)
+                            {
+                                <option value="@brand.BrandID" selected>@brand.BrandName</option>
+                            }
+                            else
+                            {
+                                <option value="@brand.BrandID">@brand.BrandName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="number" id="Warranty" name="Warranty" value="@Model.Warranty" class="form-input" min="0" required />
+                    <label for="add-product-quantity" class="input-label position-absolute">Thời gian bảo hành (tháng)</label>
+                </div>
+            </div>
+
+            <div class="right-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="number" id="add-product-quantity" value="@Model.WareHouse.Quantity" class="form-input" min="0" required />
+                    <label for="add-product-quantity" class="input-label position-absolute">Số lượng</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="ImgSrc" name="ImgSrc" value="@Model.ImgSrc" class="form-input" required />
+                    <label for="ImgSrc" class="input-label position-absolute">Đường dẫn hình ảnh chính</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-1" value="" class="form-input" />
+                    <label for="add-product-image-1" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 1</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-2" value="" class="form-input" />
+                    <label for="add-product-image-2" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 2</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-3" value="" class="form-input" />
+                    <label for="add-product-image-3" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 3</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-4" value="" class="form-input" />
+                    <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 4</label>
+                </div>
+            </div>
+
+            <div class="form-btn-box d-flex gap-3">
+                <button type="submit" class="form-submit-btn product-update-submit-btn">SỬA SẢN PHẨM</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="complete-update-notice">
+    <div class="complete-notice-box d-flex flex-column align-items-center">
+        <i class='bx bx-check-circle bx-tada'></i>
+        <span>Sửa thành công.</span>
+        <button>OK</button>
+    </div>
+</div>

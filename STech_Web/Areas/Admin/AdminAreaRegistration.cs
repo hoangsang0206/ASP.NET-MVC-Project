@@ -15,6 +15,12 @@ namespace STech_Web.Areas.Admin
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
+                "ProductDetail",
+                "admin/product/{id}",
+                new { controller = "Products", action = "Detail", id = UrlParameter.Optional }
+            );
+
+            context.MapRoute(
                 "Admin_home",
                 "admin/",
                 new { controller = "Dashboard", action = "Index", id = UrlParameter.Optional }

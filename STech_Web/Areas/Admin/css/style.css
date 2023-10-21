@@ -192,7 +192,7 @@ main {
 
 /*Loading ---------------------------------- */
 .loading {
-    width: calc(100% - 270px);
+    width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
@@ -201,10 +201,6 @@ main {
     place-items: center;
     background: #00000075;
     z-index: 70;
-}
-
-.sidebar.close ~ main .loading {
-    width: calc(100% - 95px);
 }
 
 .loader {
@@ -780,7 +776,9 @@ input[name="category"]:checked ~ .categories-label-box {
     cursor: pointer;
 }
 
-.form-box, .delete-cate-confirm-box {
+.form-box,
+.delete-cate-confirm-box,
+.delete-confirm-box {
     position: relative;
     background: var(--sidebar-color);
     width: 33%;
@@ -792,7 +790,9 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-03);
 }
 
-.form-box.show, .delete-cate-confirm-box.show {
+.form-box.show, 
+.delete-cate-confirm-box.show,
+.delete-confirm-box.show {
     transform: scale(1);
     opacity: 1;
 }
@@ -825,22 +825,26 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: all .3s ease;
 }
 
-.delete-cate-confirm-box i {
+.delete-cate-confirm-box i,
+.delete-confirm-box i{
     font-size: 4rem;
     color: #ff6606;
     margin-bottom: 1rem;
 }
 
-.delete-cate-confirm-box span {
+.delete-cate-confirm-box span,
+.delete-confirm-box span {
     font-size: 1.1rem;
 }
 
-.delete-cate-confirm-btn-box {
+.delete-cate-confirm-btn-box,
+.delete-button-box {
     width: 90%;
     margin-top: 1.5rem;
 }
 
-.delete-cate-confirm-btn-box button {
+.delete-cate-confirm-btn-box button,
+.delete-button-box button{
     border: none;
     padding: 0.7rem 1rem;
     border-radius: 0.2rem;
@@ -848,16 +852,19 @@ input[name="category"]:checked ~ .categories-label-box {
     font-weight: 500;
 }
 
-.delete-cate-confirm-no:hover {
+.delete-cate-confirm-no:hover,
+.cancel-delete:hover {
     background: #d4d4d4;
 }
 
-.delete-cate-confirm-yes {
+.delete-cate-confirm-yes,
+.confirm-delete {
     background: var(--primary-color);
     color: #ffffff;
 }
 
-.delete-cate-confirm-yes:hover {
+.delete-cate-confirm-yes:hover,
+.confirm-delete:hover {
     outline: 2px solid #938afc;
 }
 
@@ -1074,7 +1081,8 @@ input[name="category"]:checked ~ .categories-label-box {
     margin-top: 2rem;
 }
 
-.form-submit-btn.product-submit-btn {
+.form-submit-btn.product-submit-btn,
+.form-submit-btn.product-update-submit-btn {
     width: 25%;
     margin: 0;
 }
@@ -1111,6 +1119,27 @@ input[name="category"]:checked ~ .categories-label-box {
 .form-submit-reset:hover::before {
     transform: scaleX(1);
     transform-origin: left;
+}
+
+.form-submit-delete {
+    outline: none;
+    border: none;
+    padding: 0 1rem;
+    background: #e30019;
+    border-radius: 0.3rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.form-submit-delete:hover {
+    outline: 2px solid #fb7c7c;
+}
+
+/*-----------Product detail page -------------------*/
+.product-detail {
+    background: #ffffff;
+    border-radius: 0.3rem;
+    padding: 2rem 2.5rem;
 }
 
 /*---Responsive --------------------------------------------------------------*/
@@ -1156,14 +1185,6 @@ input[name="category"]:checked ~ .categories-label-box {
 
     .sidebar.close ~ main {
         left: 60px;
-        width: calc(100% - 60px);
-    }
-
-    .loading {
-        width: calc(100% - 70vw);
-    }
-
-    .sidebar.close ~ main .loading {
         width: calc(100% - 60px);
     }
 
