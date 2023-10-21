@@ -953,7 +953,11 @@ $('.product-detail-form').submit((e) => {
 })
 
 //Delete product --------------------------------
-    $('.delete-product-btn').click(() => {
+$(document).on('click ', '.delete-product-btn', (e) => {
+    const productID = $(e.target).data('product-id');
+    console.log(e.target)
+    console.log(productID)
+    //----------
     $('.delete-product-confirm').css('visibility', 'visible');
     $('.delete-confirm-box').addClass('show');
     //----------
@@ -962,8 +966,7 @@ $('.product-detail-form').submit((e) => {
         $('.delete-confirm-box').removeClass('show');
     })
     //----------
-    $('.confirm-delete').click((e) => {
-        var productID = "";
+    $('.confirm-delete').click(() => {
             //----------
         $('.loading').css('display', 'grid');
         $.ajax({
@@ -984,4 +987,11 @@ $('.product-detail-form').submit((e) => {
         $('.delete-product-confirm').css('visibility', 'hidden');
         $('.delete-confirm-box').removeClass('show');
     })
+})
+
+$('.delete-product-confirm').click((e) => {
+    if ($(e.target).closest('.delete-confirm-box').length <= 0) {
+        $('.delete-product-confirm').css('visibility', 'hidden');
+        $('.delete-confirm-box').removeClass('show');
+    }
 })

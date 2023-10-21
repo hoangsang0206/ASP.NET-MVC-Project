@@ -1001,6 +1001,14 @@ input[name="category"]:checked ~ .categories-label-box {
     z-index: 55;
 }
 
+.delete-product-confirm {
+    cursor: pointer;
+}
+
+.delete-confirm-box {
+    cursor: auto;
+}
+
 .complete-notice, .complete-update-notice {
     z-index: 60 !important;
 }

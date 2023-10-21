@@ -199,11 +199,15 @@ namespace STech_Web.Areas.Admin.Controllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
+            WareHouse wh = product.WareHouse;
+            ProductImgDetail imgDetail = product.ProductImgDetails.FirstOrDefault();
             if (product == null)
             {
                 return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
             }
 
+            db.WareHouses.Remove(wh);
+            db.ProductImgDetails.Remove(imgDetail);
             db.Products.Remove(product);
             db.SaveChanges();
             return Json(new { success = true });
