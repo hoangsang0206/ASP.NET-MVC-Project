@@ -31,7 +31,7 @@ namespace STech_Web.Areas.Admin.Controllers
             Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
             List<Category> categories = db.Categories.ToList();
             List<Brand> brands = db.Brands.ToList();
-            ProductImgDetail imgDetail = product.ProductImgDetails.FirstOrDefault();
+            ProductImgDetail imgDetail = product.ProductImgDetail;
 
             ViewBag.Categories = categories;
             ViewBag.Brands = brands;
@@ -138,8 +138,8 @@ namespace STech_Web.Areas.Admin.Controllers
             db.WareHouses.Add(wh);
 
             //---
-            ProductImgDetail imgDetail = pro.ProductImgDetails.FirstOrDefault();
-            updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
+            ProductImgDetail imgDetail = new ProductImgDetail();
+            updateProductImages(db, imgDetail, product.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
             //---
             db.SaveChanges();
             //---
@@ -185,7 +185,7 @@ namespace STech_Web.Areas.Admin.Controllers
             wh.Quantity = quantity;
 
             //--------------
-            ProductImgDetail imgDetail = pro.ProductImgDetails.FirstOrDefault();
+            ProductImgDetail imgDetail = pro.ProductImgDetail;
             updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
 
             //----------
@@ -199,17 +199,47 @@ namespace STech_Web.Areas.Admin.Controllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
-            WareHouse wh = product.WareHouse;
-            ProductImgDetail imgDetail = product.ProductImgDetails.FirstOrDefault();
             if (product == null)
             {
                 return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
             }
 
-            db.WareHouses.Remove(wh);
-            db.ProductImgDetails.Remove(imgDetail);
+            WareHouse wh = product.WareHouse;
+            ProductImgDetail imgDetail = product.ProductImgDetail;
+            if (wh != null)
+            {
+                db.WareHouses.Remove(wh);
+            }
+            if(imgDetail != null)
+            {
+                db.ProductImgDetails.Remove(imgDetail);
+            }
             db.Products.Remove(product);
             db.SaveChanges();
+            return Json(new { success = true });
+        }
+
+        //Delete all product in category
+        public ActionResult DeleteAllInCategory(string cateID)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Category category = db.Categories.FirstOrDefault(t => t.CateID == cateID);
+
+            if (category == null)
+            {
+                return Json(new { success = false, error = "Danh mục " + category.CateName +" không tồn tại." });
+            }
+
+            if(category.Products.Count <= 0)
+            {
+                return Json(new { success = false, error = "Không có sản phẩm nào thuộc danh mục " + category.CateName + "." });
+            }
+
+            List<Product> products = category.Products.ToList();
+            
+            db.Products.RemoveRange(products);
+            db.SaveChanges();
+
             return Json(new { success = true });
         }
     }

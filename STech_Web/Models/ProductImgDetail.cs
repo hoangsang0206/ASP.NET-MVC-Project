@@ -14,7 +14,6 @@ namespace STech_Web.Models
     
     public partial class ProductImgDetail
     {
-        public int ImgDetailId { get; set; }
         public string ProductID { get; set; }
         public string ImgSrc1 { get; set; }
         public string ImgSrc2 { get; set; }

@@ -366,7 +366,7 @@ $('.delete-cate-confirm-yes').click(() => {
                 var interval = setInterval(() => {
                     hideCateNotice();
                     clearInterval(interval);
-                }, 4000);
+                }, 6000);
             }
             else {
                 var str = `<span>
@@ -886,6 +886,10 @@ $(document).ready(() => {
 })
 
 //Update product --------------------------------
+$('.product-detail-form #ProductID').on('keydown', (e) => {
+    e.preventDefault();
+})
+
 $('.product-detail-form').submit((e) => {
     e.preventDefault();
     var productID = $('.product-detail-form #ProductID').val();
@@ -955,15 +959,13 @@ $('.product-detail-form').submit((e) => {
 //Delete product --------------------------------
 $(document).on('click ', '.delete-product-btn', (e) => {
     const productID = $(e.target).data('product-id');
-    console.log(e.target)
-    console.log(productID)
     //----------
     $('.delete-product-confirm').css('visibility', 'visible');
-    $('.delete-confirm-box').addClass('show');
+    $('.delete-product-confirm .delete-confirm-box').addClass('show');
     //----------
     $('.cancel-delete').click(() => {
         $('.delete-product-confirm').css('visibility', 'hidden');
-        $('.delete-confirm-box').removeClass('show');
+        $('.delete-product-confirm .delete-confirm-box').removeClass('show');
     })
     //----------
     $('.confirm-delete').click(() => {
@@ -977,7 +979,11 @@ $(document).on('click ', '.delete-product-btn', (e) => {
             },
             success: (res) => {
                 hideLoading();
-
+                var interval = setInterval(() => {
+                    $('.complete-delete-notice').css('visibility', 'visible');
+                    $('.complete-delete-notice .complete-notice-box').addClass('showForm');
+                    clearInterval(interval);
+                }, 620);
             },
             error: () => {
                 hideLoading();
@@ -985,13 +991,108 @@ $(document).on('click ', '.delete-product-btn', (e) => {
         })
 
         $('.delete-product-confirm').css('visibility', 'hidden');
-        $('.delete-confirm-box').removeClass('show');
+        $('.delete-product-confirm .delete-confirm-box').removeClass('show');
     })
 })
 
 $('.delete-product-confirm').click((e) => {
     if ($(e.target).closest('.delete-confirm-box').length <= 0) {
         $('.delete-product-confirm').css('visibility', 'hidden');
-        $('.delete-confirm-box').removeClass('show');
+        $('.delete-product-confirm .delete-confirm-box').removeClass('show');
     }
+})
+
+$('.complete-delete-notice .complete-notice-box button').click(() => {
+    $('.complete-delete-notice').css('visibility', 'hidden');
+    $('.complete-delete-notice .complete-notice-box').removeClass('showForm');
+})
+
+$('.complete-delete-notice').click((e) => {
+    if ($(e.target).closest('.complete-notice-box').length <= 0) {
+        $('.complete-delete-notice').css('visibility', 'hidden');
+        $('.complete-delete-notice .complete-notice-box').removeClass('showForm');
+    }
+})
+
+//--Delete all product in one category ------------------------------------
+$('.delete-product-in-cate-confirm').click((e) => {
+    if ($(e.target).closest('.delete-confirm-box').length <= 0) {
+        $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
+        $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
+    }
+})
+
+$('.delete-product-in-cate-btn').click(() => {
+    var cateID = $('input[name="category"]:checked').val();
+
+    if (cateID == null) {
+        var str = `<span>
+            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+            Chọn danh mục muốn xóa từ danh sách phía dưới.
+        </span>`
+        $('.categories-action-notice').empty();
+        showCateNotice();
+        $('.categories-action-notice').append(str);
+
+        var interval = setInterval(() => {
+            hideCateNotice();
+            clearInterval(interval);
+        }, 4000);
+
+    }
+    else {
+
+        $('.delete-product-in-cate-confirm').css('visibility', 'visible');
+        $('.delete-product-in-cate-confirm .delete-confirm-box').addClass('show');
+    }
+})
+
+$('.delete-product-in-cate-confirm .cancel-delete').click(() => {
+    $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
+    $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
+})
+
+$('.delete-product-in-cate-confirm .confirm-delete').click(() => {
+    var cateID = $('input[name="category"]:checked').val();
+
+    $('.loading').css('display', 'grid');
+    $.ajax({
+        type: 'POST',
+        url: '/admin/products/deleteallincategory',
+        data: {
+            cateID: cateID
+        },
+        success: (response) => {
+            hideLoading();
+            if (response.success) {
+                var interval = setInterval(() => {
+                    $('.complete-delete-notice').css('visibility', 'visible');
+                    $('.complete-delete-notice .complete-notice-box').addClass('showForm');
+                    clearInterval(interval);
+                }, 620);
+            }
+            else {
+                var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                    ${response.err}
+                    </span>`
+                $('.categories-action-notice').empty();
+                showCateNotice();
+                $('.categories-action-notice').append(str);
+                $('.delete-cate-confirm').css('visibility', 'hidden');
+                $('.delete-cate-confirm-box').removeClass('show');
+
+                var interval = setInterval(() => {
+                    hideCateNotice();
+                    clearInterval(interval);
+                }, 6000);
+            }
+        },
+        error: () => {
+            hideLoading();
+        }
+    })
+
+    $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
+    $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
 })

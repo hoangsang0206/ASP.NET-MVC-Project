@@ -34,10 +34,9 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
         </EntityType>
         <EntityType Name="ProductImgDetail">
           <Key>
-            <PropertyRef Name="ImgDetailId" />
+            <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ImgDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductID" Type="varchar" MaxLength="50" />
+          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ImgSrc1" Type="nvarchar(max)" />
           <Property Name="ImgSrc2" Type="nvarchar(max)" />
           <Property Name="ImgSrc3" Type="nvarchar(max)" />
@@ -99,8 +98,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="Quantity" Type="int" />
         </EntityType>
         <Association Name="FK_DetailImg_Pro">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
-          <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductID" />
@@ -260,10 +259,9 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
         </EntityType>
         <EntityType Name="ProductImgDetail">
           <Key>
-            <PropertyRef Name="ImgDetailId" />
+            <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ImgDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ImgSrc1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ImgSrc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ImgSrc3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -293,7 +291,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="ProductImgDetails" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
+          <NavigationProperty Name="ProductImgDetail" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
           <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
@@ -367,8 +365,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetailImg_Pro">
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="*" />
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductID" />
@@ -494,7 +492,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySetMapping Name="ProductImgDetails">
             <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
               <MappingFragment StoreEntitySet="ProductImgDetail">
-                <ScalarProperty Name="ImgDetailId" ColumnName="ImgDetailId" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
                 <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />

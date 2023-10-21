@@ -32,11 +32,11 @@
                     <label for="ProductName" class="input-label position-absolute">Tên sản phẩm</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="Cost" name="Cost" value="@(Model.Cost == null ? Model.Price.ToString() : Model.Cost.ToString())" class="form-input" required />
+                    <input type="text" id="Cost" name="Cost" value="@(Model.Cost == null ? Math.Round((double)Model.Price).ToString() : Math.Round((double)Model.Cost).ToString())" class="form-input" required />
                     <label for="Cost" class="input-label position-absolute">Giá</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="Price" name="Price" value="@(Model.Cost == null ? "" : Model.Price.ToString())" class="form-input" />
+                    <input type="text" id="Price" name="Price" value="@(Model.Cost == null ? "" : Math.Round((double)Model.Price).ToString())" class="form-input" />
                     <label for="Price" class="input-label position-absolute">Giá khuyến mãi</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">

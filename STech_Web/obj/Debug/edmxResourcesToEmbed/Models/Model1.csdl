@@ -21,10 +21,9 @@
   </EntityType>
   <EntityType Name="ProductImgDetail">
     <Key>
-      <PropertyRef Name="ImgDetailId" />
+      <PropertyRef Name="ProductID" />
     </Key>
-    <Property Name="ImgDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ImgSrc1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ImgSrc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ImgSrc3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -54,7 +53,7 @@
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
     <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
-    <NavigationProperty Name="ProductImgDetails" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
+    <NavigationProperty Name="ProductImgDetail" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
     <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
     <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
     <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
@@ -128,8 +127,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_DetailImg_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="*" />
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Products">
         <PropertyRef Name="ProductID" />

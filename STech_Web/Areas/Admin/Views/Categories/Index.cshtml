@@ -31,6 +31,10 @@
                 <i class="fa-regular fa-pen-to-square action-btn-icon"></i>
                 Sửa
             </button>
+            <button class="delete-product-in-cate-btn">
+                <i class="fa-regular fa-pen-to-square action-btn-icon"></i>
+                Xóa tất cả sản phẩm trong danh mục
+            </button>
             <div class="categories-action-notice"></div>
         </div>
         <div class="categories-content-box">
@@ -114,8 +118,19 @@
             <i class="fa-regular fa-circle-question"></i>
             <span>Xóa danh mục này?</span>
             <div class="delete-cate-confirm-btn-box d-flex justify-content-between">
-                <button class="delete-cate-confirm-no">Không</button>
-                <button class="delete-cate-confirm-yes">Đồng ý</button>
+                <button class="delete-cate-confirm-no">Hủy</button>
+                <button class="delete-cate-confirm-yes">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-product-in-cate-confirm position-fixed">
+        <div class="delete-confirm-box d-flex flex-column align-items-center">
+            <i class="fa-regular fa-circle-question"></i>
+            <span>Xóa tất cả sản phẩm trong danh mục này?</span>
+            <div class="delete-button-box">
+                <button class="cancel-delete">Hủy</button>
+                <button class="confirm-delete">Xóa</button>
             </div>
         </div>
     </div>
@@ -132,6 +147,14 @@
         <div class="complete-notice-box d-flex flex-column align-items-center">
             <i class='bx bx-check-circle bx-tada'></i>
             <span>Sửa thành công.</span>
+            <button>OK</button>
+        </div>
+    </div>
+
+    <div class="complete-delete-notice">
+        <div class="complete-notice-box d-flex flex-column align-items-center">
+            <i class='bx bx-check-circle bx-tada'></i>
+            <span>Xóa thành công.</span>
             <button>OK</button>
         </div>
     </div>

@@ -23,7 +23,6 @@
     <EntitySetMapping Name="ProductImgDetails">
       <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
         <MappingFragment StoreEntitySet="ProductImgDetail">
-          <ScalarProperty Name="ImgDetailId" ColumnName="ImgDetailId" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
           <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
