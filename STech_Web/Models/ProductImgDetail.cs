@@ -16,7 +16,10 @@ namespace STech_Web.Models
     {
         public int ImgDetailId { get; set; }
         public string ProductID { get; set; }
-        public string ImgDetailSrc { get; set; }
+        public string ImgSrc1 { get; set; }
+        public string ImgSrc2 { get; set; }
+        public string ImgSrc3 { get; set; }
+        public string ImgSrc4 { get; set; }
     
         public virtual Product Product { get; set; }
     }

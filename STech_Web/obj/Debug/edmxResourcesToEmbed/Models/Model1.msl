@@ -20,51 +20,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ImportDetails">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ImportDetail">
-        <MappingFragment StoreEntitySet="ImportDetail">
-          <ScalarProperty Name="ImportID" ColumnName="ImportID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductDescriptions">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductDescription">
-        <MappingFragment StoreEntitySet="ProductDescription">
-          <ScalarProperty Name="DesID" ColumnName="DesID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductDetails">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductDetail">
-        <MappingFragment StoreEntitySet="ProductDetail">
-          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="DetailName" ColumnName="DetailName" />
-          <ScalarProperty Name="DetailContent" ColumnName="DetailContent" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductGifts">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductGift">
-        <MappingFragment StoreEntitySet="ProductGift">
-          <ScalarProperty Name="GiftID" ColumnName="GiftID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ProductGiftID" ColumnName="ProductGiftID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProductImgDetails">
       <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
         <MappingFragment StoreEntitySet="ProductImgDetail">
           <ScalarProperty Name="ImgDetailId" ColumnName="ImgDetailId" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ImgDetailSrc" ColumnName="ImgDetailSrc" />
+          <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
+          <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
+          <ScalarProperty Name="ImgSrc3" ColumnName="ImgSrc3" />
+          <ScalarProperty Name="ImgSrc4" ColumnName="ImgSrc4" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -74,15 +38,6 @@
           <ScalarProperty Name="StandingID" ColumnName="StandingID" />
           <ScalarProperty Name="StandingType" ColumnName="StandingType" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductPromotions">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductPromotion">
-        <MappingFragment StoreEntitySet="ProductPromotion">
-          <ScalarProperty Name="PromotionID" ColumnName="PromotionID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="PromotionName" ColumnName="PromotionName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

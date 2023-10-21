@@ -19,54 +19,16 @@
     <Property Name="CateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Cate" FromRole="Categories" ToRole="Products" />
   </EntityType>
-  <EntityType Name="ImportDetail">
-    <Key>
-      <PropertyRef Name="ImportID" />
-      <PropertyRef Name="ProductID" />
-    </Key>
-    <Property Name="ImportID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_ImpDetail_Pro" FromRole="ImportDetail" ToRole="Products" />
-  </EntityType>
-  <EntityType Name="ProductDescription">
-    <Key>
-      <PropertyRef Name="DesID" />
-    </Key>
-    <Property Name="DesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_Des_Pro" FromRole="ProductDescription" ToRole="Products" />
-  </EntityType>
-  <EntityType Name="ProductDetail">
-    <Key>
-      <PropertyRef Name="DetailID" />
-    </Key>
-    <Property Name="DetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DetailName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="DetailContent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_Detail_Pro" FromRole="ProductDetail" ToRole="Products" />
-  </EntityType>
-  <EntityType Name="ProductGift">
-    <Key>
-      <PropertyRef Name="GiftID" />
-    </Key>
-    <Property Name="GiftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ProductGiftID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_Gift_Pro" FromRole="ProductGift" ToRole="Products" />
-    <NavigationProperty Name="Product1" Relationship="Self.FK_ProGift_Pro" FromRole="ProductGift" ToRole="Products" />
-  </EntityType>
   <EntityType Name="ProductImgDetail">
     <Key>
       <PropertyRef Name="ImgDetailId" />
     </Key>
     <Property Name="ImgDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ImgDetailSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImgSrc1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImgSrc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImgSrc3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImgSrc4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Product" Relationship="Self.FK_DetailImg_Pro" FromRole="ProductImgDetail" ToRole="Products" />
   </EntityType>
   <EntityType Name="ProductOutStanding">
@@ -77,15 +39,6 @@
     <Property Name="StandingType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Product" Relationship="Self.FK_ProductOutStading_Pro" FromRole="ProductOutStanding" ToRole="Products" />
-  </EntityType>
-  <EntityType Name="ProductPromotion">
-    <Key>
-      <PropertyRef Name="PromotionID" />
-    </Key>
-    <Property Name="PromotionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PromotionName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_Promotion_Pro" FromRole="ProductPromotion" ToRole="Products" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -101,14 +54,8 @@
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
     <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
-    <NavigationProperty Name="ImportDetails" Relationship="Self.FK_ImpDetail_Pro" FromRole="Products" ToRole="ImportDetail" />
-    <NavigationProperty Name="ProductDescriptions" Relationship="Self.FK_Des_Pro" FromRole="Products" ToRole="ProductDescription" />
-    <NavigationProperty Name="ProductDetails" Relationship="Self.FK_Detail_Pro" FromRole="Products" ToRole="ProductDetail" />
-    <NavigationProperty Name="ProductGifts" Relationship="Self.FK_Gift_Pro" FromRole="Products" ToRole="ProductGift" />
-    <NavigationProperty Name="ProductGifts1" Relationship="Self.FK_ProGift_Pro" FromRole="Products" ToRole="ProductGift" />
     <NavigationProperty Name="ProductImgDetails" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
     <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
-    <NavigationProperty Name="ProductPromotions" Relationship="Self.FK_Promotion_Pro" FromRole="Products" ToRole="ProductPromotion" />
     <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
     <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
     <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
@@ -180,66 +127,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ImpDetail_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="1" />
-    <End Role="ImportDetail" Type="Self.ImportDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ImportDetail">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Des_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductDescription" Type="Self.ProductDescription" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductDescription">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Detail_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductDetail" Type="Self.ProductDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductDetail">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Gift_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductGift" Type="Self.ProductGift" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductGift">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProGift_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductGift" Type="Self.ProductGift" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductGift">
-        <PropertyRef Name="ProductGiftID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_DetailImg_Pro">
     <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
     <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="*" />
@@ -260,18 +147,6 @@
         <PropertyRef Name="ProductID" />
       </Principal>
       <Dependent Role="ProductOutStanding">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Promotion_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductPromotion" Type="Self.ProductPromotion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductPromotion">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -315,13 +190,8 @@
   <EntityContainer Name="DatabaseSTechEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Brands" EntityType="Self.Brand" />
     <EntitySet Name="Categories" EntityType="Self.Category" />
-    <EntitySet Name="ImportDetails" EntityType="Self.ImportDetail" />
-    <EntitySet Name="ProductDescriptions" EntityType="Self.ProductDescription" />
-    <EntitySet Name="ProductDetails" EntityType="Self.ProductDetail" />
-    <EntitySet Name="ProductGifts" EntityType="Self.ProductGift" />
     <EntitySet Name="ProductImgDetails" EntityType="Self.ProductImgDetail" />
     <EntitySet Name="ProductOutStandings" EntityType="Self.ProductOutStanding" />
-    <EntitySet Name="ProductPromotions" EntityType="Self.ProductPromotion" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Sales" EntityType="Self.Sale" />
     <EntitySet Name="Specifications" EntityType="Self.Specification" />
@@ -336,26 +206,6 @@
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK_ImpDetail_Pro" Association="Self.FK_ImpDetail_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ImportDetail" EntitySet="ImportDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Des_Pro" Association="Self.FK_Des_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductDescription" EntitySet="ProductDescriptions" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Detail_Pro" Association="Self.FK_Detail_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductDetail" EntitySet="ProductDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Gift_Pro" Association="Self.FK_Gift_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductGift" EntitySet="ProductGifts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProGift_Pro" Association="Self.FK_ProGift_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductGift" EntitySet="ProductGifts" />
-    </AssociationSet>
     <AssociationSet Name="FK_DetailImg_Pro" Association="Self.FK_DetailImg_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductImgDetail" EntitySet="ProductImgDetails" />
@@ -363,10 +213,6 @@
     <AssociationSet Name="FK_ProductOutStading_Pro" Association="Self.FK_ProductOutStading_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductOutStanding" EntitySet="ProductOutStandings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Promotion_Pro" Association="Self.FK_Promotion_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductPromotion" EntitySet="ProductPromotions" />
     </AssociationSet>
     <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
       <End Role="Products" EntitySet="Products" />

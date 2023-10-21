@@ -28,12 +28,14 @@ namespace STech_Web.Areas.Admin.Controllers
         public ActionResult Detail(string id)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            Product product = db.Products.Find(id);
+            Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
             List<Category> categories = db.Categories.ToList();
             List<Brand> brands = db.Brands.ToList();
+            ProductImgDetail imgDetail = product.ProductImgDetails.FirstOrDefault();
 
             ViewBag.Categories = categories;
             ViewBag.Brands = brands;
+            ViewBag.ImgDetail = imgDetail;
             return View(product);
         }
 
@@ -77,6 +79,29 @@ namespace STech_Web.Areas.Admin.Controllers
             return null;
         }
 
+
+        //Update product imgage detail -------------------------------------------------
+        public void updateProductImages(DatabaseSTechEntities db, ProductImgDetail imgDetail, string productID, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
+        {
+            if (imgDetail == null)
+            {
+                imgDetail = new ProductImgDetail();
+                imgDetail.ProductID = productID;
+                imgDetail.ImgSrc1 = imgSrc1;
+                imgDetail.ImgSrc2 = imgSrc2;
+                imgDetail.ImgSrc3 = imgSrc3;
+                imgDetail.ImgSrc4 = imgSrc4;
+
+                db.ProductImgDetails.Add(imgDetail);
+                return;
+            }
+
+            imgDetail.ImgSrc1 = imgSrc1;
+            imgDetail.ImgSrc2 = imgSrc2;
+            imgDetail.ImgSrc3 = imgSrc3;
+            imgDetail.ImgSrc4 = imgSrc4;
+        }
+
         //Add new product --------
         [HttpPost]
         public ActionResult AddProduct(Product product, int quantity, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
@@ -113,193 +138,12 @@ namespace STech_Web.Areas.Admin.Controllers
             db.WareHouses.Add(wh);
 
             //---
-            if (imgSrc1.Length > 0)
-            {
-                ProductImgDetail imgDetail = new ProductImgDetail();
-                imgDetail.ProductID = product.ProductID;
-                imgDetail.ImgDetailSrc = imgSrc1;
-
-                db.ProductImgDetails.Add(imgDetail);
-            }
-            if (imgSrc2.Length > 0)
-            {
-                ProductImgDetail imgDetail = new ProductImgDetail();
-                imgDetail.ProductID = product.ProductID;
-                imgDetail.ImgDetailSrc = imgSrc2;
-
-                db.ProductImgDetails.Add(imgDetail);
-            }
-            if (imgSrc3.Length > 0)
-            {
-                ProductImgDetail imgDetail = new ProductImgDetail();
-                imgDetail.ProductID = product.ProductID;
-                imgDetail.ImgDetailSrc = imgSrc3;
-
-                db.ProductImgDetails.Add(imgDetail);
-            }
-            if (imgSrc4.Length > 0)
-            {
-                ProductImgDetail imgDetail = new ProductImgDetail();
-                imgDetail.ProductID = product.ProductID;
-                imgDetail.ImgDetailSrc = imgSrc4;
-
-                db.ProductImgDetails.Add(imgDetail);
-            }
-
+            ProductImgDetail imgDetail = pro.ProductImgDetails.FirstOrDefault();
+            updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
             //---
             db.SaveChanges();
             //---
             return Json(new { success = true });
-        }
-
-        //Update product imgage detail
-        public void updateProductImages(DatabaseSTechEntities db, List<ProductImgDetail> imgDetails, string productID, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
-        {
-            if (imgDetails.Count == 0)
-            {
-                ProductImgDetail newImgDetail = new ProductImgDetail();
-                newImgDetail.ProductID = productID;
-                if(imgSrc1.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-                else if(imgSrc2.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-                else if(imgSrc3.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-                else if(imgSrc4.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-
-                if(newImgDetail.ImgDetailSrc == null || newImgDetail.ImgDetailSrc.Length <= 0)
-                {
-                    return;
-                }
-
-                db.ProductImgDetails.Add(newImgDetail);
-            }
-            if (imgDetails.Count == 1)
-            {
-                ProductImgDetail newImgDetail = new ProductImgDetail();
-                newImgDetail.ProductID = productID;
-
-                if (imgSrc1.Length > 0)
-                {
-                    imgDetails[0].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc2.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-                else if (imgSrc3.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-                else if (imgSrc4.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-
-                if (newImgDetail.ImgDetailSrc == null || newImgDetail.ImgDetailSrc.Length <= 0)
-                {
-                    return;
-                }
-
-                db.ProductImgDetails.Add(newImgDetail);
-            }
-            if(imgDetails.Count == 2)
-            {
-                ProductImgDetail newImgDetail = new ProductImgDetail();
-                newImgDetail.ProductID = productID;
-
-                if (imgSrc1.Length > 0)
-                {
-                    imgDetails[0].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc2.Length > 0)
-                {
-                    imgDetails[1].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc3.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-                else if (imgSrc4.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-
-                if (newImgDetail.ImgDetailSrc == null || newImgDetail.ImgDetailSrc.Length <= 0)
-                {
-                    return;
-                }
-
-                db.ProductImgDetails.Add(newImgDetail);
-            }
-            if (imgDetails.Count == 3)
-            {
-                ProductImgDetail newImgDetail = new ProductImgDetail();
-                newImgDetail.ProductID = productID;
-
-                if (imgSrc1.Length > 0)
-                {
-                    imgDetails[0].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc2.Length > 0)
-                {
-                    imgDetails[1].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc3.Length > 0)
-                {
-                    imgDetails[2].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc4.Length > 0)
-                {
-                    newImgDetail.ImgDetailSrc = imgSrc1;
-                }
-
-                if (newImgDetail.ImgDetailSrc == null || newImgDetail.ImgDetailSrc.Length <= 0)
-                {
-                    return;
-                }
-
-                db.ProductImgDetails.Add(newImgDetail);
-            }
-
-            if (imgDetails.Count == 4)
-            {
-                if (imgSrc1.Length > 0)
-                {
-                    imgDetails[0].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc2.Length > 0)
-                {
-                    imgDetails[1].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc3.Length > 0)
-                {
-                    imgDetails[2].ImgDetailSrc = imgSrc1;
-                }
-
-                if (imgSrc4.Length > 0)
-                {
-                    imgDetails[3].ImgDetailSrc = imgSrc1;
-                }
-            }
-
         }
 
         //Update product
@@ -341,11 +185,8 @@ namespace STech_Web.Areas.Admin.Controllers
             wh.Quantity = quantity;
 
             //--------------
-            List<ProductImgDetail> imgDetails = pro.ProductImgDetails.ToList();
-            if (imgDetails.Count <= 4)
-            {
-                updateProductImages(db, imgDetails, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
-            }
+            ProductImgDetail imgDetail = pro.ProductImgDetails.FirstOrDefault();
+            updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
 
             //----------
             db.SaveChanges();

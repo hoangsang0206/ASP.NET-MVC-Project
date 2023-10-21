@@ -27,13 +27,8 @@ namespace STech_Web.Models
     
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<ImportDetail> ImportDetails { get; set; }
-        public virtual DbSet<ProductDescription> ProductDescriptions { get; set; }
-        public virtual DbSet<ProductDetail> ProductDetails { get; set; }
-        public virtual DbSet<ProductGift> ProductGifts { get; set; }
         public virtual DbSet<ProductImgDetail> ProductImgDetails { get; set; }
         public virtual DbSet<ProductOutStanding> ProductOutStandings { get; set; }
-        public virtual DbSet<ProductPromotion> ProductPromotions { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<Specification> Specifications { get; set; }

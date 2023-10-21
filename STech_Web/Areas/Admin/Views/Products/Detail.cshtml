@@ -88,19 +88,19 @@
                     <label for="ImgSrc" class="input-label position-absolute">Đường dẫn hình ảnh chính</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-1" value="" class="form-input" />
+                    <input type="text" id="add-product-image-1" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc1 : "")" class="form-input" />
                     <label for="add-product-image-1" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 1</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-2" value="" class="form-input" />
+                    <input type="text" id="add-product-image-2" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc2 : "")" class="form-input" />
                     <label for="add-product-image-2" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 2</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-3" value="" class="form-input" />
+                    <input type="text" id="add-product-image-3" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc3 : "")" class="form-input" />
                     <label for="add-product-image-3" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 3</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-4" value="" class="form-input" />
+                    <input type="text" id="add-product-image-4" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc4 : "")" class="form-input" />
                     <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 4</label>
                 </div>
             </div>
