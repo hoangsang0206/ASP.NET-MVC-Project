@@ -518,6 +518,28 @@ header {
     color: #ffffff !important;
 }
 
+.sub-header {
+    border-top: 1px solid #ffffff;
+    display: none;
+}
+
+.sub-header-item-list {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    list-style-type: none;
+    padding: 0.6rem 0;
+    margin: 0;
+    gap: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.sub-header-link {
+    white-space: nowrap;
+    font-size: 0.95rem;
+    color: #ffffff;
+    text-decoration: none;
+}
+
 .login, .register, .forgot-password, .reset-password, .logout-confirm {
     width: 100vw;
     height: 100vh;
@@ -839,8 +861,9 @@ main {
 
 .menu {
     display: flex;
-    gap: 0.35rem;
+    align-items: start;
     position: relative;
+    gap: 0.35rem;
 }
 
 .sidebar {
@@ -979,11 +1002,11 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     height: 100vh;
     background: #ffffff;
     position: fixed;
-    padding-bottom: 1rem;
+    padding: 0 0 1rem 0;
     top: 0;
     left: -100%;
     opacity: 0;
-    transition: all .4s ease;
+    transition: all .3s ease;
     z-index: 22;
     overflow-y: scroll;
 }
@@ -1124,41 +1147,6 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     color: #e30019;
 }
 
-/*.sidebar-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-list-item {
-    width: 100%;
-    border-bottom: 1px solid #d0d0d0;
-}
-
-.sidebar-list-box {
-    width: 100%;
-    padding: 0.8rem 1rem;
-}
-
-.sidebar-link-box {
-    width: 80%;
-}
-
-.sidebar-link {
-    text-decoration: none;
-    color: #000000;
-    font-size: 1rem;
-}
-
-.sidebar-icon-box {
-    width: 13%;
-}
-
-.sidebar-icon {
-    display: flex;
-    align-items: center;
-    font-size: 1.2rem;
-}*/
 footer {
     background-color: #ffff;
     padding: 2rem 0;
@@ -1400,10 +1388,6 @@ footer {
     transform-origin: left;
 }
 
-
-
-
-
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
@@ -1414,10 +1398,6 @@ footer {
     .container-xxl {
         margin: 0;
     }
-
-    /* ::-webkit-scrollbar {
-        height: 2px;
-    } */
 
     header {
         position: relative;
@@ -1461,7 +1441,7 @@ footer {
         }
 
     .search {
-        width: 60%;
+        width: 70%;
         position: static;
     }
 
@@ -1488,7 +1468,7 @@ footer {
         display: none;
     }
 
-    .login-btn {
+    .login-btn-box {
         display: none;
     }
 
@@ -1517,6 +1497,10 @@ footer {
         left: 35%;
     }
 
+    .sub-header {
+        display: block;
+    }
+
     nav {
         display: none;
     }
@@ -1527,10 +1511,6 @@ footer {
 
     .hidden-menu {
         display: none;
-    }
-
-    mobile-sidebar .sidebar {
-        display: block;
     }
 
     footer {
@@ -1611,14 +1591,112 @@ footer {
     }
 }
 
-/* For tablet (767 < width < 1024px) ---------------------------------------------*/
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+/* --------------------------- */
+@media screen and (min-width: 450px) and (max-width: 767px) {
+    .form-container {
+        width: 27rem;
+    }
+}
+
+/* For tablet (767 < width <= 1024px) ---------------------------------------------*/
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    * {
+        font-size: 0.93rem;
+    }
+
+    .sub-header {
+        display: block;
+    }
+
+    .categories-btn,
+    .header-hotline,
+    .order-check,
+    .cart-btn > a > span,
+    .login-link span,
+    .navigation,
+    .sidebar {
+        display: none;
+    }
+
+    header {
+        position: static;
+    }
+
+    .header-box {
+        width: 11rem;
+    }
+
+    .mobile-categories-btn {
+        display: block;
+        margin-right: 1rem;
+    }
+
+        .mobile-categories-btn i {
+            font-size: 1.8rem;
+        }
+
+    .search {
+        width: 70%;
+        margin-left: 1.5rem;
+    }
+
+    .cart-btn {
+        margin: 0 !important;
+    }
+
+    .cart-count-holder {
+        top: -10%;
+        left: 35%;
+    }
+
+    .login-btn {
+        padding: 0.7rem 1rem;
+    }
+
+    .login-link i {
+        margin: 0;
+        font-size: 1.6rem;
+    }
+
+    .login-btn:hover .login-info-box {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    .mobile-sidebar {
+        width: 65%;
+    }
+
+    .slider {
+        width: 100%;
+    }
+
+    .mobile-sidebar .sidebar {
+        display: block;
+    }
+
+    .footer-col {
+        padding-bottom: 1rem;
+    }
+
+    .bottom-nav-mobile {
+        display: flex;
+    }
+
+    .form-container {
+        width: 32rem;
+    }
+
+    .to-top-btn {
+        bottom: 5.5rem;
+    }
 }
 
 /* For desktop - custom scrollbar ------------------------------------------------*/
 @media screen and (min-width: 1024px) {
     ::-webkit-scrollbar {
         width: 6px;
+        height: 6px;
     }
 
     ::-webkit-scrollbar-thumb {
@@ -1630,7 +1708,87 @@ footer {
         background: #c3c3c3;
     }
 
+}
+
+/* ---------------------------- */
+@media screen and (min-width: 1024px) and (max-width: 1170px) {
+
+    .categories-btn {
+        background: none;
+        margin-left: 1rem;
+    }
+
+    .categories-btn i {
+        font-size: 1.75rem;
+    }
+
+    .categories-btn span,
+    .header-hotline span,
+    .order-check > a span,
+    .cart-btn span,
+    .login-link span,
+    .menu .sidebar{
+        display: none;
+    }
+
+    .search {
+        width: 75%;
+        margin-left: 1.5rem;
+    }
+
+    .header-hotline {
+        margin-right: 0.6rem;
+    }
+
+    .order-check {
+        width: auto;
+        margin-right: 0.6rem;
+    }
+        
+    .cart-count-holder {
+        top: -10%;
+        left: 35%;
+    }
+
+    .login-btn {
+        padding: 0.7rem 1rem;
+    }
+
+    .login-link i {
+        margin: 0;
+        font-size: 1.6rem;
+    }
+
+    .login-btn:hover .login-info-box {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    .form-container {
+        width: 30rem;
+    }
+
+    .slider {
+        width: 100%;
+    }
+
+    .hidden-menu .sidebar {
+        display: block;
+        width: 15rem;
+    }
+
+    .hidden-menu .slider {
+        width: 0;
+    }
+
+    .hidden-menu .sidebar .megamenu-content {
+        width: calc(99.8% - 15rem);
+    }
+}
+
+/* ---------------------- */
+@media screen and (min-width: 1400px) {
     .container-xxl {
-        width: 1300px !important;
+        width: 1250px !important;
     }
 }

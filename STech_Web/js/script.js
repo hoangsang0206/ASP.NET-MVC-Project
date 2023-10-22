@@ -111,6 +111,15 @@ $(".sale-slick-slider").slick({
     swipeToSlide: true,
     responsive: [
         {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 4,
+                autoplay: true,
+                infinite: false,
+                arrows: false
+            }
+        },
+        {
             breakpoint: 767,
             settings: {
                 slidesToShow: 2.2,
@@ -133,6 +142,13 @@ $(".collection-slick-slider").slick({
     nextArrow: `<button type='button' class='slick-next slick-arrow'><i class="fa-solid fa-chevron-right"></i></button>`,
     responsive: [
         {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 4,
+                arrows: false
+            }
+        },
+        {
             breakpoint: 767,
             settings: {
                 slidesToShow: 2.2,
@@ -153,6 +169,12 @@ $(".brand-collections").slick({
     autoplaySpeed: 1500,
     swipeToSlide: true,
     responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 5,
+            }
+        },
         {
             breakpoint: 767,
             settings: {
@@ -245,7 +267,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#search').on('click', () => {
         const windowWidth = $(window).width();
-        if (windowWidth <= 768) {
+        if (windowWidth < 768) {
             $('.header-box').hide();
             $('.header-btn').hide();
             $('body').css('overflow', 'hidden');
@@ -304,7 +326,7 @@ $("#search").keyup(function () {
                 name: searchText
             },
             success: function (responses) {
-                var maxItems = window.innerWidth <= 768 ? 25 : 6
+                var maxItems = window.innerWidth < 768 ? 25 : 6
 
                 $('.ajax-search-autocomplete').show();
                 $('.ajax-search-autocomplete').empty();

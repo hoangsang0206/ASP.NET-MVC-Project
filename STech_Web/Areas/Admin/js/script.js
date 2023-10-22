@@ -1074,7 +1074,7 @@ $('.delete-product-in-cate-confirm .confirm-delete').click(() => {
             else {
                 var str = `<span>
                     <i class="fa-solid fa-circle-exclamation error-icon"></i>
-                    ${response.err}
+                    ${response.error}
                     </span>`
                 $('.categories-action-notice').empty();
                 showCateNotice();

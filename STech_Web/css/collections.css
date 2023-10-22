@@ -21,7 +21,7 @@
 
 .product-search-item-list {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .product-search-item {
@@ -135,7 +135,7 @@
 
 .filter-item-list {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .filter-item {
@@ -252,11 +252,11 @@
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
     .product-search-item-list {
-        grid-template-columns: 50% 50%;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .filter-item-list {
-        grid-template-columns: 50% 50%;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .search-error {
@@ -273,5 +273,16 @@
 
     .breadcrumb {
         overflow-x: scroll;
+    }
+}
+
+/* For tablet (767 < width < 1024px) ---------------------------------------------*/
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .product-search-item-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .filter-item-list {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

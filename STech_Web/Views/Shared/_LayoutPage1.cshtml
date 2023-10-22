@@ -127,7 +127,7 @@
                                         <i class="fa-regular fa-clipboard"></i>
                                         <span>Đơn hàng của tôi</span>
                                     </div>
-                                </a>          
+                                </a>
                                 <hr />
                                 <div class="login-info-logout d-flex align-items-center">
                                     <ion-icon name="log-out-outline"></ion-icon>
@@ -156,6 +156,23 @@
                         }
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="sub-header">
+            <div class="container-xxl">
+                <ul class="sub-header-item-list d-flex align-items-center">
+                    @{
+                        STech_Web.Models.DatabaseSTechEntities db = new STech_Web.Models.DatabaseSTechEntities();
+                        List<STech_Web.Models.Category> categories = db.Categories.ToList();
+
+                        foreach (var cate in categories)
+                        {
+                            <li class="sub-header-item">
+                                <a href="/collections/@cate.CateID" class="sub-header-link">@cate.CateName</a>
+                            </li>
+                        }
+                    }
+                </ul>
             </div>
         </div>
     </header>
@@ -210,8 +227,8 @@
             <span>Danh mục</span>
         </div>
         <a href="#" class="bottom-nav-link bottom-nav-promotion d-flex flex-column align-items-center justify-content-center">
-            <ion-icon name="pricetags-outline" class="bottom-nav-icon"></ion-icon>
-            <span>Khuyến mãi</span>
+            <ion-icon name="clipboard-outline"class="bottom-nav-icon"></ion-icon>
+            <span>Đơn hàng</span>
         </a>
         <a href="#" class="bottom-nav-link bottom-nav-chat d-flex flex-column align-items-center justify-content-center">
             <ion-icon name="chatbubbles-outline" class="bottom-nav-icon"></ion-icon>
