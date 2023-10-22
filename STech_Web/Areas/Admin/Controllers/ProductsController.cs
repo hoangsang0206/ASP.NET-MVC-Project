@@ -236,7 +236,34 @@ namespace STech_Web.Areas.Admin.Controllers
             }
 
             List<Product> products = category.Products.ToList();
-            
+            List<WareHouse> wareHouses = new List<WareHouse>();
+            List<ProductImgDetail> productImgDetails = new List<ProductImgDetail>();
+
+            foreach (Product product in products)
+            {
+                WareHouse wh = product.WareHouse;
+                if(wh != null)
+                {
+                    wareHouses.Add(wh);
+                }
+
+                ProductImgDetail imgDetail = product.ProductImgDetail;
+                if (imgDetail != null)
+                {
+                    productImgDetails.Add(imgDetail);
+                }
+            }
+
+            if(wareHouses.Count > 0)
+            {
+                db.WareHouses.RemoveRange(wareHouses);
+            }
+
+            if(productImgDetails.Count > 0)
+            {
+                db.ProductImgDetails.RemoveRange(productImgDetails);
+            }
+
             db.Products.RemoveRange(products);
             db.SaveChanges();
 

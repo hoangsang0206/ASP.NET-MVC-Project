@@ -328,14 +328,15 @@ $("#search").keyup(function () {
             success: function (responses) {
                 var maxItems = window.innerWidth < 768 ? 25 : 6
 
-                $('.ajax-search-autocomplete').show();
-                $('.ajax-search-autocomplete').empty();
-
                 if (responses == null || responses.length <= 0) {
-                    $('.ajax-search-autocomplete').hide();
-                    $('.ajax-search-autocomplete').empty();
+                    $('.ajax-search-autocomplete').show();
+                    $('.ajax-search-items').empty();
+                    $('.ajax-search-empty').css('display', 'grid');
                 }
                 else {
+                    $('.ajax-search-autocomplete').show();
+                    $('.ajax-search-items').empty();
+                    $('.ajax-search-empty').hide();
                     for (let i = 0; i <= responses.length && i < maxItems; i++) {
                         const product = responses[i];
                         if (product != null) {
@@ -356,7 +357,7 @@ $("#search").keyup(function () {
                                     </div>
                                 </a>`;
 
-                            $('.ajax-search-autocomplete').append(strHTML);
+                            $('.ajax-search-items').append(strHTML);
                         }
                     }
                 }
