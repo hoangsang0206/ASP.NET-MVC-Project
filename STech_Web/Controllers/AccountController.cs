@@ -12,6 +12,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using System.Web.Security;
+using System.Web.Management;
 
 namespace STech_Web.Controllers
 {
@@ -21,6 +23,7 @@ namespace STech_Web.Controllers
         [UserAuthorization]
         public ActionResult Index()
         {
+            ViewBag.ActiveBotNav = "account";
             return View();
         }
 
@@ -187,6 +190,7 @@ namespace STech_Web.Controllers
                 user.PhoneNumber = update.PhoneNumber;
                 user.Email = update.Email;
                 user.DOB = update.DOB;
+                user.Address = update.Address;
 
                 //Kiểm tra ngày sinh phải nhỏ hơn ngày hiện tại
                 if(update.DOB > DateTime.Now)
@@ -246,6 +250,43 @@ namespace STech_Web.Controllers
                 //return Redirect("/");
                 return Json(new { success = false, errors = error });
             }
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword, string userID)
+        {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var user = userManager.FindById(userID);
+
+            if(user != null)
+            {
+
+                if (oldPassword.Length <= 0 || newPassword.Length <= 0 || confirmNewPassword.Length <= 0)
+                {
+                    return Json(new { success = false, error = "Vui lòng nhập đầy đủ thông tin." });
+                }
+
+                if(Crypto.VerifyHashedPassword(user.PasswordHash, oldPassword) == false)
+                {
+                    return Json(new { success = false, error = "Sai mật khẩu." });
+                }
+
+                if (newPassword != confirmNewPassword)
+                {
+                    return Json(new { success = false, error = "Xác nhận mật khẩu không đúng." });
+                }
+
+                user.PasswordHash = Crypto.HashPassword(newPassword);
+                var updateCheck = userManager.Update(user);
+                if (updateCheck.Succeeded)
+                {
+                    return Json(new { success = true });
+                }
+            }
+
+            return Json(new { success = false, error = "Không thể đổi mật khẩu" });
         }
     }
 }

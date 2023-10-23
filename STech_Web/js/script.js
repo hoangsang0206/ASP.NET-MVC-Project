@@ -114,8 +114,6 @@ $(".sale-slick-slider").slick({
             breakpoint: 1024,
             settings: {
                 slidesToShow: 4,
-                autoplay: true,
-                infinite: false,
                 arrows: false
             }
         },
@@ -400,42 +398,6 @@ inputArr.forEach((input) => {
         change: () => { checkInputValid(_input) }
     });
 })
-
-//---Show password ------------------------------------------------------
-var passwordInputArr = $('input[name="Password"], input[name="ConfirmPassword"]').toArray();
-
-passwordInputArr.forEach(item => {
-    var _item = $(item);
-    var togglePassword = _item.siblings('.toggle-password');
-
-    _item.focus(() => {
-        togglePassword.css('display', 'grid');
-        togglePassword.click(() => {
-            if (_item.attr('type') === 'password') {
-                _item.attr('type', 'text');
-                togglePassword.addClass('hiddenEyeSlash');
-            }
-            else {
-                _item.attr('type', 'password');
-                togglePassword.removeClass('hiddenEyeSlash');
-            }
-        })
-    })
-
-    _item.blur(() => {
-
-        _item.attr('type', 'password');
-        togglePassword.removeClass('hiddenEyeSlash');
-
-        if (_item.val().length <= 0) {
-            togglePassword.css('display', 'none');
-        }
-        else {
-            togglePassword.css('display', 'grid');
-        }
-    })
-});
-
 
 //--Show form ----------------------------------------------------------------
 $('.action-login-btn').click(() => {

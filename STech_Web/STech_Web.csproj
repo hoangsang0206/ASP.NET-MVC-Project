@@ -329,7 +329,6 @@
     <Content Include="Views\Shared\Megamenu_Partial.cshtml" />
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\Account_Partial.cshtml" />
     <Content Include="Views\Home\About.cshtml" />

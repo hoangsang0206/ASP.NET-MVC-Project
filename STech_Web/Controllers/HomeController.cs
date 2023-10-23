@@ -33,6 +33,7 @@ namespace STech_Web.Controllers
             ViewBag.Sliders = sliders;
             ViewBag.Banner1 = banner1;
             ViewBag.Brands = brands;
+            ViewBag.ActiveBotNav = "home";
 
             //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");

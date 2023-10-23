@@ -97,6 +97,10 @@ $('.login-form').submit((e) => {
 
 
 //--Update with AJAX ----------------------------------------------
+function closeUpdateErr() {
+    $('.update-error').empty();
+}
+
 $('.user-update-form').submit((e) => {
     e.preventDefault();
     var fullName = $('#UserFulName').val();
@@ -104,10 +108,8 @@ $('.user-update-form').submit((e) => {
     var phone = $('#PhoneNumber').val();
     var email = $('#Email').val();
     var dob = $('#DOB').val();
+    var address = $('#Address').val();
     var userID = $('#userID').val();
-    function closeUpdateErr() {   
-        $('.update-error').empty();
-    }
 
     $.ajax({
         type: 'POST',
@@ -118,6 +120,7 @@ $('.user-update-form').submit((e) => {
             PhoneNumber: phone,
             Email: email,
             DOB: dob,
+            Address: address,
             userID: userID
         },
         success: (response) => {
@@ -144,9 +147,72 @@ $('.user-update-form').submit((e) => {
                 var interval = setInterval(() => {
                     closeUpdateErr();
                     clearInterval(interval);
-                }, 4000);
+                }, 5000);
             }
         },
         error: (err) => { console.log(err) }
+    })
+})
+
+//-Change password -----------------------------------
+$('.change-password-form').submit((e) => {
+    e.preventDefault();
+    var oldPassword = $('#OldPassword').val();
+    var newPassword = $('#NewPassword').val();
+    var confirmNewPassword = $('#ConfirmNewPassword').val();
+    var userID = $('#userID').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/account/changepassword',
+        data: {
+            userID: userID,
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+            confirmNewPassword: confirmNewPassword
+        },
+        success: (response) => {
+            if (response.success) {
+                var str = '<span>Đổi mật khẩu thành công.</span>';
+                $('.update-error').empty();
+                $('.update-error').append(str);
+
+                var interval = setInterval(() => {
+                    closeUpdateErr();
+                    clearInterval(interval);
+                }, 5000);
+            }
+            else {
+                $('.update-error').empty();
+                var str = `<span>${response.error}</span>`;
+
+                $('.update-error').append(str);
+
+                var interval = setInterval(() => {
+                    closeUpdateErr();
+                    clearInterval(interval);
+                }, 5000);
+            }
+
+        },
+        error: () => { }
+    })
+})
+
+//-----------------------------
+function setParentHeight() {
+    var childHeight = $('.account-right-box.current').outerHeight(true);
+    $('.account-right-side').css('height', childHeight + 'px');
+}
+
+$(document).ready(() => {
+    setParentHeight();
+
+    $(window).on('hashchange' ,() => {
+        var idFromUrl = window.location.hash.substring(1);
+        console.log(idFromUrl)
+        $('.account-right-box').removeClass('current');
+        $('[data-account-side="' + idFromUrl + '"').addClass('current');
+        setParentHeight();
     })
 })

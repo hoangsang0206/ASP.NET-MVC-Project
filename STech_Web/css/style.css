@@ -161,7 +161,7 @@ header {
 }
 
 .search-box {
-    width: 85%;
+    width: calc(100% - 4rem);
     padding: 0.7rem 0.8rem;
     border: none;
     border-top-left-radius: 0.2rem;
@@ -173,7 +173,7 @@ header {
     }
 
 .search-btn {
-    width: 15%;
+    width: 4rem;
     padding: 0.3rem;
     display: grid;
     place-items: center;
@@ -496,14 +496,17 @@ header {
     padding-top: 0.7rem;
     border-top: 1px solid #dddddd;
     column-gap: 0.7rem;
+    width: 100%;
 }
 
 .login-register-btn-box button {
+    width: 49%;
     background: none;
-    padding: 0.15rem 1.2rem;
+    padding: 0.2rem 0;
     border-radius: 0.2rem;
     border: 2px solid #000000;
     z-index: 2;
+    white-space: nowrap;
 }
 
 .action-login-btn {
@@ -600,37 +603,6 @@ header {
     padding: 0 0.4rem;
     background: #ffffff;
     transition: transform .4s ease;
-}
-
-.toggle-password {
-    right: 0.8rem;
-    place-items: center;
-    border: none;
-    background: none;
-    cursor: pointer;
-    z-index: 1;
-    display: none;
-}
-
-.toggle-password ion-icon {
-    font-size: 1.4rem;
-    position: relative;
-}
-
-.toggle-password::after {
-    content: '';
-    height: 2px;
-    width: 100%;
-    background: #000000;
-    border-radius: 0.3rem;
-    position: absolute;
-    left: 0;
-    transform: rotate(45deg);
-    z-index: 2;
-}
-
-.toggle-password.hiddenEyeSlash::after {
-    transform: scale(0);
 }
 
 .forgot-password-link {
@@ -876,7 +848,7 @@ main {
 
 .megamenu-item-box {
     width: 100%;
-    padding: 0.6rem 1rem;
+    padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -915,8 +887,8 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     top: 0;
     bottom: 0;
     right: -1.4rem;
-    border-top: 1.35rem solid transparent;
-    border-bottom: 1.35rem solid transparent;
+    border-top: 1.238rem solid transparent;
+    border-bottom: 1.238rem solid transparent;
     border-left: 1.4rem solid #e30019;
     display: none;
     z-index: 11;
@@ -1440,6 +1412,14 @@ footer {
 
     .search-form {
         overflow: hidden;
+    }
+
+    .search-box {
+        width: calc(100% - 3rem);
+    }
+
+    .search-btn {
+        width: 3rem;
     }
 
     .search-btn i {
