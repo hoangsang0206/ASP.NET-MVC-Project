@@ -171,7 +171,7 @@
 }
 
 .product-price span {
-    color: #e30019;
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 1.2rem;
 }
@@ -179,10 +179,10 @@
 .product-discount-percent {
     display: grid;
     place-items: center;
-    color: #e30019;
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 0.8rem;
-    border: 1px solid #e30019;
+    border: 1px solid var(--primary-color);
     border-radius: 0.2rem;
     padding: 0.1rem 0.3rem;
     margin-left: 1rem;
@@ -206,7 +206,7 @@
 }
 
 .slick-prev:hover {
-    color: #e30019;
+    color: var(--primary-color);
 }
 
 .slick-next {
@@ -222,7 +222,7 @@
 }
 
     .slick-next:hover {
-        color: #e30019;
+        color: var(--primary-color);
     }
 
 .slick-dots {
@@ -361,7 +361,7 @@
 }
 
     .section-title a:hover {
-        color: #e30019;
+        color: var(--primary-color);
     }
 
 .section-title .fa-circle-check {

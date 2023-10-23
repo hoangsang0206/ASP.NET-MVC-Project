@@ -86,21 +86,23 @@ namespace STech_Web.Controllers
                     return Json(new { success = false, errors = error });
                 }
 
-                if(existingUser != null || existingUserEmail != null)
+                //Kiểm tra xem user đã tồn tại chưa
+                if (existingUser != null)
                 {
-                    if (existingUser != null)
-                    {
-                        ModelState.AddModelError("Error User", "Tài khoản nãy đã tồn tại.");
-                    }
-                    if(existingUserEmail != null)
-                    {
-                        ModelState.AddModelError("Email Error", "Email này đã tồn tại.");
-                    }
-
+                    ModelState.AddModelError("Error User", "Tài khoản nãy đã tồn tại.");
                     var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
                     return Json(new { success = false, errors = error });
                 }
+
+                //Kiểm tra xem email đã tồn tại chưa
+                if(existingUserEmail != null)
+                {
+                    ModelState.AddModelError("Email Error", "Email này đã tồn tại.");
+                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, errors = error });
+                }
+
+                   
 
                 IdentityResult identityResult = userManager.Create(user);
 
@@ -213,7 +215,7 @@ namespace STech_Web.Controllers
 
                 //Kiểm tra xem email có tồn tại trong bảng user chưa
                 var allUsers = userManager.Users.ToList();
-                if(allUsers.Any(t => t.Id != userID && t.Email == update.Email))
+                if (allUsers.Any(t => t.Id != userID && t.Email == update.Email))
                 {
                     ModelState.AddModelError("", "Email này đã tồn tại.");
                     var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
@@ -222,7 +224,7 @@ namespace STech_Web.Controllers
                 }
 
                 //Kiểm tra số điện thoại
-                if(!(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
+                if (!(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
                 {
                     ModelState.AddModelError("", "Số điện thoại không hợp lệ.");
                     var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
