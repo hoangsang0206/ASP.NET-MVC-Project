@@ -143,6 +143,7 @@
 
 .user-form-submit {
     padding: 0.5rem 1.3rem;
+    width: 10rem;
     border: none;
     outline: none;
     background: var(--primary-color);
@@ -150,12 +151,13 @@
     color: #ffffff;
     font-size: 1rem;
     font-weight: 600;
+    display: grid;
+    place-items: center;
 }
 
 .user-form-submit:hover {
     outline: 2px solid var(--primary-color-hover);
 }
-
 
 
 /*---Responsive --------------------------------------------------------------*/

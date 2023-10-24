@@ -272,7 +272,7 @@ namespace STech_Web.Controllers
 
                 if(Crypto.VerifyHashedPassword(user.PasswordHash, oldPassword) == false)
                 {
-                    return Json(new { success = false, error = "Sai mật khẩu." });
+                    return Json(new { success = false, error = "Mật khẩu cũ không đúng." });
                 }
 
                 if (newPassword != confirmNewPassword)

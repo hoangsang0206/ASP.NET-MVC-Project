@@ -1,4 +1,23 @@
-﻿//--Register with Ajax --------------------------------------------
+﻿//--Show button loading -------------------------------------------
+function showBtnLoading(button) {
+    var btnText = button.text();
+    button.empty();
+    var loadingStr = `<div class="loadingio-spinner-dual-ring-ekj0ol56kwc">
+                        <div class="ldio-gmrbyawnrc">
+                            <div></div><div><div></div></div>
+                        </div>
+                    </div>`;
+    button.append(loadingStr);
+
+    return btnText;
+}
+
+function resetBtn(button, btnText) {
+    button.empty();
+    button.text(btnText);
+}
+
+//--Register with Ajax --------------------------------------------
 $('#re-enter-password').keyup(() => {
     var password = $('#register-password').val();
     var confirmPassword = $('#re-enter-password').val();
@@ -19,6 +38,9 @@ $('.register-form').submit((e) => {
     var password = $('#register-password').val();
     var confirmPassword = $('#re-enter-password').val();
     var email = $('#register-email').val();
+
+    var submitBtn = $(e.target).find('.form-submit-btn');
+    var btnText = showBtnLoading(submitBtn);
     $.ajax({
         type: 'POST',
         url: '/account/register',
@@ -29,6 +51,7 @@ $('.register-form').submit((e) => {
             Email: email
         },
         success: (response) => {
+            resetBtn(submitBtn, btnText);
             if (response.success) {
                 $('.register .form-error').hide();
                 $('.register .form-error').empty();
@@ -50,7 +73,7 @@ $('.register-form').submit((e) => {
                 $('.register .form-error').append(str);
             }
         },
-        error: (err) => { console.log(err) }
+        error: (err) => { resetBtn(submitBtn, btnText); }
     })
 })
 
@@ -62,6 +85,8 @@ $('.login-form').submit((e) => {
     var userName = $('#login-username').val();
     var password = $('#login-password').val();
 
+    var submitBtn = $(e.target).find('.form-submit-btn');
+    var btnText = showBtnLoading(submitBtn);
     $.ajax({
         type: 'POST',
         url: '/account/login',
@@ -70,6 +95,7 @@ $('.login-form').submit((e) => {
             Password: password
         },
         success: (response) => {
+            resetBtn(submitBtn, btnText);
             if (response.success) {
                 $('.login .form-error').hide();
                 $('.login .form-error').empty();
@@ -91,7 +117,7 @@ $('.login-form').submit((e) => {
                 $('.login .form-error').append(str);
             }
         },
-        error: (err) => { console.log(err) }
+        error: (err) => { resetBtn(submitBtn, btnText); }
     })
 })
 
@@ -111,6 +137,8 @@ $('.user-update-form').submit((e) => {
     var address = $('#Address').val();
     var userID = $('#userID').val();
 
+    var submitBtn = $(e.target).find('.user-form-submit');
+    var btnText = showBtnLoading(submitBtn);
     $.ajax({
         type: 'POST',
         url: '/account/update',
@@ -124,6 +152,7 @@ $('.user-update-form').submit((e) => {
             userID: userID
         },
         success: (response) => {
+            resetBtn(submitBtn, btnText);
             if (response.success) {
                 var str = '<span>Cập nhật thành công.</span>';
                 $('.update-error').empty();
@@ -150,7 +179,7 @@ $('.user-update-form').submit((e) => {
                 }, 5000);
             }
         },
-        error: (err) => { console.log(err) }
+        error: (err) => { resetBtn(submitBtn, btnText); }
     })
 })
 
@@ -162,6 +191,8 @@ $('.change-password-form').submit((e) => {
     var confirmNewPassword = $('#ConfirmNewPassword').val();
     var userID = $('#userID').val();
 
+    var submitBtn = $(e.target).find('.user-form-submit');
+    var btnText = showBtnLoading(submitBtn);
     $.ajax({
         type: 'POST',
         url: '/account/changepassword',
@@ -172,10 +203,15 @@ $('.change-password-form').submit((e) => {
             confirmNewPassword: confirmNewPassword
         },
         success: (response) => {
+            resetBtn(submitBtn, btnText);
             if (response.success) {
                 var str = '<span>Đổi mật khẩu thành công.</span>';
                 $('.update-error').empty();
                 $('.update-error').append(str);
+
+                $('#OldPassword').val('');
+                $('#NewPassword').val('');
+                $('#ConfirmNewPassword').val('');
 
                 var interval = setInterval(() => {
                     closeUpdateErr();
@@ -195,7 +231,7 @@ $('.change-password-form').submit((e) => {
             }
 
         },
-        error: () => { }
+        error: () => { resetBtn(submitBtn, btnText); }
     })
 })
 
