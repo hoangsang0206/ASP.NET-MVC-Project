@@ -27,6 +27,24 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="CateID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CateName" Type="nvarchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="Megamenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MegamenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MegamenuLink" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SidebarItemId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MegamenuItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MegamenuItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MegamenuItemLink" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MegamenuId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ProductImgDetail">
     <Key>
       <PropertyRef Name="ProductID" />
@@ -65,6 +83,15 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProductID" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="SidebarMenuNav">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SidebarItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SidebarLink" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SidebarIcon" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB\APP_DATA\DATABASESTECH.MDF.dbo.Slider' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Slider">
@@ -101,6 +128,30 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Principal>
       <Dependent Role="ProductImgDetail">
         <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Megamenu_SidebarNav">
+    <End Role="SidebarMenuNav" Type="Self.SidebarMenuNav" Multiplicity="1" />
+    <End Role="Megamenu" Type="Self.Megamenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SidebarMenuNav">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Megamenu">
+        <PropertyRef Name="SidebarItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MegamenuItem_Megamenu">
+    <End Role="Megamenu" Type="Self.Megamenu" Multiplicity="1" />
+    <End Role="MegamenuItem" Type="Self.MegamenuItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Megamenu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MegamenuItem">
+        <PropertyRef Name="MegamenuId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -179,10 +230,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
   <EntityContainer Name="DatabaseSTechModelStoreContainer">
     <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Megamenu" EntityType="Self.Megamenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MegamenuItem" EntityType="Self.MegamenuItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductImgDetail" EntityType="Self.ProductImgDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banner1" EntityType="Self.Banner1" store:Type="Tables" store:Schema="dbo">
@@ -202,6 +256,14 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <AssociationSet Name="FK_DetailImg_Pro" Association="Self.FK_DetailImg_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductImgDetail" EntitySet="ProductImgDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Megamenu_SidebarNav" Association="Self.FK_Megamenu_SidebarNav">
+      <End Role="SidebarMenuNav" EntitySet="SidebarMenuNav" />
+      <End Role="Megamenu" EntitySet="Megamenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MegamenuItem_Megamenu" Association="Self.FK_MegamenuItem_Megamenu">
+      <End Role="Megamenu" EntitySet="Megamenu" />
+      <End Role="MegamenuItem" EntitySet="MegamenuItem" />
     </AssociationSet>
     <AssociationSet Name="FK_Pro_Brand" Association="Self.FK_Pro_Brand">
       <End Role="Brands" EntitySet="Brands" />

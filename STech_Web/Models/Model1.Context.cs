@@ -27,10 +27,13 @@ namespace STech_Web.Models
     
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Megamenu> Megamenus { get; set; }
+        public virtual DbSet<MegamenuItem> MegamenuItems { get; set; }
         public virtual DbSet<ProductImgDetail> ProductImgDetails { get; set; }
         public virtual DbSet<ProductOutStanding> ProductOutStandings { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
+        public virtual DbSet<SidebarMenuNav> SidebarMenuNavs { get; set; }
         public virtual DbSet<Specification> Specifications { get; set; }
         public virtual DbSet<WareHouse> WareHouses { get; set; }
         public virtual DbSet<Banner1> Banner1 { get; set; }

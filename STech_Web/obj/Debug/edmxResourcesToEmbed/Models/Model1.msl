@@ -20,6 +20,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Megamenus">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.Megamenu">
+        <MappingFragment StoreEntitySet="Megamenu">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MegamenuName" ColumnName="MegamenuName" />
+          <ScalarProperty Name="MegamenuLink" ColumnName="MegamenuLink" />
+          <ScalarProperty Name="SidebarItemId" ColumnName="SidebarItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MegamenuItems">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.MegamenuItem">
+        <MappingFragment StoreEntitySet="MegamenuItem">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MegamenuItemName" ColumnName="MegamenuItemName" />
+          <ScalarProperty Name="MegamenuItemLink" ColumnName="MegamenuItemLink" />
+          <ScalarProperty Name="MegamenuId" ColumnName="MegamenuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProductImgDetails">
       <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
         <MappingFragment StoreEntitySet="ProductImgDetail">
@@ -59,6 +79,16 @@
         <MappingFragment StoreEntitySet="Sales">
           <ScalarProperty Name="SaleID" ColumnName="SaleID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SidebarMenuNavs">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.SidebarMenuNav">
+        <MappingFragment StoreEntitySet="SidebarMenuNav">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SidebarItemName" ColumnName="SidebarItemName" />
+          <ScalarProperty Name="SidebarLink" ColumnName="SidebarLink" />
+          <ScalarProperty Name="SidebarIcon" ColumnName="SidebarIcon" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
