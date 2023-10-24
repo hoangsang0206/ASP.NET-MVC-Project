@@ -21,6 +21,58 @@ $(".overlay").click(() => {
     $(".overlay").removeClass("showOverlay");
 });
 
+
+//Show change theme
+$('.toogle-theme-btn').click(() => {
+    $('.change-theme').toggleClass('show');
+})
+
+//Change theme -----------------------------
+function changeThemeColor(newColor, btnHoverColor, headerBtnBackground) {
+    $('body').css('--primary-color', newColor);
+    $('body').css('--primary-color-hover', btnHoverColor);
+    $('body').css('--header-btn-background', headerBtnBackground);
+}
+
+function saveColorToLocalStorage(color1, color2, headerBtnBackground, themeValue) {
+    localStorage.setItem('themeColor', color1);
+    localStorage.setItem('btnHoverColor', color2);
+    localStorage.setItem('headerBtnBackground', headerBtnBackground);
+    localStorage.setItem('themeValue', themeValue);
+}
+
+function loadThemeColor() {
+    var themeColor = localStorage.getItem('themeColor');
+    var btnHoverColor = localStorage.getItem('btnHoverColor');
+    var headerBtnBackground = localStorage.getItem('headerBtnBackground');
+    var themeValue = localStorage.getItem('themeValue');
+    changeThemeColor(themeColor, btnHoverColor, headerBtnBackground);
+
+    //checked theme radio
+    $('#' + themeValue).prop('checked', true);
+}
+
+$(document).ready(() => {
+    loadThemeColor();
+})
+
+$('input[name="theme"]').on('change', (e) => {
+    var colorValue = $(e.target).val();
+
+    if (colorValue == "theme-1") {
+        changeThemeColor('#e30019', '#fba5a5', '#be1529');
+        saveColorToLocalStorage('#e30019', '#fba5a5', '#be1529', 'theme-1');
+    }
+    else if (colorValue == "theme-2") {
+        changeThemeColor('var(--primary-color-1)', 'var(--primary-color-1-hover)', 'var(--header-btn-background-1)');
+        saveColorToLocalStorage('var(--primary-color-1)', 'var(--primary-color-1-hover)', 'var(--header-btn-background-1)', 'theme-2');
+    }
+    else if (colorValue == "theme-3") {
+        changeThemeColor('var(--primary-color-2)', 'var(--primary-color-2-hover)', 'var(--header-btn-background-2)');
+        saveColorToLocalStorage('var(--primary-color-2)', 'var(--primary-color-2-hover)', 'var(--header-btn-background-2)', 'theme-3');
+    }
+})
+
 //Show scroll to top button ----------------------------------------------------------
 const scrollTopBtn = document.querySelector(".to-top-btn");
 

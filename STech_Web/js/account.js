@@ -199,20 +199,25 @@ $('.change-password-form').submit((e) => {
     })
 })
 
-//-----------------------------
+//-----------------------------------------------
 function setParentHeight() {
     var childHeight = $('.account-right-box.current').outerHeight(true);
     $('.account-right-side').css('height', childHeight + 'px');
 }
 
-$(document).ready(() => {
-    setParentHeight();
-
-    $(window).on('hashchange' ,() => {
-        var idFromUrl = window.location.hash.substring(1);
-        console.log(idFromUrl)
+function showCard() {
+    var idFromUrl = window.location.hash.substring(1);
+    if (idFromUrl.length > 0) {
         $('.account-right-box').removeClass('current');
         $('[data-account-side="' + idFromUrl + '"').addClass('current');
-        setParentHeight();
+    } 
+    setParentHeight();
+}
+
+$(document).ready(() => {
+    showCard();
+
+    $(window).on('hashchange' ,() => {
+        showCard();
     })
 })

@@ -179,61 +179,66 @@ namespace STech_Web.Controllers
         //Lọc sản phẩm theo id danh mục
         public ActionResult GetProduct(string id = "", string sort = "", string filtertype = "", string filter = "", string sbrand = "", int page = 1)
         {
-            //Lấy danh sách sản phẩm theo danh mục
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = new List<Product>();
-
-            string breadcrumbItem = "";
-
-            if (id == "all")
+            if(id.Length > 0)
             {
-                products = db.Products.ToList();
-                breadcrumbItem = "Tất cả sản phẩm";
-            }
-            else
-            {
-                products = db.Products.Where(t => t.Category.CateID == id).ToList();
+                //Lấy danh sách sản phẩm theo danh mục
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Product> products = new List<Product>();
 
-                //Lấy danh mục của danh sách sản phẩm
-                Category cate = db.Categories.Where(t => t.CateID == id).FirstOrDefault();
-                //
-                breadcrumbItem = cate.CateName;
-            }
-            //--------
-            //Sắp xếp danh sách sản phẩm
-            if (sort.Length > 0)
-            {
-                products = Sort(sort, products);
-            }
+                string breadcrumbItem = "";
 
-            //Lọc danh sách sản phẩm
-            if ((products != null) && (filter.Length > 0 && filtertype.Length > 0))
-            {
-                products = Filter(products, filtertype, filter, sbrand);
-                ViewBag.FilterType = filtertype;
-                ViewBag.Filter = filter;
-                ViewBag.Sbrand = sbrand;
-                if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
+                if (id == "all")
                 {
-                    breadcrumbItem += " " + ViewBag.filterName;
+                    products = db.Products.ToList();
+                    breadcrumbItem = "Tất cả sản phẩm";
                 }
+                else
+                {
+                    products = db.Products.Where(t => t.Category.CateID == id).ToList();
+
+                    //Lấy danh mục của danh sách sản phẩm
+                    Category cate = db.Categories.Where(t => t.CateID == id).FirstOrDefault();
+                    //
+                    breadcrumbItem = cate.CateName;
+                }
+                //--------
+                //Sắp xếp danh sách sản phẩm
+                if (sort.Length > 0)
+                {
+                    products = Sort(sort, products);
+                }
+
+                //Lọc danh sách sản phẩm
+                if ((products != null) && (filter.Length > 0 && filtertype.Length > 0))
+                {
+                    products = Filter(products, filtertype, filter, sbrand);
+                    ViewBag.FilterType = filtertype;
+                    ViewBag.Filter = filter;
+                    ViewBag.Sbrand = sbrand;
+                    if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
+                    {
+                        breadcrumbItem += " " + ViewBag.filterName;
+                    }
+                }
+
+                //Tạo danh sách Breadcrumb
+                List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
+                breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
+                breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
+
+                //Paging ------
+                products = Pagination(products, page);
+
+                //-----------
+                ViewBag.cateID = id;
+                ViewBag.title = breadcrumbItem;
+                ViewBag.Breadcrumb = breadcrumb;
+                ViewBag.sortValue = sort;
+
+                return View("Index", products);
             }
 
-            //Tạo danh sách Breadcrumb
-            List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
-            breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
-            breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
-
-            //Paging ------
-            products = Pagination(products, page);
-
-            //-----------
-            ViewBag.cateID = id;
-            ViewBag.title = breadcrumbItem;
-            ViewBag.Breadcrumb = breadcrumb;
-            ViewBag.sortValue = sort;
-
-            return View("Index", products);
+            return Redirect("/error/notfound");
         }
 
     }

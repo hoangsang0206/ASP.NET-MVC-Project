@@ -12,22 +12,27 @@ namespace STech_Web.Controllers
         // GET: Product
         public ActionResult Detail(string id="")
         {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            Product product = db.Products.Where(t => t.ProductID == id)
-                .FirstOrDefault();
+            if(id.Length > 0)
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.Where(t => t.ProductID == id)
+                    .FirstOrDefault();
 
-            Category cate = db.Categories.Where(t => t.CateID == product.CateID)
-                .FirstOrDefault();
+                Category cate = db.Categories.Where(t => t.CateID == product.CateID)
+                    .FirstOrDefault();
 
-            List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
-            breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
-            breadcrumb.Add(new Breadcrumb(cate.CateName, "/collections/"+cate.CateID+""));
-            breadcrumb.Add(new Breadcrumb(product.ProductName, ""));
+                List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
+                breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
+                breadcrumb.Add(new Breadcrumb(cate.CateName, "/collections/" + cate.CateID + ""));
+                breadcrumb.Add(new Breadcrumb(product.ProductName, ""));
 
-            ViewBag.Title = product.ProductName;
-            ViewBag.Breadcrumb = breadcrumb;
+                ViewBag.Title = product.ProductName;
+                ViewBag.Breadcrumb = breadcrumb;
 
-            return View(product);
+                return View(product);
+            }
+
+            return Redirect("/error/notfound");
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿.product-detail-box {
-    background: #ffffff;
+    background: var(--content-color-white);
     padding: 1rem;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .product-info-price h2 {
-    color: #e30019;
+    color: var(--primary-color);
     font-weight: bold;
     font-size: 2rem;
     margin: 0;
@@ -36,10 +36,10 @@
 .product-info-discount-percent {
     display: grid;
     place-items: center;
-    color: #e30019;
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 0.9rem;
-    border: 1px solid #e30019;
+    border: 1px solid var(--primary-color);
     border-radius: 0.2rem;
     padding: 0.1rem 0.3rem;
     margin-left: 1rem;
@@ -47,11 +47,11 @@
 }
 
 .buy-action-btn {
-    color: #ffffff;
+    color: var(--content-color-white);
     border: none;
     border-radius: 0.2rem;
     padding: 0.7rem 3rem;
-    background: #e30019;
+    background: var(--primary-color);
 }
 
 .buy-action-btn:disabled {
@@ -67,9 +67,9 @@
 
 .add-to-cart-btn {
     background: none;
-    border: 2px solid #e30019;
+    border: 2px solid var(--primary-color);
     border-radius: 0.2rem;
-    color: #e30019;
+    color: var(--primary-color);
     padding: 1rem 1rem;
 }
 
@@ -91,7 +91,7 @@ button:disabled {
 .product-gift-header {
     background: #ffd9d9;
     padding: 0.5rem 1.7rem;
-    color: #e30019;
+    color: var(--primary-color);
     font-weight: 600;
 }
 
@@ -126,5 +126,5 @@ button:disabled {
 }
 
 .product-gift-item:hover a {
-    color: #e30019;
+    color: var(--primary-color);
 }
