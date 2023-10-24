@@ -42,13 +42,19 @@
     --primary-color-hover: #fba5a5;
     --primary-color-1: #7d5fff;
     --primary-color-2: #0652DD;
+    --primary-color-3: #FC427B;
+    --primary-color-4: #44bd32;
     --primary-color-1-hover: #af9dff;
     --primary-color-2-hover: #548ffa;
+    --primary-color-3-hover: #ff96b6;
+    --primary-color-4-hover: #7ffba9;
     --content-color-black: #000000;
     --content-color-white: #ffffff;
     --header-btn-background: #be1529;
     --header-btn-background-1: #5129ff;
     --header-btn-background-2: #387dfc;
+    --header-btn-background-3: #FD7272;
+    --header-btn-background-4: #009432;
     /*--transition---------*/
     --trans-all-05: all .5s ease;
     --trans-all-04: all .4s ease;
@@ -758,6 +764,8 @@ header {
 }
 
 .logout-confirm-yes {
+    display: grid;
+    place-items: center;
     background: var(--primary-color);
     color: var(--content-color-white);
 }
@@ -1012,7 +1020,7 @@ hidden-menu .megamenu-item:hover .megamenu-content,
 }
 
 .megamenu-content-item {
-    padding: 0 1.3rem;
+    padding: 0 0 0 1.3rem;
 }
 
 .megamenu-item-title {
@@ -1129,6 +1137,11 @@ hidden-menu .megamenu-item:hover .megamenu-content,
     padding: 0 0 1rem 2rem;
     width: 100%;
     box-shadow: none;
+}
+
+
+.mobile-sidebar .megamenu-content-item {
+    padding: 0 1.3rem;
 }
 
 .mobile-sidebar .megamenu-item-title {
@@ -1444,8 +1457,8 @@ footer {
 
 .change-theme-wrapper {
     padding: 1rem;
-    border-top-left-radius: 0.2rem;
-    border-bottom-left-radius: 0.2rem;
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
     background: var(--content-color-white);
 }
 
@@ -1496,6 +1509,14 @@ input[name="theme"] {
 
 .theme-color-3 {
     background: var(--primary-color-2);
+}
+
+.theme-color-4 {
+    background: var(--primary-color-3);
+}
+
+.theme-color-5 {
+    background: var(--primary-color-4);
 }
 
 .theme-label {
@@ -1603,7 +1624,7 @@ input[name="theme"]:checked ~ .theme-label-box .theme-label::after {
         box-shadow: none;
         border: none;
         width: 100%;
-        height: calc(100vh - 5rem);
+        height: calc(100vh - 8rem);
         overflow-x: hidden;
         overflow-y: scroll;
     }

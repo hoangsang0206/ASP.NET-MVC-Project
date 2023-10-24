@@ -121,6 +121,12 @@ $('.login-form').submit((e) => {
     })
 })
 
+//--Logout ---------------------------------
+$('.logout-confirm-yes').click((e) => {
+    var btnText = showBtnLoading($(e.target));
+    window.location.href = '/account/logout';
+})
+
 
 //--Update with AJAX ----------------------------------------------
 function closeUpdateErr() {
@@ -245,7 +251,9 @@ function showCard() {
     var idFromUrl = window.location.hash.substring(1);
     if (idFromUrl.length > 0) {
         $('.account-right-box').removeClass('current');
+        $('.account-nav-list-item a').removeClass('activeNav');
         $('[data-account-side="' + idFromUrl + '"').addClass('current');
+        $('a[href="#' + idFromUrl +'"').addClass('activeNav');
     } 
     setParentHeight();
 }

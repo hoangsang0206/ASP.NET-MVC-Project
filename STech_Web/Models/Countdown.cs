@@ -7,12 +7,12 @@ namespace STech_Web.Models
 {
     public class Countdown
     {
-        public string startDate {  get; set; }
-        public string endDate { get; set; }
+        public DateTime startDate {  get; set; }
+        public DateTime endDate { get; set; }
 
         public Countdown() { }
 
-        public Countdown(string startDate, string endDate)
+        public Countdown(DateTime startDate, DateTime endDate)
         {
             this.startDate = startDate;
             this.endDate = endDate;

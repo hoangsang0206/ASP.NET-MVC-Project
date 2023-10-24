@@ -49,7 +49,7 @@
     padding: 1rem 0;
 }
 
-.account-nav-list-item.activeNav {
+.account-nav-list-item a.activeNav {
     color: var(--primary-color);
 }
 

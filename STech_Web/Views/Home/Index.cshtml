@@ -621,33 +621,41 @@
 </section>
 
 <script>
-    var startDate = new Date("@ViewBag.Countdown.startDate".toString());
-    var endDate = new Date("@ViewBag.Countdown.endDate".toString());
-    var currentDate = new Date();
+    var days, hours, minutes, seconds;
 
-    function updateCountdown() {
-        var timeRemaining = endDate - Date.now(); //millisecond
-        //Tổng số mili giây trong 1 ngày: 1000 * 60 * 60 * 24
-        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        //Số giờ còn lại trong ngày
-        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        //Số phút còn lại giờ
-        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        //Số giây còn lại trong phút
-        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    function updateCountdown() { 
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("Countdown", "Home")',
+            dataType: 'json',
+            success: (data) => {
+                if (data.success) {
+                    days = data.days;
+                    hours = data.hours;
+                    minutes = data.minutes;
+                    seconds = data.seconds;
+                }
+                else {
+                    days = 0;
+                    hours = 0;
+                    minutes = 0;
+                    seconds = 0;
+                }
+            },
+            error: () => { }
+        })
 
         $("#countdown-days").text(String(days).padStart(2, "0"));
         $("#countdown-hours").text(String(hours).padStart(2, "0"));
         $("#countdown-minutes").text(String(minutes).padStart(2, "0"));
         $("#countdown-seconds").text(String(seconds).padStart(2, "0"));
-
-        if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
-            $(".sale").hide();
-        }
     }
 
-    if (currentDate >= startDate) {
-        setInterval(updateCountdown, 1000);
+    var intervalCd = setInterval(updateCountdown, 1000);
+
+    if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+        $(".sale").hide();
+        clearInterval(intervalCd);
     }
 
     // -------------------------------------

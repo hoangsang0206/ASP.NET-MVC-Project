@@ -71,6 +71,14 @@ $('input[name="theme"]').on('change', (e) => {
         changeThemeColor('var(--primary-color-2)', 'var(--primary-color-2-hover)', 'var(--header-btn-background-2)');
         saveColorToLocalStorage('var(--primary-color-2)', 'var(--primary-color-2-hover)', 'var(--header-btn-background-2)', 'theme-3');
     }
+    else if (colorValue == "theme-4") {
+        changeThemeColor('var(--primary-color-3)', 'var(--primary-color-3-hover)', 'var(--header-btn-background-3)');
+        saveColorToLocalStorage('var(--primary-color-3)', 'var(--primary-color-3-hover)', 'var(--header-btn-background-3)', 'theme-4');
+    }
+    else if (colorValue == "theme-5") {
+        changeThemeColor('var(--primary-color-4)', 'var(--primary-color-4-hover)', 'var(--header-btn-background-4)');
+        saveColorToLocalStorage('var(--primary-color-4)', 'var(--primary-color-4-hover)', 'var(--header-btn-background-4)', 'theme-5');
+    }
 })
 
 //Show scroll to top button ----------------------------------------------------------
@@ -322,6 +330,7 @@ $(document).ready(function () {
             $('.header-btn').hide();
             $('body').css('overflow', 'hidden');
             $('.search').css('width', '100%');
+            $('.search').css('transition', 'var(--trans-all-03)');
             $('.close-search').show();
             $('.search-history').show();
         }

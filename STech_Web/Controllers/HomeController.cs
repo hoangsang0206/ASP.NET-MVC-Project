@@ -5,9 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml;
+using Newtonsoft.Json;
 using System.Collections.Specialized;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Web.Management;
 
 namespace STech_Web.Controllers
 {
@@ -24,8 +25,10 @@ namespace STech_Web.Controllers
             List<Banner1> banner1 = db.Banner1.ToList();
             List<Brand> brands = db.Brands.ToList();
 
-            //Countdown -------
-            Countdown();
+            //--Countdown -----
+            Countdown countdown = GetCountdown();
+            ViewBag.CurrentDate = DateTime.Now;
+            ViewBag.StartDate = countdown.startDate;
 
             //----------
             ViewBag.Sales = sales;
@@ -42,23 +45,46 @@ namespace STech_Web.Controllers
             return View();
         }
 
-        public void Countdown() 
+        //----Countdown ------------------------------
+        [HttpGet]
+        public ActionResult Countdown() 
         {
-            XmlDocument read = new XmlDocument();
-            string filePath = Server.MapPath("~/XmlFile/Countdown.xml");
-            read.Load(filePath);
-            XmlNode node = read.SelectSingleNode("/Countdown");
+            Countdown countdown = GetCountdown();
+            if(DateTime.Now >= countdown.startDate)
+            {
+                TimeSpan remainingTime = calculateRemainingTime(countdown.endDate);
 
-            string startDate = node["startDate"].InnerText;
-            string endDate = node["endDate"].InnerText;
+                return Json(new
+                {
+                    success = true,
+                    days = remainingTime.Days,
+                    hours = remainingTime.Hours,
+                    minutes = remainingTime.Minutes,
+                    seconds = remainingTime.Seconds
+                }, JsonRequestBehavior.AllowGet);
+            }
 
-            Countdown countdown = new Countdown(startDate, endDate);
-
-            ViewBag.CurrentDate = DateTime.Now;
-            ViewBag.StartDate = DateTime.Parse(countdown.startDate);
-            ViewBag.Countdown = countdown;
+            return Json(new { success = false });
         }
 
+        //--Get countdown time
+        Countdown GetCountdown()
+        {
+            string filePath = Server.MapPath("~/DataFiles/countdown.json");
+            string json = System.IO.File.ReadAllText(filePath);
+            Countdown countdown = JsonConvert.DeserializeObject<Countdown>(json);
+            
+            return countdown;
+        }
+
+        //---Calculate remaining time --------------
+        private TimeSpan calculateRemainingTime(DateTime endDate)
+        {
+            return endDate - DateTime.Now;
+        }
+
+
+        //--------------------------------
         public ActionResult About() 
         {
             return View();

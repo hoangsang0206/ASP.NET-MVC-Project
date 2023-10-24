@@ -224,7 +224,7 @@ namespace STech_Web.Controllers
                 }
 
                 //Kiểm tra số điện thoại
-                if (!(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
+                if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
                 {
                     ModelState.AddModelError("", "Số điện thoại không hợp lệ.");
                     var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
