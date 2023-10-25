@@ -68,7 +68,7 @@ namespace STech_Web.Controllers
         public List<Product> Pagination(List<Product> products, int page)
         {
             //Paging ------
-            int NoOfProductPerPage = 20;
+            int NoOfProductPerPage = 40;
             int NoOfPages = Convert.ToInt32(Math.Ceiling(
                 Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
             int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
@@ -125,7 +125,7 @@ namespace STech_Web.Controllers
                 if (productsFilter.Count > 0)
                 {
                     Product product = productsFilter[0];
-                    filterName = product.Brand.BrandName;
+                    filterName = product.Brand.BrandName.ToUpper();
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace STech_Web.Controllers
                     Product product = productsFilter[0];
                     Regex regex = new Regex(sbrand, RegexOptions.IgnoreCase);
                     Match match = regex.Match(product.ProductName);
-                    filterName = product.Brand.BrandName + " " + match.Value;
+                    filterName = product.Brand.BrandName.ToUpper() + " " + match.Value;
                 }
                 else
                 {

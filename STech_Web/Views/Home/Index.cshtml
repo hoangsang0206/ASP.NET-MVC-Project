@@ -422,29 +422,76 @@
     </div>
 </section>
 
-<section class="section-collection">
-    <div class="section-header">
-        <div class="section-header-box">
-            <h2 class="section-title">
-                <a href="#">Laptop gaming nổi bậc</a>
-            </h2>
-            <div class="section-sub-header-box">
-                <i class="fa-solid fa-truck"></i>
-                <span>Miễn phí giao hàng</span>
+@if (ViewBag.LaptopGamingOSD.Count > 0)
+{
+    <section class="section-collection">
+        <div class="section-header">
+            <div class="section-header-box">
+                <h2 class="section-title">
+                    <a href="#">Laptop gaming nổi bậc</a>
+                </h2>
+                <div class="section-sub-header-box">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Miễn phí giao hàng</span>
+                </div>
+            </div>
+            <div class="section-header-link">
+                <a href="/collections/laptop-gaming">Xem tất cả</a>
             </div>
         </div>
-        <div class="section-header-link">
-            <a href="/collections/laptop-gaming">Xem tất cả</a>
-        </div>
-    </div>
-    <div class="section-content">
-        <div class="collection-slick-slider">
+        <div class="section-content">
+            <div class="collection-slick-slider">
+                @foreach (var item in ViewBag.LaptopGamingOSD)
+                {
+                    <div class="slick-slider-item">
+                        <div class="product-box">
+                            <a href="/product/@item.Product.ProductID" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                                </div>
+                            </a>
+                            <a href="/product/@item.Product.ProductID" class="product-link">
+                                <div class="product-name">
+                                    @item.Product.ProductName
+                                </div>
+                            </a>
 
-        </div>
-    </div>
-</section>
+                            @{ double discountPercent = 0; }
+                            <div class="product-original-price">
+                                @if (item.Product.Cost != null && item.Product.Cost.ToString().Length > 0)
+                                {
+                                    decimal cost = Convert.ToDecimal(item.Product.Cost);
 
-@if (ViewBag.LaptopOutStandings.Count > 0)
+                                    discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
+                                        / Convert.ToDouble(item.Product.Cost)) * 100;
+                                    <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                                }
+                                else
+                                {
+                                    <span style="visibility: hidden">0</span>
+                                }
+                            </div>
+                            <div class="product-price d-flex align-items-center">
+                                @{
+                                    decimal price = Convert.ToDecimal(item.Product.Price);
+                                }
+                                <span>@price.ToString("##,###", ViewBag.cul)đ</span>
+                                @if (discountPercent > 0)
+                                {
+                                    <div class="product-discount-percent">
+                                        @( "-" + (int)discountPercent + "%" )
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@if (ViewBag.LaptopOSD.Count > 0)
 {
     <section class="section-collection">
         <div class="section-header">
@@ -463,7 +510,7 @@
         </div>
         <div class="section-content">
             <div class="collection-slick-slider">
-                @foreach (var item in ViewBag.LaptopOutStandings)
+                @foreach (var item in ViewBag.LaptopOSD)
                 {
                     <div class="slick-slider-item">
                         <div class="product-box">
@@ -480,7 +527,7 @@
 
                             @{ double discountPercent = 0; }
                             <div class="product-original-price">
-                                @if (item.Product.Cost != null || item.Product.Cost.ToString().Length > 0)
+                                @if (item.Product.Cost != null && item.Product.Cost.ToString().Length > 0)
                                 {
                                     decimal cost = Convert.ToDecimal(item.Product.Cost);
 
@@ -623,7 +670,7 @@
 <script>
     var days, hours, minutes, seconds;
 
-    function updateCountdown() { 
+    function updateCountdown() {
         $.ajax({
             type: 'GET',
             url: '@Url.Action("Countdown", "Home")',

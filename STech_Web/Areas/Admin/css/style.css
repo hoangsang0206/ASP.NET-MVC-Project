@@ -1028,8 +1028,8 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .product-form-container {
-    width: 90vw;
-    height: 85vh;
+    width: 90%;
+    height: 90%;
     padding: 2rem;
     border-radius: 0.3rem;
     background: var(--sidebar-color);
@@ -1169,8 +1169,8 @@ input[name="category"]:checked ~ .categories-label-box {
 
     .sidebar {
         width: 70vw;
-        padding-left: 0.6rem;
-        padding-right: 0.6rem;
+        padding-left: 0.5rem;
+        padding-right: 0.4rem;
     }
 
     .sidebar.close {
@@ -1183,12 +1183,12 @@ input[name="category"]:checked ~ .categories-label-box {
     }
 
     .menu-item a, .bottom-menu a {
-        column-gap: 1rem;
-        padding: 0.5rem;
+        column-gap: 0.8rem;
+        padding: 0.6rem 0.4rem 0.6rem 0.6rem;
     }
 
-    menu-icon {
-        font-size: 1.5rem;
+    .menu-icon {
+        font-size: 1.7rem;
     }
 
     .menu-item span, .bottom-menu span {
@@ -1274,6 +1274,14 @@ input[name="category"]:checked ~ .categories-label-box {
         overflow-x: scroll;
     }
 
+    .action-box {
+        gap: 0.5rem;
+    }
+
+    .action-box button {
+        padding: 0.6rem 1rem;
+    }
+
     /* -------------- Products page ---------------------*/
     .search-products {
         width: 100%;
@@ -1284,6 +1292,10 @@ input[name="category"]:checked ~ .categories-label-box {
         white-space: nowrap;
     }
 
+    .products-content-box {
+        padding: 0.6rem 0.3rem;
+        margin-top: 0.6rem;
+    }
 }
 
 /* For tablet (767 < width < 1024px) ---------------------------------------------*/

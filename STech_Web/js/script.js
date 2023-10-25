@@ -103,9 +103,7 @@ function showSidebar() {
     $(".overlay").addClass("showOverlay");
     $(".overlay").click(function () {
         $(".mobile-sidebar").removeClass("showMobileSidebar");
-        $("body").removeClass("web-scroll-block");
     });
-    $("body").addClass("web-scroll-block");
 };
 
 $(".mobile-categories-btn").click(showSidebar);
@@ -113,7 +111,6 @@ $(".bottom-nav-show-sidebar").click(showSidebar);
 $(".sidebar-close-btn").click(function () {
     $(".mobile-sidebar").removeClass("showMobileSidebar");
     $(".overlay").removeClass("showOverlay");
-    $("body").removeClass("web-scroll-block");
 });
 
 //Show mobile sidebar menu level 2, 3
