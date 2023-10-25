@@ -1,0 +1,226 @@
+﻿.cart-wrapper .container-fluid {
+    max-width: 660px;
+    padding: 0;
+}
+
+.breadcrumb-cart {
+    padding: 1rem;
+}
+
+.breadcrumb-cart a {
+    display: flex;
+    align-items: center;
+    column-gap: 0.4rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.cart-main {
+    border-radius: 0.2rem;
+    background: var(--content-color-white);
+    padding: 0.6rem;
+}
+
+.checkout-steplist {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1.2rem 1.6rem;
+    background: #ffeded;
+    border-radius: 0.2rem;
+}
+
+.checkout-step {
+    text-align: center;
+    position: relative;
+    flex: 0 0 25%;
+    gap: 0.3rem;
+}
+
+.checkout-step:not(:first-child)::after {
+    content: '';
+    border-top: 1px dashed #535353;
+    position: absolute;
+    width: calc(100% - 2rem);
+    right: calc(50% + 1rem);
+    top: 22%;
+}
+
+.checkout-step.step-active .step-icon {
+    color: var(--content-color-white);
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+}
+
+.checkout-step.step-active .step-text {
+    color: var(--primary-color);
+}
+
+.step-icon {
+    margin: auto;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid #535353;
+    color: #535353;
+    padding: 0;
+    background: #ffeded;
+}
+
+.step-text {
+    font-size: 1rem;
+    color: #535353;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.cart-info {
+    padding: 0 0.8rem;
+}
+
+.cart-products-form {
+    padding: 1rem 0;
+}
+
+.cart-product-box {
+    gap: 12px;
+    width: 100%;
+    padding: 1.3rem 0;
+}
+
+.cart-product-left {
+    width: 83px;
+    border-radius: 0.2rem;
+    border: 1px solid #dbdbdb;
+}
+
+.cart-product-left img {
+    width: 100%;
+}
+
+.cart-product-right {
+    width: calc(100% - 95px);
+}
+
+.cart-product-name a {
+    text-decoration: none;
+    color: var(--content-color-black);
+    
+}
+
+.cart-product-name a h5 {
+    font-size: 1.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical
+}
+
+.cart-product-price-quantity {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.cart-product-price {
+    text-align: end;
+}
+
+.cart-product-price h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.cart-product-price h6 {
+    font-size: 0.95rem;
+    text-decoration: line-through;
+    color: #808080;
+}
+
+.cart-product-quantity {
+    display: flex;
+    gap: 0;
+}
+
+input[name="quantity"] {
+    outline: none;
+    border: 1px solid #cfcfcf;
+    border-left: none;
+    border-right: none;
+    width: 2.7rem;
+    padding: 0.2rem;
+    text-align: center;
+}
+
+.update-quantity {
+    outline: none;
+    border: 1px solid #cfcfcf;
+    background: none;
+    padding: 0 0.5rem;
+}
+
+.update-quantity:disabled {
+    border: 1px solid #e2e2e2;
+    color: #e2e2e2;
+    background: none;
+}
+
+.update-quantity i {
+    font-size: 0.9rem;
+}
+
+.increase-quantity {
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+}
+
+.descrease-quantity {
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+}
+
+.cart-hr {
+    margin: 0 0 1rem;
+}
+
+.summary-shipping,
+.summary-price {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.summary-shipping span {
+    font-size: 1.1rem;
+}
+
+.s-price-title {
+    font-size: 1.2rem;
+}
+
+.total-price {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+}
+
+.summary-action {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--content-color-white);
+    border: none;
+    outline: none;
+    border-radius: 0.2rem;
+}
+/*For mobile -------------------------------------------*/
+@media screen and (max-width: 767px) {
+    .cart-product-right {
+        flex-direction: column;
+    }
+}

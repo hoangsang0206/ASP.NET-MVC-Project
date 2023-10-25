@@ -144,6 +144,7 @@
     <Content Include="Areas\Admin\css\style.css" />
     <Content Include="Areas\Admin\js\script.js" />
     <Content Include="css\account.css" />
+    <Content Include="css\cart.css" />
     <Content Include="css\collections.css" />
     <Content Include="css\home.css" />
     <Content Include="css\product.css" />
@@ -180,6 +181,7 @@
     <Content Include="images\payment\momo.png" />
     <Content Include="images\payment\visa.png" />
     <Content Include="js\account.js" />
+    <Content Include="js\cart.js" />
     <Content Include="js\script.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\AdminLayoutPage1.cshtml" />
@@ -265,6 +267,7 @@
     </Compile>
     <Compile Include="Models\BrandAPI.cs" />
     <Compile Include="Models\Breadcrumb.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

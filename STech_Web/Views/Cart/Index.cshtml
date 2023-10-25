@@ -3,4 +3,103 @@
     ViewBag.Title = "Giỏ hàng";
 }
 
-<h4 class="text-center">Đang cập nhật...</h4>
+<section class="cart-wrapper">
+    <div class="container-fluid">
+        <div class="breadcrumb-cart">
+            <a href="/collections/all">
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>Mua thêm sản phẩm khác</span>
+            </a>
+        </div>
+        <div class="cart-main">
+
+            <div class="checkout-steplist">
+                <div class="checkout-step step-1 step-active">
+                    <i class='bx bxs-shopping-bag-alt step-icon'></i>
+                    <span class="step-text">Giỏ hàng</span>
+                </div>
+                <div class="checkout-step step-2">
+                    <i class='bx bxs-id-card step-icon'></i>
+                    <span class="step-text">Thông tin đặt hàng</span>
+                </div>
+                <div class="checkout-step step-3">
+                    <i class='bx bxs-credit-card step-icon'></i>
+                    <span class="step-text">Thanh toán</span>
+                </div>
+                <div class="checkout-step step-4">
+                    <i class='bx bxs-check-shield step-icon'></i>
+                    <span class="step-text">Hoàn tất</span>
+                </div>
+            </div>
+
+            <!--Test cart-->
+            @{
+                STech_Web.Models.DatabaseSTechEntities db = new STech_Web.Models.DatabaseSTechEntities();
+                List<STech_Web.Models.Product> products = db.Products.Take(3).ToList();
+                ViewBag.CartCount = products.Count;
+            }
+            
+            <div class="cart-info">
+                <form action="#" method="post" class="cart-products-form">
+                    @{
+                        foreach (var pro in products)
+                        {
+                            <div class="cart-product-box d-flex">
+                                <div class="cart-product-left">
+                                    <a href="/product/@pro.ProductID">
+                                        <img src="@pro.ImgSrc" alt="" />
+                                    </a>
+                                </div>
+                                <div class="cart-product-right d-flex justify-content-between">
+                                    <div class="cart-product-name">
+                                        <a href="/product/@pro.ProductID">
+                                            <h5>@pro.ProductName</h5>
+                                        </a>
+                                    </div>
+                                    <div class="cart-product-price-quantity">
+                                        <div class="cart-product-price">
+
+                                            <h5>@(Convert.ToDecimal(pro.Price).ToString("##,###", ViewBag.cul))đ</h5>
+                                            @if (pro.Cost != null && pro.Cost.ToString().Length > 0)
+                                            {
+                                                <h6>@(Convert.ToDecimal(pro.Cost).ToString("##,###", ViewBag.cul))đ</h6>
+                                            }
+                                        </div>
+                                        <div class="cart-product-quantity">
+                                            <button type="button" class="update-quantity descrease-quantity" disabled>
+                                                <i class="fa-solid fa-minus"></i>
+                                            </button>
+                                            <input type="number" name="quantity" value="1" data-quantity="1"
+                                                   data-product="@pro.ProductID" data-price="@pro.Price" readonly min="1" />
+                                            <button type="button" class="update-quantity increase-quantity">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </form>
+                <hr class="cart-hr"/>
+                <div class="cart-product-total d-flex flex-column gap-3">
+                    <div class="summary-shipping">
+                        <span class="s-shipping-title">Phí vận chuyển: </span>
+                        <span class="ship-price">Miễn phí</span>
+                    </div>
+                    <div class="summary-price">
+                        <span class="s-price-title">Tổng tiền: </span>
+                        <span class="total-price">@(Convert.ToDecimal(products.Sum(t => t.Price)).ToString("##,###", ViewBag.cul))đ</span>
+                    </div>
+                    <button class="summary-action">
+                        ĐẶT HÀNG NGAY
+                    </button>
+                </div>
+            </div>
+            <div class="cart-order-info"></div>
+            <div class="cart-payment"></div>
+            <div class="cart-success"></div>
+
+        </div>
+    </div>
+</section>
