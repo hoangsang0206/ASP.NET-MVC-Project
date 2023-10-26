@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "Hãng sản xuất - Admin";
+}
+
+@model List<STech_Web.Models.Brand>
+
+<div class="brands">
+    <h2 class="title">Danh mục</h2>
+    <div class="breadcrumb">
+        <ul class="breadcrumb-list d-flex">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                Hãng sản xuất
+            </li>
+        </ul>
+    </div>
+    <div class="brands-content">
+        <div class="action-box brands-action d-flex flex-wrap">
+            <button class="add-brand-btn">
+                <i class="fa-regular fa-square-plus action-btn-icon"></i>
+                Thêm
+            </button>
+            <button class="delete-brand-btn">
+                <i class="fa-regular fa-trash-can action-btn-icon"></i>
+                Xóa
+            </button>
+            <button class="update-brand-btn">
+                <i class="fa-regular fa-pen-to-square action-btn-icon"></i>
+                Sửa
+            </button>
+            <div class="brands-action-notice"></div>
+        </div>
+        <div class="brands-content-box">
+            <div class="box-header d-flex align-items-center justify-content-between">
+                <h5>Danh sách danh mục</h5>
+                <button class="reload-action-btn reload-brands">Tải lại</button>
+            </div>
+            <hr />
+            <div class="brands-list">
+                
+            </div>
+        </div>
+        <div class="products-in-category">
+            <div class="box-header d-flex align-items-center justify-content-between">
+                <h5>Sản phẩm thuộc danh mục</h5>
+                <button class="remove-action-btn">Bỏ chọn</button>
+            </div>
+            <hr />
+            <div class="products-cate-list">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="add-category">
+        <div class="form-box d-flex flex-column">
+            <div class="close-form close-add-category position-absolute">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h3 class="form-header text-center m-0">THÊM DANH MỤC</h3>
+            <div class="form-error"></div>
+            <form action="#" method="post" class="add-category-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="category-id" name="category-id" value="" class="form-input" required />
+                    <label for="category-id" class="input-label position-absolute">Mã danh mục</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="category-name" name="category-name" value="" class="form-input" required />
+                    <label for="category-name" class="input-label position-absolute">Tên danh mục</label>
+                </div>
+                <button type="submit" class="form-submit-btn">THÊM DANH MỤC</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="update-category">
+        <div class="form-box d-flex flex-column">
+            <div class="close-form close-update-category position-absolute">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h3 class="form-header text-center m-0">SỬA DANH MỤC</h3>
+            <div class="form-error"></div>
+            <form action="#" method="post" class="update-category-form">
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="update-category-id" name="category-id" value="" class="form-input" required />
+                    <label for="update-category-id" class="input-label position-absolute">Mã danh mục</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="update-category-name" name="category-name" value="" class="form-input" required />
+                    <label for="update-category-name" class="input-label position-absolute">Tên danh mục</label>
+                </div>
+                <button type="submit" class="form-submit-btn">SỬA DANH MỤC</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="delete-cate-confirm position-fixed">
+        <div class="delete-cate-confirm-box d-flex flex-column align-items-center">
+            <i class="fa-regular fa-circle-question"></i>
+            <span>Xóa danh mục này?</span>
+            <div class="delete-cate-confirm-btn-box d-flex justify-content-between">
+                <button class="delete-cate-confirm-no">Hủy</button>
+                <button class="delete-cate-confirm-yes">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-product-in-cate-confirm position-fixed">
+        <div class="delete-confirm-box d-flex flex-column align-items-center">
+            <i class="fa-regular fa-circle-question"></i>
+            <span>Xóa tất cả sản phẩm trong danh mục này?</span>
+            <div class="delete-button-box">
+                <button class="cancel-delete">Hủy</button>
+                <button class="confirm-delete">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="complete-notice">
+        <div class="complete-notice-box d-flex flex-column align-items-center">
+            <i class='bx bx-check-circle bx-tada'></i>
+            <span>Thêm thành công.</span>
+            <button>OK</button>
+        </div>
+    </div>
+
+    <div class="complete-update-notice">
+        <div class="complete-notice-box d-flex flex-column align-items-center">
+            <i class='bx bx-check-circle bx-tada'></i>
+            <span>Sửa thành công.</span>
+            <button>OK</button>
+        </div>
+    </div>
+
+    <div class="complete-delete-notice">
+        <div class="complete-notice-box d-flex flex-column align-items-center">
+            <i class='bx bx-check-circle bx-tada'></i>
+            <span>Xóa thành công.</span>
+            <button>OK</button>
+        </div>
+    </div>
+
+</div>

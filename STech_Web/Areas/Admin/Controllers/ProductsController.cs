@@ -206,6 +206,9 @@ namespace STech_Web.Areas.Admin.Controllers
 
             WareHouse wh = product.WareHouse;
             ProductImgDetail imgDetail = product.ProductImgDetail;
+            ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
+            Sale productSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
+
             if (wh != null)
             {
                 db.WareHouses.Remove(wh);
@@ -214,6 +217,15 @@ namespace STech_Web.Areas.Admin.Controllers
             {
                 db.ProductImgDetails.Remove(imgDetail);
             }
+            if(proOSD != null)
+            {
+                db.ProductOutStandings.Remove(proOSD);
+            }
+            if(productSale != null)
+            {
+                db.Sales.Remove(productSale);
+            }
+
             db.Products.Remove(product);
             db.SaveChanges();
             return Json(new { success = true });
@@ -225,20 +237,26 @@ namespace STech_Web.Areas.Admin.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Category category = db.Categories.FirstOrDefault(t => t.CateID == cateID);
 
+            //Kiểm tra danh mục có tồn tại không
             if (category == null)
             {
                 return Json(new { success = false, error = "Danh mục " + category.CateName +" không tồn tại." });
             }
 
+            //Kiểm tra có sản phẩm nào trong danh mục không
             if(category.Products.Count <= 0)
             {
                 return Json(new { success = false, error = "Không có sản phẩm nào thuộc danh mục " + category.CateName + "." });
             }
 
+            //-----------------
             List<Product> products = category.Products.ToList();
             List<WareHouse> wareHouses = new List<WareHouse>();
             List<ProductImgDetail> productImgDetails = new List<ProductImgDetail>();
+            List<ProductOutStanding> productOSDs = new List<ProductOutStanding>();
+            List<Sale> productSale = new List<Sale>();
 
+            //------------------
             foreach (Product product in products)
             {
                 WareHouse wh = product.WareHouse;
@@ -252,8 +270,23 @@ namespace STech_Web.Areas.Admin.Controllers
                 {
                     productImgDetails.Add(imgDetail);
                 }
+
+                ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
+                if(proOSD != null)
+                { 
+                    productOSDs.Add(proOSD);
+                }
+
+                Sale proSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
+                if(proSale != null)
+                {
+                    productSale.Add(proSale);
+                }
             }
 
+            //--Tạo bảng để lưu dữ liệu cho việc khôi phục
+
+            //---------------------------
             if(wareHouses.Count > 0)
             {
                 db.WareHouses.RemoveRange(wareHouses);
@@ -262,6 +295,16 @@ namespace STech_Web.Areas.Admin.Controllers
             if(productImgDetails.Count > 0)
             {
                 db.ProductImgDetails.RemoveRange(productImgDetails);
+            }
+
+            if(productOSDs.Count > 0)
+            {
+                db.ProductOutStandings.RemoveRange(productOSDs);
+            }
+
+            if(productSale.Count > 0)
+            {
+                db.Sales.RemoveRange(productSale);
             }
 
             db.Products.RemoveRange(products);
