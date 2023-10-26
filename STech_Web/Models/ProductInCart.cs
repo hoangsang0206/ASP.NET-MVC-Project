@@ -11,7 +11,7 @@ namespace STech_Web.Models
         public int Quantity { get; set; }
 
         public ProductInCart() { }
-        public ProductInCart(string productID, string quantity)
+        public ProductInCart(string productID, int quantity)
         {
             this.ProductID = productID;
             this.Quantity = quantity;

@@ -202,6 +202,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="DataFiles\CartTemp.json" />
     <None Include="Properties\PublishProfiles\lehoangsang - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
@@ -267,12 +268,16 @@
     </Compile>
     <Compile Include="Models\BrandAPI.cs" />
     <Compile Include="Models\Breadcrumb.cs" />
-    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Cart.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CartTemp.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CategoryAPI.cs" />
-    <Compile Include="Models\Countdown.cs" />
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Megamenu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -297,10 +302,13 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductAPI.cs" />
     <Compile Include="Models\ProductImgDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductInCart.cs" />
+    <Compile Include="Models\CategoryAPI.cs" />
+    <Compile Include="Models\Countdown.cs" />
+    <Compile Include="Models\ProductAPI.cs" />
     <Compile Include="Models\ProductOutStanding.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

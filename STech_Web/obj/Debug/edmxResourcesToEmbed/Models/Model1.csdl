@@ -11,6 +11,17 @@
     <Property Name="BrandImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Brand" FromRole="Brands" ToRole="Products" />
   </EntityType>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_Cart_Customer" FromRole="Cart" ToRole="Customers" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_Cart_Product" FromRole="Cart" ToRole="Products" />
+  </EntityType>
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="CateID" />
@@ -18,6 +29,20 @@
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Cate" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DoB" Type="DateTime" Precision="0" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AccountID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Customer" FromRole="Customers" ToRole="Cart" />
   </EntityType>
   <EntityType Name="Megamenu">
     <Key>
@@ -73,6 +98,7 @@
     <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
+    <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Product" FromRole="Products" ToRole="Cart" />
     <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
     <NavigationProperty Name="ProductImgDetail" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
     <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
@@ -98,7 +124,10 @@
       <PropertyRef Name="SaleID" />
     </Key>
     <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OriginalCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="Product" Relationship="Self.FK_Sale_Pro" FromRole="Sales" ToRole="Products" />
   </EntityType>
   <EntityType Name="SidebarMenuNav">
@@ -155,6 +184,30 @@
       </Principal>
       <Dependent Role="Products">
         <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_Customer">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_Product">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -219,7 +272,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Sale_Pro">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
     <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
@@ -256,7 +309,9 @@
   </Association>
   <EntityContainer Name="DatabaseSTechEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Brands" EntityType="Self.Brand" />
+    <EntitySet Name="Carts" EntityType="Self.Cart" />
     <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
     <EntitySet Name="Megamenus" EntityType="Self.Megamenu" />
     <EntitySet Name="MegamenuItems" EntityType="Self.MegamenuItem" />
     <EntitySet Name="ProductImgDetails" EntityType="Self.ProductImgDetail" />
@@ -272,6 +327,14 @@
     <AssociationSet Name="FK_Pro_Brand" Association="Self.FK_Pro_Brand">
       <End Role="Brands" EntitySet="Brands" />
       <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_Customer" Association="Self.FK_Cart_Customer">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_Product" Association="Self.FK_Cart_Product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Carts" />
     </AssociationSet>
     <AssociationSet Name="FK_Pro_Cate" Association="Self.FK_Pro_Cate">
       <End Role="Categories" EntitySet="Categories" />

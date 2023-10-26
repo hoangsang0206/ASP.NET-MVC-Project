@@ -17,6 +17,7 @@ namespace STech_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.Carts = new HashSet<Cart>();
             this.ProductOutStandings = new HashSet<ProductOutStanding>();
             this.Sales = new HashSet<Sale>();
             this.Specifications = new HashSet<Specification>();
@@ -32,6 +33,8 @@ namespace STech_Web.Models
         public string CateID { get; set; }
     
         public virtual Brand Brand { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
         public virtual Category Category { get; set; }
         public virtual ProductImgDetail ProductImgDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

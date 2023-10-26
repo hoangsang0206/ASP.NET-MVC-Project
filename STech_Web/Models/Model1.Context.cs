@@ -26,7 +26,9 @@ namespace STech_Web.Models
         }
     
         public virtual DbSet<Brand> Brands { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Megamenu> Megamenus { get; set; }
         public virtual DbSet<MegamenuItem> MegamenuItems { get; set; }
         public virtual DbSet<ProductImgDetail> ProductImgDetails { get; set; }

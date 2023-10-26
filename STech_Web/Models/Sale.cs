@@ -16,6 +16,9 @@ namespace STech_Web.Models
     {
         public int SaleID { get; set; }
         public string ProductID { get; set; }
+        public Nullable<decimal> OriginalCost { get; set; }
+        public Nullable<decimal> OriginalPrice { get; set; }
+        public Nullable<decimal> SalePrice { get; set; }
     
         public virtual Product Product { get; set; }
     }
