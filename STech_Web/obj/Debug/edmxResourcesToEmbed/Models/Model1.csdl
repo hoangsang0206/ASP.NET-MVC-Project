@@ -80,6 +80,19 @@
     <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
     <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
   </EntityType>
+  <EntityType Name="ProductsBackup">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Warranty" Type="Int32" />
+    <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="Sale">
     <Key>
       <PropertyRef Name="SaleID" />
@@ -249,6 +262,7 @@
     <EntitySet Name="ProductImgDetails" EntityType="Self.ProductImgDetail" />
     <EntitySet Name="ProductOutStandings" EntityType="Self.ProductOutStanding" />
     <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductsBackups" EntityType="Self.ProductsBackup" />
     <EntitySet Name="Sales" EntityType="Self.Sale" />
     <EntitySet Name="SidebarMenuNavs" EntityType="Self.SidebarMenuNav" />
     <EntitySet Name="Specifications" EntityType="Self.Specification" />

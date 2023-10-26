@@ -81,6 +81,19 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="BrandID" Type="varchar" MaxLength="20" />
           <Property Name="CateID" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="ProductsBackup">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
+          <Property Name="ImgSrc" Type="varchar(max)" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Warranty" Type="int" />
+          <Property Name="BrandID" Type="varchar" MaxLength="20" />
+          <Property Name="CateID" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Sales">
           <Key>
             <PropertyRef Name="SaleID" />
@@ -240,6 +253,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="ProductImgDetail" EntityType="Self.ProductImgDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsBackup" EntityType="Self.ProductsBackup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
@@ -379,6 +393,19 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
           <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
+        </EntityType>
+        <EntityType Name="ProductsBackup">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Warranty" Type="Int32" />
+          <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -549,6 +576,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="ProductImgDetails" EntityType="Self.ProductImgDetail" />
           <EntitySet Name="ProductOutStandings" EntityType="Self.ProductOutStanding" />
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductsBackups" EntityType="Self.ProductsBackup" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="SidebarMenuNavs" EntityType="Self.SidebarMenuNav" />
           <EntitySet Name="Specifications" EntityType="Self.Specification" />
@@ -660,6 +688,20 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="DatabaseSTechModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Warranty" ColumnName="Warranty" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="CateID" ColumnName="CateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsBackups">
+            <EntityTypeMapping TypeName="DatabaseSTechModel.ProductsBackup">
+              <MappingFragment StoreEntitySet="ProductsBackup">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />

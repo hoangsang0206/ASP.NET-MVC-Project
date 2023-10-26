@@ -193,6 +193,49 @@ namespace STech_Web.Areas.Admin.Controllers
             return Json(new { success = true });
         }
 
+        //--Add product to backup table
+        public void addProductToBackup(DatabaseSTechEntities db ,Product product)
+        {
+            if(product == null)
+            {
+                return;
+            }
+
+            if(db.ProductsBackups.Find(product.ProductID) != null)
+            {
+                return;
+            }
+
+            ProductsBackup productBAK = new ProductsBackup();
+            productBAK.ProductID = product.ProductID;
+            productBAK.ProductName = product.ProductName;
+            productBAK.Cost = product.Cost;
+            productBAK.Price = product.Price;
+            productBAK.ImgSrc = product.ImgSrc;
+            productBAK.Warranty = product.Warranty;
+            productBAK.CateID= product.CateID;
+            productBAK.BrandID = product.BrandID;
+            
+            db.ProductsBackups.Add(productBAK);
+        }
+
+        //--Delete product from backup table
+        public void deleteProductFromBackup(DatabaseSTechEntities db, Product product)
+        {
+            if(product == null)
+            {
+                return;
+            }
+
+            ProductsBackup proBAK = db.ProductsBackups.Find(product.ProductID);
+            if(proBAK == null)
+            {
+                return;
+            }
+
+            db.ProductsBackups.Remove(proBAK);
+        }
+
         //Delete product
         [HttpPost]
         public ActionResult DeleteProduct(string id)
@@ -204,27 +247,33 @@ namespace STech_Web.Areas.Admin.Controllers
                 return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
             }
 
+            //--------------------
             WareHouse wh = product.WareHouse;
             ProductImgDetail imgDetail = product.ProductImgDetail;
             ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
             Sale productSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
 
+            //-----------------------
             if (wh != null)
             {
                 db.WareHouses.Remove(wh);
             }
-            if(imgDetail != null)
+            if (imgDetail != null)
             {
                 db.ProductImgDetails.Remove(imgDetail);
             }
-            if(proOSD != null)
+            if (proOSD != null)
             {
                 db.ProductOutStandings.Remove(proOSD);
             }
-            if(productSale != null)
+            if (productSale != null)
             {
                 db.Sales.Remove(productSale);
             }
+
+            //-Lưu sản phẩm vào bảng backup trước khi xóa-----------------------
+            addProductToBackup(db, product);
+            //----------------------
 
             db.Products.Remove(product);
             db.SaveChanges();
@@ -282,6 +331,9 @@ namespace STech_Web.Areas.Admin.Controllers
                 {
                     productSale.Add(proSale);
                 }
+
+                //--Lưu sản phẩm vào bảng backup
+                addProductToBackup(db, product);
             }
 
             //--Tạo bảng để lưu dữ liệu cho việc khôi phục
@@ -309,6 +361,67 @@ namespace STech_Web.Areas.Admin.Controllers
 
             db.Products.RemoveRange(products);
             db.SaveChanges();
+
+            return Json(new { success = true });
+        }
+
+        //--Function backup one product data -------------
+        public bool backupOneProduct(DatabaseSTechEntities db, ProductsBackup proBAK)
+        {
+            if(proBAK == null)
+            {
+                return false;
+            }
+
+            Product product = new Product();
+            product.ProductID = proBAK.ProductID;
+            product.ProductName = proBAK.ProductName;
+            product.Cost = proBAK.Cost;
+            product.Price = proBAK.Price;
+            product.ImgSrc = proBAK.ImgSrc;
+            product.BrandID = proBAK.BrandID;
+            product.CateID = proBAK.CateID;
+            product.Warranty = proBAK.Warranty;
+
+            db.Products.Add(product);
+            return true;
+        }
+
+        //--Backup one product data ----------------------
+        public ActionResult BackupOneProductData(ProductsBackup proBAK)
+        {
+            if(proBAK == null)
+            {
+                return Json(new { success = false, error = "Sản phẩm này đã bị xóa khỏi cơ sở dữ liệu." });
+            }
+
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            bool result = backupOneProduct(db, proBAK);
+
+            if(result == false)
+            {
+                return Json(new { success = false, error = "Không thể khôi phục sản phẩm này." });
+            }
+
+            return Json(new { success = true });
+        }
+
+        //--Backup all product data ----------------------
+        [HttpPost]
+        public ActionResult BackupAllProductData()
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<ProductsBackup> productBAKs = db.ProductsBackups.ToList();
+
+            if(productBAKs.Count <= 0)
+            {
+                return Json(new { success = false, error = "Không có sản phẩm nào để khôi phục." });
+            }
+
+            foreach(ProductsBackup productBAK in productBAKs)
+            {
+                backupOneProduct(db, productBAK);
+            }
 
             return Json(new { success = true });
         }

@@ -74,6 +74,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProductsBackups">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductsBackup">
+        <MappingFragment StoreEntitySet="ProductsBackup">
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Warranty" ColumnName="Warranty" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="CateID" ColumnName="CateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Sales">
       <EntityTypeMapping TypeName="DatabaseSTechModel.Sale">
         <MappingFragment StoreEntitySet="Sales">

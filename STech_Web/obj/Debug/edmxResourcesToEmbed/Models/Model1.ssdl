@@ -76,6 +76,19 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="BrandID" Type="varchar" MaxLength="20" />
     <Property Name="CateID" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ProductsBackup">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
+    <Property Name="ImgSrc" Type="varchar(max)" />
+    <Property Name="Cost" Type="money" />
+    <Property Name="Price" Type="money" />
+    <Property Name="Warranty" Type="int" />
+    <Property Name="BrandID" Type="varchar" MaxLength="20" />
+    <Property Name="CateID" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Sales">
     <Key>
       <PropertyRef Name="SaleID" />
@@ -235,6 +248,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <EntitySet Name="ProductImgDetail" EntityType="Self.ProductImgDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductsBackup" EntityType="Self.ProductsBackup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
