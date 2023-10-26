@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/collections.css?Version=1" />
     <link rel="stylesheet" type="text/css" href="~/css/product.css?Version=1" />
     <link rel="stylesheet" type="text/css" href="~/css/account.css?Version=1" />
-    <link rel="stylesheet" type="text/css" href="~/css/cart.css?Version=1"/>
+    <link rel="stylesheet" type="text/css" href="~/css/cart.css?Version=1" />
 
     <!--------------------------------------------------------------------------->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
@@ -39,7 +39,9 @@
     <script type="text/javascript" src="/js/script.js?Version=2" defer></script>
     <script type="text/javascript" src="/js/account.js?Version=2" defer></script>
     <script type="text/javascript" src="/js/cart.js?Version=1" defer></script>
-
+    @using STech_Web.Models;
+    @using Newtonsoft.Json;
+    @{ DatabaseSTechEntities db = new DatabaseSTechEntities(); }
 </head>
 <body>
 
@@ -103,10 +105,25 @@
                 </div>
                 <div class="header-btn">
                     <div class="cart-btn">
+                        @{ int cartCount = 0;}
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            List<Cart> cart = db.Carts.ToList();
+                            cartCount = cart.Count(t => t.Customer.CustomerID == User.Identity.Name);
+                        }
+                        else
+                        {
+                            if (Request.Cookies["CartItems"] != null)
+                            {
+                                string cookieValue = Request.Cookies["CartItems"].Value;
+                                List<CartItem> cartItems = JsonConvert.DeserializeObject<List<CartItem>>(cookieValue);
+                                cartCount = cartItems.Count;
+                            }
+                        }
                         <a href="/cart">
                             <ion-icon name="cart-outline"></ion-icon>
                             <div class="cart-count-holder">
-                                <div class="cart-count">@(ViewBag.CartCount > 0 ? ViewBag.CartCount : "0")</div>
+                                <div class="cart-count">@cartCount</div>
                             </div>
                             <span>Giỏ <br>hàng</span>
                         </a>
@@ -167,9 +184,7 @@
             <div class="container-xxl">
                 <ul class="sub-header-item-list d-flex align-items-center">
                     @{
-                        STech_Web.Models.DatabaseSTechEntities db = new STech_Web.Models.DatabaseSTechEntities();
-                        List<STech_Web.Models.Category> categories = db.Categories.ToList();
-
+                        List<Category> categories = db.Categories.ToList();
                         foreach (var cate in categories)
                         {
                             <li class="sub-header-item">
