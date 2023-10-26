@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Web.Management;
+using Microsoft.Owin.Security.Provider;
 
 namespace STech_Web.Controllers
 {
@@ -30,7 +31,7 @@ namespace STech_Web.Controllers
             Countdown countdown = GetCountdown();
             ViewBag.CurrentDate = DateTime.Now;
             ViewBag.StartDate = countdown.startDate;
-
+            ViewBag.RemaingTime = calculateRemainingTime(countdown.endDate);
             //----------
             ViewBag.Sales = sales;
             ViewBag.LaptopOSD = laptopOSD;
@@ -52,9 +53,14 @@ namespace STech_Web.Controllers
         public ActionResult Countdown() 
         {
             Countdown countdown = GetCountdown();
-            if(DateTime.Now >= countdown.startDate)
+            if(DateTime.Now >= countdown.startDate && DateTime.Now <= countdown.endDate)
             {
                 TimeSpan remainingTime = calculateRemainingTime(countdown.endDate);
+                if (remainingTime.Days == 0 && remainingTime.Hours == 0 
+                    && remainingTime.Minutes == 0 && remainingTime.Seconds == 0)
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                }
 
                 return Json(new
                 {
@@ -66,7 +72,7 @@ namespace STech_Web.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { success = false });
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
         //--Get countdown time

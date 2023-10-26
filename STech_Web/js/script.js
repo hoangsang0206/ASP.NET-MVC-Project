@@ -553,3 +553,52 @@ $('.forgot-password-form').on('submit', (e) => {
     $('.reset-password').css('visibility', 'visible');
     $('.reset-password .form-container').addClass('showForm');
 })
+
+ //--Sale countdown ------------------------------------
+$(document).ready(() => {
+    var days, hours, minutes, seconds;
+    function getCountdown() {
+        $.ajax({
+            type: 'GET',
+            url: '/home/countdown',
+            dataType: 'json',
+            success: (data) => {
+                if (data.success) {
+                    days = data.days;
+                    hours = data.hours;
+                    minutes = data.minutes;
+                    seconds = data.seconds;
+                }
+                else {
+                    days = 0;
+                    hours = 0;
+                    minutes = 0;
+                    seconds = 0;
+                }
+            },
+            error: () => {
+                days = 0;
+                hours = 0;
+                minutes = 0;
+                seconds = 0;
+            }
+        })
+    }
+
+    function updateCountdown() {
+        $("#countdown-days").text(String(days).padStart(2, "0"));
+        $("#countdown-hours").text(String(hours).padStart(2, "0"));
+        $("#countdown-minutes").text(String(minutes).padStart(2, "0"));
+        $("#countdown-seconds").text(String(seconds).padStart(2, "0"));
+    }
+
+    var intervalCd = setInterval(() => {
+        getCountdown();
+        updateCountdown();
+        if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
+            $('.sale').hide();
+            clearInterval(intervalCd);
+        }
+    }, 1000);
+    // -------------------------------------
+})

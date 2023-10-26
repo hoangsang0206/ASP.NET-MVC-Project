@@ -407,7 +407,6 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //--Backup all product data ----------------------
-        [HttpPost]
         public ActionResult BackupAllProductData()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
