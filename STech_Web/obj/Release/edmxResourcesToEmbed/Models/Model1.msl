@@ -1,6 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DatabaseSTechModelStoreContainer" CdmEntityContainer="DatabaseSTechEntities">
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Brands">
       <EntityTypeMapping TypeName="DatabaseSTechModel.Brand">
         <MappingFragment StoreEntitySet="Brands">
@@ -12,6 +34,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.Cart">
+        <MappingFragment StoreEntitySet="Cart">
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="DatabaseSTechModel.Category">
         <MappingFragment StoreEntitySet="Categories">
@@ -20,51 +52,48 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ImportDetails">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ImportDetail">
-        <MappingFragment StoreEntitySet="ImportDetail">
-          <ScalarProperty Name="ImportID" ColumnName="ImportID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DoB" ColumnName="DoB" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProductDescriptions">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductDescription">
-        <MappingFragment StoreEntitySet="ProductDescription">
-          <ScalarProperty Name="DesID" ColumnName="DesID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
+    <EntitySetMapping Name="Megamenus">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.Megamenu">
+        <MappingFragment StoreEntitySet="Megamenu">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MegamenuName" ColumnName="MegamenuName" />
+          <ScalarProperty Name="MegamenuLink" ColumnName="MegamenuLink" />
+          <ScalarProperty Name="SidebarItemId" ColumnName="SidebarItemId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProductDetails">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductDetail">
-        <MappingFragment StoreEntitySet="ProductDetail">
-          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="DetailName" ColumnName="DetailName" />
-          <ScalarProperty Name="DetailContent" ColumnName="DetailContent" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductGifts">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductGift">
-        <MappingFragment StoreEntitySet="ProductGift">
-          <ScalarProperty Name="GiftID" ColumnName="GiftID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ProductGiftID" ColumnName="ProductGiftID" />
+    <EntitySetMapping Name="MegamenuItems">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.MegamenuItem">
+        <MappingFragment StoreEntitySet="MegamenuItem">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MegamenuItemName" ColumnName="MegamenuItemName" />
+          <ScalarProperty Name="MegamenuItemLink" ColumnName="MegamenuItemLink" />
+          <ScalarProperty Name="MegamenuId" ColumnName="MegamenuId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ProductImgDetails">
       <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
         <MappingFragment StoreEntitySet="ProductImgDetail">
-          <ScalarProperty Name="ImgDetailId" ColumnName="ImgDetailId" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ImgDetailSrc" ColumnName="ImgDetailSrc" />
+          <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
+          <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
+          <ScalarProperty Name="ImgSrc3" ColumnName="ImgSrc3" />
+          <ScalarProperty Name="ImgSrc4" ColumnName="ImgSrc4" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -74,15 +103,6 @@
           <ScalarProperty Name="StandingID" ColumnName="StandingID" />
           <ScalarProperty Name="StandingType" ColumnName="StandingType" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductPromotions">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductPromotion">
-        <MappingFragment StoreEntitySet="ProductPromotion">
-          <ScalarProperty Name="PromotionID" ColumnName="PromotionID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="PromotionName" ColumnName="PromotionName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -100,11 +120,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProductsBackups">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductsBackup">
+        <MappingFragment StoreEntitySet="ProductsBackup">
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Warranty" ColumnName="Warranty" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="CateID" ColumnName="CateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Sales">
       <EntityTypeMapping TypeName="DatabaseSTechModel.Sale">
         <MappingFragment StoreEntitySet="Sales">
           <ScalarProperty Name="SaleID" ColumnName="SaleID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="OriginalCost" ColumnName="OriginalCost" />
+          <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
+          <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SidebarMenuNavs">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.SidebarMenuNav">
+        <MappingFragment StoreEntitySet="SidebarMenuNav">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SidebarItemName" ColumnName="SidebarItemName" />
+          <ScalarProperty Name="SidebarLink" ColumnName="SidebarLink" />
+          <ScalarProperty Name="SidebarIcon" ColumnName="SidebarIcon" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

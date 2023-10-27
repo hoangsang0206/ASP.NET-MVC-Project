@@ -14,11 +14,12 @@ namespace STech_Web.Models
     
     public partial class Cart
     {
+        public int CartID { get; set; }
         public string ProductID { get; set; }
         public int Quantity { get; set; }
-        public string CustomerID { get; set; }
+        public string UserID { get; set; }
     
-        public virtual Customer Customer { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual Product Product { get; set; }
     }
 }

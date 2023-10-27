@@ -11,6 +11,7 @@ using System.Web.DynamicData;
 using Microsoft.Owin;
 using Newtonsoft.Json;
 using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity;
 
 namespace STech_Web.Controllers
 {
@@ -28,72 +29,116 @@ namespace STech_Web.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                cartItems = db.Carts.Where(t => t.Customer.AccountID == User.Identity.Name).ToList();
-                cartCookie = getCartFromCookie();
+                string userID = User.Identity.GetUserId();
+                Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+                string customerID;
 
-                foreach(CartItem cartItem in cartCookie)
+                if(customer == null)
                 {
-                    Cart cart = new Cart();
-                    cart.ProductID = cartItem.ProductID;
-                    cart.Quantity = cartItem.Quantity;
+                    customerID = addNewCustomer(db, userID);
                 }
+
+                cartCookie = getCartFromCookie();
+                if(cartCookie.Count > 0)
+                {
+                    foreach (CartItem cartItem in cartCookie)
+                    {
+                        Cart cart = new Cart();
+                        cart.ProductID = cartItem.ProductID;
+                        cart.Quantity = cartItem.Quantity;
+                        cart.UserID = User.Identity.GetUserId();
+
+                        if(cart != null)
+                        {
+                            db.Carts.Add(cart);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+                cartItems = db.Carts.Where(t => t.UserID == userID).ToList();
+
+                //Delete cookie
+                Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(-10);
+                ViewBag.CartCount = cartItems.Count;
+                return View(cartItems);
             }
             else
             {
                 cartCookie = getCartFromCookie();
-
-                foreach(var item in cartCookie)
+                if(cartCookie.Count > 0)
                 {
-                    Cart cartItem = new Cart();
-                    cartItem.ProductID = item.ProductID;
-                    cartItem.Quantity = item.Quantity;
-                    cartItem.CustomerID = "undefined";
-                    cartItems.Add(cartItem);
+                    foreach (CartItem item in cartCookie)
+                    {
+                        Cart cart = new Cart();
+                        cart.ProductID = item.ProductID;
+                        cart.Quantity = item.Quantity;
+                        cart.UserID = null;
+                        if(cart != null)
+                        {
+                            cartItems.Add(cart);
+                        }
+                    }
                 }
-            }
 
-            
-            return View();
+                var cartWithProduct = cartItems.Select(item => new
+                {
+                    item.Quantity,
+                    Product = db.Products.FirstOrDefault(t => t.ProductID == item.ProductID)
+                }).ToList();
+
+                if(cartWithProduct.Count > 0)
+                {
+                    ViewBag.CartCount = cartWithProduct.Count;
+                    return View(cartWithProduct);
+                }
+                else
+                {
+                    cartItems = new List<Cart>();
+                    ViewBag.CartCount = cartItems.Count;
+                    return View(cartItems);
+                }    
+            }
         }
 
-        //data will add to JSON
+        //Add product to cart
         [HttpPost]
         public ActionResult AddToCart(CartItem pro)
         {
             //Add data from cart to database when user logged in
             if (User.Identity.IsAuthenticated)
             {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                string userID = User.Identity.GetUserId();
+                List<Cart> userCart = db.Carts.Where(t => t.UserID == userID).ToList();
 
-                if (pro.ProductID != null && pro.ProductID.Length > 0)
+                if(userCart.Any(t => t.ProductID == pro.ProductID && t.UserID == userID))
                 {
-                    DatabaseSTechEntities db = new DatabaseSTechEntities();
-                    string userName = User.Identity.Name;
-                    Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userName);
-
+                    userCart.FirstOrDefault(t => t.ProductID == pro.ProductID && t.UserID == userID).Quantity += 1;
+                    db.SaveChanges();
+                }
+                else
+                {
                     Cart cartItem = new Cart();
                     cartItem.ProductID = pro.ProductID;
                     cartItem.Quantity = pro.Quantity;
-
-                    if (customer == null)
-                    {
-                        cartItem.CustomerID = addNewCustomer(db, userName);
-                    }
-                    else
-                    {
-                        cartItem.CustomerID = customer.CustomerID;
-                    }
-
+                    cartItem.UserID = userID;
                     db.Carts.Add(cartItem);
                     db.SaveChanges();
-                    return Json(new { success = true });
-                }
+                }   
+                   
+                return Json(new { success = true });
             }
             else //Add product to cart when user not logged in
             {    //data will save to cookie
                 List<CartItem> cartItems = getCartFromCookie();
 
                 //----------
-                if (pro.ProductID != null && pro.ProductID.Length > 0)
+                if(cartItems.Contains(pro))
+                {
+                    cartItems.FirstOrDefault(t => t.ProductID == pro.ProductID).Quantity += 1;
+                }
+                else
                 {
                     cartItems.Add(new CartItem
                     {
@@ -108,8 +153,6 @@ namespace STech_Web.Controllers
                 Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
                 return Json(new { success = true });
             }
-
-            return Json(new { success = false, errror = "Thêm thất bại." });
         }
 
         //--Get cart items from Cookies
@@ -141,7 +184,7 @@ namespace STech_Web.Controllers
 
         }
 
-        //Update quantity when user not logged in
+        //Update quantity
         public ActionResult UpdateQuantity(CartItem pro, int quantity)
         {
             if (quantity <= 0)
@@ -153,16 +196,5 @@ namespace STech_Web.Controllers
             return Redirect("/cart");
         }
 
-        //Update quantity when user logged in
-        public ActionResult UpdateQuantityWhenLoggedIn(CartItem pro, string customerID, int quantity)
-        {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            Cart cartItem = db.Carts.FirstOrDefault(t => t.CustomerID == customerID && t.ProductID == pro.ProductID);
-           
-            cartItem.Quantity = quantity;
-            db.SaveChanges();
-
-            return Redirect("/cart");
-        }
     }
 }

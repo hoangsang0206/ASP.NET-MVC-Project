@@ -41,6 +41,7 @@
     <script type="text/javascript" src="/js/cart.js?Version=1" defer></script>
     @using STech_Web.Models;
     @using Newtonsoft.Json;
+    @using Microsoft.AspNet.Identity;
     @{ DatabaseSTechEntities db = new DatabaseSTechEntities(); }
 </head>
 <body>
@@ -108,8 +109,9 @@
                         @{ int cartCount = 0;}
                         @if (User.Identity.IsAuthenticated)
                         {
+                            
                             List<Cart> cart = db.Carts.ToList();
-                            cartCount = cart.Count(t => t.Customer.CustomerID == User.Identity.Name);
+                            cartCount = cart.Count(t => t.UserID == User.Identity.GetUserId());
                         }
                         else
                         {
