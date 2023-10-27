@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Giỏ hàng";
+    ViewBag.Title = "Giỏ hàng - STech";
 }
 
 @using Microsoft.AspNet.Identity;
@@ -42,15 +42,23 @@
                     <form action="#" method="post" class="cart-products-form">
                         @{
                             decimal totalPrice = 0;
+                            var i = 0;
                             foreach (var item in Model)
                             {
                                 if (item != null)
                                 {
+                                     i++;
                                     totalPrice += (decimal)item.Product.Price;
                                     <div class="cart-product-box d-flex">
-                                        <div class="cart-product-left">
+                                        <div class="cart-product-left d-flex flex-column align-items-center gap-2">
                                             <a href="/product/@item.Product.ProductID">
-                                                <img src="@item.Product.ImgSrc" alt="" />
+                                                <div class="cart-img">
+                                                    <img src="@item.Product.ImgSrc" alt="" />
+                                                </div>
+                                            </a>
+                                            <a href="/cart/deletecartitem?line=@i" class="delete-cart-item d-flex gap-2 align-items-center">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                                <span>Xóa</span>
                                             </a>
                                         </div>
                                         <div class="cart-product-right d-flex justify-content-between">

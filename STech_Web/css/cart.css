@@ -92,12 +92,24 @@
 
 .cart-product-left {
     width: 83px;
+}
+
+.cart-img {
+    padding: 0 0.3rem;
     border-radius: 0.2rem;
     border: 1px solid #dbdbdb;
 }
 
 .cart-product-left img {
     width: 100%;
+}
+
+.delete-cart-item * {
+    font-size: 0.95rem;
+}
+
+.delete-cart-item:hover {
+    color: var(--primary-color);
 }
 
 .cart-product-right {
@@ -181,6 +193,11 @@ input[name="quantity"] {
 .descrease-quantity {
     border-top-left-radius: 0.2rem;
     border-bottom-left-radius: 0.2rem;
+}
+
+.delete-cart-item {
+    text-decoration: none;
+    color: var(--content-color-black);
 }
 
 .cart-hr {

@@ -14,6 +14,7 @@ using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using System.Text;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace STech_Web.Controllers
 {
@@ -154,6 +155,39 @@ namespace STech_Web.Controllers
                 Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
                 return Json(new { success = true });
             }
+        }
+
+        //--Delete item from cart
+        public ActionResult DeleteCartItem(int line = 0)
+        {
+            if (line > 0)
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Cart> cartList = new List<Cart>();
+                if (User.Identity.IsAuthenticated)
+                {
+                    string userID = User.Identity.GetUserId();
+                    cartList = db.Carts.Where(t => t.UserID == userID).ToList();
+                    db.Carts.Remove(cartList[line - 1]);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    List<CartItem> cartCookie = getCartFromCookie();
+                    cartCookie.RemoveAt(line - 1);
+
+                    var cartJson = JsonConvert.SerializeObject(cartCookie);
+                    var bytesToEncode = Encoding.UTF8.GetBytes(cartJson);
+                    var base64String = Convert.ToBase64String(bytesToEncode);
+                    string json = JsonConvert.SerializeObject(cartCookie);
+                    Response.Cookies["CartItems"].Value = base64String;
+                    //Cookie will expire in 30 days from the date the new product is added
+                    Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
+                }
+                
+            }
+
+            return Redirect("/cart");
         }
 
         //--Get cart items from Cookies
