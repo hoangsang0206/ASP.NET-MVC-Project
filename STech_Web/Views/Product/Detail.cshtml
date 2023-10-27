@@ -24,7 +24,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-5 col-md-12 col-sm-12 col-12 product-detail-box product-gallery">
-                <img src="@Model.ImgSrc" alt="" />
+                <div class="slider-main">
+                    <img src="@Model.ImgSrc" alt="" />
+                    <img src="https://storage.googleapis.com/stech-product-images/products/laptop-gaming/laptop-gaming-acer-aspire-7-a715-42g-r05g.webp" alt="" />
+                    <img src="https://storage.googleapis.com/stech-product-images/products/laptop-gaming/laptop-gaming-acer-nitro-v-anv15-51-55ca.webp" alt="" />
+                </div>
+                <div class="slider-nav">
+                    <img src="@Model.ImgSrc" alt="" />
+                    <img src="https://storage.googleapis.com/stech-product-images/products/laptop-gaming/laptop-gaming-acer-aspire-7-a715-42g-r05g.webp" alt="" />
+                    <img src="https://storage.googleapis.com/stech-product-images/products/laptop-gaming/laptop-gaming-acer-nitro-v-anv15-51-55ca.webp" alt="" />
+                </div>
             </div>
             <div class="col-lg-7 col-md-12 col-sm-12 col-12 product-detail-box product-info">
                 <div class="product-info-name">
@@ -72,18 +81,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="product-action d-flex gap-2 my-2 align-items-center">
+                <div class="product-action d-flex my-2 align-items-center">
                     @if (Model.WareHouse.ProductID != null && Model.WareHouse.Quantity > 0)
                     {
                         <div class="buy-action">
                             <button class="buy-action-btn" data-product-id="@Model.ProductID">
                                 <h4>MUA NGAY</h4>
                                 <span>Giao tận nơi hoặc nhận tại cửa hàng</span>
-                            </button>
-                        </div>
-                        <div class="add-to-cart-action">
-                            <button class="add-to-cart-btn">
-                                <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
                     }

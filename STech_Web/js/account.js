@@ -56,7 +56,6 @@ $('.register-form').submit((e) => {
                 $('.register .form-error').hide();
                 $('.register .form-error').empty();
                 $('.register-form').unbind('submit').submit();
-                window.location.href = response.redirectUrl;
             }
             else {
                 var str = '<ul>';
@@ -100,7 +99,6 @@ $('.login-form').submit((e) => {
                 $('.login .form-error').hide();
                 $('.login .form-error').empty();
                 $('.login-form').unbind('submit').submit();
-                window.location.href = response.redirectUrl;
             }
             else {
                 var str = '<ul>';

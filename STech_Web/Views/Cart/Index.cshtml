@@ -49,13 +49,13 @@
                                     totalPrice += (decimal)item.Product.Price;
                                     <div class="cart-product-box d-flex">
                                         <div class="cart-product-left">
-                                            <a href="/product/">
+                                            <a href="/product/@item.Product.ProductID">
                                                 <img src="@item.Product.ImgSrc" alt="" />
                                             </a>
                                         </div>
                                         <div class="cart-product-right d-flex justify-content-between">
                                             <div class="cart-product-name">
-                                                <a href="/product/@item.ProductID">
+                                                <a href="/product/@item.Product.ProductID">
                                                     <h5>@item.Product.ProductName</h5>
                                                 </a>
                                             </div>
@@ -72,8 +72,8 @@
                                                     <button type="button" class="update-quantity descrease-quantity" disabled>
                                                         <i class="fa-solid fa-minus"></i>
                                                     </button>
-                                                    <input type="number" name="quantity" value="@item.CartItem.Quantity" data-quantity="@item.CartItem.Quantity"
-                                                            data-product="@item.ProductID" data-price="@item.Product.Price" readonly min="1" />
+                                                    <input type="number" name="quantity" value="@item.Quantity" data-quantity="@item.Quantity"
+                                                            data-product="@item.Product.ProductID" data-price="@item.Product.Price" readonly min="1" />
                                                     <button type="button" class="update-quantity increase-quantity">
                                                         <i class="fa-solid fa-plus"></i>
                                                     </button>

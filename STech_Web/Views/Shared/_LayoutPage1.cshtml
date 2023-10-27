@@ -40,9 +40,6 @@
     <script type="text/javascript" src="/js/account.js?Version=2" defer></script>
     <script type="text/javascript" src="/js/cart.js?Version=1" defer></script>
     @using STech_Web.Models;
-    @using Newtonsoft.Json;
-    @using Microsoft.AspNet.Identity;
-    @{ DatabaseSTechEntities db = new DatabaseSTechEntities(); }
 </head>
 <body>
 
@@ -106,26 +103,10 @@
                 </div>
                 <div class="header-btn">
                     <div class="cart-btn">
-                        @{ int cartCount = 0;}
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            
-                            List<Cart> cart = db.Carts.ToList();
-                            cartCount = cart.Count(t => t.UserID == User.Identity.GetUserId());
-                        }
-                        else
-                        {
-                            if (Request.Cookies["CartItems"] != null)
-                            {
-                                string cookieValue = Request.Cookies["CartItems"].Value;
-                                List<CartItem> cartItems = JsonConvert.DeserializeObject<List<CartItem>>(cookieValue);
-                                cartCount = cartItems.Count;
-                            }
-                        }
                         <a href="/cart">
                             <ion-icon name="cart-outline"></ion-icon>
                             <div class="cart-count-holder">
-                                <div class="cart-count">@cartCount</div>
+                                <div class="cart-count">0</div>
                             </div>
                             <span>Giỏ <br>hàng</span>
                         </a>
@@ -185,15 +166,7 @@
         <div class="sub-header">
             <div class="container-xxl">
                 <ul class="sub-header-item-list d-flex align-items-center">
-                    @{
-                        List<Category> categories = db.Categories.ToList();
-                        foreach (var cate in categories)
-                        {
-                            <li class="sub-header-item">
-                                <a href="/collections/@cate.CateID" class="sub-header-link">@cate.CateName</a>
-                            </li>
-                        }
-                    }
+                   
                 </ul>
             </div>
         </div>

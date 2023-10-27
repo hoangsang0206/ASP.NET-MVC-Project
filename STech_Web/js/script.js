@@ -1,4 +1,25 @@
-﻿//Show overlay when click category button -------------------------------------------
+﻿//Load sub header data --------------------------
+$(document).ready(() => {
+    $.ajax({
+        type: 'GET',
+        url: '/api/categories',
+        success: (data) => {
+            $('.sub-header-item-list').empty();
+            for (var i = 0; i < data.length; i++) {
+                var str = `<li class="sub-header-item">
+                    <a href="/collections/${data[i].CateID}" class="sub-header-link">${data[i].CateName}</a>
+                </li>`;
+
+                $('.sub-header-item-list').append(str);
+            }
+        },
+        error: () => {
+            console.error("Cannot get category list");
+        }
+    })
+})
+
+//Show overlay when click category button -------------------------------------------
 $(".categories-btn").click(() => {
     $(".hidden-menu").toggleClass("showHiddenMenu");
 
@@ -238,6 +259,25 @@ $(".brand-collections").slick({
         }
     ]
 })
+
+//Slick slider in product detail page -----------------------
+$('.slider-main').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    fade: true,
+    dots: false,
+    arrows: false,
+    asNavFor: '.slider-nav'
+})
+
+$('.slider-nav').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerMode: true,
+    asNavFor: '.slider-main',
+    focusOnSelect: true
+})
+
 
 //Show footer column content -----------------------------------------------------------
 var footerColArr = $(".footer-col").toArray();
