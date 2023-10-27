@@ -99,7 +99,6 @@ namespace STech_Web.Controllers
 
             //Paging -----
             products = Pagination(products, page);
-           
 
             //----------
             ViewBag.searchValue = search;
@@ -110,79 +109,90 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm
-        public List<Product> Filter(List<Product> products, string filterType, string value, string sbrand)
+        public List<Product> Filter(List<Product> products, string filterType, string filter, string sbrand, decimal? minprice, decimal? maxprice)
         {
             List<Product> productsFilter = new List<Product>();
             string filterName = "";
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-
-            //Lọc sản phẩm theo thương hiệu
-            if (filterType == "brand")
+            
+            switch (filterType)
             {
-                productsFilter = products.Where(t => t.Brand.BrandID == value).ToList();
+                //Lọc sản phẩm theo thương hiệu
+                case "brand":
+                    productsFilter = products.Where(t => t.Brand.BrandID == filter).ToList();
+                    if (productsFilter.Count > 0)
+                    {
+                        Product product = productsFilter[0];
+                        filterName = product.Brand.BrandName.ToUpper();
+                    }
+                    else
+                    {
+                        filterName = textInfo.ToTitleCase(filter);
+                    }
+                    break;
+                //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
+                case "sbrand":
+                    productsFilter = products.Where(t => t.Brand.BrandID == filter && t.ProductName.ToLower().Contains(sbrand)).ToList();
+                    if (productsFilter.Count > 0)
+                    {
+                        Product product = productsFilter[0];
+                        Regex regex = new Regex(sbrand, RegexOptions.IgnoreCase);
+                        Match match = regex.Match(product.ProductName);
+                        filterName = product.Brand.BrandName.ToUpper() + " " + match.Value;
+                    }
+                    else
+                    {
+                        filterName = textInfo.ToTitleCase(filter) + " " + textInfo.ToTitleCase(sbrand);
+                    }
+                    break;
+                //Lọc sản phẩm theo giá cho trước
+                case "price":
+                    if (minprice == null)
+                    {
+                        productsFilter = products.Where(t => t.Price <= maxprice).ToList();
+                        filterName = "giá dưới " + (int)((decimal)maxprice / 1000000) + " triệu";
+                    }
+                    else if (maxprice == null)
+                    {
+                        productsFilter = products.Where(t => t.Price >= minprice).ToList();
+                        filterName = "giá trên " + (int)((decimal)minprice / 1000000) + " triệu";
+                    }
+                    else if(minprice != null && maxprice != null)
+                    {
+                        productsFilter = products.Where(t => t.Price >= minprice && t.Price <= maxprice).ToList();
+                        filterName = "giá từ " + (int)((decimal)minprice / 1000000) + " đến " + (int)((decimal)maxprice / 1000000) + " triệu";
+                    }
+                    else
+                    {
+                        filterName = "giá từ ... đến ...";
+                    }
 
+                    break;
 
-                if (productsFilter.Count > 0)
-                {
-                    Product product = productsFilter[0];
-                    filterName = product.Brand.BrandName.ToUpper();
-                }
-                else
-                {
-                    filterName = textInfo.ToTitleCase(value);
-                }
-            }
-            //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
-            else if (filterType == "sbrand")
-            {
-                //productsFilter = products.SearchName(sbrand).ToList();
-                productsFilter = products.Where(t => t.Brand.BrandID == value && t.ProductName.ToLower().Contains(sbrand)).ToList();
-
-                if (productsFilter.Count > 0)
-                {
-                    Product product = productsFilter[0];
-                    Regex regex = new Regex(sbrand, RegexOptions.IgnoreCase);
-                    Match match = regex.Match(product.ProductName);
-                    filterName = product.Brand.BrandName.ToUpper() + " " + match.Value;
-                }
-                else
-                {
-                    filterName = textInfo.ToTitleCase(value) + " " + textInfo.ToTitleCase(sbrand);
-                }
-            }
-            //Lọc sản phẩm theo giá cho trước
-            else if (filterType == "price")
-            {
-                if (value == "tren-25-trieu")
-                {
-                    productsFilter = products.Where(t => t.Price > 25000000).ToList();
-                }
-                else if (value == "tu-20-den-25-trieu")
-                {
-                    productsFilter = products.Where(t => t.Price > 20000000 && t.Price < 25000000).ToList();
-                }
-                else if (value == "tu-15-den-20-trieu")
-                {
-                    productsFilter = products.Where(t => t.Price > 15000000 && t.Price < 20000000).ToList();
-                }
-                else if (value == "duoi-15-trieu")
-                {
-                    productsFilter = products.Where(t => t.Price < 15000000).ToList();
-                }
             }
 
             ViewBag.filterName = filterName;
-
             return productsFilter;
         }
 
-        //Lọc sản phẩm theo id danh mục
-        public ActionResult GetProduct(string id = "", string sort = "", string filtertype = "", string filter = "", string sbrand = "", int page = 1)
+        //Kiểm tra danh mục có tồn tại không
+        private bool checkCateExist(DatabaseSTechEntities db, string cateID)
         {
-            if(id.Length > 0)
+            Category category = db.Categories.FirstOrDefault(t => t.CateID == cateID);
+            if(category != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //Lọc sản phẩm theo id danh mục
+        public ActionResult GetProduct(string id = "", string sort = "", string filtertype = "", string filter = "", string sbrand = "", decimal? minprice = null, decimal? maxprice = null, int page = 1)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            if (id.Length > 0 && checkCateExist(db, id))
             {
                 //Lấy danh sách sản phẩm theo danh mục
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
                 List<Product> products = new List<Product>();
 
                 string breadcrumbItem = "";
@@ -209,12 +219,14 @@ namespace STech_Web.Controllers
                 }
 
                 //Lọc danh sách sản phẩm
-                if ((products != null) && (filter.Length > 0 && filtertype.Length > 0))
+                if ((products != null) && filtertype.Length > 0)
                 {
-                    products = Filter(products, filtertype, filter, sbrand);
+                    products = Filter(products, filtertype, filter, sbrand, minprice, maxprice);
                     ViewBag.FilterType = filtertype;
                     ViewBag.Filter = filter;
                     ViewBag.Sbrand = sbrand;
+                    ViewBag.MinPrice = minprice;
+                    ViewBag.MaxPrice = maxprice;
                     if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
                     {
                         breadcrumbItem += " " + ViewBag.filterName;

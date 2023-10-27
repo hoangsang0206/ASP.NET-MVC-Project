@@ -3,27 +3,57 @@
     padding: 1rem;
 }
 
-.product-gallery, .product-info {
+.product-info {
     padding: 2rem 1rem 1.5rem 1rem;
 }
 
 .product-gallery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
+    padding: 2rem 1.8rem 1.5rem 1.8rem;
+    overflow: hidden;
 }
 
 .product-gallery img {
-    border: 1px solid red;
     cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 0.3rem;
+}
+
+.product-gallery img:not(:last-child) {
+    margin-right: 0.7rem;
 }
 
 .slider-main {
-    width: 85%;
+    width: 100%;
 }
 
 .slider-nav {
     width: 100%;
+}
+
+.slider-nav .is-active {
+    border: 1px solid var(--primary-color);
+}
+
+.slider-main .slick-arrow,
+.slider-nav .slick-arrow {
+    background: #f0f0f0;
+    transform: scale(0);
+    visibility: hidden;
+    transition: var(--trans-all-03);
+}
+
+.slider-nav .slick-arrow {
+    padding: 0.3rem 0.7rem;
+}
+
+.slider-nav .slick-arrow i {
+    font-size: 0.8rem;
+}
+
+.slider-main:hover .slick-arrow,
+.slider-nav:hover .slick-arrow {
+    transform: scale(1);
+    visibility: visible;
 }
 
 .product-info-name h3 {
@@ -73,8 +103,8 @@
 }
 
 .buy-action-btn::after {
-    content: '\f127';
-    font-family: 'Font Awesome 5 Free';
+    content: '\f217';
+    font-family: "FontAwesome";
     font-size: 1.8rem;
     color: var(--content-color-white);
     position: absolute;

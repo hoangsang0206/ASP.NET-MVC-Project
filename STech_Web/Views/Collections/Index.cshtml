@@ -46,31 +46,31 @@
                     <!--------------------------->
                     @if (ViewBag.FilterType != null)
                     {
-                        <a href="/collections/@ViewBag.cateID?sort=random&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@ViewBag.Page">
+                        <a href="/collections/@ViewBag.cateID?sort=random&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@ViewBag.Page">
                             <div class="sort-dropdown-content-item @( ViewBag.sortValue == "random" ? "active" : "" )">
                                 Ngẫu nhiên
                             </div>
                         </a>
 
-                        <a href="/collections/@ViewBag.cateID?sort=price-ascending&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@ViewBag.Page">
+                        <a href="/collections/@ViewBag.cateID?sort=price-ascending&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@ViewBag.Page">
                             <div class="sort-dropdown-content-item @( ViewBag.sortValue == "price-ascending" ? "active" : "" )">
                                 Giá tăng dần
                             </div>
                         </a>
 
-                        <a href="/collections/@ViewBag.cateID?sort=price-descending&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@ViewBag.Page">
+                        <a href="/collections/@ViewBag.cateID?sort=price-descending&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@ViewBag.Page">
                             <div class="sort-dropdown-content-item @( ViewBag.sortValue == "price-descending" ? "active" : "" )">
                                 Giá giảm dần
                             </div>
                         </a>
 
-                        <a href="/collections/@ViewBag.cateID?sort=name-az&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@ViewBag.Page">
+                        <a href="/collections/@ViewBag.cateID?sort=name-az&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@ViewBag.Page">
                             <div class="sort-dropdown-content-item @( ViewBag.sortValue == "name-az" ? "active" : "" ) ">
                                 Tên A-Z
                             </div>
                         </a>
 
-                        <a href="/collections/@ViewBag.cateID?sort=name-za&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@ViewBag.Page">
+                        <a href="/collections/@ViewBag.cateID?sort=name-za&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@ViewBag.Page">
                             <div class="sort-dropdown-content-item @( ViewBag.sortValue == "name-za" ? "active" : "" )">
                                 Tên Z - A
                             </div>

@@ -264,20 +264,41 @@ $(".brand-collections").slick({
 $('.slider-main').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
-    fade: true,
-    dots: false,
-    arrows: false,
-    asNavFor: '.slider-nav'
+    arrows: true,
+    fade: false,
+    infinite: false,
+    useTransform: true,
+    speed: 400,
+    cssEase: 'cubic-bezier(0.77, 0, 0.18, 1)',
+    prevArrow: `<button type='button' class='slick-prev slick-arrow'><i class="fa-solid fa-arrow-left"></i></button>`,
+    nextArrow: `<button type='button' class='slick-next slick-arrow'><i class="fa-solid fa-arrow-right"></i></button>`,
 })
 
-$('.slider-nav').slick({
-    slidesToShow: 3,
+$('.slider-nav').on('init', function (event, slick) {
+    $('.slider-nav .slick-slide.slick-current').addClass('is-active');
+}).slick({
+    slidesToShow: 5,
     slidesToScroll: 1,
-    centerMode: true,
-    asNavFor: '.slider-main',
-    focusOnSelect: true
+    dots: false,
+    focusOnSelect: false,
+    infinite: false,
+    prevArrow: `<button type='button' class='slick-prev slick-arrow'><i class="fa-solid fa-arrow-left"></i></button>`,
+    nextArrow: `<button type='button' class='slick-next slick-arrow'><i class="fa-solid fa-arrow-right"></i></button>`,
 })
 
+$('.slider-main').on('afterChange', function (event, slick, currentSlide) {
+    $('.slider-nav').slick('slickGoTo', currentSlide);
+    var currrentNavSlideElem = '.slider-nav .slick-slide[data-slick-index="' + currentSlide + '"]';
+    $('.slider-nav .slick-slide.is-active').removeClass('is-active');
+    $(currrentNavSlideElem).addClass('is-active');
+});
+
+$('.slider-nav').on('click', '.slick-slide', function (event) {
+    event.preventDefault();
+    var goToSingleSlide = $(this).data('slick-index');
+
+    $('.slider-main').slick('slickGoTo', goToSingleSlide);
+});
 
 //Show footer column content -----------------------------------------------------------
 var footerColArr = $(".footer-col").toArray();

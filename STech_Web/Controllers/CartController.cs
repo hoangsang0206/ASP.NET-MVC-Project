@@ -160,10 +160,13 @@ namespace STech_Web.Controllers
         private List<CartItem> getCartFromCookie()
         {
             List<CartItem> cartItems = new List<CartItem>();
-            if (Request.Cookies["CartItems"] != null)
+            var base64String = Request.Cookies["CartItems"]?.Value;
+
+            if (!String.IsNullOrEmpty(base64String))
             {
-                string cookieValue = Request.Cookies["CartItems"].Value;
-                cartItems = JsonConvert.DeserializeObject<List<CartItem>>(cookieValue);
+                var bytesToDecode = Convert.FromBase64String(base64String);
+                var cartItemsJson = Encoding.UTF8.GetString(bytesToDecode);
+                cartItems = JsonConvert.DeserializeObject<List<CartItem>>(cartItemsJson);
             }
 
             return cartItems;
