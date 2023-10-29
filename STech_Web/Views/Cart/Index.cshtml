@@ -47,8 +47,8 @@
                             {
                                 if (item != null)
                                 {
-                                     i++;
-                                    totalPrice += (decimal)item.Product.Price;
+                                    i++;
+                                    totalPrice += (decimal)item.Product.Price * item.Quantity;
                                     <div class="cart-product-box d-flex">
                                         <div class="cart-product-left d-flex flex-column align-items-center gap-2">
                                             <a href="/product/@item.Product.ProductID">
@@ -77,12 +77,14 @@
                                                     }
                                                 </div>
                                                 <div class="cart-product-quantity">
-                                                    <button type="button" class="update-quantity descrease-quantity" disabled>
+                                                    <button type="button" class="update-quantity decrease-quantity" @( item.Quantity <= 1 ? "disabled" : "")
+                                                            onclick="window.location.href = '/cart/updatequantity?productID=@item.Product.ProductID&updatetype=decrease'">
                                                         <i class="fa-solid fa-minus"></i>
                                                     </button>
                                                     <input type="number" name="quantity" value="@item.Quantity" data-quantity="@item.Quantity"
                                                             data-product="@item.Product.ProductID" data-price="@item.Product.Price" readonly min="1" />
-                                                    <button type="button" class="update-quantity increase-quantity">
+                                                    <button type="button" class="update-quantity increase-quantity"
+                                                            onclick="window.location.href = '/cart/updatequantity?productID=@item.Product.ProductID&updatetype=increase'">
                                                         <i class="fa-solid fa-plus"></i>
                                                     </button>
                                                 </div>
@@ -114,7 +116,14 @@
             }
             else
             {
-                
+                <div class="cart-info">
+                    <div class="cart-empty d-flex flex-column align-items-center py-5">
+                        <p>Giỏ hàng của bạn đang trống</p>
+                        <button class="to-home-page-btn" onclick="window.location.href='/collections/all'">
+                            TIẾP TỤC MUA HÀNG
+                        </button>
+                    </div>
+                </div>
             }
         </div>
     </div>

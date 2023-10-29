@@ -18,7 +18,7 @@ $(document).ready(() => {
     updateCartCount();
 })
 
-//------
+//-Add product to cart ------------------------------------
 $('.buy-action-btn').click(() => {
     var productID = $('.buy-action-btn').data('product-id');
     console.log(productID);

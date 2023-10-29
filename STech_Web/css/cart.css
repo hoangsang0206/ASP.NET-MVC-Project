@@ -95,7 +95,7 @@
 }
 
 .cart-img {
-    padding: 0 0.3rem;
+    padding: 0.3rem;
     border-radius: 0.2rem;
     border: 1px solid #dbdbdb;
 }
@@ -120,6 +120,10 @@
     text-decoration: none;
     color: var(--content-color-black);
     
+}
+
+.cart-product-name a:hover {
+    color: var(--primary-color);
 }
 
 .cart-product-name a h5 {
@@ -234,6 +238,10 @@ input[name="quantity"] {
     border: none;
     outline: none;
     border-radius: 0.2rem;
+}
+
+.summary-action:hover {
+    outline: 2px solid var(--primary-color-hover);
 }
 /*For mobile -------------------------------------------*/
 @media screen and (max-width: 767px) {

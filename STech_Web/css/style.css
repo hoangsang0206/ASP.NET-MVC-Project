@@ -152,6 +152,10 @@
     font-family: 'SF Pro Display';
 }
 
+button:disabled {
+    cursor: not-allowed;
+}
+
 .web-scroll-block {
     overflow: hidden;
 }
@@ -642,7 +646,7 @@ header {
 .showForm {
     transform: translateY(0);
     opacity: 1;
-    transition: var(--trans-all-05);
+    transition: var(--trans-all-04);
 }
 
 .form-bottom {

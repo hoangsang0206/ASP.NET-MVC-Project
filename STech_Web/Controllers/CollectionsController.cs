@@ -179,7 +179,7 @@ namespace STech_Web.Controllers
         private bool checkCateExist(DatabaseSTechEntities db, string cateID)
         {
             Category category = db.Categories.FirstOrDefault(t => t.CateID == cateID);
-            if(category != null)
+            if (category != null || cateID == "all")
             {
                 return true;
             }

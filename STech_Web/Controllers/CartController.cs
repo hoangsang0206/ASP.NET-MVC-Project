@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using System.Text;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Migrations;
 
 namespace STech_Web.Controllers
 {
@@ -164,16 +165,26 @@ namespace STech_Web.Controllers
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 List<Cart> cartList = new List<Cart>();
+                //Add to cart when user logged in
                 if (User.Identity.IsAuthenticated)
                 {
                     string userID = User.Identity.GetUserId();
                     cartList = db.Carts.Where(t => t.UserID == userID).ToList();
+                    if (line > cartList.Count)
+                    {
+                        line = cartList.Count;
+                    }
                     db.Carts.Remove(cartList[line - 1]);
                     db.SaveChanges();
                 }
                 else
-                {
+                {   //Add to cart when user not logged in
                     List<CartItem> cartCookie = getCartFromCookie();
+                    if(line > cartCookie.Count)
+                    {
+                        line = cartCookie.Count;
+                    }
+
                     cartCookie.RemoveAt(line - 1);
 
                     var cartJson = JsonConvert.SerializeObject(cartCookie);
@@ -222,14 +233,58 @@ namespace STech_Web.Controllers
 
         }
 
-        //Update quantity
-        public ActionResult UpdateQuantity(CartItem pro, int quantity)
+        //Update cart item quantity
+        public ActionResult UpdateQuantity(string productID, string updateType)
         {
-            if (quantity <= 0)
+            //Update cart item quantity when user logged in
+            if(User.Identity.IsAuthenticated)
             {
-                quantity = 1;
-            }
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                string userID = User.Identity.GetUserId();
+                Cart cart = db.Carts.FirstOrDefault(t => t.UserID == userID && t.ProductID == productID);
 
+                if(cart != null)
+                {
+                    if (updateType == "increase")
+                    {
+                        cart.Quantity += 1;
+                    }
+                    else if (updateType == "decrease")
+                    {
+                        cart.Quantity -= 1;
+                        if (cart.Quantity <= 0) cart.Quantity = 1;
+                    }
+                    db.Carts.AddOrUpdate(cart);
+                    db.SaveChanges();
+                }       
+            }
+            else
+            {   //Update cart item quantity when user not logged in
+                List<CartItem> cartCookie = getCartFromCookie();
+                CartItem cartCCItem =  cartCookie.FirstOrDefault(t => t.ProductID == productID);
+                if (cartCCItem != null)
+                {
+                    if (updateType == "increase" && cartCCItem != null)
+                    {
+                        cartCCItem.Quantity += 1;
+                    }
+                    else if (updateType == "decrease" && cartCCItem != null)
+                    {
+                        cartCCItem.Quantity -= 1;
+                        if (cartCCItem.Quantity <= 0) cartCCItem.Quantity = 1;
+                    }
+                    cartCookie.Remove(cartCCItem);
+                    cartCookie.Add(cartCCItem);
+
+                    var cartJson = JsonConvert.SerializeObject(cartCookie);
+                    var bytesToEncode = Encoding.UTF8.GetBytes(cartJson);
+                    var base64String = Convert.ToBase64String(bytesToEncode);
+                    string json = JsonConvert.SerializeObject(cartCookie);
+                    Response.Cookies["CartItems"].Value = base64String;
+                    //Cookie will expire in 30 days from the date the new product is added
+                    Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
+                }
+            }
 
             return Redirect("/cart");
         }
@@ -238,6 +293,7 @@ namespace STech_Web.Controllers
         [HttpPost]
         public ActionResult CartCount()
         {
+            //Count item in cart when user logged in
             if(User.Identity.IsAuthenticated)
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
@@ -247,7 +303,7 @@ namespace STech_Web.Controllers
                 return Json(new { count = cartCount });
             }
             else
-            {
+            {   //Count item in cart when user not logged in
                 List<CartItem> cartItems = getCartFromCookie();
                 int cartCount = cartItems.Count();
 
