@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.DataHandler.Encoder;
 using System.Text;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Migrations;
+using STech_Web.Identity;
 
 namespace STech_Web.Controllers
 {
@@ -25,7 +26,6 @@ namespace STech_Web.Controllers
         public ActionResult Index()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Cart> cartItems = new List<Cart>(); //Cart from database
             List<CartItem> cartCookie = new List<CartItem>();
 
             //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
@@ -34,37 +34,43 @@ namespace STech_Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string userID = User.Identity.GetUserId();
-                Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
-                string customerID;
-
-                if(customer == null)
-                {
-                    customerID = addNewCustomer(db, userID);
-                }
 
                 cartCookie = getCartFromCookie();
                 if(cartCookie.Count > 0)
                 {
                     foreach (CartItem cartItem in cartCookie)
                     {
-                        Cart cart = new Cart();
-                        cart.ProductID = cartItem.ProductID;
-                        cart.Quantity = cartItem.Quantity;
-                        cart.UserID = User.Identity.GetUserId();
-
-                        if(cart != null)
+                        Cart cartExist = db.Carts.FirstOrDefault(t => t.ProductID == cartItem.ProductID && t.UserID == userID);
+                        if (cartExist != null)
                         {
+                            cartExist.Quantity += cartItem.Quantity;
+                            db.Carts.AddOrUpdate(cartExist);
+                        }
+                        else
+                        {
+                            Cart cart = new Cart();
+                            cart.ProductID = cartItem.ProductID;
+                            cart.Quantity = cartItem.Quantity;
+                            cart.UserID = userID;
                             db.Carts.Add(cart);
                         }
                     }
                     db.SaveChanges();
                 }
 
-                cartItems = db.Carts.Where(t => t.UserID == userID).ToList();
+                DatabaseSTechEntities db1 = new DatabaseSTechEntities();
+                List<Cart> cartItems = db1.Carts.Where(t => t.UserID == userID).ToList();
+
+                var appDbContext = new AppDBContext();
+                var userStore = new AppUserStore(appDbContext);
+                var userManager = new AppUserManager(userStore);
+                var user = userManager.FindById(User.Identity.GetUserId());
 
                 //Delete cookie
                 Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(-10);
                 ViewBag.CartCount = cartItems.Count;
+                ViewBag.User = user;
+                
                 return View(cartItems);
             }
             else
@@ -84,17 +90,8 @@ namespace STech_Web.Controllers
                     }
                 }
 
-                if(cartTemp.Count > 0)
-                {
-                    ViewBag.CartCount = cartTemp.Count;
-                    return View(cartTemp);
-                }
-                else
-                {
-                    cartItems = new List<Cart>();
-                    ViewBag.CartCount = cartItems.Count;
-                    return View(cartItems);
-                }    
+                ViewBag.CartCount = cartTemp.Count;
+                return View(cartTemp);
             }
         }
 
@@ -198,7 +195,7 @@ namespace STech_Web.Controllers
                 
             }
 
-            return Redirect("/cart");
+            return RedirectToAction("Index");
         }
 
         //--Get cart items from Cookies
@@ -215,22 +212,6 @@ namespace STech_Web.Controllers
             }
 
             return cartItems;
-        }
-
-        //--Add new customer ---------------
-        public string addNewCustomer(DatabaseSTechEntities db, string userName)
-        {
-            Customer customer = new Customer();
-            int customersCount = db.Customers.Count();
-            string customerID = "KH" + (customersCount + 1).ToString().PadLeft(8, '0');
-
-            customer = new Customer();
-            customer.AccountID = userName;
-            customer.CustomerID = customerID;
-            db.Customers.Add(customer);
-
-            return customerID;
-
         }
 
         //Update cart item quantity

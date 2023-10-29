@@ -23,8 +23,13 @@ namespace STech_Web.Controllers
         [UserAuthorization]
         public ActionResult Index()
         {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var user = userManager.FindById(User.Identity.GetUserId());
+
             ViewBag.ActiveBotNav = "account";
-            return View();
+            return View(user);
         }
 
         [HttpPost]
@@ -38,10 +43,8 @@ namespace STech_Web.Controllers
                     register.ConfirmPassword == null ||
                     register.Email == null)
                 {
-                    ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
+                    string err = "Vui lòng nhập đầy đủ thông tin.";
+                    return Json(new { success = false, error = err });
                 }
 
                 var appDbContext = new AppDBContext();
@@ -62,47 +65,37 @@ namespace STech_Web.Controllers
                 //Tên đăng nhập không quá 15 ký tự
                 if (register.Username.Length > 15)
                 {
-                    ModelState.AddModelError("", "Tên đăng tối đa 15 ký tự.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
+                    string err = "Tên đăng tối đa 15 ký tự.";
+                    return Json(new { success = false, error = err });
                 }
 
                 //Tên đăng nhập không chứa khoảng trắng và ký tự đặc biệt
                 if (containsSpace || containsSpecialCharacter)
                 {
-                    ModelState.AddModelError("", "Tên đăng nhập không chứa ký tự đặc biệt trừ '_'.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
+                    string err = "Tên đăng nhập không chứa ký tự đặc biệt trừ '_'.";
+                    return Json(new { success = false, error = err });
                 }
 
                 //Xác nhận mật khẩu phải trùng với mật khẩu
                 if(register.Password != register.ConfirmPassword)
                 {
-                    ModelState.AddModelError("", "Xác nhận mật khẩu không đúng.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
+                    string err = "Xác nhận mật khẩu không đúng.";
+                    return Json(new { success = false, error = err });
                 }
 
                 //Kiểm tra xem user đã tồn tại chưa
                 if (existingUser != null)
                 {
-                    ModelState.AddModelError("Error User", "Tài khoản nãy đã tồn tại.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    return Json(new { success = false, errors = error });
+                    string err = "Tài khoản nãy đã tồn tại.";
+                    return Json(new { success = false, error = err });
                 }
 
                 //Kiểm tra xem email đã tồn tại chưa
                 if(existingUserEmail != null)
                 {
-                    ModelState.AddModelError("Email Error", "Email này đã tồn tại.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    return Json(new { success = false, errors = error });
+                    string err = "Email này đã tồn tại.";
+                    return Json(new { success = false, error = err });
                 }
-
-                   
 
                 IdentityResult identityResult = userManager.Create(user);
 
@@ -121,10 +114,8 @@ namespace STech_Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Dữ liệu không hợp lệ.");
-                var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                //return Redirect("/");
-                return Json(new { success = false, errors = error });
+                string err = "Dữ liệu không hợp lệ.";
+                return Json(new { success = false, error = err });
             }
         }
 
@@ -134,10 +125,8 @@ namespace STech_Web.Controllers
             //Tên đăng nhập và mật khẩu không để trống
             if (login.Username == null || login.Password == null)
             {
-                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin.");
-                var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                //return Redirect("/");
-                return Json(new { success = false, errors = error });
+                string err = "Vui lòng nhập đầy đủ thông tin.";
+                return Json(new { success = false, error = err });
             }
 
             var appDbContext = new AppDBContext();
@@ -156,15 +145,12 @@ namespace STech_Web.Controllers
                     return Json(new { success = true, redirectUrl = "/admin/dashboard" });
                 }
 
-                //return Redirect("/");
                 return Json(new { success = true, redirectUrl = "/account" });
             }
             else
             {
-                ModelState.AddModelError("", "Sai tên đăng nhập hoặc mật khẩu.");
-                var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                //return Redirect("/");
-                return Json(new { success = false, errors = error });
+                string err = "Sai tên đăng nhập hoặc mật khẩu.";
+                return Json(new { success = false, error = err });
             }
         }
 
@@ -176,118 +162,108 @@ namespace STech_Web.Controllers
             return Redirect("/");
         }
 
-        [HttpPost]
-        public ActionResult Update(UpdateUserVM update, string userID)
+        [HttpPost, UserAuthorization]
+        public ActionResult Update(UpdateUserVM update)
         {
 
-            var appDbContext = new AppDBContext();
-            var userStore = new AppUserStore(appDbContext);
-            var userManager = new AppUserManager(userStore);
-            var user = userManager.FindById(userID);
-
-            if (user != null)
+            if (User.Identity.IsAuthenticated)
             {
-                user.UserFullName = update.UserFullName;
-                user.Gender = update.Gender;
-                user.PhoneNumber = update.PhoneNumber;
-                user.Email = update.Email;
-                user.DOB = update.DOB;
-                user.Address = update.Address;
+                string userID = User.Identity.GetUserId();
 
-                //Kiểm tra ngày sinh phải nhỏ hơn ngày hiện tại
-                if(update.DOB > DateTime.Now)
-                {
-                    ModelState.AddModelError("", "Ngày sinh phải nhỏ hơn ngày hiện tại .");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
-                }
+                var appDbContext = new AppDBContext();
+                var userStore = new AppUserStore(appDbContext);
+                var userManager = new AppUserManager(userStore);
+                var user = userManager.FindById(userID);
 
-                //Kiểm tra ngày sinh phải lớn hơn hoặc bằng 01/01/1930
-                DateTime oldDate = DateTime.Parse("1930/01/01");
-                if (update.DOB <= oldDate)
+                if (user != null)
                 {
-                    ModelState.AddModelError("", "Ngày sinh phải lớn hơn 01/01/1930 .");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
-                }
+                    user.UserFullName = update.UserFullName;
+                    user.Gender = update.Gender;
+                    user.PhoneNumber = update.PhoneNumber;
+                    user.Email = update.Email;
+                    user.DOB = update.DOB;
+                    user.Address = update.Address;
 
-                //Kiểm tra xem email có tồn tại trong bảng user chưa
-                var allUsers = userManager.Users.ToList();
-                if (allUsers.Any(t => t.Id != userID && t.Email == update.Email))
-                {
-                    ModelState.AddModelError("", "Email này đã tồn tại.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
-                }
+                    //Kiểm tra ngày sinh phải nhỏ hơn ngày hiện tại
+                    if (update.DOB > DateTime.Now)
+                    {
+                        string err = "Ngày sinh phải nhỏ hơn ngày hiện tại.";
+                        return Json(new { success = false, error = err });
+                    }
 
-                //Kiểm tra số điện thoại
-                if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
-                {
-                    ModelState.AddModelError("", "Số điện thoại không hợp lệ.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
-                }
+                    //Kiểm tra ngày sinh phải lớn hơn hoặc bằng 01/01/1930
+                    DateTime oldDate = DateTime.Parse("1930/01/01");
+                    if (update.DOB <= oldDate)
+                    {
+                        string err = "Ngày sinh phải lớn hơn 01/01/1930.";
+                        return Json(new { success = false, error = err });
+                    }
 
-                var updateCheck = userManager.Update(user);
-                if(updateCheck.Succeeded)
-                {
-                    return Json(new { success = true });
-                }    
-                else
-                {
-                    ModelState.AddModelError("", "Không thể cập nhật.");
-                    var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    //return Redirect("/");
-                    return Json(new { success = false, errors = error });
+                    //Kiểm tra xem email có tồn tại trong bảng user chưa
+                    var allUsers = userManager.Users.ToList();
+                    if (allUsers.Any(t => t.Id != userID && t.Email == update.Email))
+                    {
+                        string err = "Email này đã tồn tại.";
+                        return Json(new { success = false, error = err });
+                    }
+
+                    //Kiểm tra số điện thoại
+                    if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
+                    {
+                        string err = "Số điện thoại không hợp lệ.";
+                        return Json(new { success = false, error = err });
+                    }
+
+                    var updateCheck = userManager.Update(user);
+                    if (updateCheck.Succeeded)
+                    {
+                        return Json(new { success = true });
+                    }
                 }
             }
-            else
-            {
-                ModelState.AddModelError("", "Không thể cập nhật.");
-                var error = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                //return Redirect("/");
-                return Json(new { success = false, errors = error });
-            }
+
+            return Json(new { success = false, error = "Không thể cập nhật." });
         }
 
-        [HttpPost]
-        public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword, string userID)
+        [HttpPost, UserAuthorization]
+        public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword)
         {
-            var appDbContext = new AppDBContext();
-            var userStore = new AppUserStore(appDbContext);
-            var userManager = new AppUserManager(userStore);
-            var user = userManager.FindById(userID);
-
-            if(user != null)
+            if(User.Identity.IsAuthenticated)
             {
+                string userID = User.Identity.GetUserId();
 
-                if (oldPassword.Length <= 0 || newPassword.Length <= 0 || confirmNewPassword.Length <= 0)
-                {
-                    return Json(new { success = false, error = "Vui lòng nhập đầy đủ thông tin." });
-                }
+                var appDbContext = new AppDBContext();
+                var userStore = new AppUserStore(appDbContext);
+                var userManager = new AppUserManager(userStore);
+                var user = userManager.FindById(userID);
 
-                if(Crypto.VerifyHashedPassword(user.PasswordHash, oldPassword) == false)
+                if (user != null)
                 {
-                    return Json(new { success = false, error = "Mật khẩu cũ không đúng." });
-                }
 
-                if (newPassword != confirmNewPassword)
-                {
-                    return Json(new { success = false, error = "Xác nhận mật khẩu không đúng." });
-                }
+                    if (oldPassword.Length <= 0 || newPassword.Length <= 0 || confirmNewPassword.Length <= 0)
+                    {
+                        return Json(new { success = false, error = "Vui lòng nhập đầy đủ thông tin." });
+                    }
 
-                user.PasswordHash = Crypto.HashPassword(newPassword);
-                var updateCheck = userManager.Update(user);
-                if (updateCheck.Succeeded)
-                {
-                    return Json(new { success = true });
+                    if (Crypto.VerifyHashedPassword(user.PasswordHash, oldPassword) == false)
+                    {
+                        return Json(new { success = false, error = "Mật khẩu cũ không đúng." });
+                    }
+
+                    if (newPassword != confirmNewPassword)
+                    {
+                        return Json(new { success = false, error = "Xác nhận mật khẩu không đúng." });
+                    }
+
+                    user.PasswordHash = Crypto.HashPassword(newPassword);
+                    var updateCheck = userManager.Update(user);
+                    if (updateCheck.Succeeded)
+                    {
+                        return Json(new { success = true });
+                    }
                 }
             }
-
+            
             return Json(new { success = false, error = "Không thể đổi mật khẩu" });
         }
     }

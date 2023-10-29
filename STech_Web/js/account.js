@@ -58,14 +58,9 @@ $('.register-form').submit((e) => {
                 $('.register-form').unbind('submit').submit();
             }
             else {
-                var str = '<ul>';
-                $.each(response.errors, (index, value) => {
-                    str += `<li>
-                    <i class="fa-solid fa-circle-exclamation" ></i>`
-                        + value + '</li>';
-                })
-
-                str += '</li>';
+                var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation"></i>`
+                        + response.error + `</span>`;
 
                 $('.register .form-error').show();
                 $('.register .form-error').empty();
@@ -101,14 +96,9 @@ $('.login-form').submit((e) => {
                 $('.login-form').unbind('submit').submit();
             }
             else {
-                var str = '<ul>';
-                $.each(response.errors, (index, value) => {
-                    str += `<li>
-                        <i class="fa-solid fa-circle-exclamation" ></i>`
-                        + value + '</li>';
-                })
-
-                str += '</li>';
+                var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation"></i>`
+                    + response.error + `</span>`;
 
                 $('.login .form-error').show();
                 $('.login .form-error').empty();
@@ -139,7 +129,6 @@ $('.user-update-form').submit((e) => {
     var email = $('#Email').val();
     var dob = $('#DOB').val();
     var address = $('#Address').val();
-    var userID = $('#userID').val();
 
     var submitBtn = $(e.target).find('.user-form-submit');
     var btnText = showBtnLoading(submitBtn);
@@ -152,8 +141,7 @@ $('.user-update-form').submit((e) => {
             PhoneNumber: phone,
             Email: email,
             DOB: dob,
-            Address: address,
-            userID: userID
+            Address: address
         },
         success: (response) => {
             resetBtn(submitBtn, btnText);
@@ -162,25 +150,19 @@ $('.user-update-form').submit((e) => {
                 $('.update-error').empty();
                 $('.update-error').append(str);
 
-                var interval = setInterval(() => {
+                setTimeout(() => {
                     closeUpdateErr();
-                    clearInterval(interval);
-                }, 5000);
+                }, 6000)
             }
             else {
                 $('.update-error').empty();
-                var str = '<span>';
-                $.each(response.errors, (index, value) => {
-                    str += value;
-                })
-                str += '</span>'
+                var str = '<span>' + response.error +'</span>'
                
                 $('.update-error').append(str);
 
-                var interval = setInterval(() => {
+                setTimeout(() => {
                     closeUpdateErr();
-                    clearInterval(interval);
-                }, 5000);
+                }, 6000)
             }
         },
         error: (err) => { resetBtn(submitBtn, btnText); }
@@ -193,7 +175,6 @@ $('.change-password-form').submit((e) => {
     var oldPassword = $('#OldPassword').val();
     var newPassword = $('#NewPassword').val();
     var confirmNewPassword = $('#ConfirmNewPassword').val();
-    var userID = $('#userID').val();
 
     var submitBtn = $(e.target).find('.user-form-submit');
     var btnText = showBtnLoading(submitBtn);
@@ -201,7 +182,6 @@ $('.change-password-form').submit((e) => {
         type: 'POST',
         url: '/account/changepassword',
         data: {
-            userID: userID,
             oldPassword: oldPassword,
             newPassword: newPassword,
             confirmNewPassword: confirmNewPassword
@@ -217,10 +197,9 @@ $('.change-password-form').submit((e) => {
                 $('#NewPassword').val('');
                 $('#ConfirmNewPassword').val('');
 
-                var interval = setInterval(() => {
+                setTimeout(() => {
                     closeUpdateErr();
-                    clearInterval(interval);
-                }, 5000);
+                }, 6000)
             }
             else {
                 $('.update-error').empty();
@@ -228,10 +207,9 @@ $('.change-password-form').submit((e) => {
 
                 $('.update-error').append(str);
 
-                var interval = setInterval(() => {
+                setTimeout(() => {
                     closeUpdateErr();
-                    clearInterval(interval);
-                }, 5000);
+                }, 6000)
             }
 
         },

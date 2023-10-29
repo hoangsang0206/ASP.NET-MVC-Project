@@ -786,17 +786,7 @@ header {
     display: none;
 }
 
-.form-error ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.form-error ul li {
-    padding: 0.3rem 0;
-}
-
-.form-error ul li i {
+.form-error i {
     font-size: 1rem;
     margin-right: 0.5rem;
     color: #e30019;

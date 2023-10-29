@@ -3,8 +3,6 @@
     ViewBag.Title = "Giỏ hàng - STech";
 }
 
-@using Microsoft.AspNet.Identity;
-
 @model dynamic
 
 <section class="cart-wrapper">
@@ -38,11 +36,11 @@
 
             @if (ViewBag.CartCount > 0)
             {
-                <div class="cart-info">
-                    <form action="#" method="post" class="cart-products-form">
+                <div class="cart-info d-none form-current" id="cart-info-box">
+                    <div class="cart-products-wrapper">
                         @{
                             decimal totalPrice = 0;
-                            var i = 0;
+                            int i = 0;
                             foreach (var item in Model)
                             {
                                 if (item != null)
@@ -69,7 +67,6 @@
                                             </div>
                                             <div class="cart-product-price-quantity">
                                                 <div class="cart-product-price">
-
                                                     <h5>@(Convert.ToDecimal(item.Product.Price).ToString("##,###", ViewBag.cul))đ</h5>
                                                     @if (item.Product.Cost != null && item.Product.Cost.ToString().Length > 0)
                                                     {
@@ -82,7 +79,7 @@
                                                         <i class="fa-solid fa-minus"></i>
                                                     </button>
                                                     <input type="number" name="quantity" value="@item.Quantity" data-quantity="@item.Quantity"
-                                                            data-product="@item.Product.ProductID" data-price="@item.Product.Price" readonly min="1" />
+                                                           data-product="@item.Product.ProductID" data-price="@item.Product.Price" readonly min="1" />
                                                     <button type="button" class="update-quantity increase-quantity"
                                                             onclick="window.location.href = '/cart/updatequantity?productID=@item.Product.ProductID&updatetype=increase'">
                                                         <i class="fa-solid fa-plus"></i>
@@ -94,7 +91,7 @@
                                 }
                             }
                         }
-                    </form>
+                    </div>
                     <hr class="cart-hr" />
                     <div class="cart-product-total d-flex flex-column gap-3">
                         <div class="summary-shipping">
@@ -105,14 +102,168 @@
                             <span class="s-price-title">Tổng tiền: </span>
                             <span class="total-price">@(totalPrice.ToString("##,###", ViewBag.cul))đ</span>
                         </div>
-                        <button class="summary-action">
-                            ĐẶT HÀNG NGAY
-                        </button>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <button class="summary-action" onclick="window.location.href='#cart-order-box'">
+                                ĐẶT HÀNG NGAY
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="summary-action not-logged-in">
+                                ĐẶT HÀNG NGAY
+                            </button>
+                        }
                     </div>
                 </div>
-                <div class="cart-order-info"></div>
-                <div class="cart-payment"></div>
-                <div class="cart-success"></div>
+                if (User.Identity.IsAuthenticated)
+                {
+                    <div class="cart-info d-none" id="cart-order-box">
+                        <div class="cart-order-wrapper">
+                            <div class="to-prev-step">
+                                <a href="#cart-info-box">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <span>Quay lại</span>
+                                </a>
+                            </div>
+                            <form action="#" method="post" id="form-info-edit">
+                                <div class="cart-form">
+                                    <div class="cart-form-detail">
+                                        <div class="cart-form-header">
+                                            <h5>Thông tin khách mua hàng</h5>
+                                        </div>
+                                        <div class="cart-form-checkbox d-flex gap-3">
+                                            <div class="checkbox-item">
+                                                <input type="radio" id="men" name="gender" value="Nam" @(ViewBag.User.Gender == "Nam" ? "checked" : "") />
+                                                <label for="men">Nam</label>
+                                            </div>
+                                            <div class="checkbox-item">
+                                                <input type="radio" id="women" name="gender" value="Nữ" @(ViewBag.User.Gender == "Nữ" ? "checked" : "") />
+                                                <label for="women">Nữ</label>
+                                            </div>
+                                        </div>
+                                        <div class="cart-form-input my-4">
+                                            <div class="form-input-box position-relative d-flex align-items-center">
+                                                <input type="text" id="UserFullName" name="UserFullName" value="@ViewBag.User.UserFullName" class="form-input" required />
+                                                <label for="UserFullName" class="input-label position-absolute">Họ tên</label>
+                                            </div>
+                                            <div class="form-input-box position-relative d-flex align-items-center">
+                                                <input type="text" id="PhoneNumber" name="PhoneNumber" value="@ViewBag.User.PhoneNumber" class="form-input" required />
+                                                <label for="PhoneNumber" class="input-label position-absolute">Số điện thoại</label>
+                                            </div>
+                                        </div>
+                                        <div class="cart-form-input-ship">
+                                            <div class="cart-form-header">
+                                                <h5>Chọn cách nhận hàng</h5>
+                                            </div>
+                                            <div class="checkbox-shipmethod my-3">
+                                                <input type="radio" id="cod-method" name="shipmethod" value="COD" checked />
+                                                <label for="cod-method">Giao hàng tận nơi</label>
+                                            </div>
+                                            <div class="input-ship-info">
+                                                <div class="form-input-box position-relative d-flex align-items-center">
+                                                    <input type="text" id="ship-address" name="ship-address" value="@ViewBag.User.Address" class="form-input" required />
+                                                    <label for="ship-address" class="input-label position-absolute">Địa chỉ nhận hàng</label>
+                                                </div>
+                                            </div>
+                                            <div class="checkbox-shipmethod my-3">
+                                                <input type="radio" id="store-method" name="shipmethod" value="Store" />
+                                                <label for="store-method">Nhận tại cửa hàng</label>
+                                            </div>
+                                        </div>
+                                        <div class="cart-note my-3">
+                                            <div class="form-input-box position-relative d-flex align-items-center">
+                                                <input type="text" id="cart-note" name="cart-note" value="" class="form-input" />
+                                                <label for="cart-note" class="input-label position-absolute">Lưu ý, yêu cầu khác (không bắt buộc)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr class="cart-hr" />
+                        <div class="cart-product-total d-flex flex-column gap-3">
+                            <div class="summary-shipping">
+                                <span class="s-shipping-title">Phí vận chuyển: </span>
+                                <span class="ship-price">Miễn phí</span>
+                            </div>
+                            <div class="summary-price">
+                                <span class="s-price-title">Tổng tiền: </span>
+                                <span class="total-price">@(totalPrice.ToString("##,###", ViewBag.cul))đ</span>
+                            </div>
+                            <button class="summary-action" onclick="window.location.href='#cart-payment-box'">
+                                ĐẶT HÀNG NGAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-info d-none" id="cart-payment-box">
+                        <div class="cart-payment-wrapper">
+                            <div class="to-prev-step">
+                                <a href="#cart-order-box">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <span>Quay lại</span>
+                                </a>
+                            </div>  
+                            <div class="cart-form-header">
+                                <h5>Thông tin đặt hàng</h5>
+                            </div>
+                            <div class="user-order-info">
+                                <ul class="user-order-info-list">
+                                    <li>
+                                        <span>Khách hàng: </span>
+                                        @ViewBag.User.UserFullName
+                                    </li>
+                                    <li>
+                                        <span>Số điện thoại: </span>
+                                        @ViewBag.User.PhoneNumber
+                                    </li>
+                                    <li>
+                                        <span>Email: </span>
+                                        @ViewBag.User.Email
+                                    </li>
+                                    <li>
+                                        <span>Địa chỉ nhận hàng: </span>
+                                        @ViewBag.User.Address
+                                    </li>
+                                    <li>
+                                        <span>Tạm tính: </span>
+
+                                    </li>
+                                    <li>
+                                        <span>Phí vận chuyển: </span>
+
+                                    </li>
+                                    <li>
+                                        <span>Tổng tiền: </span>
+                                        @(totalPrice.ToString("##,###", ViewBag.cul))đ
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr class="cart-hr" />
+                        <div class="cart-product-total d-flex flex-column gap-3">
+                            <div class="summary-price">
+                                <span class="s-price-title">Tổng tiền: </span>
+                                <span class="total-price">@(totalPrice.ToString("##,###", ViewBag.cul))đ</span>
+                            </div>
+                            <button class="summary-action">
+                                THANH TOÁN NGAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-info d-none" id="cart-success-box">
+                        <div class="cart-success-wrapper">
+                            <div class="cart-success-box d-flex flex-column align-items-center gap-2">
+                                <i class='bx bxs-check-circle bx-tada success-icon'></i>
+                                <span>Thanh toán thành công !</span>
+                                <span>Cảm ơn bạn đã ủng hộ chúng tôi</span>
+                                <button class="to-home-page-btn" onclick="window.location.href='/collections/all'">
+                                    TIẾP TỤC MUA HÀNG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
             else
             {
