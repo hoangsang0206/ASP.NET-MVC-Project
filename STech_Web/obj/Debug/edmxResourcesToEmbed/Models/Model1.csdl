@@ -72,7 +72,7 @@
     </Key>
     <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Quantity" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
@@ -80,13 +80,14 @@
     </Key>
     <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
     <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="DeliveryFee" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="DepositedMoney" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="TotalPaymentAmout" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="ShipMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customer" FromRole="Orders" ToRole="Customers" />
   </EntityType>
   <EntityType Name="ProductImgDetail">

@@ -75,7 +75,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </Key>
     <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Quantity" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
@@ -83,13 +83,14 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </Key>
     <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="CustomerID" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" />
     <Property Name="TotalPrice" Type="money" Nullable="false" />
     <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="Note" Type="nvarchar(max)" />
     <Property Name="DeliveryFee" Type="money" />
-    <Property Name="DepositedMoney" Type="money" />
     <Property Name="TotalPaymentAmout" Type="money" Nullable="false" />
+    <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="ProductImgDetail">
     <Key>

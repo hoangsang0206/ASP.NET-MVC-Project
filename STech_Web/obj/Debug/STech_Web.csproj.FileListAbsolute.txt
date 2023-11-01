@@ -102,3 +102,11 @@ D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Owin.Security.O
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.IdentityMigration.init.resources
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.csproj.GenerateResource.cache
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.IdentityMigration.init1.resources
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Bcl.AsyncInterfaces.dll
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Stripe.net.dll
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\System.Threading.Tasks.Extensions.dll
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Bcl.AsyncInterfaces.xml
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Stripe.net.xml
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\System.Threading.Tasks.Extensions.xml

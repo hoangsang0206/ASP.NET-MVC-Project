@@ -83,8 +83,9 @@
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Note" ColumnName="Note" />
           <ScalarProperty Name="DeliveryFee" ColumnName="DeliveryFee" />
-          <ScalarProperty Name="DepositedMoney" ColumnName="DepositedMoney" />
           <ScalarProperty Name="TotalPaymentAmout" ColumnName="TotalPaymentAmout" />
+          <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

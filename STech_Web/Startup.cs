@@ -27,6 +27,7 @@ namespace STech_Web
             this.CreateRolesAndUsers();
         }
 
+        //Crate user role
         public void CreateRolesAndUsers()
         {
             var roleManager = new RoleManager<IdentityRole>(

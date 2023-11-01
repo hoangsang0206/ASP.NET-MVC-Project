@@ -55,3 +55,23 @@ $('.order-info-summary').click(() => {
         error: () => {  }
     })
 })
+
+//Thanh toán qua thẻ VISA/MASTERCARD --------------------------------------------
+$('.payment-action').click(() => {
+    var paymentMethod = $('input[name="payment-method"]:checked').val();
+
+    if (paymentMethod == 'card') {
+        $.ajax({
+            type: 'Post',
+            url: '/order/checkout',
+            data: {
+                paymentMethod: paymentMethod
+            },
+            success: (res) => {
+
+            },
+            error: () => { console.log("error") }
+        })
+    }
+
+})

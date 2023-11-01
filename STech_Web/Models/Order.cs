@@ -16,13 +16,14 @@ namespace STech_Web.Models
     {
         public string OrderID { get; set; }
         public string CustomerID { get; set; }
-        public System.DateTime OrderDate { get; set; }
+        public Nullable<System.DateTime> OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; }
         public string Note { get; set; }
         public Nullable<decimal> DeliveryFee { get; set; }
-        public Nullable<decimal> DepositedMoney { get; set; }
         public decimal TotalPaymentAmout { get; set; }
+        public string ShipMethod { get; set; }
+        public string PaymentMethod { get; set; }
     
         public virtual Customer Customer { get; set; }
     }

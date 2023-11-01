@@ -3,8 +3,6 @@
     ViewBag.Title = "Thông tin đặt hàng - STech";
 }
 
-@model dynamic
-
 <section class="cart-wrapper">
     <div class="container-fluid">
         <div class="breadcrumb-cart">
@@ -76,21 +74,21 @@
                         <h5>Chọn hình thức thanh toán</h5>
                         <div class="payment-method">
                             <div class="payment-method-box">
-                                <input type="radio" id="cod-method" name="payment-method" value="" checked />
+                                <input type="radio" id="cod-method" name="payment-method" value="COD" checked />
                                 <label for="cod-method">
                                     <i class="fa-solid fa-truck-ramp-box payment-icon cod-icon"></i>
                                     <span> Thanh toán khi nhận hàng (COD)</span>
                                 </label>
                             </div>
                             <div class="payment-method-box">
-                                <input type="radio" id="card-method" name="payment-method" value="" />
+                                <input type="radio" id="card-method" name="payment-method" value="card" />
                                 <label for="card-method">
                                     <i class="fa-brands fa-cc-visa payment-icon visa-icon"></i>
                                     <span>Thanh toán qua thẻ VISA/MASTERCARD</span>
                                 </label>
                             </div>
                             <div class="payment-method-box">
-                                <input type="radio" id="paypal-method" name="payment-method" value="" />
+                                <input type="radio" id="paypal-method" name="payment-method" value="paypal" />
                                 <label for="paypal-method">
                                     <i class="fa-brands fa-paypal payment-icon paypal-icon"></i>
                                     <span>Thanh toán qua ví Paypal</span>
@@ -108,7 +106,7 @@
                             <span class="s-price-title">Tổng tiền: </span>
                             <span class="total-price"> @(ViewBag.TotalPrice + "đ")</span>
                         </div>
-                        <button class="summary-action">
+                        <button class="summary-action payment-action">
                             THANH TOÁN NGAY
                         </button>
                     </div>
