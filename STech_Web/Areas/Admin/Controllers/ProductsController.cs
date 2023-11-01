@@ -126,7 +126,6 @@ namespace STech_Web.Areas.Admin.Controllers
             if (product.Price == null)
             {
                 product.Price = product.Cost;
-                product.Cost = null;
             }
             //---
             db.Products.Add(product);
@@ -170,7 +169,6 @@ namespace STech_Web.Areas.Admin.Controllers
             if (product.Price == null)
             {
                 product.Price = product.Cost;
-                product.Cost = null;
             }
             pro.ProductName = product.ProductName;
             pro.ImgSrc = product.ImgSrc;

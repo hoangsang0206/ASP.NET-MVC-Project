@@ -14,6 +14,12 @@ namespace STech_Web.Models
     
     public partial class Customer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Customer()
+        {
+            this.Orders = new HashSet<Order>();
+        }
+    
         public string CustomerID { get; set; }
         public string CustomerName { get; set; }
         public string Phone { get; set; }
@@ -23,6 +29,7 @@ namespace STech_Web.Models
         public string Email { get; set; }
         public string AccountID { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

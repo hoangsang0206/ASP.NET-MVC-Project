@@ -145,7 +145,7 @@
 
                         @{ double discountPercent = 0; }
                         <div class="product-original-price">
-                            @if (item.Cost.ToString().Length > 0)
+                            @if (item.Cost > item.Price)
                             {
                                 decimal cost = Convert.ToDecimal(item.Cost);
 

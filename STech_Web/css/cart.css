@@ -298,7 +298,7 @@ input[name="quantity"] {
 }
 
 .user-order-info-list * {
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .user-order-info-list li {
@@ -307,6 +307,25 @@ input[name="quantity"] {
 
 .user-order-info-list li span {
     font-weight: 600;
+}
+
+/* -------------------------------------------------------------- */
+.payment-method {
+    padding: 0 0 1rem 1rem;
+}
+
+.payment-method-box {
+    padding: 0.3rem 0;
+}
+
+.payment-method-box label span {
+    font-size: 1rem;
+}
+
+.payment-icon {
+    font-size: 1.2rem;
+    width: 2rem;
+    margin-left: 0.5rem;
 }
 
 /*For mobile -------------------------------------------*/

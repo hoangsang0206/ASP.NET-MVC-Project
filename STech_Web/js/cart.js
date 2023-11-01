@@ -91,12 +91,6 @@ function showCartInfo() {
         if (idFromUrl == 'cart-order-box') {
             activeCartStep('.step-1', '.step-2');
         }
-        if (idFromUrl == 'cart-payment-box') {
-            activeCartStep('.step-1', '.step-2', '.step-3');
-        }
-        if (idFromUrl == 'cart-success-box') {
-            activeCartStep('.step-1', '.step-2', '.step-3', '.step-4');
-        }
     }
 }
 

@@ -31,6 +31,7 @@ namespace STech_Web.Models
         public Nullable<int> Warranty { get; set; }
         public string BrandID { get; set; }
         public string CateID { get; set; }
+        public Nullable<int> ManufacturingDate { get; set; }
     
         public virtual Brand Brand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

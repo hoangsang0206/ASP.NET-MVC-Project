@@ -21,8 +21,8 @@ namespace STech_Web.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Sale> sales = db.Sales.ToList();
             List<ProductOutStanding> productOutStandings = db.ProductOutStandings.ToList();
-            List<ProductOutStanding> laptopOSD = productOutStandings.Where(t => t.StandingType == "laptop").ToList();
-            List<ProductOutStanding> laptopGamingOSD = productOutStandings.Where(t => t.StandingType == "laptop-gaming").ToList();
+            List<ProductOutStanding> laptopOSD = productOutStandings.Where(t => t.Product.CateID == "laptop").ToList();
+            List<ProductOutStanding> laptopGamingOSD = productOutStandings.Where(t => t.Product.CateID == "laptop-gaming").ToList();
             List<Slider> sliders = db.Sliders.ToList();
             List<Banner1> banner1 = db.Banner1.ToList();
             List<Brand> brands = db.Brands.ToList();

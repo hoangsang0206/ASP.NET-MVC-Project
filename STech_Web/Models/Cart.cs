@@ -19,7 +19,6 @@ namespace STech_Web.Models
         public int Quantity { get; set; }
         public string UserID { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         public virtual Product Product { get; set; }
     }
 }

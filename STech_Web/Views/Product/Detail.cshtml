@@ -51,7 +51,7 @@
                 </div>
                 <div class="product-info-original-price">
                     @{ double discountPercent = 0; }
-                    @if (Model.Cost != null || Model.Cost.ToString().Length > 0)
+                    @if (Model.Cost > Model.Price)
                     {
                         decimal cost = Convert.ToDecimal(Model.Cost);
                         <span>@cost.ToString("#,###", ViewBag.cul)đ</span>

@@ -129,7 +129,7 @@
                             </a>
                             @{ double discountPercent = 0; }
                             <div class="product-original-price">
-                                @if (item.Product.Cost.ToString().Length > 0)
+                                @if (item.Product.Cost > item.Product.Price)
                                 {
                                     decimal cost = Convert.ToDecimal(item.Product.Cost);
 
@@ -460,7 +460,7 @@
 
                             @{ double discountPercent = 0; }
                             <div class="product-original-price">
-                                @if (item.Product.Cost != null && item.Product.Cost.ToString().Length > 0)
+                                @if (item.Product.Cost > item.Product.Price)
                                 {
                                     decimal cost = Convert.ToDecimal(item.Product.Cost);
 
@@ -529,7 +529,7 @@
 
                             @{ double discountPercent = 0; }
                             <div class="product-original-price">
-                                @if (item.Product.Cost != null && item.Product.Cost.ToString().Length > 0)
+                                @if (item.Product.Cost > item.Product.Price)
                                 {
                                     decimal cost = Convert.ToDecimal(item.Product.Cost);
 

@@ -162,6 +162,7 @@ namespace STech_Web.Controllers
             return Redirect("/");
         }
 
+        //Update account info
         [HttpPost, UserAuthorization]
         public ActionResult Update(UpdateUserVM update)
         {
@@ -177,13 +178,6 @@ namespace STech_Web.Controllers
 
                 if (user != null)
                 {
-                    user.UserFullName = update.UserFullName;
-                    user.Gender = update.Gender;
-                    user.PhoneNumber = update.PhoneNumber;
-                    user.Email = update.Email;
-                    user.DOB = update.DOB;
-                    user.Address = update.Address;
-
                     //Kiểm tra ngày sinh phải nhỏ hơn ngày hiện tại
                     if (update.DOB > DateTime.Now)
                     {
@@ -208,11 +202,30 @@ namespace STech_Web.Controllers
                     }
 
                     //Kiểm tra số điện thoại
-                    if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10)
+                    if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10 || !Regex.IsMatch(update.PhoneNumber, @"^[0-9]+$"))
                     {
                         string err = "Số điện thoại không hợp lệ.";
                         return Json(new { success = false, error = err });
                     }
+
+                    //------------------------
+                    if (user.DOB != null && update.DOB == null)
+                    {
+                        update.DOB = user.DOB;
+                    }
+
+                    if(user.Email.Length > 0 && update.Email == null)
+                    {
+                        update.Email = user.Email;
+                    }
+
+                    //-----------------------
+                    user.UserFullName = update.UserFullName;
+                    user.Gender = update.Gender;
+                    user.PhoneNumber = update.PhoneNumber;
+                    user.Email = update.Email;
+                    user.DOB = update.DOB;
+                    user.Address = update.Address;
 
                     var updateCheck = userManager.Update(user);
                     if (updateCheck.Succeeded)

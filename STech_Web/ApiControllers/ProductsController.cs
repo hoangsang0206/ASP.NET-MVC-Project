@@ -44,11 +44,6 @@ namespace STech_Web.ApiControllers
 
             foreach (Product p in products)
             {
-                if (p.Cost == null)
-                {
-                    p.Cost = 0;
-                }
-
                 ProductAPI productAPI =
                     new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
 
@@ -71,11 +66,6 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Product p in products)
                 {
-                    if (p.Cost == null)
-                    {
-                        p.Cost = 0;
-                    }
-
                     ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
 
                     productsApi.Add(product);
@@ -96,11 +86,6 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Product p in products)
                 {
-                    if (p.Cost == null)
-                    {
-                        p.Cost = 0;
-                    }
-
                     ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
 
                     productsApi.Add(product);
@@ -134,11 +119,6 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Product p in products)
                 {
-                    if (p.Cost == null)
-                    {
-                        p.Cost = 0;
-                    }
-
                     ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
 
                     productsApi.Add(product);

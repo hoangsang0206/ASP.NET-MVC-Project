@@ -203,7 +203,7 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                                 </div>
                             </a>
                             <div class="product-original-price">
-                                ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                 `<span style="visibility: hidden">0</span>`
                             }
                             </div>
@@ -535,7 +535,7 @@ $('.search-products').submit((e) => {
                                                     </div>
                                                 </a>
                                                 <div class="product-original-price">
-                                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                                         `<span style="visibility: hidden">0</span>`
                                                     }
                                                 </div>
@@ -610,7 +610,7 @@ $('.get-all-poduct').click(() => {
                                                     </div>
                                                 </a>
                                                 <div class="product-original-price">
-                                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                                     `<span style="visibility: hidden">0</span>`}
                                                 </div>
                                                 <div class="product-price d-flex align-items-center">
@@ -689,7 +689,7 @@ $('#cateID, #brandID').on('change', () => {
                                                     </div>
                                                 </a>
                                                 <div class="product-original-price">
-                                                    ${responses[i].Cost !== 0 ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
                                 `<span style="visibility: hidden">0</span>`
                             }
                                                 </div>

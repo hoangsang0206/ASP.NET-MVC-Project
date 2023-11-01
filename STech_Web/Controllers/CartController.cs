@@ -65,12 +65,12 @@ namespace STech_Web.Controllers
                 var userStore = new AppUserStore(appDbContext);
                 var userManager = new AppUserManager(userStore);
                 var user = userManager.FindById(User.Identity.GetUserId());
+                ViewBag.User = user;
 
                 //Delete cookie
                 Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(-10);
                 ViewBag.CartCount = cartItems.Count;
-                ViewBag.User = user;
-                
+                      
                 return View(cartItems);
             }
             else

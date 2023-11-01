@@ -25,13 +25,14 @@ namespace STech_Web.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Megamenu> Megamenus { get; set; }
         public virtual DbSet<MegamenuItem> MegamenuItems { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<ProductImgDetail> ProductImgDetails { get; set; }
         public virtual DbSet<ProductOutStanding> ProductOutStandings { get; set; }
         public virtual DbSet<Product> Products { get; set; }

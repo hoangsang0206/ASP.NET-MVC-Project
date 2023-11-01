@@ -15,7 +15,6 @@ namespace STech_Web.Models
     public partial class ProductOutStanding
     {
         public int StandingID { get; set; }
-        public string StandingType { get; set; }
         public string ProductID { get; set; }
     
         public virtual Product Product { get; set; }

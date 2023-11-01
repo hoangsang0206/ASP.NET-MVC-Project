@@ -465,7 +465,7 @@ $("#search").keyup(function () {
                                             </div>
                                             <div class="ajax-search-item-price d-flex align-items-center">
                                                 <h3>${product.Price.toLocaleString("vi-VN") + 'đ'}</h3>
-                                                <h4>${product.Cost !== 0 ? product.Cost.toLocaleString("vi-VN") + 'đ' : ''}</h4>
+                                                <h4>${product.Cost > product.Price ? product.Cost.toLocaleString("vi-VN") + 'đ' : ''}</h4>
                                             </div>
                                         </div>
                                         <div class="ajax-search-item-image">
