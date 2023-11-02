@@ -34,6 +34,10 @@
                 </div>
             </div>
 
+            <div class="cart-error">
+
+            </div>
+
             @if (ViewBag.CartCount > 0)
             {
                 <div class="cart-info d-none form-current" id="cart-info-box">
@@ -78,14 +82,13 @@
                                                         }
                                                 </div>
                                                 <div class="cart-product-quantity">
-                                                    <button type="button" class="update-quantity decrease-quantity" @( item.Quantity <= 1 ? "disabled" : "")
-                                                            onclick="window.location.href = '/cart/updatequantity?productID=@item.Product.ProductID&updatetype=decrease'">
+                                                    <button type="button" class="update-quantity decrease-quantity"
+                                                            data-product-btn="@item.Product.ProductID" data-update="decrease">
                                                         <i class="fa-solid fa-minus"></i>
                                                     </button>
-                                                    <input type="number" name="quantity" value="@item.Quantity" data-quantity="@item.Quantity"
-                                                           data-product="@item.Product.ProductID" data-price="@item.Product.Price" readonly min="1" />
+                                                    <input type="number" name="quantity" value="@item.Quantity" data-product="@item.Product.ProductID" readonly min="1" />
                                                     <button type="button" class="update-quantity increase-quantity"
-                                                            onclick="window.location.href = '/cart/updatequantity?productID=@item.Product.ProductID&updatetype=increase'">
+                                                            data-product-btn="@item.Product.ProductID" data-update="increase">
                                                         <i class="fa-solid fa-plus"></i>
                                                     </button>
                                                 </div>

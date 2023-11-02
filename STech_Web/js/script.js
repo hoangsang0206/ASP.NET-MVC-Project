@@ -102,6 +102,15 @@ $('input[name="theme"]').on('change', (e) => {
     }
 })
 
+//Show/hide web loader
+function showWebLoader() {
+    $('.webloading').css('display', 'grid');
+}
+
+function hideWebLoader() {
+    $('.webloading').hide();
+}
+
 //Show scroll to top button ----------------------------------------------------------
 const scrollTopBtn = document.querySelector(".to-top-btn");
 

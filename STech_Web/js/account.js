@@ -150,8 +150,9 @@ $('.user-update-form').submit((e) => {
                 $('.update-error').empty();
                 $('.update-error').append(str);
 
-                setTimeout(() => {
+                var timeout = setTimeout(() => {
                     closeUpdateErr();
+                    clearTimeout(timeout);
                 }, 6000)
             }
             else {
@@ -160,8 +161,9 @@ $('.user-update-form').submit((e) => {
                
                 $('.update-error').append(str);
 
-                setTimeout(() => {
+                var timeout = setTimeout(() => {
                     closeUpdateErr();
+                    clearTimeout(timeout);
                 }, 6000)
             }
         },
@@ -197,8 +199,9 @@ $('.change-password-form').submit((e) => {
                 $('#NewPassword').val('');
                 $('#ConfirmNewPassword').val('');
 
-                setTimeout(() => {
+                var timeout = setTimeout(() => {
                     closeUpdateErr();
+                    clearTimeout(timeout);
                 }, 6000)
             }
             else {
@@ -207,8 +210,9 @@ $('.change-password-form').submit((e) => {
 
                 $('.update-error').append(str);
 
-                setTimeout(() => {
+                var timeout = setTimeout(() => {
                     closeUpdateErr();
+                    clearTimeout(timeout);
                 }, 6000)
             }
 

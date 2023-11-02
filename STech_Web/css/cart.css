@@ -80,6 +80,21 @@
     width: 100%;
 }
 
+.cart-error {
+    display: none;
+    padding: 0.5rem 1rem;
+    margin: 0.7rem 0 0 0;
+    background: #fff3cd;
+    border-radius: 0.2rem;
+    color: #000000;
+}
+
+.cart-error i {
+    font-size: 1rem;
+    margin-right: 0.3rem;
+    color: #e30019;
+}
+
 .cart-info {
     padding: 0 0.8rem;
 }
@@ -195,6 +210,7 @@ input[name="quantity"] {
 
 .update-quantity i {
     font-size: 0.9rem;
+    pointer-events: none;
 }
 
 .increase-quantity {
@@ -326,6 +342,12 @@ input[name="quantity"] {
     font-size: 1.2rem;
     width: 2rem;
     margin-left: 0.5rem;
+}
+
+.payment-status-wrapper {
+    display: grid;
+    place-items: center;
+    height: 30rem;
 }
 
 /*For mobile -------------------------------------------*/

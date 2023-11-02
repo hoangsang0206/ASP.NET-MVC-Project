@@ -1,4 +1,14 @@
-﻿//Update quantity of item in cart to header
+﻿//Show/hide web loader
+function showWebLoader() {
+    $('.webloading').css('display', 'grid');
+}
+
+function hideWebLoader() {
+    $('.webloading').hide();
+}
+
+
+//Update quantity of item in cart to header
 function updateCartCount() {
     $.ajax({
         type: 'POST',
@@ -107,4 +117,41 @@ $(document).ready(() => {
     $(window).on('hashchange', () => {
         showCartInfo();
     })
+})
+
+//--Update cart item quantity
+$('.update-quantity').click((e) => {
+    var productID = $(e.target).data('product-btn');
+    var updateType = $(e.target).data('update');
+    var parentOfBtn = $(e.target).parent('.cart-product-quantity');
+    var inputQuantity = parentOfBtn.children('input[name="quantity"]');
+
+    if (productID.length > 0 && updateType.length > 0) {
+        showWebLoader();
+        $.ajax({
+            type: 'Post',
+            url: '/cart/updatequantity',
+            data: {
+                productID: productID,
+                updateType: updateType
+            },
+            success: (res) => {
+                setTimeout(hideWebLoader, 500);
+                inputQuantity.val(res.qty);
+                if (res.error.length > 0) {
+                    $('.cart-error').empty();
+                    $('.cart-error').show();
+                    var str = `<span><i class="fa-solid fa-circle-exclamation"></i>
+                    ${res.error}</span>`;
+                    $('.cart-error').append(str);
+
+                    var timeout = setTimeout(() => {
+                        $('.cart-error').hide()
+                        clearTimeout(timeout);
+                    }, 7000)
+                }
+            },
+            error: () => { hideWebLoader(); }
+        })
+    }
 })

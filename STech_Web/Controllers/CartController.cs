@@ -6,15 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using STech_Web.Models;
 using STech_Web.Filters;
-using System.Runtime.ConstrainedExecution;
-using System.Web.DynamicData;
 using Microsoft.Owin;
 using Newtonsoft.Json;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using System.Text;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Migrations;
 using STech_Web.Identity;
 
@@ -217,24 +214,33 @@ namespace STech_Web.Controllers
         //Update cart item quantity
         public ActionResult UpdateQuantity(string productID, string updateType)
         {
+            int quantity = 0;
+            string updateError = "";
             //Update cart item quantity when user logged in
             if(User.Identity.IsAuthenticated)
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 string userID = User.Identity.GetUserId();
                 Cart cart = db.Carts.FirstOrDefault(t => t.UserID == userID && t.ProductID == productID);
-
+                
                 if(cart != null)
                 {
+                    int inventory = (int)db.Products.FirstOrDefault(t => t.ProductID == cart.ProductID).WareHouse.Quantity;
                     if (updateType == "increase")
                     {
                         cart.Quantity += 1;
+                        if (cart.Quantity > inventory)
+                        {
+                            cart.Quantity = inventory;
+                            updateError = "Sản phẩm này chỉ còn " + inventory + " sản phẩm trong kho.";
+                        }
                     }
                     else if (updateType == "decrease")
                     {
                         cart.Quantity -= 1;
                         if (cart.Quantity <= 0) cart.Quantity = 1;
                     }
+                    quantity = cart.Quantity;
                     db.Carts.AddOrUpdate(cart);
                     db.SaveChanges();
                 }       
@@ -245,15 +251,24 @@ namespace STech_Web.Controllers
                 CartItem cartCCItem =  cartCookie.FirstOrDefault(t => t.ProductID == productID);
                 if (cartCCItem != null)
                 {
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    int inventory = (int)db.Products.FirstOrDefault(t => t.ProductID == cartCCItem.ProductID).WareHouse.Quantity;
+
                     if (updateType == "increase" && cartCCItem != null)
                     {
                         cartCCItem.Quantity += 1;
+                        if (cartCCItem.Quantity > inventory)
+                        {
+                            cartCCItem.Quantity = inventory;
+                            updateError = "Sản phẩm này chỉ còn " + inventory + " sản phẩm trong kho.";
+                        }
                     }
                     else if (updateType == "decrease" && cartCCItem != null)
                     {
                         cartCCItem.Quantity -= 1;
                         if (cartCCItem.Quantity <= 0) cartCCItem.Quantity = 1;
                     }
+                    quantity = cartCCItem.Quantity;
                     cartCookie.Remove(cartCCItem);
                     cartCookie.Add(cartCCItem);
 
@@ -267,7 +282,7 @@ namespace STech_Web.Controllers
                 }
             }
 
-            return Redirect("/cart");
+            return Json(new { qty = quantity, error = updateError });
         }
 
         //Count item in cart

@@ -68,6 +68,7 @@ $('.payment-action').click(() => {
                 paymentMethod: paymentMethod
             },
             success: (res) => {
+                
                 window.location.href = res.url;
             },
             error: () => { console.log("Payment Error") }
