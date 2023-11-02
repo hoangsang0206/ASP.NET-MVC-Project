@@ -14,6 +14,12 @@ namespace STech_Web.Models
     
     public partial class Order
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order()
+        {
+            this.OrderDetails = new HashSet<OrderDetail>();
+        }
+    
         public string OrderID { get; set; }
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
@@ -26,5 +32,7 @@ namespace STech_Web.Models
         public string PaymentMethod { get; set; }
     
         public virtual Customer Customer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

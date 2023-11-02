@@ -73,6 +73,8 @@
     <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Orders" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_OrderDetail_Product" FromRole="OrderDetail" ToRole="Products" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
@@ -89,6 +91,7 @@
     <Property Name="ShipMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customer" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Order" FromRole="Orders" ToRole="OrderDetail" />
   </EntityType>
   <EntityType Name="ProductImgDetail">
     <Key>
@@ -125,6 +128,7 @@
     <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
     <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Product" FromRole="Products" ToRole="Cart" />
     <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Product" FromRole="Products" ToRole="OrderDetail" />
     <NavigationProperty Name="ProductImgDetail" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
     <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
     <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
@@ -272,6 +276,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_OrderDetail_Order">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_Product">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DetailImg_Pro">
     <End Role="Products" Type="Self.Product" Multiplicity="1" />
     <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
@@ -374,6 +402,14 @@
     <AssociationSet Name="FK_MegamenuItem_Megamenu" Association="Self.FK_MegamenuItem_Megamenu">
       <End Role="Megamenu" EntitySet="Megamenus" />
       <End Role="MegamenuItem" EntitySet="MegamenuItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Product" Association="Self.FK_OrderDetail_Product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_DetailImg_Pro" Association="Self.FK_DetailImg_Pro">
       <End Role="Products" EntitySet="Products" />

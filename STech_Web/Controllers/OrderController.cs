@@ -96,6 +96,11 @@ namespace STech_Web.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Cart> cart = db.Carts.Where(t => t.UserID == userID).ToList();
 
+            if(cart.Count <= 0)
+            {
+                return Redirect("/cart");
+            }
+
             //Kiểm tra có sản phảm nào hết hàng không
             List<string> errors = new List<string>();
             int coutProductOutOfStock = 0;
@@ -210,14 +215,17 @@ namespace STech_Web.Controllers
                             Quantity = 1,
                         }
                     },
+                    Metadata = new Dictionary<string, string> { { "order_id", orderID } },
                     Mode = "payment",
-                    SuccessUrl = domain + "/order/succeeded",
+                    SuccessUrl = domain + "/order/updatepaymentstatus",
                     CancelUrl = domain + "/order/failed"
 
                 };
 
                 var service = new SessionService();
                 var session = service.Create(options);
+                TempData["Session"] = session.Id;
+
                 //Response.Headers.Add("Location", session.Url);
 
                 db.Orders.Add(order);
@@ -225,7 +233,7 @@ namespace STech_Web.Controllers
                 db.Carts.RemoveRange(cart);
                 db.SaveChanges();
 
-                return Json( new { url = session.Url , order = orderID});
+                return Json( new { url = session.Url});
 
      
             }
@@ -568,6 +576,31 @@ namespace STech_Web.Controllers
             }
 
             return View();
+        }
+
+        //Update payment status - Stripe
+        public ActionResult UpdatePaymentStatus()
+        {
+            var service = new SessionService();
+            var session = service.Get(TempData["Session"].ToString());
+            string orderID = session.Metadata["order_id"];
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            STech_Web.Models.Order order = db.Orders.FirstOrDefault(t => t.OrderID == orderID);
+
+            if (session.PaymentStatus == "paid")
+            {
+                order.Status = "Thanh toán thành công.";
+                db.Orders.AddOrUpdate(order);
+                db.SaveChanges(); 
+
+                return RedirectToAction("Succeeded");
+            }
+
+            order.Status = "Thanh toán thất bại.";
+            db.Orders.AddOrUpdate(order);
+            db.SaveChanges();
+
+            return RedirectToAction("Failed");
         }
 
     }

@@ -230,6 +230,30 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_OrderDetail_Order">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_Product">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Orders_Customer">
     <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -360,6 +384,14 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <AssociationSet Name="FK_MegamenuItem_Megamenu" Association="Self.FK_MegamenuItem_Megamenu">
       <End Role="Megamenu" EntitySet="Megamenu" />
       <End Role="MegamenuItem" EntitySet="MegamenuItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Product" Association="Self.FK_OrderDetail_Product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_Customer" Association="Self.FK_Orders_Customer">
       <End Role="Customers" EntitySet="Customers" />
