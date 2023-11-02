@@ -16,6 +16,7 @@ using Stripe;
 using Stripe.Checkout;
 using System.Web.Http.Results;
 using System.Net;
+using System.Data.Entity.Migrations;
 
 namespace STech_Web.Controllers
 {
@@ -67,6 +68,24 @@ namespace STech_Web.Controllers
             return View();
         }
 
+        //Lấy domain hiện tại
+        public string getCurrentDomain()
+        {
+            var url = HttpContext.Request.Url;
+
+            if (url != null)
+            {
+                var scheme = url.Scheme;
+                var host = url.Host;
+                var port = url.Port;
+                var domain = $"{scheme}://{host}:{port}";
+
+                return domain;
+            }
+            
+            return null;
+        }
+
         //Thanh toán
         [HttpPost]
         public ActionResult CheckOut(string paymentMethod)
@@ -103,9 +122,11 @@ namespace STech_Web.Controllers
             int orderCount = db.Orders.ToList().Count;
             string orderID = "DH" + (orderCount + 1).ToString().PadLeft(10, '0');
             decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
+            STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
 
             Order order = new Order();
             order.OrderID = orderID;
+            order.CustomerID = customer1.CustomerID;
             order.OrderDate = DateTime.Now;
             order.Note = orderTemp.Note;
             order.ShipMethod = orderTemp.ShipMethod;
@@ -131,10 +152,19 @@ namespace STech_Web.Controllers
             //--------------------------------------------------------------------------------
             if (paymentMethod == "COD") //Thanh toán khi nhận hàng
             {
-
+                //--
+                db.Orders.Add(order);
+                db.OrderDetails.AddRange(orderDetails);
+                db.Carts.RemoveRange(cart);
+                db.SaveChanges();
+                //--
+                return Json( new { url = "/order/succeeded?order=" + orderID });
             }
             else if(paymentMethod == "card") //Thanh toán bằng thẻ visa/mastercard
             {
+                //Lấy domain hiện tại
+                var domain = getCurrentDomain();
+
                 //Stripe api key
                 StripeConfiguration.ApiKey = "sk_test_51O7hGcASuMBoFWl8pQdaMvQaPYFY13MjLln9m2w2oQ41K5JuagkbAJLJmQ8pULQ48ebIgYx9RKCZeAT575F3qoVR00tx24Pnvt";
 
@@ -162,8 +192,8 @@ namespace STech_Web.Controllers
                         }
                     },
                     Mode = "payment",
-                    SuccessUrl = "http://localhost:49944/cart",
-                    CancelUrl = "http://localhost:49944/cart"
+                    SuccessUrl = domain + "/order/succeeded?order=" + orderID,
+                    CancelUrl = domain + "/order/failed?order=" + orderID
 
                 };
 
@@ -171,26 +201,14 @@ namespace STech_Web.Controllers
                 var session = service.Create(options);
                 //Response.Headers.Add("Location", session.Url);
 
-                return Redirect(session.Url);
+                db.Orders.Add(order);
+                db.OrderDetails.AddRange(orderDetails);
+                db.Carts.RemoveRange(cart);
+                db.SaveChanges();
 
-                //if(charge.Status == "succeeded")
-                //{
-                //    order.Status = "Đã thanh toán";
-                //    db.Orders.Add(order);
-                //    db.OrderDetails.AddRange(orderDetails);
-                //    db.SaveChanges();
+                return Json( new { url = session.Url });
 
-                //    return Redirect("/order/success");
-                //}
-                //else
-                //{
-                //    order.Status = "Thanh toán thất bại";
-                //    db.Orders.Add(order);
-                //    db.OrderDetails.AddRange(orderDetails);
-                //    db.SaveChanges();
-
-                //    return Redirect("/order/failed");
-                //}
+     
             }
             else if(paymentMethod == "paypal") //Thanh toán bằng Paypal
             {
@@ -273,6 +291,48 @@ namespace STech_Web.Controllers
             Response.Cookies["OrderTemp"].Expires = DateTime.Now.AddMinutes(30);
 
             return Json( new { success = true });
+        }
+
+        //Thanh toán thành công
+        public ActionResult Succeeded(string order)
+        {
+            string userID = User.Identity.GetUserId();
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+            Order ordr = db.Orders.FirstOrDefault(t => t.OrderID == order && t.CustomerID == customer.CustomerID);
+            if (ordr != null)
+            {
+                if(ordr.PaymentMethod == "COD")
+                {
+                    ordr.Status = "Chờ thanh toán.";
+                }
+                else
+                {
+                    ordr.Status = "Thanh toán thành công.";
+                }
+                
+                db.Orders.AddOrUpdate(ordr);
+                db.SaveChanges();
+            }
+            
+            return View();
+        }
+
+        //Thanh toán thất bại
+        public ActionResult Failed(string order)
+        {
+            string userID = User.Identity.GetUserId();
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+            Order ordr = db.Orders.FirstOrDefault(t => t.OrderID == order && t.CustomerID == customer.CustomerID);
+            if (ordr != null)
+            {
+                ordr.Status = "Thanh toán thất bại.";
+                db.Orders.AddOrUpdate(ordr);
+                db.SaveChanges();
+            }
+
+            return View();
         }
     }
 }

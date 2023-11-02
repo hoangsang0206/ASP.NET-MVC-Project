@@ -262,7 +262,6 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Filters\AdminAuthorization.cs" />
-    <Compile Include="Filters\AllowCrossSite.cs" />
     <Compile Include="Filters\UserAuthorization.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -385,6 +384,8 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Order\OrderInfo.cshtml" />
     <Content Include="Views\Order\CheckOut.cshtml" />
+    <Content Include="Views\Order\Succeeded.cshtml" />
+    <Content Include="Views\Order\Failed.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

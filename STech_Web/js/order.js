@@ -60,7 +60,7 @@ $('.order-info-summary').click(() => {
 $('.payment-action').click(() => {
     var paymentMethod = $('input[name="payment-method"]:checked').val();
 
-    if (paymentMethod == 'card') {
+    if (paymentMethod.length > 0) {
         $.ajax({
             type: 'Post',
             url: '/order/checkout',
@@ -68,9 +68,9 @@ $('.payment-action').click(() => {
                 paymentMethod: paymentMethod
             },
             success: (res) => {
-
+                window.location.href = res.url;
             },
-            error: () => { console.log("error") }
+            error: () => { console.log("Payment Error") }
         })
     }
 
