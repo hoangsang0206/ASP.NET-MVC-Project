@@ -68,11 +68,36 @@ $('.payment-action').click(() => {
                 paymentMethod: paymentMethod
             },
             success: (res) => {
-                
-                window.location.href = res.url;
+                if (res.success == false) {
+                    var str = ``;
+                    $.each(res.error, (index, value) => {
+                        console.log(value)
+                        str += `<li><i class="fa-solid fa-circle-exclamation"></i><span>${value}</span></li>`;
+                    })
+
+                    showOrderNotice(str);
+                }
+                else {
+                    window.location.href = res.url;
+                }
             },
             error: () => { console.log("Payment Error") }
         })
     }
 
 })
+
+//--------------
+function showOrderNotice(string) {
+    $('.notice-list').empty();
+    $('.checkout-notice-wrapper').css('visibility', 'visible');
+    $('.checkout-notice').addClass('showNotice');
+
+    $('.notice-list').append(string);
+
+    $('.close-notice').click(() => {
+        $('.notice-list').empty();
+        $('.checkout-notice-wrapper').css('visibility', 'hidden');
+        $('.checkout-notice').removeClass('showNotice');
+    })
+}

@@ -350,6 +350,66 @@ input[name="quantity"] {
     height: 30rem;
 }
 
+.checkout-notice-wrapper {
+    background: #00000075;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 70;
+}
+
+.checkout-notice {
+    background: #ffffff;
+    padding: 1.5rem 2.5rem;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+    opacity: 0;
+    top: -100%;
+    width: 33%;
+    transition: var(--trans-all-03);
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.showNotice {
+    top: 0;
+    opacity: 1;
+}
+
+.close-notice {
+    background: none;
+    border: 1px solid #cfcfcf;
+    width: 5rem;
+    padding: 0.4rem 0;
+    border-radius: 0.2rem;
+}
+
+.close-notice:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.notice-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.notice-list li {
+    padding: 0.1rem 0;
+}
+
+.notice-list li i {
+    color: #e30019;
+    margin-right: 0.3rem;
+    font-size: 1rem;
+}
+
 /*For mobile -------------------------------------------*/
 @media screen and (max-width: 767px) {
     .cart-product-right {

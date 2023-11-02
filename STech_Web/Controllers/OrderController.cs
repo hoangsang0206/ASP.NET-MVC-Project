@@ -96,6 +96,24 @@ namespace STech_Web.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Cart> cart = db.Carts.Where(t => t.UserID == userID).ToList();
 
+            //Kiểm tra có sản phảm nào hết hàng không
+            List<string> errors = new List<string>();
+            int coutProductOutOfStock = 0;
+            foreach(Cart c in cart)
+            {
+                if(c.Product.WareHouse.Quantity <= 0)
+                {
+                    coutProductOutOfStock += 1;
+                    string err = "Sản phẩm " + c.Product.ProductName + " đã hết hàng.";
+                    errors.Add(err);
+                }
+            }
+
+            if(coutProductOutOfStock > 0)
+            {
+                return Json(new { success = false, error = errors });
+            }
+
             //--Lấy thông tin đơn hàng đã lưu tạm vào cookie
             var base64String = Request.Cookies["OrderTemp"]?.Value;
             OrderTemp orderTemp = new OrderTemp();

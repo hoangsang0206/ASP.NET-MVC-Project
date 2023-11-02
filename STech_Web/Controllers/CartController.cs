@@ -40,8 +40,15 @@ namespace STech_Web.Controllers
                         Cart cartExist = db.Carts.FirstOrDefault(t => t.ProductID == cartItem.ProductID && t.UserID == userID);
                         if (cartExist != null)
                         {
-                            cartExist.Quantity += cartItem.Quantity;
-                            db.Carts.AddOrUpdate(cartExist);
+                            if (cartExist.Product.WareHouse.Quantity <= 0)
+                            {
+                                db.Carts.Remove(cartExist);
+                            }
+                            else
+                            {
+                                cartExist.Quantity += cartItem.Quantity;
+                                db.Carts.AddOrUpdate(cartExist);
+                            }
                         }
                         else
                         {
@@ -57,6 +64,22 @@ namespace STech_Web.Controllers
 
                 DatabaseSTechEntities db1 = new DatabaseSTechEntities();
                 List<Cart> cartItems = db1.Carts.Where(t => t.UserID == userID).ToList();
+                List<Cart> cartDelete = new List<Cart>();
+                foreach (Cart cart in cartItems)
+                {
+                    if (cart.Product.WareHouse.Quantity <= 0)
+                    {
+                       cartDelete.Add(cart);
+                    }
+                }
+
+                if(cartDelete.Count > 0)
+                {
+                    db1.Carts.RemoveRange(cartDelete);
+                    db1.SaveChanges();
+                    db1 = new DatabaseSTechEntities();
+                    cartItems = db1.Carts.Where(t => t.UserID == userID).ToList();
+                }
 
                 var appDbContext = new AppDBContext();
                 var userStore = new AppUserStore(appDbContext);
