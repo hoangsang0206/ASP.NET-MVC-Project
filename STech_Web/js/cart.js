@@ -138,6 +138,12 @@ $('.update-quantity').click((e) => {
             success: (res) => {
                 setTimeout(hideWebLoader, 500);
                 inputQuantity.val(res.qty);
+
+                console.log(res.total);
+                var total = res.total.toLocaleString("vi-VN") + 'đ';
+                $('.total-price').empty();
+                $('.total-price').text(total);
+
                 if (res.error.length > 0) {
                     $('.cart-error').empty();
                     $('.cart-error').show();

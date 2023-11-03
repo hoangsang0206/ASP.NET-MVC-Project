@@ -347,7 +347,7 @@ input[name="quantity"] {
 .payment-status-wrapper {
     display: grid;
     place-items: center;
-    height: 30rem;
+    height: 20rem;
 }
 
 .checkout-notice-wrapper {
@@ -408,6 +408,18 @@ input[name="quantity"] {
     color: #e30019;
     margin-right: 0.3rem;
     font-size: 1rem;
+}
+
+.payment-status i {
+    font-size: 1.8rem;
+}
+
+.p-success-icon {
+    color: #44bd32;
+}
+
+.p-failed-icon {
+    color: #e30019;
 }
 
 /*For mobile -------------------------------------------*/

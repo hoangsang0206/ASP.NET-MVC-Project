@@ -388,7 +388,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Order\OrderInfo.cshtml" />
-    <Content Include="Views\Order\CheckOut.cshtml" />
     <Content Include="Views\Order\Succeeded.cshtml" />
     <Content Include="Views\Order\Failed.cshtml" />
     <None Include="Web.Debug.config">

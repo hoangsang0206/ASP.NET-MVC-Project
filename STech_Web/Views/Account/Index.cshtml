@@ -122,7 +122,58 @@
             <div class="account-right-box" data-account-side="orders">
                 <h3 class="r-side-header">Đơn hàng</h3>
                 <div class="orders-wrapper">
-
+                    <div class="orders-header">
+                        <ul class="order-header-list">
+                            <li>
+                                <a href="#" class="active">TẤT CẢ</a>
+                            </li>
+                            <li>
+                                <a href="#">MỚI</a>
+                            </li>
+                            <li>
+                                <a href="#">ĐANG XỬ LÝ</a>
+                            </li>
+                            <li>
+                                <a href="#">ĐANG VẬN CHUYỂN</a>
+                            </li>
+                            <li>
+                                <a href="#">HOÀN THÀNH</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-search-box">
+                        <form action="#" method="post" class="order-search-form">
+                            <input type="text" id="order-search" name="order-search" value="" required autocomplete="off" placeholder="Tìm đơn hàng theo mã đơn"/>
+                            <button type="submit" class="order-search-btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <hr />
+                    <div class="order-list-box mt-1">
+                        @if (ViewBag.Orders.Count > 0)
+                        {
+                            <div class="order-list">
+                                @foreach (var item in ViewBag.Orders)
+                                {
+                                    <div class="order-item d-flex gap-3">
+                                        <span class="order-id">@item.OrderID</span>
+                                        <span class=""></span>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="order-empty d-flex flex-column gap-3 align-items-center justify-content-center">
+                                <img src="#" alt="" />
+                                <span>Bạn chưa có đơn hàng nào</span>
+                                <button class="to-home-page-btn" onclick="window.location.href='/collections/all'">
+                                    TIẾP TỤC MUA HÀNG
+                                </button>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
 

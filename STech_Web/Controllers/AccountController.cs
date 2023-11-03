@@ -23,11 +23,17 @@ namespace STech_Web.Controllers
         [UserAuthorization]
         public ActionResult Index()
         {
+            string userID = User.Identity.GetUserId();
+
             var appDbContext = new AppDBContext();
             var userStore = new AppUserStore(appDbContext);
             var userManager = new AppUserManager(userStore);
-            var user = userManager.FindById(User.Identity.GetUserId());
+            var user = userManager.FindById(userID);
 
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Order> orders = db.Orders.Where(t => t.Customer.AccountID == userID).ToList();
+
+            ViewBag.Orders = orders;
             ViewBag.ActiveBotNav = "account";
             return View(user);
         }

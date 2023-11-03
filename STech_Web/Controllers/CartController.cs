@@ -244,6 +244,7 @@ namespace STech_Web.Controllers
         public ActionResult UpdateQuantity(string productID, string updateType)
         {
             int quantity = 0;
+            decimal totalPrice = 0;
             string updateError = "";
             //Update cart item quantity when user logged in
             if(User.Identity.IsAuthenticated)
@@ -272,6 +273,10 @@ namespace STech_Web.Controllers
                     quantity = cart.Quantity;
                     db.Carts.AddOrUpdate(cart);
                     db.SaveChanges();
+
+                    db = new DatabaseSTechEntities();
+                    List<Cart> userCart = db.Carts.Where(t => t.UserID == userID).ToList();
+                    totalPrice = (decimal)userCart.Sum(t => t.Product.Price * t.Quantity);
                 }       
             }
             else
@@ -308,10 +313,28 @@ namespace STech_Web.Controllers
                     Response.Cookies["CartItems"].Value = base64String;
                     //Cookie will expire in 30 days from the date the new product is added
                     Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
+
+                    //Update total price in cart page
+                    cartCookie = getCartFromCookie();
+                    List<CartTemp> cartTemp = new List<CartTemp>();
+                    if (cartCookie.Count > 0)
+                    {
+                        foreach (CartItem item in cartCookie)
+                        {
+                            Product product = new Product();
+                            int qty = item.Quantity;
+                            product = db.Products.FirstOrDefault(t => t.ProductID == item.ProductID);
+
+                            CartTemp cTemp = new CartTemp(product, quantity);
+                            cartTemp.Add(cTemp);
+                        }
+                    }
+
+                    totalPrice = (decimal)cartTemp.Sum(t => t.Product.Price * t.Quantity);
                 }
             }
 
-            return Json(new { qty = quantity, error = updateError });
+            return Json(new { qty = quantity, total = totalPrice, error = updateError });
         }
 
         //Count item in cart
