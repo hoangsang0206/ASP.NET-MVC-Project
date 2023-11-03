@@ -31,21 +31,42 @@ $(document).ready(() => {
 //-Add product to cart ------------------------------------
 $('.buy-action-btn').click(() => {
     var productID = $('.buy-action-btn').data('product-id');
-    console.log(productID);
 
-    $.ajax({
-        type: 'POST',
-        url: '/cart/addtocart',
-        data: {
-            ProductID: productID,
-            Quantity: 1
-        },
-        success: (respone) => {
-            if (respone.success) {
-                updateCartCount();
+    if (productID.length > 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/cart/addtocart',
+            data: {
+                ProductID: productID,
+                Quantity: 1
+            },
+            success: (respone) => {
+                if (respone.success) {
+                    updateCartCount();
+                }
             }
-        }
-    })
+        })
+    }   
+})
+
+$('.btn-add-to-cart').click((e) => {
+    var productID = $(e.target).data('product');
+
+    if (productID.length > 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/cart/addtocart',
+            data: {
+                ProductID: productID,
+                Quantity: 1
+            },
+            success: (respone) => {
+                if (respone.success) {
+                    updateCartCount();
+                }
+            }
+        })
+    }
 })
 
 //-------------------------------

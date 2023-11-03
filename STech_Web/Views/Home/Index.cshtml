@@ -122,6 +122,12 @@
                                     <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
                                 </div>
                             </a>
+                            @if(item.Product.WareHouse.Quantity <= 0)
+                            {
+                                <div class="out-of-stock mt-1 text-center">
+                                    Hết hàng
+                                </div>
+                            }
                             <a href="/product/@item.Product.ProductID" class="product-link">
                                 <div class="product-name">
                                     @item.Product.ProductName
@@ -158,6 +164,12 @@
                                     </div>
                                 }
                             </div>
+                            <button class="view-product" onclick="window.location.href='/product/@item.Product.ProductID'">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-add-to-cart" data-product="@item.Product.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
                         </div>
                     </div>
                 }
@@ -452,6 +464,12 @@
                                     <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
                                 </div>
                             </a>
+                            @if (item.Product.WareHouse.Quantity <= 0)
+                            {
+                                <div class="out-of-stock mt-1 text-center">
+                                    Hết hàng
+                                </div>
+                            }
                             <a href="/product/@item.Product.ProductID" class="product-link">
                                 <div class="product-name">
                                     @item.Product.ProductName
@@ -485,6 +503,12 @@
                                     </div>
                                 }
                             </div>
+                            <button class="view-product" onclick="window.location.href='/product/@item.Product.ProductID'">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-add-to-cart" data-product="@item.Product.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
                         </div>
                     </div>
                 }
@@ -521,6 +545,12 @@
                                     <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
                                 </div>
                             </a>
+                            @if (item.Product.WareHouse.Quantity <= 0)
+                            {
+                                <div class="out-of-stock mt-1 text-center">
+                                    Hết hàng
+                                </div>
+                            }
                             <a href="/product/@item.Product.ProductID" class="product-link">
                                 <div class="product-name">
                                     @item.Product.ProductName
@@ -554,6 +584,12 @@
                                     </div>
                                 }
                             </div>
+                            <button class="view-product" onclick="window.location.href='/product/@item.Product.ProductID'">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-add-to-cart" data-product="@item.Product.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
                         </div>
                     </div>
                 }

@@ -234,6 +234,30 @@
     height: 15rem;
 }
 
+.order-list {
+    max-height: 25rem;
+    overflow-y: scroll;
+}
+
+.order-list table td {
+    white-space: nowrap;
+}
+
+.order-total {
+    font-weight: 600;
+}
+
+.order-status.order-success {
+    color: #44bd32;
+}
+
+.order-status.order-failed {
+    color: #e30019;
+}
+
+.order-status.order-waiting {
+    color: #ff6a00;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {

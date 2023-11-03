@@ -154,13 +154,30 @@
                         @if (ViewBag.Orders.Count > 0)
                         {
                             <div class="order-list">
-                                @foreach (var item in ViewBag.Orders)
-                                {
-                                    <div class="order-item d-flex gap-3">
-                                        <span class="order-id">@item.OrderID</span>
-                                        <span class=""></span>
-                                    </div>
-                                }
+                                <table class="table">
+                                    <tr>
+                                        <th>Mã ĐH</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach (var item in ViewBag.Orders)
+                                    {
+                                        var statusClass = "order-success";
+                                        if (item.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
+                                        else if (item.Status == "Chờ thanh toán.") { statusClass = "order-waiting"; }
+                                        <tr>
+                                            <td class="order-id">@item.OrderID</td>
+                                            <td class="order-date">@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                                            <td class="order-total">@item.TotalPaymentAmout.ToString("##,###", ViewBag.cul)đ</td>
+                                            <td>
+                                                <div class="order-status @statusClass">@item.Status </div>
+                                            </td>
+                                            <td> <a href="#" class="order-detail-link" data-order="@item.OrderID">Chi tiết</a></td>
+                                        </tr>
+                                    }
+                                </table>
                             </div>
                         }
                         else

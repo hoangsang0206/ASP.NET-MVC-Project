@@ -47,6 +47,10 @@ namespace STech_Web.Controllers
                             else
                             {
                                 cartExist.Quantity += cartItem.Quantity;
+                                if(cartExist.Quantity >= cartExist.Product.WareHouse.Quantity)
+                                {
+                                    cartExist.Quantity = (int)cartExist.Product.WareHouse.Quantity;
+                                }
                                 db.Carts.AddOrUpdate(cartExist);
                             }
                         }
@@ -62,8 +66,8 @@ namespace STech_Web.Controllers
                     db.SaveChanges();
                 }
 
-                DatabaseSTechEntities db1 = new DatabaseSTechEntities();
-                List<Cart> cartItems = db1.Carts.Where(t => t.UserID == userID).ToList();
+                db = new DatabaseSTechEntities();
+                List<Cart> cartItems = db.Carts.Where(t => t.UserID == userID).ToList();
                 List<Cart> cartDelete = new List<Cart>();
                 foreach (Cart cart in cartItems)
                 {
@@ -75,10 +79,10 @@ namespace STech_Web.Controllers
 
                 if(cartDelete.Count > 0)
                 {
-                    db1.Carts.RemoveRange(cartDelete);
-                    db1.SaveChanges();
-                    db1 = new DatabaseSTechEntities();
-                    cartItems = db1.Carts.Where(t => t.UserID == userID).ToList();
+                    db.Carts.RemoveRange(cartDelete);
+                    db.SaveChanges();
+                    db = new DatabaseSTechEntities();
+                    cartItems = db.Carts.Where(t => t.UserID == userID).ToList();
                 }
 
                 var appDbContext = new AppDBContext();
@@ -156,9 +160,13 @@ namespace STech_Web.Controllers
 
                 //----------
                 CartItem cartItem = cartItems.FirstOrDefault(t => t.ProductID == cart.ProductID);
+
                 if (cartItem != null)
                 {
                     cartItem.Quantity += 1;
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    int inventory = (int)db.Products.FirstOrDefault(t => t.ProductID == cartItem.ProductID).WareHouse.Quantity;
+                    if (cartItem.Quantity >= inventory) cartItem.Quantity = inventory;
                 }
                 else
                 {

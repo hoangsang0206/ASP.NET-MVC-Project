@@ -87,6 +87,12 @@
                                 <img lazy-src="@item.ImgSrc" alt="" class="product-img">
                             </div>
                         </a>
+                        @if (item.WareHouse.Quantity <= 0)
+                        {
+                            <div class="out-of-stock mt-1 text-center">
+                                Hết hàng
+                            </div>
+                        }
                         <a href="/product/@item.ProductID" class="product-link">
                             <div class="product-name">
                                 @item.ProductName
@@ -121,6 +127,12 @@
                                 </div>
                             }
                         </div>
+                        <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                        <button class="btn-add-to-cart" data-product="@item.ProductID">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
                     </div>
                 </div>
             }

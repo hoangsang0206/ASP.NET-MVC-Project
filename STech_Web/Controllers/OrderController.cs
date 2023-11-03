@@ -144,7 +144,7 @@ namespace STech_Web.Controllers
 
             //Tạo đơn hàng
             int orderCount = db.Orders.ToList().Count;
-            string orderID = "DH" + (orderCount + 1).ToString().PadLeft(10, '0');
+            string orderID = "DH" + (orderCount + 1).ToString().PadLeft(5, '0');
             decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
             STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
 
@@ -258,7 +258,7 @@ namespace STech_Web.Controllers
 
             STech_Web.Models.Customer customer = new STech_Web.Models.Customer();
             int customersCount = db.Customers.Count();
-            string customerID = "KH" + (customersCount + 1).ToString().PadLeft(8, '0');
+            string customerID = "KH" + (customersCount + 1).ToString().PadLeft(4, '0');
 
             customer = new STech_Web.Models.Customer();
             customer.AccountID = userID;
@@ -353,7 +353,7 @@ namespace STech_Web.Controllers
 
             //Tạo đơn hàng
             int orderCount = db.Orders.ToList().Count;
-            string orderID = "DH" + (orderCount + 1).ToString().PadLeft(10, '0');
+            string orderID = "DH" + (orderCount + 1).ToString().PadLeft(5, '0');
             decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
             STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
 
@@ -530,51 +530,9 @@ namespace STech_Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Succeeded(string order)
-        {
-            string userID = User.Identity.GetUserId();
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
-            STech_Web.Models.Order ordr = db.Orders.FirstOrDefault(t => t.OrderID == order && t.CustomerID == customer.CustomerID);
-            if (ordr != null)
-            {
-                if (ordr.PaymentMethod == "COD")
-                {
-                    ordr.Status = "Chờ thanh toán.";
-                }
-                else
-                {
-                    ordr.Status = "Thanh toán thành công.";
-                }
-
-                db.Orders.AddOrUpdate(ordr);
-                db.SaveChanges();
-            }
-
-            return View();
-        }
-
         //Thanh toán thất bại
         public ActionResult Failed()
         {
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Failed(string order)
-        {
-            string userID = User.Identity.GetUserId();
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
-            STech_Web.Models.Order ordr = db.Orders.FirstOrDefault(t => t.OrderID == order && t.CustomerID == customer.CustomerID);
-            if (ordr != null)
-            {
-                ordr.Status = "Thanh toán thất bại.";
-                db.Orders.AddOrUpdate(ordr);
-                db.SaveChanges();
-            }
 
             return View();
         }

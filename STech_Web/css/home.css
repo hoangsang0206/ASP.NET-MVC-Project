@@ -113,6 +113,10 @@
     justify-content: center;
 }
 
+.slick-slider-item {
+    height: auto !important;
+}
+
 .slick-slider-item:not(:last-child) {
     padding: 0 0.5rem 0 0;
 }
@@ -129,10 +133,21 @@
     padding: 0.9rem;
     overflow: hidden;
     border: 1px solid transparent;
+    position: relative;
+    height: 100%;
+}
+
+.out-of-stock {
+    border-radius: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    background: #cfcfcf;
+    color: #000000;
+    width: 4.7rem;
+    font-size: 0.85rem;
 }
 
 .product-name {
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     font-weight: 600;
     color: #000000;
     overflow: hidden;
@@ -161,7 +176,7 @@
 }
 
 .product-original-price {
-    margin-top: 0.7rem;
+    margin-top: 0.4rem;
 }
 
 .product-original-price span {
@@ -191,6 +206,41 @@
 
 .product-link {
     text-decoration: none;
+}
+
+.btn-add-to-cart, .view-product {
+    position: absolute;
+    bottom: 2rem;
+    right: -100%;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--primary-color);
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    transition: right .3s ease;
+}
+
+.view-product {
+    bottom: 4.6rem;
+    transition: right .4s ease;
+}
+
+.btn-add-to-cart:hover,
+.view-product:hover {
+    outline: 2px solid var(--primary-color-hover);
+}
+
+.product-box:hover .btn-add-to-cart,
+.product-box:hover .view-product {
+    right: 0.6rem;
+}
+
+.btn-add-to-cart i,
+.view-product i {
+    font-size: 0.85rem;
+    color: #ffffff;
+    pointer-events: none;
 }
 
 .slick-prev {
