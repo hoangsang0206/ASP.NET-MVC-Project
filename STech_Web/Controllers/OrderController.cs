@@ -98,7 +98,7 @@ namespace STech_Web.Controllers
 
             if(cart.Count <= 0)
             {
-                return Redirect("/cart");
+                return Json(new { url = "/cart" }) ;
             }
 
             //Kiểm tra có sản phảm nào hết hàng không
@@ -423,12 +423,13 @@ namespace STech_Web.Controllers
                     //If executed payment failed then we will show payment failure message to user  
                     if (executedPayment.state.ToLower() != "approved")
                     {
+                        order.Status = "Thanh toán thất bại.";
                         db.Orders.Add(order);
                         db.OrderDetails.AddRange(orderDetails);
                         db.Carts.RemoveRange(cart);
                         db.SaveChanges();
 
-                        return Json( new { url = "/order/failed", order = orderID });
+                        return Redirect("/order/failed");
                     }
                 }
             }
@@ -439,15 +440,15 @@ namespace STech_Web.Controllers
                 db.Carts.RemoveRange(cart);
                 db.SaveChanges();
 
-                return Json(new { url = "/order/failed", order = orderID });
+                return Redirect("/order/failed");
             }
-
+            order.Status = "Thanh toán thành công.";
             db.Orders.Add(order);
             db.OrderDetails.AddRange(orderDetails);
             db.Carts.RemoveRange(cart);
             db.SaveChanges();
             //on successful payment, show success page to user.  
-            return Json(new { url = "/order/succeeded", order = orderID });
+            return Redirect("/order/succeeded");
         }
         private PayPal.Api.Payment payment;
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
@@ -578,7 +579,7 @@ namespace STech_Web.Controllers
             return View();
         }
 
-        //Update payment status - Stripe
+        //Cập nhật trạng thái giao dịch  - Stripe
         public ActionResult UpdatePaymentStatus()
         {
             var service = new SessionService();

@@ -546,7 +546,7 @@
     }
 
     .brand-item:not(:first-child, :last-child) {
-        padding: 0 1rem;
+        padding: 0 0.5rem;
     }
 
     .brand-item:first-child {

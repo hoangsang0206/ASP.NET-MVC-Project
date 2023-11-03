@@ -130,6 +130,12 @@ namespace STech_Web.Controllers
                 if (existCart != null)
                 {
                     existCart.Quantity += 1;
+                    if (existCart.Quantity >= existCart.Product.WareHouse.Quantity)
+                    {
+                        existCart.Quantity = (int)existCart.Product.WareHouse.Quantity;
+                    }
+                   
+                    db.Carts.AddOrUpdate(existCart);
                     db.SaveChanges();
                 }
                 else

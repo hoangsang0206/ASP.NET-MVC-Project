@@ -199,6 +199,7 @@
     <Content Include="images\payment\internet-banking.jpg" />
     <Content Include="images\payment\mastercard.png" />
     <Content Include="images\payment\momo.png" />
+    <Content Include="images\payment\paypal.jpg" />
     <Content Include="images\payment\visa.png" />
     <Content Include="js\account.js" />
     <Content Include="js\cart.js" />
