@@ -18,6 +18,7 @@ using System.Web.Http.Results;
 using System.Net;
 using System.Data.Entity.Migrations;
 using PayPal.Api;
+using System.Web.SessionState;
 
 namespace STech_Web.Controllers
 {
@@ -39,7 +40,7 @@ namespace STech_Web.Controllers
                 var orderTempJson = Encoding.UTF8.GetString(bytesToDecode);
                 orderTemp = JsonConvert.DeserializeObject<OrderTemp>(orderTempJson);
 
-                if(orderTemp == null)
+                if (orderTemp == null)
                 {
                     return Redirect("/cart");
                 }
@@ -83,7 +84,7 @@ namespace STech_Web.Controllers
 
                 return domain;
             }
-            
+
             return null;
         }
 
@@ -96,17 +97,17 @@ namespace STech_Web.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Cart> cart = db.Carts.Where(t => t.UserID == userID).ToList();
 
-            if(cart.Count <= 0)
+            if (cart.Count <= 0)
             {
-                return Json(new { url = "/cart" }) ;
+                return Json(new { url = "/cart" });
             }
 
             //Kiểm tra có sản phảm nào hết hàng không
             List<string> errors = new List<string>();
             int coutProductOutOfStock = 0;
-            foreach(Cart c in cart)
+            foreach (Cart c in cart)
             {
-                if(c.Product.WareHouse.Quantity <= 0)
+                if (c.Product.WareHouse.Quantity <= 0)
                 {
                     coutProductOutOfStock += 1;
                     string err = "Sản phẩm " + c.Product.ProductName + " đã hết hàng.";
@@ -114,7 +115,7 @@ namespace STech_Web.Controllers
                 }
             }
 
-            if(coutProductOutOfStock > 0)
+            if (coutProductOutOfStock > 0)
             {
                 return Json(new { success = false, error = errors });
             }
@@ -162,16 +163,16 @@ namespace STech_Web.Controllers
 
             //Tạo chi tiết đơn hàng
             List<OrderDetail> orderDetails = new List<OrderDetail>();
-            foreach(Cart c in cart)
+            foreach (Cart c in cart)
             {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.OrderID = orderID;
                 orderDetail.ProductID = c.ProductID;
                 orderDetail.Quantity = c.Quantity;
-                
+
                 orderDetails.Add(orderDetail);
             }
-            
+
 
             //--------------------------------------------------------------------------------
             if (paymentMethod == "COD") //Thanh toán khi nhận hàng
@@ -182,9 +183,9 @@ namespace STech_Web.Controllers
                 db.Carts.RemoveRange(cart);
                 db.SaveChanges();
                 //--
-                return Json( new {url = "/order/succeeded", order = orderID });
+                return Json(new { url = "/order/succeeded", order = orderID });
             }
-            else if(paymentMethod == "card") //Thanh toán bằng thẻ visa/mastercard
+            else if (paymentMethod == "card") //Thanh toán bằng thẻ visa/mastercard
             {
                 //Lấy domain hiện tại
                 var domain = getCurrentDomain();
@@ -233,11 +234,11 @@ namespace STech_Web.Controllers
                 db.Carts.RemoveRange(cart);
                 db.SaveChanges();
 
-                return Json( new { url = session.Url});
+                return Json(new { url = session.Url });
 
-     
+
             }
-            else if(paymentMethod == "paypal") //Thanh toán bằng Paypal
+            else if (paymentMethod == "paypal") //Thanh toán bằng Paypal
             {
                 return Json(new { url = "/order/paymentwithpaypal" });
             }
@@ -295,9 +296,9 @@ namespace STech_Web.Controllers
             }
 
             //Kiểm tra địa chỉ nhận hàng nếu chọn COD
-            if(shipMethod == "COD")
+            if (shipMethod == "COD")
             {
-                if(String.IsNullOrEmpty(address))
+                if (String.IsNullOrEmpty(address))
                 {
                     string err = "Vui lòng nhập địa chỉ nhận hàng.";
                     return Json(new { success = false, error = err });
@@ -315,7 +316,7 @@ namespace STech_Web.Controllers
             //Cookie will expire in 15 minutes from the date the new product is added
             Response.Cookies["OrderTemp"].Expires = DateTime.Now.AddMinutes(15);
 
-            return Json( new { success = true });
+            return Json(new { success = true });
         }
 
         //Thanh toán bằng paypal
@@ -550,7 +551,7 @@ namespace STech_Web.Controllers
             {
                 order.Status = "Thanh toán thành công.";
                 db.Orders.AddOrUpdate(order);
-                db.SaveChanges(); 
+                db.SaveChanges();
 
                 return RedirectToAction("Succeeded");
             }
@@ -562,5 +563,134 @@ namespace STech_Web.Controllers
             return RedirectToAction("Failed");
         }
 
+        //Kiểm tra chi tiết đơn hàng
+        public ActionResult Detail(string id)
+        {
+            try
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                STech_Web.Models.Order order = db.Orders.FirstOrDefault(t => t.OrderID == id);
+                List<OrderDetail> orderDetail = order.OrderDetails.ToList();
+
+                //Tạo danh sách Breadcrumb
+                List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
+                breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
+                breadcrumb.Add(new Breadcrumb("Đơn hàng", "/account#orders"));
+                breadcrumb.Add(new Breadcrumb("Chi tiết " + id, ""));
+
+                //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
+                CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+
+                //Lấy thông tin khách hàng
+                STech_Web.Models.Customer customer = order.Customer;
+
+                ViewBag.Breadcrumb = breadcrumb;
+                ViewBag.Order = order;
+                ViewBag.Customer = customer;
+                ViewBag.cul = cul;
+                return View(orderDetail);
+            }
+            catch (Exception ex)
+            {
+
+                return Redirect("/error/notfound");
+            }
+
+        }
+
+        //In hóa đơn
+        public ActionResult PrintOrder(string orderID)
+        {
+
+            return Json(new { success = true });
+        }
+
+        //Xóa hóa đơn có trạng thái chờ thanh toán
+        public ActionResult Delete(string orderID)
+        {
+            try
+            {
+                string userID = User.Identity.GetUserId();
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+                STech_Web.Models.Order order = customer.Orders.FirstOrDefault(t => t.OrderID == orderID);
+
+                if (order != null && order.Status == "Chờ thanh toán")
+                {
+                    db.Orders.Remove(order);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex) { }
+            return Redirect("/account#orders");
+        }
+
+        //Tìm hóa đơn
+        [HttpPost]
+        public ActionResult SearchOrder(string orderID)
+        {
+            try
+            {
+                string userID = User.Identity.GetUserId();
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+                List<STech_Web.Models.Order> orders = customer.Orders.Where(t => t.OrderID.Contains(orderID)).ToList();
+                List<OrderAPI> orderAPI = new List<OrderAPI>();
+
+                foreach (var order in orders)
+                {
+                    orderAPI.Add(new OrderAPI(order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                }
+
+                orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
+                return Json(new { orders = orderAPI });
+            }
+            catch (Exception ex)
+            {
+                return Redirect("/account#orders");
+            }
+        }
+
+        //Lấy danh sách hóa đơn theo trạng thái
+        [HttpPost]
+        public ActionResult GetOrder(string status)
+        {
+            try
+            {
+                string userID = User.Identity.GetUserId();
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+                List<Models.Order> orders = new List<Models.Order>();
+                List<OrderAPI> orderAPI = new List<OrderAPI>();
+
+                switch (status)
+                {
+                    case "all":
+                        orders = customer.Orders.ToList();
+                        break;
+                    case "new":
+                        orders = customer.Orders.Where(t => t.OrderDate >= DateTime.Now.AddDays(-2)).ToList();
+                        break;
+                    case "wait-for-pay":
+                        orders = customer.Orders.Where(t => t.Status == "Chờ thanh toán").ToList();
+                        break;
+                    case "paid":
+                        orders = customer.Orders.Where(t => t.Status == "Thanh toán thành công.").ToList();
+                        break;
+                }
+
+                foreach (var order in orders)
+                {
+                    orderAPI.Add(new OrderAPI(order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                }
+
+                orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
+                return Json(new { orders = orderAPI });
+            }
+            catch (Exception ex)
+            {
+                return Redirect("/account#orders");
+            }
+        }
     }
 }

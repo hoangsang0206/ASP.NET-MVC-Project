@@ -309,6 +309,35 @@ $('.slider-nav').on('click', '.slick-slide', function (event) {
     $('.slider-main').slick('slickGoTo', goToSingleSlide);
 });
 
+
+//------
+//Slick Slider for Collection in main page
+$(".order-product-slick-slider").slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    infinite: false,
+    arrows: true,
+    swipeToSlide: true,
+    prevArrow: `<button type='button' class='slick-prev slick-arrow'><i class="fa-solid fa-chevron-left"></i></button>`,
+    nextArrow: `<button type='button' class='slick-next slick-arrow'><i class="fa-solid fa-chevron-right"></i></button>`,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 4,
+                arrows: false
+            }
+        },
+        {
+            breakpoint: 767,
+            settings: {
+                slidesToShow: 2.2,
+                arrows: false
+            }
+        }
+    ]
+})
+
 //Show footer column content -----------------------------------------------------------
 var footerColArr = $(".footer-col").toArray();
 footerColArr.forEach(item => {

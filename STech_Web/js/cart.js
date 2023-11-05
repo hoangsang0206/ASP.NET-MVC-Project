@@ -29,10 +29,11 @@ $(document).ready(() => {
 })
 
 //-Add product to cart ------------------------------------
-$('.buy-action-btn').click(() => {
-    var productID = $('.buy-action-btn').data('product-id');
+$('.add-to-cart-btn, .buy-action-btn').click(() => {
+    var productID = $('.add-to-cart-btn').data('product-id');
 
     if (productID.length > 0) {
+        showWebLoader();
         $.ajax({
             type: 'POST',
             url: '/cart/addtocart',
@@ -42,11 +43,16 @@ $('.buy-action-btn').click(() => {
             },
             success: (respone) => {
                 if (respone.success) {
+                    setTimeout(hideWebLoader, 500);
                     updateCartCount();
                 }
             }
         })
     }   
+})
+
+$('.buy-action-btn').click(() => {
+    setTimeout(() => { window.location.href = '/cart' }, 510)
 })
 
 $('.btn-add-to-cart').click((e) => {

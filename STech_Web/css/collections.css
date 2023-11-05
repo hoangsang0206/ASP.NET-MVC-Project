@@ -228,6 +228,7 @@
     border-radius: 0.2rem;
     border: 1px solid #cecece;
     padding: 0.5rem 0.8rem;
+    cursor: not-allowed;
 }
 
 .filter-all-btn {

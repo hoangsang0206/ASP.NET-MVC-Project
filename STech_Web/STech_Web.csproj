@@ -249,6 +249,7 @@
   <ItemGroup>
     <Compile Include="ApiControllers\BrandsController.cs" />
     <Compile Include="ApiControllers\CategoriesController.cs" />
+    <Compile Include="ApiControllers\OrderController.cs" />
     <Compile Include="ApiControllers\ProductsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -328,6 +329,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderAPI.cs" />
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -390,6 +392,7 @@
     <Content Include="Views\Order\OrderInfo.cshtml" />
     <Content Include="Views\Order\Succeeded.cshtml" />
     <Content Include="Views\Order\Failed.cshtml" />
+    <Content Include="Views\Order\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

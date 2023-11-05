@@ -124,20 +124,17 @@
                 <div class="orders-wrapper">
                     <div class="orders-header">
                         <ul class="order-header-list">
-                            <li>
-                                <a href="#" class="active">TẤT CẢ</a>
+                            <li class="active" data-get-order="all">
+                                TẤT CẢ
                             </li>
-                            <li>
-                                <a href="#">MỚI</a>
+                            <li data-get-order="new">
+                                MỚI
                             </li>
-                            <li>
-                                <a href="#">ĐANG XỬ LÝ</a>
+                            <li data-get-order="wait-for-pay">
+                                CHỜ THANH TOÁN
                             </li>
-                            <li>
-                                <a href="#">ĐANG VẬN CHUYỂN</a>
-                            </li>
-                            <li>
-                                <a href="#">HOÀN THÀNH</a>
+                            <li data-get-order="paid">
+                                ĐÃ THANH TOÁN
                             </li>
                         </ul>
                     </div>
@@ -166,7 +163,7 @@
                                     {
                                         var statusClass = "order-success";
                                         if (item.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
-                                        else if (item.Status == "Chờ thanh toán.") { statusClass = "order-waiting"; }
+                                        else if (item.Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
                                         <tr>
                                             <td class="order-id">@item.OrderID</td>
                                             <td class="order-date">@item.OrderDate.ToString("dd/MM/yyyy")</td>
@@ -174,7 +171,7 @@
                                             <td>
                                                 <div class="order-status @statusClass">@item.Status </div>
                                             </td>
-                                            <td> <a href="#" class="order-detail-link" data-order="@item.OrderID">Chi tiết</a></td>
+                                            <td> <a href="/order/detail/@item.OrderID">Chi tiết</a></td>
                                         </tr>
                                     }
                                 </table>

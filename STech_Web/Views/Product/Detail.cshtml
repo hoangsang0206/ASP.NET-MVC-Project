@@ -94,10 +94,13 @@
                 <div class="product-action d-flex my-2 align-items-center">
                     @if (Model.WareHouse.ProductID != null && Model.WareHouse.Quantity > 0)
                     {
-                        <div class="buy-action">
+                        <div class="buy-action d-flex gap-3">
                             <button class="buy-action-btn" data-product-id="@Model.ProductID">
                                 <h4>MUA NGAY</h4>
                                 <span>Giao tận nơi hoặc nhận tại cửa hàng</span>
+                            </button>
+                            <button class="add-to-cart-btn" data-product-id="@Model.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
                     }
@@ -113,4 +116,136 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid mt-3 p-0">
+        <div class="product-des-wrapper d-flex gap-3">
+            <div class="product-description product-des-box">
+                <div class="box-header">
+                    <h4>Mô tả sản phẩm</h4>
+                </div>
+                <div class="product-content-box mt-4">
+                    <div class="product-content">
+                        <div class="content-header">
+                            <h5>Tiêu đề 1</h5>
+                        </div>
+                        <div class="main-content">
+                            Nội dung 1
+                        </div>
+                    </div>
+                </div>
+                <div class="product-content-box mt-4">
+                    <div class="product-content">
+                        <div class="content-header">
+                            <h5>Tiêu đề 2</h5>
+                        </div>
+                        <div class="main-content">
+                            Nội dung 2
+                        </div>
+                    </div>
+                </div>
+                <div class="product-content-box mt-4">
+                    <div class="product-content">
+                        <div class="content-header">
+                            <h5>Tiêu đề 3</h5>
+                        </div>
+                        <div class="main-content">
+                            Nội dung 3
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="product-parameter product-des-box">
+                <div class="box-header">
+                    <h4>Thông số kĩ thuật</h4>
+                </div>
+                <div class="product-para-table">
+                    <table>
+                        <tr>
+                            <td>CPU</td>
+                            <td>Intel Core i7</td>
+                        </tr>
+                        <tr>
+                            <td>CPU</td>
+                            <td>Intel Core i7</td>
+                        </tr>
+                        <tr>
+                            <td>CPU</td>
+                            <td>Intel Core i7</td>
+                        </tr>
+                        <tr>
+                            <td>CPU</td>
+                            <td>Intel Core i7</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="order-product product-des-box mt-3">
+        <div class="box-header">
+            <h4>Sản phẩm tương tự</h4>
+        </div>
+        <div class="order-product-slick-slider">
+            @foreach (var item in ViewBag.Products)
+            {
+                <div class="slick-slider-item">
+                    <div class="product-box">
+                        <a href="/product/@item.ProductID" class="product-link">
+                            <div class="product-image lazy-loading">
+                                <img lazy-src="@item.ImgSrc" alt="" class="product-img">
+                            </div>
+                        </a>
+                        @if (item.WareHouse.Quantity <= 0)
+                        {
+                            <div class="out-of-stock mt-1 text-center">
+                                Hết hàng
+                            </div>
+                        }
+                        <a href="/product/@item.ProductID" class="product-link">
+                            <div class="product-name">
+                                @item.ProductName
+                            </div>
+                        </a>
+
+                        @{ double discountPercent1 = 0; }
+                        <div class="product-original-price">
+                            @if (item.Cost > item.Price)
+                            {
+                                decimal cost1 = Convert.ToDecimal(item.Cost);
+
+                                discountPercent1 = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                    / Convert.ToDouble(item.Cost)) * 100;
+                                <span>@cost1.ToString("#,###", ViewBag.cul)đ</span>
+                            }
+                            else
+                            {
+                                <span style="visibility: hidden">0</span>
+                            }
+                        </div>
+                        <div class="product-price d-flex align-items-center">
+                            @{
+                                decimal price1 = Convert.ToDecimal(item.Price);
+                            }
+                            <span>@price1.ToString("##,###", ViewBag.cul)đ</span>
+                            @if (discountPercent1 > 0)
+                            {
+                                <div class="product-discount-percent">
+                                    @( "-" + (int)discountPercent1 + "%" )
+                                </div>
+                            }
+                        </div>
+                        <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                        <button class="btn-add-to-cart" data-product="@item.ProductID">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
 </section>

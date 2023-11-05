@@ -1,6 +1,7 @@
 ﻿.product-detail-box {
     background: var(--content-color-white);
     padding: 1rem;
+    border-radius: 0.2rem;
 }
 
 .product-info {
@@ -139,6 +140,22 @@
     margin: 0;
 }
 
+.add-to-cart-btn {
+    border: 2px solid var(--primary-color);
+    width: 6rem;
+    border-radius: 0.2rem;
+    background: none;
+}
+
+.add-to-cart-btn:hover {
+    border-color: var(--primary-color-hover);
+}
+
+.add-to-cart-btn i {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
 button:disabled {
     background: #bcbec2;
     border: none;
@@ -191,6 +208,52 @@ button:disabled {
     color: var(--primary-color);
 }
 
+.product-des-box {
+    border-radius: 0.2rem;
+    background: #ffffff;
+    padding: 1rem 1.5rem;
+}
+
+.product-description {
+    width: 53%;
+}
+
+.product-parameter {
+    width: 47%;
+}
+
+.box-header h4 {
+    font-weight: 600;
+}
+
+.product-para-table {
+    overflow-x: scroll;
+}
+
+.product-para-table table {
+    width: 100%;
+}
+
+.product-para-table table tr td {
+    border-collapse: collapse;
+    border: 1px solid #dddddd;
+    padding: 0.4rem 0.7rem;
+}
+
+.product-para-table table tr td:first-child {
+    background: #f7f7f7;
+    width: 22%;
+}
+
+.content-header h5 {
+    font-weight: bold;
+}
+
+.order-product .product-box {
+    border: 1px solid #e5e5e5;
+}
+
+
 /*For mobile -------------------------------------------*/
 @media screen and (max-width: 767px) {
     .product-info-name h3 {
@@ -203,5 +266,17 @@ button:disabled {
 
     .product-info-price h2 {
         font-size: 1.5rem;
+    }
+
+    .product-des-wrapper {
+        flex-direction: column-reverse;
+    }
+
+    .product-description {
+        width: 100%;
+    }
+
+    .product-parameter {
+        width: 100%;
     }
 }

@@ -62,6 +62,10 @@
     --trans-all-02: all .2s ease;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /*----Loading ---------------------------------------------*/
 /*--Button loading-------------------*/
 @keyframes ldio-gmrbyawnrc {

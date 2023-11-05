@@ -245,3 +245,108 @@ $(document).ready(() => {
         showCard();
     })
 })
+
+// Format datetime ASP.NET to "dd/MM/yyyy"
+function formatDateFromAspNet(jsonDate) {
+    var ticks = /\/Date\((\d+)\)\//.exec(jsonDate);
+    if (ticks) {
+        var milliseconds = parseInt(ticks[1]);
+        var date = new Date(milliseconds);
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return day + '/' + month + '/' + year;
+    }
+    return jsonDate;
+}
+
+//Order search ----------------------------------------------
+$('.order-search-form').submit((e) => {
+    e.preventDefault();
+    var orderID = $('#order-search').val();
+
+    showWebLoader();
+    $.ajax({
+        type: 'POST',
+        url: '/order/searchorder',
+        data: {
+            orderID: orderID
+        },
+        success: (data) => {
+            setTimeout(hideWebLoader, 500);
+            var str = ` <tr>
+                    <th>Mã ĐH</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>`;
+            $('.order-list table tbody').empty();
+            $.each(data.orders, (index, order) => {
+                var statusClass = "order-success";
+                if (order.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
+                else if (order.Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+                str += `<tr>
+                    <td class="order-id">${order.OrderID}</td>
+                    <td class="order-date">${formatDateFromAspNet(order.OrderDate)}</td>
+                    <td class="order-total">${order.TotalPaymentAmout.toLocaleString("vi-VN")}đ</td>
+                    <td>
+                        <div class="order-status ${statusClass}">${order.Status}</div>
+                    </td>
+                    <td> <a href="/order/detail/${order.OrderID}">Chi tiết</a></td>
+                </tr>`;
+            })
+
+            $('.order-list table tbody').append(str);
+            setParentHeight();
+        },
+        error: () => { hideWebLoader(); }
+    })
+})
+
+//Get order list by Status
+$('.order-header-list li').click((e) => {
+    $('.order-header-list li').removeClass('active');
+    $(e.target).addClass('active');
+
+    var value = $(e.target).data('get-order');
+    if (value.length > 0) {
+        showWebLoader();
+        $.ajax({
+            type: 'POST',
+            url: '/order/getorder',
+            data: {
+                status: value
+            },
+            success: (data) => {
+                setTimeout(hideWebLoader, 500);
+                var str = ` <tr>
+                    <th>Mã ĐH</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>`;
+                $('.order-list table tbody').empty();
+                $.each(data.orders, (index, order) => {
+                    var statusClass = "order-success";
+                    if (order.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
+                    else if (order.Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+                    str += `<tr>
+                    <td class="order-id">${order.OrderID}</td>
+                    <td class="order-date">${formatDateFromAspNet(order.OrderDate)}</td>
+                    <td class="order-total">${order.TotalPaymentAmout.toLocaleString("vi-VN")}đ</td>
+                    <td>
+                        <div class="order-status ${statusClass}">${order.Status}</div>
+                    </td>
+                    <td> <a href="/order/detail/${order.OrderID}">Chi tiết</a></td>
+                </tr>`;
+                })
+
+                $('.order-list table tbody').append(str);
+                setParentHeight();
+            },
+            error: () => { hideWebLoader(); }
+        })
+    }
+})

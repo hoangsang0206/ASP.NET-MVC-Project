@@ -121,8 +121,7 @@
     padding: 0 0.5rem 0 0;
 }
 
-.sale-slick-slider .slick-track,
-.collection-slick-slider .slick-track {
+.slick-track {
     display: flex;
     align-items: stretch;
 }

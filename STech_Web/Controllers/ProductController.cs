@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace STech_Web.Controllers
 {
@@ -12,27 +13,40 @@ namespace STech_Web.Controllers
         // GET: Product
         public ActionResult Detail(string id="")
         {
-            if(id.Length > 0)
+            try
             {
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
-                Product product = db.Products.Where(t => t.ProductID == id)
-                    .FirstOrDefault();
+                if (id.Length > 0)
+                {
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    Product product = db.Products.Where(t => t.ProductID == id)
+                        .FirstOrDefault();
 
-                Category cate = db.Categories.Where(t => t.CateID == product.CateID)
-                    .FirstOrDefault();
+                    Category cate = db.Categories.Where(t => t.CateID == product.CateID)
+                        .FirstOrDefault();
 
-                List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
-                breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
-                breadcrumb.Add(new Breadcrumb(cate.CateName, "/collections/" + cate.CateID + ""));
-                breadcrumb.Add(new Breadcrumb(product.ProductName, ""));
+                    ProductImgDetail imgDetail = product.ProductImgDetail;
 
-                ViewBag.Title = product.ProductName;
-                ViewBag.Breadcrumb = breadcrumb;
+                    List<Product> products = db.Products.Where(t => t.CateID == product.CateID).OrderBy(t => Guid.NewGuid()).Take(15).ToList();
 
-                return View(product);
+                    List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
+                    breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
+                    breadcrumb.Add(new Breadcrumb(cate.CateName, "/collections/" + cate.CateID + ""));
+                    breadcrumb.Add(new Breadcrumb(product.ProductName, ""));
+
+                    ViewBag.Title = product.ProductName;
+                    ViewBag.Breadcrumb = breadcrumb;
+                    ViewBag.ImgDetail = imgDetail;
+                    ViewBag.Products = products;
+
+                    return View(product);
+                }
+
+                return Redirect("/error/notfound");
             }
-
-            return Redirect("/error/notfound");
+            catch (Exception ex)
+            {
+                return Redirect("/error/notfound");
+            }
         }
     }
 }
