@@ -15,6 +15,7 @@ using System.Text;
 using System.Data.Entity.Migrations;
 using STech_Web.Identity;
 using System.Runtime.Remoting.Messaging;
+using System.Web.DynamicData;
 
 namespace STech_Web.Controllers
 {
@@ -43,7 +44,7 @@ namespace STech_Web.Controllers
                             Cart cartExist = db.Carts.FirstOrDefault(t => t.ProductID == cartItem.ProductID && t.UserID == userID);
                             if (cartExist != null)
                             {
-                                if (cartExist.Product.WareHouse.Quantity <= 0)
+                                if (cartExist.Product.WareHouse.Quantity <= 0 || cartExist.Product.WareHouse.Quantity == null)
                                 {
                                     db.Carts.Remove(cartExist);
                                 }
@@ -74,7 +75,7 @@ namespace STech_Web.Controllers
                     List<Cart> cartDelete = new List<Cart>();
                     foreach (Cart cart in cartItems)
                     {
-                        if (cart.Product.WareHouse.Quantity <= 0)
+                        if (cart.Product.WareHouse.Quantity <= 0 || cart.Product.WareHouse.Quantity == null)
                         {
                             cartDelete.Add(cart);
                         }
@@ -104,6 +105,7 @@ namespace STech_Web.Controllers
                 {
                     cartCookie = getCartFromCookie();
                     List<CartTemp> cartTemp = new List<CartTemp>();
+                    List<CartItem> cartCCDelete = new List<CartItem>();
                     if (cartCookie.Count > 0)
                     {
                         foreach (CartItem item in cartCookie)
@@ -112,8 +114,23 @@ namespace STech_Web.Controllers
                             int quantity = item.Quantity;
                             product = db.Products.FirstOrDefault(t => t.ProductID == item.ProductID);
 
+                            if (product.WareHouse.Quantity <= 0 || product.WareHouse.Quantity == null)
+                            {
+                                cartCCDelete.Add(item);
+                                continue;
+                            }
                             CartTemp cTemp = new CartTemp(product, quantity);
                             cartTemp.Add(cTemp);
+                        }
+
+                        if(cartCCDelete.Count > 0)
+                        {
+                            foreach(CartItem item in cartCCDelete)
+                            {
+                                cartCookie.Remove(item);
+                            }
+
+                            saveCartToCookie(cartCookie);
                         }
                     }
 
@@ -133,23 +150,38 @@ namespace STech_Web.Controllers
         {
             try
             {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.FirstOrDefault(t => t.ProductID == cart.ProductID);
+                if (product == null || product.WareHouse.Quantity <= 0 || product.WareHouse.Quantity == null)
+                {
+                    return Json(new { success = false });
+                }
+
                 //Add data from cart to database when user logged in
                 if (User.Identity.IsAuthenticated)
                 {
-                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                   
                     string userID = User.Identity.GetUserId();
                     List<Cart> userCart = db.Carts.Where(t => t.UserID == userID).ToList();
 
                     Cart existCart = userCart.FirstOrDefault(t => t.ProductID == cart.ProductID);
                     if (existCart != null)
                     {
-                        existCart.Quantity += 1;
-                        if (existCart.Quantity >= existCart.Product.WareHouse.Quantity)
+                        if(existCart.Product.WareHouse.Quantity <= 0 || existCart.Product.WareHouse.Quantity == null)
                         {
-                            existCart.Quantity = (int)existCart.Product.WareHouse.Quantity;
+                            db.Carts.Remove(existCart);
                         }
+                        else
+                        {
+                            existCart.Quantity += 1;
+                            if (existCart.Quantity >= existCart.Product.WareHouse.Quantity)
+                            {
+                                existCart.Quantity = (int)existCart.Product.WareHouse.Quantity;
+                            }
 
-                        db.Carts.AddOrUpdate(existCart);
+                            db.Carts.AddOrUpdate(existCart);
+                        }
+                        
                         db.SaveChanges();
                     }
                     else
@@ -174,7 +206,6 @@ namespace STech_Web.Controllers
                     if (cartItem != null)
                     {
                         cartItem.Quantity += 1;
-                        DatabaseSTechEntities db = new DatabaseSTechEntities();
                         int inventory = (int)db.Products.FirstOrDefault(t => t.ProductID == cartItem.ProductID).WareHouse.Quantity;
                         if (cartItem.Quantity >= inventory) cartItem.Quantity = inventory;
                     }
@@ -187,14 +218,9 @@ namespace STech_Web.Controllers
                         });
 
                     }
-                    var cartJson = JsonConvert.SerializeObject(cartItems);
-                    var bytesToEncode = Encoding.UTF8.GetBytes(cartJson);
-                    var base64String = Convert.ToBase64String(bytesToEncode);
 
-                    //--Save cart item list to cookie
-                    Response.Cookies["CartItems"].Value = base64String;
-                    //Cookie will expire in 30 days from the date the new product is added
-                    Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
+                    saveCartToCookie(cartItems);
+                    
                     return Json(new { success = true });
                 }
             }
@@ -267,6 +293,19 @@ namespace STech_Web.Controllers
             }
 
             return cartItems;
+        }
+
+        //--Save cart to cookie
+        private void saveCartToCookie(List<CartItem> cartItems)
+        {
+            var cartJson = JsonConvert.SerializeObject(cartItems);
+            var bytesToEncode = Encoding.UTF8.GetBytes(cartJson);
+            var base64String = Convert.ToBase64String(bytesToEncode);
+
+            //--Save cart item list to cookie
+            Response.Cookies["CartItems"].Value = base64String;
+            //Cookie will expire in 30 days from the date the new product is added
+            Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
         }
 
         //Update cart item quantity

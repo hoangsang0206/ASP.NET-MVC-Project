@@ -655,7 +655,7 @@ $('.forgot-password-form').on('submit', (e) => {
 
  //--Sale countdown ------------------------------------
 $(document).ready(() => {
-    var days, hours, minutes, seconds;
+    var days, hours, minutes, seconds, totalSeconds;
     function getCountdown() {
         $.ajax({
             type: 'GET',
@@ -663,26 +663,36 @@ $(document).ready(() => {
             dataType: 'json',
             success: (data) => {
                 if (data.success) {
-                    days = data.days;
-                    hours = data.hours;
-                    minutes = data.minutes;
-                    seconds = data.seconds;
+                    totalSeconds = data.times.TotalSeconds;
+                    console.log(data.times)
                 }
                 else {
-                    days = 0;
-                    hours = 0;
-                    minutes = 0;
-                    seconds = 0;
+                    totalSeconds = 0;
                 }
             },
             error: () => {
-                days = 0;
-                hours = 0;
-                minutes = 0;
-                seconds = 0;
+                totalSeconds = 0;
             }
         })
     }
+
+    getCountdown();
+    var intervalCd = setInterval(() => {
+        if (totalSeconds <= 0) {
+            $('.sale').hide();
+            clearInterval(intervalCd);
+        }
+        else { 
+            days = Math.floor(totalSeconds / (24 * 3600));
+            hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+            minutes = Math.floor((totalSeconds % 3600) / 60);
+            seconds = Math.floor(totalSeconds % 60);
+
+            updateCountdown();
+        }
+
+        totalSeconds--;
+    }, 1000);
 
     function updateCountdown() {
         $("#countdown-days").text(String(days).padStart(2, "0"));
@@ -690,14 +700,5 @@ $(document).ready(() => {
         $("#countdown-minutes").text(String(minutes).padStart(2, "0"));
         $("#countdown-seconds").text(String(seconds).padStart(2, "0"));
     }
-
-    var intervalCd = setInterval(() => {
-        getCountdown();
-        updateCountdown();
-        if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
-            $('.sale').hide();
-            clearInterval(intervalCd);
-        }
-    }, 1000);
     // -------------------------------------
 })

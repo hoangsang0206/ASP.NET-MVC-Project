@@ -94,8 +94,7 @@
 </section>
 
 @if (ViewBag.Sales.Count > 0 && ViewBag.CurrentDate >= ViewBag.StartDate
-    && (ViewBag.RemaingTime.Days >= 0 && ViewBag.RemaingTime.Hours >= 0
-                    && ViewBag.RemaingTime.Minutes >= 0 && ViewBag.RemaingTime.Seconds > 0))
+    && ViewBag.CurrentDate <= ViewBag.EndDate)
 {
     <section class="sale">
         <div class="sale-header">

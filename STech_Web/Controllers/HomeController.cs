@@ -31,7 +31,7 @@ namespace STech_Web.Controllers
             Countdown countdown = GetCountdown();
             ViewBag.CurrentDate = DateTime.Now;
             ViewBag.StartDate = countdown.startDate;
-            ViewBag.RemaingTime = calculateRemainingTime(countdown.endDate);
+            ViewBag.EndDate = countdown.endDate;
             //----------
             ViewBag.Sales = sales;
             ViewBag.LaptopOSD = laptopOSD;
@@ -65,10 +65,7 @@ namespace STech_Web.Controllers
                 return Json(new
                 {
                     success = true,
-                    days = remainingTime.Days,
-                    hours = remainingTime.Hours,
-                    minutes = remainingTime.Minutes,
-                    seconds = remainingTime.Seconds
+                    times = remainingTime
                 }, JsonRequestBehavior.AllowGet);
             }
 
