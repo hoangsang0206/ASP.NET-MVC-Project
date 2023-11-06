@@ -144,8 +144,14 @@ namespace STech_Web.Controllers
             }
 
             //Tạo đơn hàng
-            int orderCount = db.Orders.ToList().Count;
-            string orderID = "DH" + (orderCount + 1).ToString().PadLeft(5, '0');
+            List<STech_Web.Models.Order> orders = db.Orders.OrderByDescending(t => t.OrderID).ToList();
+            int orderNumber = 1;
+            if(orders.Count > 0)
+            {
+                orderNumber = int.Parse(orders[0].OrderID.Substring(2)) + 1;
+            }
+
+            string orderID = "DH" + orderNumber.ToString().PadLeft(5, '0');
             decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
             STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
 
@@ -258,8 +264,14 @@ namespace STech_Web.Controllers
             var user = userManager.FindById(userID);
 
             STech_Web.Models.Customer customer = new STech_Web.Models.Customer();
-            int customersCount = db.Customers.Count();
-            string customerID = "KH" + (customersCount + 1).ToString().PadLeft(4, '0');
+           List<STech_Web.Models.Customer> customers = db.Customers.OrderByDescending(t => t.CustomerID).ToList();
+            int customerNumber = 1;
+            if(customers.Count > 0)
+            {
+                customerNumber = int.Parse(customers[0].CustomerID.Substring(2)) + 1;
+            }
+
+            string customerID = "KH" + customerNumber.ToString().PadLeft(4, '0');
 
             customer = new STech_Web.Models.Customer();
             customer.AccountID = userID;
@@ -353,8 +365,14 @@ namespace STech_Web.Controllers
             }
 
             //Tạo đơn hàng
-            int orderCount = db.Orders.ToList().Count;
-            string orderID = "DH" + (orderCount + 1).ToString().PadLeft(5, '0');
+            List<STech_Web.Models.Order> orders = db.Orders.OrderByDescending(t => t.OrderID).ToList();
+            int orderNumber = 1;
+            if (orders.Count > 0)
+            {
+                orderNumber = int.Parse(orders[0].OrderID.Substring(2)) + 1;
+            }
+            string orderID = "DH" + orderNumber.ToString().PadLeft(5, '0');
+
             decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
             STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
 
@@ -617,6 +635,8 @@ namespace STech_Web.Controllers
 
                 if (order != null && order.Status == "Chờ thanh toán")
                 {
+                    List<OrderDetail> orderDetails = order.OrderDetails.ToList();
+                    db.OrderDetails.RemoveRange(orderDetails);
                     db.Orders.Remove(order);
                     db.SaveChanges();
                 }
@@ -662,6 +682,11 @@ namespace STech_Web.Controllers
                 Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
                 List<Models.Order> orders = new List<Models.Order>();
                 List<OrderAPI> orderAPI = new List<OrderAPI>();
+
+                if(customer == null)
+                {
+                    return Json(new { orders = orderAPI });
+                }
 
                 switch (status)
                 {
