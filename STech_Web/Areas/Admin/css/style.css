@@ -454,7 +454,7 @@ footer span {
     border-radius: 0.4rem;
     padding: 1rem 1.2rem;
     column-gap: 1.5rem;
-    width: 14rem;
+    width: 14.5rem;
 }
 
 .dashboard-box:not(:last-child) {
@@ -529,50 +529,18 @@ footer span {
     font-size: 1.1rem;
 }
 
-.dashboard-bottom {
-    margin-top: 2rem;
-    gap: 2rem;
+.bot-left {
+    width: 30%;
+    padding: 1rem 1.5rem;
+    background: #ffffff;
+    border-radius: 0.3rem;
 }
 
-.dashboard-table, .dashboard-bottom-right-content {
-    background: var(--sidebar-color);
-    border-radius: 0.4rem;
-    height: 22rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding: 1.2rem 1.6rem;
-}
-
-.dashboard-table {
-    width: calc(65% - 2rem);
-}
-
-.dashboard-bottom-right-content {
-    width: calc(35%);
-}
-
-.dashboard-table table {
-    width: 100%;
-}
-
-.dashboard-table tr {
-    white-space: nowrap;
-}
-
-.dashboard-table tr:first-child {
-    border-bottom: 1px solid #dddddd;
-}
-
-.dashboard-table th {
-    padding: 0 0 0.8rem 0;
-}
-
-.dashboard-table td {
-    padding: 1rem 1.5rem 1rem 0rem;
- }
-
-.dashboard-bottom-right-content {
-    padding: 1rem 1.4rem;
+.dashboard-revenue {
+    padding: 1rem 1.5rem;
+    background: #ffffff;
+    border-radius: 0.3rem;
+    width: 70%;
 }
 
 /* -------------- Categories page ---------------------*/
@@ -1038,7 +1006,7 @@ input[name="category"]:checked ~ .categories-label-box {
 .product-form-container {
     width: 90%;
     height: 90%;
-    padding: 2rem;
+    padding: 2rem 3rem;
     border-radius: 0.3rem;
     background: var(--sidebar-color);
     overflow-y: scroll;
@@ -1254,14 +1222,9 @@ input[name="category"]:checked ~ .categories-label-box {
         flex-direction: column;
     }
 
-    .dashboard-table, .dashboard-bottom-right-content {
+    .bot-left, .dashboard-revenue {
         width: 100%;
     }
-
-    .dashboard-table {
-        overflow: scroll;
-    }
-
     /* -------------- Collections page ---------------------*/
     .products-cate-list, .product-list {
         display: grid;

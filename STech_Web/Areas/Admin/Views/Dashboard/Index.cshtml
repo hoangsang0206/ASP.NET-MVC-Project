@@ -16,7 +16,7 @@
         </ul>
     </div>
     <div class="dashboard-content">
-        <div class="dashboard-top d-flex justify-content-between flex-wrap">
+        <div class="dashboard-top d-flex justify-content-start flex-wrap">
             <div class="dashboard-box dashboard-products d-flex align-items-center">
                 <div class="left-box">
                     <i class='bx bxs-joystick'></i>
@@ -39,11 +39,11 @@
 
             <div class="dashboard-box dashboard-brands d-flex align-items-center">
                 <div class="left-box">
-                    <i class='bx bxs-purchase-tag-alt'></i>
+                    <i class="fa-solid fa-users"></i>
                 </div>
                 <div class="right-box d-flex flex-column">
-                    <h3>@( ViewBag.brandCount > 0 ? ViewBag.brandCount : "0" )</h3>
-                    <span>Hãng</span>
+                    <h3>@( ViewBag.customerCount > 0 ? ViewBag.customerCount : "0" )</h3>
+                    <span>Khách hàng</span>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@
                     <i class='bx bxs-notepad'></i>
                 </div>
                 <div class="right-box d-flex flex-column">
-                    <h3>0</h3>
+                    <h3>@( ViewBag.orderCount > 0 ? ViewBag.orderCount : "0" )</h3>
                     <span>Đơn hàng</span>
                 </div>
             </div>
@@ -62,71 +62,66 @@
                     <i class='bx bxs-dollar-circle'></i>
                 </div>
                 <div class="right-box d-flex flex-column">
-                    <h3>0</h3>
+                    <h3>@ViewBag.total </h3>
                     <span>Doanh thu</span>
                 </div>
             </div>
         </div>
 
-        <div class="dashboard-bottom d-flex">
-            <div class="dashboard-table">
-                <table>
-                    <tr>
-                        <th>STT</th>
-                        <th>Khách hàng</th>
-                        <th>Đơn hàng</th>
-                        <th>Ngày đặt</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Hoàng Sang</td>
-                        <td>HD00001</td>
-                        <td>10/10/2023</td>
-                        <td>Chờ duyệt</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Hoàng Sang</td>
-                        <td>HD00001</td>
-                        <td>10/10/2023</td>
-                        <td>Chờ duyệt</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Hoàng Sang</td>
-                        <td>HD00001</td>
-                        <td>10/10/2023</td>
-                        <td>Chờ duyệt</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Hoàng Sang</td>
-                        <td>HD00001</td>
-                        <td>10/10/2023</td>
-                        <td>Chờ duyệt</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Hoàng Sang</td>
-                        <td>HD00001</td>
-                        <td>10/10/2023</td>
-                        <td>Chờ duyệt</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Hoàng Sang</td>
-                        <td>HD00001</td>
-                        <td>10/10/2023</td>
-                        <td>Chờ duyệt</td>
-                    </tr>
-                </table>
+        <div class="dashboard-bottom d-flex gap-3 my-4">
+            <div class="bot-left">
+                <div class="dash-header-box">
+                    <h4>Chi tiết tháng @ViewBag.CurrentDate</h4>
+                </div>
+                <div class="bot-left-content">
+                    <div class="order-count">
+                        @ViewBag.OrderCurrentMonth
+                    </div>
+                </div>
             </div>
-
-            <div class="dashboard-bottom-right-content">
-                Content
+            <div class="dashboard-revenue">
+                <div class="dash-header-box">
+                    <h4>Doanh thu 6 tháng gần nhất</h4>
+                </div>
+                <canvas id="revenue-chart"></canvas>
             </div>
         </div>
 
     </div>
 </div>
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    //---Get revenue / chart.js ------------------------------------
+    $(document).ready(() => {
+        $.ajax({
+            type: 'Get',
+            url: '/admin/dashboard/getrevenue',
+            success: (res) => {
+                var ctx = $('#revenue-chart');
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [res.data[0].month, res.data[1].month, res.data[2].month, res.data[3].month, res.data[4].month, res.data[5].month],
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: [res.data[0].revenue, res.data[1].revenue, res.data[2].revenue, res.data[3].revenue, res.data[4].revenue, res.data[5].revenue],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>
