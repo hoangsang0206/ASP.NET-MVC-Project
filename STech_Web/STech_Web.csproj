@@ -282,6 +282,10 @@
     <Compile Include="IdentityMigration\202310100635356_init1.designer.cs">
       <DependentUpon>202310100635356_init1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IdentityMigration\202311071558464_init2.cs" />
+    <Compile Include="IdentityMigration\202311071558464_init2.designer.cs">
+      <DependentUpon>202311071558464_init2.cs</DependentUpon>
+    </Compile>
     <Compile Include="IdentityMigration\Configuration.cs" />
     <Compile Include="Identity\AppDBContext.cs" />
     <Compile Include="Identity\AppUser.cs" />
@@ -409,6 +413,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IdentityMigration\202310100635356_init1.resx">
       <DependentUpon>202310100635356_init1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IdentityMigration\202311071558464_init2.resx">
+      <DependentUpon>202311071558464_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

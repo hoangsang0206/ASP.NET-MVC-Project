@@ -60,7 +60,8 @@ namespace STech_Web.Controllers
                 var user = new AppUser() { 
                     Email = register.Email,
                     UserName = register.Username, 
-                    PasswordHash = passwordHash
+                    PasswordHash = passwordHash,
+                    DateCreate = DateTime.Now
                 };
 
                 var existingUser = userManager.FindByName(register.Username);

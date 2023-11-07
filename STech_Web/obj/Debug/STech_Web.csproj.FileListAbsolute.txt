@@ -112,3 +112,4 @@ D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.csproj.Co
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.csproj.CopyComplete
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.dll
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.pdb
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.IdentityMigration.init2.resources

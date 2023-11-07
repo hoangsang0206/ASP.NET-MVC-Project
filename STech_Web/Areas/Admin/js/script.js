@@ -76,14 +76,9 @@ $('.admin-login-form').submit((e) => {
                 window.location.href = response.redirectUrl;
             }
             else {
-                var str = '<ul>';
-                $.each(response.errors, (index, value) => {
-                    str += `<li>
-                        <i class="fa-solid fa-circle-exclamation" ></i>`
-                        + value + '</li>';
-                })
-
-                str += '</li>';
+                var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation"></i>`
+                    + response.error + `</span>`;
 
                 $('.form-error').show();
                 $('.form-error').empty();

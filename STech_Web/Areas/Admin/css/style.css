@@ -396,17 +396,7 @@ footer {
     display: none;
 }
 
-.form-error ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.form-error ul li {
-    padding: 0.3rem 0;
-}
-
-.form-error ul li i {
+.form-error i {
     font-size: 1rem;
     margin-right: 0.5rem;
     color: #e30019;
@@ -543,6 +533,18 @@ footer span {
     width: 70%;
 }
 
+.summary-update {
+    border-radius: 0.3rem;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    background: var(--primary-color);
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.summary-update:hover {
+    outline: 2px solid #b8b3f7;
+}
 /* -------------- Categories page ---------------------*/
 .categories {
     overflow: hidden;

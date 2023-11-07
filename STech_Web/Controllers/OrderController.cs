@@ -652,10 +652,16 @@ namespace STech_Web.Controllers
             try
             {
                 string userID = User.Identity.GetUserId();
+                List<OrderAPI> orderAPI = new List<OrderAPI>();
+
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
                 List<STech_Web.Models.Order> orders = customer.Orders.Where(t => t.OrderID.Contains(orderID)).ToList();
-                List<OrderAPI> orderAPI = new List<OrderAPI>();
+
+                if(customer == null)
+                {
+                    return Json(new { orders = orderAPI });
+                }
 
                 foreach (var order in orders)
                 {

@@ -40,6 +40,14 @@ namespace STech_Web.Areas.Admin.Controllers
             return View();
         }
 
+        //Lấy chi thiết doanh thu tháng hiện tại
+        [HttpGet]
+        public ActionResult GetCurrentMonthSumarry()
+        {
+
+            return Json(new {success = true});
+        }
+
         //Lấy doanh thu của 4 tháng gần nhất
         [HttpGet]
         public ActionResult GetRevenue()
