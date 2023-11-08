@@ -86,7 +86,7 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
             }
 
-            return Json(new { orderCount = orders.Count, revenue = totalRevenue, customerCount = customers.Count, productSold = totalProductSold }, JsonRequestBehavior.AllowGet);
+            return Json(new { orderCount = orders.Count, revenue = totalRevenue, customerCount = customers.Count, productSold = totalProductSold, currentTime = DateTime.Now }, JsonRequestBehavior.AllowGet);
         }
 
         //Lấy doanh thu của 4 tháng gần nhất
