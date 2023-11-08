@@ -970,7 +970,7 @@ $(document).on('click ', '.delete-product-btn', (e) => {
             type: 'POST',
             url: '/admin/products/deleteproduct',
             data: {
-                id: productID
+                productID: productID
             },
             success: (res) => {
                 hideLoading();

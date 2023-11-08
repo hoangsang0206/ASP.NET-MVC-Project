@@ -236,10 +236,10 @@ namespace STech_Web.Areas.Admin.Controllers
 
         //Delete product
         [HttpPost]
-        public ActionResult DeleteProduct(string id)
+        public ActionResult DeleteProduct(string productID)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
+            Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
             if (product == null)
             {
                 return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
@@ -270,7 +270,7 @@ namespace STech_Web.Areas.Admin.Controllers
             }
 
             //-Lưu sản phẩm vào bảng backup trước khi xóa-----------------------
-            addProductToBackup(db, product);
+            //addProductToBackup(db, product);
             //----------------------
 
             db.Products.Remove(product);

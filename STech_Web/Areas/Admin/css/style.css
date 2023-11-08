@@ -537,13 +537,38 @@ footer span {
     border-radius: 0.3rem;
     border: none;
     padding: 0.4rem 0.8rem;
-    background: var(--primary-color);
+    background: #0652DD;
     color: #ffffff;
     font-size: 0.95rem;
 }
 
 .summary-update:hover {
-    outline: 2px solid #b8b3f7;
+    outline: 2px solid #0e91d7;
+}
+
+.bot-left-box {
+    border-radius: 0.3rem;
+    background: #9980FA;
+    color: #ffffff;
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+}
+
+.bot-left-box:not(:first-child) {
+    margin-top: 0.6rem;
+}
+
+.bot-left-box span {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.bot-left-box i {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    width: 1.8rem;
 }
 /* -------------- Categories page ---------------------*/
 .categories {
@@ -943,6 +968,7 @@ input[name="category"]:checked ~ .categories-label-box {
 .product-hidden-btn i {
     color: #ffffff;
     font-size: 0.8rem;
+    pointer-events: none;
 }
 
 .update-product-btn {

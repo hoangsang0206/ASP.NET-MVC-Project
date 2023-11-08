@@ -4,7 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using STech_Web.Filters;
+using STech_Web.Identity;
 using STech_Web.Models;
 
 namespace STech_Web.Areas.Admin.Controllers
@@ -34,7 +36,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 ViewBag.total = millions + "tỉ";
             }
             ViewBag.CurrentDate = DateTime.Now.ToString("MM/yyyy");
-            ViewBag.OrderCurrentMonth = orders.Where(t =>Convert.ToDateTime(t.OrderDate).ToString("MM/yyyy") == DateTime.Now.ToString("MM/yyyy")).ToList().Count;
             
             ViewBag.ActiveNav = "dashboard";
             return View();
@@ -44,8 +45,48 @@ namespace STech_Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetCurrentMonthSumarry()
         {
+            string userID = User.Identity.GetUserId();
 
-            return Json(new {success = true});
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var userList = userManager.Users.Where(t => t.DateCreate != null && t.DateCreate.Value.Month == DateTime.Now.Month && t.DateCreate.Value.Year == DateTime.Now.Year).ToList();
+
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Order> orders = db.Orders.Where(t => t.OrderDate.Value.Month == DateTime.Now.Month && t.OrderDate.Value.Year == DateTime.Now.Year).ToList();
+            
+            List<Customer> customers = new List<Customer>();
+
+            if (userList.Count > 0)
+            {
+                foreach (var user in userList)
+                {
+                    Customer cus = db.Customers.FirstOrDefault(t => t.AccountID == user.Id);
+                    if (cus != null)
+                    {
+                        customers.Add(cus);
+                    }    
+                }
+            }
+
+            decimal totalRevenue = orders.Sum(t => t.TotalPaymentAmout);
+            int totalProductSold = 0;
+            if(orders.Count > 0)
+            {
+                foreach(var order in orders)
+                {
+                    List<OrderDetail> orderDetails = order.OrderDetails.ToList();
+                    if(orderDetails.Count > 0)
+                    {
+                        foreach(var ordDetail in orderDetails)
+                        {
+                            totalProductSold += ordDetail.Quantity;
+                        }
+                    }
+                }
+            }
+
+            return Json(new { orderCount = orders.Count, revenue = totalRevenue, customerCount = customers.Count, productSold = totalProductSold }, JsonRequestBehavior.AllowGet);
         }
 
         //Lấy doanh thu của 4 tháng gần nhất

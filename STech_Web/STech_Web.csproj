@@ -400,6 +400,7 @@
     <Content Include="Views\Order\Succeeded.cshtml" />
     <Content Include="Views\Order\Failed.cshtml" />
     <Content Include="Views\Order\Detail.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -92,121 +92,123 @@ namespace STech_Web.Controllers
         [HttpPost]
         public ActionResult CheckOut(string paymentMethod)
         {
-            //--
-            string userID = User.Identity.GetUserId();
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Cart> cart = db.Carts.Where(t => t.UserID == userID).ToList();
-
-            if (cart.Count <= 0)
-            {
-                return Json(new { url = "/cart" });
-            }
-
-            //Kiểm tra có sản phảm nào hết hàng không
-            List<string> errors = new List<string>();
-            int coutProductOutOfStock = 0;
-            foreach (Cart c in cart)
-            {
-                if (c.Product.WareHouse.Quantity <= 0)
-                {
-                    coutProductOutOfStock += 1;
-                    string err = "Sản phẩm " + c.Product.ProductName + " đã hết hàng.";
-                    errors.Add(err);
-                }
-            }
-
-            if (coutProductOutOfStock > 0)
-            {
-                return Json(new { success = false, error = errors });
-            }
-
-            //--Lấy thông tin đơn hàng đã lưu tạm vào cookie
-            var base64String = Request.Cookies["OrderTemp"]?.Value;
-            OrderTemp orderTemp = new OrderTemp();
-
-            if (!String.IsNullOrEmpty(base64String))
-            {
-                var bytesToDecode = Convert.FromBase64String(base64String);
-                var orderTempJson = Encoding.UTF8.GetString(bytesToDecode);
-                orderTemp = JsonConvert.DeserializeObject<OrderTemp>(orderTempJson);
-                if (orderTemp == null)
-                {
-                    return Redirect("/cart");
-                }
-            }
-
-            //Tạo khách hàng mới nếu khách hàng này chưa tồn tại
-            STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
-            if (customer == null)
-            {
-                addNewCustomer(db, userID);
-                db = new DatabaseSTechEntities();
-            }
-
-            //Tạo đơn hàng
-            List<STech_Web.Models.Order> orders = db.Orders.OrderByDescending(t => t.OrderID).ToList();
-            int orderNumber = 1;
-            if(orders.Count > 0)
-            {
-                orderNumber = int.Parse(orders[0].OrderID.Substring(2)) + 1;
-            }
-
-            string orderID = "DH" + orderNumber.ToString().PadLeft(5, '0');
-            decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
-            STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
-
-            STech_Web.Models.Order order = new STech_Web.Models.Order();
-            order.OrderID = orderID;
-            order.CustomerID = customer1.CustomerID;
-            order.OrderDate = DateTime.Now;
-            order.Note = orderTemp.Note;
-            order.ShipMethod = orderTemp.ShipMethod;
-            order.PaymentMethod = paymentMethod;
-            order.DeliveryFee = 0;
-            order.TotalPrice = totalPrice;
-            order.TotalPaymentAmout = totalPrice;
-            order.Status = "Chờ thanh toán";
-
-            //Tạo chi tiết đơn hàng
-            List<OrderDetail> orderDetails = new List<OrderDetail>();
-            foreach (Cart c in cart)
-            {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.OrderID = orderID;
-                orderDetail.ProductID = c.ProductID;
-                orderDetail.Quantity = c.Quantity;
-
-                orderDetails.Add(orderDetail);
-            }
-
-
-            //--------------------------------------------------------------------------------
-            if (paymentMethod == "COD") //Thanh toán khi nhận hàng
+            try
             {
                 //--
-                db.Orders.Add(order);
-                db.OrderDetails.AddRange(orderDetails);
-                db.Carts.RemoveRange(cart);
-                db.SaveChanges();
-                //--
-                return Json(new { url = "/order/succeeded", order = orderID });
-            }
-            else if (paymentMethod == "card") //Thanh toán bằng thẻ visa/mastercard
-            {
-                //Lấy domain hiện tại
-                var domain = getCurrentDomain();
+                string userID = User.Identity.GetUserId();
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Cart> cart = db.Carts.Where(t => t.UserID == userID).ToList();
 
-                //Stripe api key
-                StripeConfiguration.ApiKey = "sk_test_51O7hGcASuMBoFWl8pQdaMvQaPYFY13MjLln9m2w2oQ41K5JuagkbAJLJmQ8pULQ48ebIgYx9RKCZeAT575F3qoVR00tx24Pnvt";
-
-                // Số tiền cần thanh toán => đổi sang USD (đơn vị là cents - 1 USD  = 100 cents)
-                var amount = ((long)Math.Round(totalPrice / 24000)) * 100;
-                //-------
-
-                var options = new SessionCreateOptions
+                if (cart.Count <= 0)
                 {
-                    PaymentMethodTypes = new List<string> { "card" },
-                    LineItems = new List<SessionLineItemOptions>
+                    return Json(new { url = "/cart" });
+                }
+
+                //Kiểm tra có sản phảm nào hết hàng không
+                List<string> errors = new List<string>();
+                int coutProductOutOfStock = 0;
+                foreach (Cart c in cart)
+                {
+                    if (c.Product.WareHouse.Quantity <= 0)
+                    {
+                        coutProductOutOfStock += 1;
+                        string err = "Sản phẩm " + c.Product.ProductName + " đã hết hàng.";
+                        errors.Add(err);
+                    }
+                }
+
+                if (coutProductOutOfStock > 0)
+                {
+                    return Json(new { success = false, error = errors });
+                }
+
+                //--Lấy thông tin đơn hàng đã lưu tạm vào cookie
+                var base64String = Request.Cookies["OrderTemp"]?.Value;
+                OrderTemp orderTemp = new OrderTemp();
+
+                if (!String.IsNullOrEmpty(base64String))
+                {
+                    var bytesToDecode = Convert.FromBase64String(base64String);
+                    var orderTempJson = Encoding.UTF8.GetString(bytesToDecode);
+                    orderTemp = JsonConvert.DeserializeObject<OrderTemp>(orderTempJson);
+                    if (orderTemp == null)
+                    {
+                        return Redirect("/cart");
+                    }
+                }
+
+                //Tạo khách hàng mới nếu khách hàng này chưa tồn tại
+                STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+                if (customer == null)
+                {
+                    addNewCustomer(db, userID);
+                    db = new DatabaseSTechEntities();
+                }
+
+                //Tạo đơn hàng
+                List<STech_Web.Models.Order> orders = db.Orders.OrderByDescending(t => t.OrderID).ToList();
+                int orderNumber = 1;
+                if (orders.Count > 0)
+                {
+                    orderNumber = int.Parse(orders[0].OrderID.Substring(2)) + 1;
+                }
+
+                string orderID = "DH" + orderNumber.ToString().PadLeft(5, '0');
+                decimal totalPrice = (decimal)cart.Sum(t => t.Quantity * t.Product.Price);
+                STech_Web.Models.Customer customer1 = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+
+                STech_Web.Models.Order order = new STech_Web.Models.Order();
+                order.OrderID = orderID;
+                order.CustomerID = customer1.CustomerID;
+                order.OrderDate = DateTime.Now;
+                order.Note = orderTemp.Note;
+                order.ShipMethod = orderTemp.ShipMethod;
+                order.PaymentMethod = paymentMethod;
+                order.DeliveryFee = 0;
+                order.TotalPrice = totalPrice;
+                order.TotalPaymentAmout = totalPrice;
+                order.Status = "Chờ thanh toán";
+
+                //Tạo chi tiết đơn hàng
+                List<OrderDetail> orderDetails = new List<OrderDetail>();
+                foreach (Cart c in cart)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderID = orderID;
+                    orderDetail.ProductID = c.ProductID;
+                    orderDetail.Quantity = c.Quantity;
+
+                    orderDetails.Add(orderDetail);
+                }
+
+
+                //--------------------------------------------------------------------------------
+                if (paymentMethod == "COD") //Thanh toán khi nhận hàng
+                {
+                    //--
+                    db.Orders.Add(order);
+                    db.OrderDetails.AddRange(orderDetails);
+                    db.Carts.RemoveRange(cart);
+                    db.SaveChanges();
+                    //--
+                    return Json(new { url = "/order/succeeded", order = orderID });
+                }
+                else if (paymentMethod == "card") //Thanh toán bằng thẻ visa/mastercard
+                {
+                    //Lấy domain hiện tại
+                    var domain = getCurrentDomain();
+
+                    //Stripe api key
+                    StripeConfiguration.ApiKey = "sk_test_51O7hGcASuMBoFWl8pQdaMvQaPYFY13MjLln9m2w2oQ41K5JuagkbAJLJmQ8pULQ48ebIgYx9RKCZeAT575F3qoVR00tx24Pnvt";
+
+                    // Số tiền cần thanh toán => đổi sang USD (đơn vị là cents - 1 USD  = 100 cents)
+                    var amount = ((long)Math.Round(totalPrice / 24000)) * 100;
+                    //-------
+
+                    var options = new SessionCreateOptions
+                    {
+                        PaymentMethodTypes = new List<string> { "card" },
+                        LineItems = new List<SessionLineItemOptions>
                     {
                         new SessionLineItemOptions
                         {
@@ -222,35 +224,40 @@ namespace STech_Web.Controllers
                             Quantity = 1,
                         }
                     },
-                    Metadata = new Dictionary<string, string> { { "order_id", orderID } },
-                    Mode = "payment",
-                    SuccessUrl = domain + "/order/updatepaymentstatus",
-                    CancelUrl = domain + "/order/failed"
+                        Metadata = new Dictionary<string, string> { { "order_id", orderID } },
+                        Mode = "payment",
+                        SuccessUrl = domain + "/order/updatepaymentstatus",
+                        CancelUrl = domain + "/order/failed"
 
-                };
+                    };
 
-                var service = new SessionService();
-                var session = service.Create(options);
-                TempData["Session"] = session.Id;
+                    var service = new SessionService();
+                    var session = service.Create(options);
+                    TempData["Session"] = session.Id;
 
-                //Response.Headers.Add("Location", session.Url);
+                    //Response.Headers.Add("Location", session.Url);
 
-                db.Orders.Add(order);
-                db.OrderDetails.AddRange(orderDetails);
-                db.Carts.RemoveRange(cart);
-                db.SaveChanges();
+                    db.Orders.Add(order);
+                    db.OrderDetails.AddRange(orderDetails);
+                    db.Carts.RemoveRange(cart);
+                    db.SaveChanges();
 
-                return Json(new { url = session.Url });
+                    return Json(new { url = session.Url });
 
 
+                }
+                else if (paymentMethod == "paypal") //Thanh toán bằng Paypal
+                {
+                    return Json(new { url = "/order/paymentwithpaypal" });
+                }
+                else
+                {
+                    return Redirect("/order/orderinfo");
+                }
             }
-            else if (paymentMethod == "paypal") //Thanh toán bằng Paypal
+            catch (Exception ex)
             {
-                return Json(new { url = "/order/paymentwithpaypal" });
-            }
-            else
-            {
-                return Redirect("/order/orderinfo");
+                return Redirect("/error");
             }
         }
 

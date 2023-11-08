@@ -74,9 +74,22 @@
                     <h4>Tháng @ViewBag.CurrentDate</h4>
                     <button class="summary-update">Cập nhật</button>
                 </div>
-                <div class="bot-left-content">
-                    <div class="order-count">
-                        @ViewBag.OrderCurrentMonth
+                <div class="bot-left-content mt-4">
+                    <div class="bot-left-box">
+                        <i class="fa-regular fa-clipboard"></i>
+                        Số đơn hàng:&nbsp;<span class="month-order">0</span>
+                    </div>
+                    <div class="bot-left-box">
+                        <i class="fa-solid fa-coins"></i>
+                        Doanh thu:&nbsp;<span class="month-revenue">0</span>
+                    </div>
+                    <div class="bot-left-box">
+                        <i class="fa-solid fa-microchip"></i>
+                        Sản phẩm đã bán:&nbsp;<span class="month-psold">0</span>
+                    </div>
+                    <div class="bot-left-box">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Khách hàng mới:&nbsp;<span class="month-newcus">0</span>
                     </div>
                 </div>
             </div>
@@ -96,7 +109,40 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    //---Get revenue / chart.js ------------------------------------
+    //--Get current month data ---------------------------------------
+    function getCurrentMonthData() {
+        $('.loading').css('display', 'grid');
+        $.ajax({
+            type: 'Get',
+            url: '/admin/dashboard/getcurrentmonthsumarry',
+            success: (data) => {
+                var interval = setInterval(() => {
+                    $('.loading').hide();
+                    clearInterval(interval);
+                }, 500);
+
+                $('.month-order').empty();
+                $('.month-revenue').empty();
+                $('.month-psold').empty();
+                $('.month-newcus').empty();
+
+                $('.month-order').append(data.orderCount);
+                $('.month-revenue').append(data.revenue.toLocaleString('vi-VN') + 'đ');
+                $('.month-psold').append(data.productSold);
+                $('.month-newcus').append(data.customerCount);
+            }
+        })
+    }
+
+    $(document).ready(() => {
+        getCurrentMonthData();
+
+        $('.summary-update').click(() => { 
+            getCurrentMonthData();
+        })
+    })
+
+    //---Get revenue data / chart.js ------------------------------------
     $(document).ready(() => {
         $.ajax({
             type: 'Get',
