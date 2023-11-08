@@ -775,6 +775,28 @@ function showUpdateOkForm() {
         })
 }
 
+//Update image box
+function updateImgBox(input, imgbox) {
+    input.mouseleave(() => {
+        var imgVal = input.val();
+        if (imgVal.length > 0) {
+            imgbox.attr('src', imgVal);
+        }
+        else {
+            imgbox.attr('src', '/images/no-image.jpg');
+        }
+    })
+}
+
+$(document).ready(() => {
+    updateImgBox($('#ImgSrc'), $('.p-img-1'));
+    updateImgBox($('#add-product-image-1'), $('.p-img-2'));
+    updateImgBox($('#add-product-image-2'), $('.p-img-3'));
+    updateImgBox($('#add-product-image-3'), $('.p-img-4'));
+    updateImgBox($('#add-product-image-4'), $('.p-img-5'));
+    updateImgBox($('#add-product-image-5'), $('.p-img-6'));
+})
+
 //Add product --------------------------------
 $('.add-product-form').submit((e) => {
     var productID = $('.add-product #ProductID').val();
@@ -989,6 +1011,24 @@ $(document).on('click ', '.delete-product-btn', (e) => {
         $('.delete-product-confirm .delete-confirm-box').removeClass('show');
     })
 })
+
+//-----
+$('.product-delete-frm-btn').click(() => {
+    var productID = $('#ProductID').val();
+    $.ajax({
+        type: 'POST',
+        url: '/admin/products/deleteproduct',
+        data: {
+            productID: productID
+        },
+        success: (res) => {
+            window.location.href = '/admin/products'
+        },
+        error: () => {
+        }
+    })
+})
+//-----
 
 $('.delete-product-confirm').click((e) => {
     if ($(e.target).closest('.delete-confirm-box').length <= 0) {

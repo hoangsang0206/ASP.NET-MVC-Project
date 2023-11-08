@@ -432,7 +432,7 @@ footer span {
 
 .dashboard-content {
     overflow-x: hidden;
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .dashboard-top {
@@ -444,7 +444,7 @@ footer span {
     border-radius: 0.4rem;
     padding: 1rem 1.2rem;
     column-gap: 1.5rem;
-    width: 14.5rem;
+    min-width: 14.5rem;
 }
 
 .dashboard-box:not(:last-child) {
@@ -533,6 +533,10 @@ footer span {
     width: 70%;
 }
 
+.dash-header-box * {
+    white-space: nowrap;
+}
+
 .summary-update {
     border-radius: 0.3rem;
     border: none;
@@ -550,10 +554,11 @@ footer span {
     border-radius: 0.3rem;
     background: #9980FA;
     color: #ffffff;
-    padding: 0.6rem 1rem;
+    padding: 0.7rem 1.2rem;
     display: flex;
     align-items: center;
     font-size: 1.05rem;
+    white-space: nowrap;
 }
 
 .bot-left-box:not(:first-child) {
@@ -1106,7 +1111,7 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .form-submit-btn.product-submit-btn,
 .form-submit-btn.product-update-submit-btn {
-    width: 25%;
+    width: 13rem;
     margin: 0;
 }
 
@@ -1158,6 +1163,10 @@ input[name="category"]:checked ~ .categories-label-box {
     outline: 2px solid #fb7c7c;
 }
 
+.add-product .product-images-wrapper {
+    grid-template-columns: repeat(8, 1fr);
+} 
+
 /*-----------Product detail page -------------------*/
 .product-detail {
     background: #ffffff;
@@ -1193,6 +1202,16 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .product-detail-image img {
     width: 100%;
+}
+
+.product-delete-frm-btn {
+    border-radius: 0.3rem;
+    border: none;
+    background: #e30019;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    width: 10rem;
 }
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
@@ -1262,7 +1281,7 @@ input[name="category"]:checked ~ .categories-label-box {
     }
 
     .dashboard-box {
-        width: 15rem;
+        min-width: 15rem;
         padding: 1rem;
     }
 
@@ -1324,6 +1343,33 @@ input[name="category"]:checked ~ .categories-label-box {
     .products-content-box {
         padding: 0.6rem 0.3rem;
         margin-top: 0.6rem;
+    }
+
+    .product-form-container {
+        padding: 1.5rem;
+    }
+
+    .add-product .product-images-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+
+    /*-------Product detail page --------------------*/
+    .product-detail {
+        padding: 1rem;
+    }
+
+    .product-images-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .product-detail-form {
+        flex-direction: column;
+    }
+
+    .left-form, .right-form {
+        width: 100%;
+        padding: 0;
     }
 }
 

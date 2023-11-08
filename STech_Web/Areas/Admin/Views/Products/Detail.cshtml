@@ -3,7 +3,7 @@
     ViewBag.Title = Model.ProductName;
 }
 
-<div class="product-detail-page">
+<div class="product-detail-page mb-4">
     <h2 class="title">Thông tin sản phẩm</h2>
     <div class="breadcrumb">
         <ul class="breadcrumb-list d-flex">
@@ -29,31 +29,31 @@
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc1 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc1) == false ? ViewBag.ImgDetail.ImgSrc1 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 1</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc2 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc2) == false ? ViewBag.ImgDetail.ImgSrc2 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 2</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc3 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc3) == false ? ViewBag.ImgDetail.ImgSrc3 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 3</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc4 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc4) == false ? ViewBag.ImgDetail.ImgSrc4 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 4</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc5 : "/images/no-image.jpg")" alt="" />
+                    <img src="/images/no-image.jpg" alt="" />
                 </div>
                 <span>Hình ảnh 5</span>
             </div>
@@ -69,7 +69,7 @@
                     <label for="ProductName" class="input-label position-absolute">Tên sản phẩm</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="Cost" name="Cost" value="@(Model.Cost > Model.Price ? Math.Round((double)Model.Price).ToString() : Math.Round((double)Model.Cost).ToString())" class="form-input" required />
+                    <input type="text" id="Cost" name="Cost" value="@(Model.Cost > Model.Price ? Math.Round((double)Model.Cost).ToString() : "")" class="form-input" required />
                     <label for="Cost" class="input-label position-absolute">Giá</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
@@ -141,16 +141,16 @@
                     <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 4</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-5" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc5 : "")" class="form-input" />
+                    <input type="text" id="add-product-image-5" value="" class="form-input" />
                     <label for="add-product-image-5" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 5    </label>
                 </div>
             </div>
 
             <div class="form-error my-1"></div>
 
-            <div class="form-btn-box d-flex gap-3">
+            <div class="form-btn-box d-flex gap-3 flex-wrap">
                 <button type="submit" class="form-submit-btn product-update-submit-btn">SỬA SẢN PHẨM</button>
-                <button type="button" class="form-submit-btn product-update-submit-btn">SỬA SẢN PHẨM</button>
+                <button type="button" class="product-delete-frm-btn">XÓA SẢN PHẨM</button>
             </div>
         </form>
     </div>
