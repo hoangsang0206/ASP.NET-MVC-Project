@@ -195,6 +195,7 @@
     <Content Include="images\logo\stech-logo-colors.png" />
     <Content Include="images\logo\stech-logo-mobile.png" />
     <Content Include="images\logo\stech-logo.png" />
+    <Content Include="images\no-image.jpg" />
     <Content Include="images\payment\cash-payment.png" />
     <Content Include="images\payment\internet-banking.jpg" />
     <Content Include="images\payment\mastercard.png" />

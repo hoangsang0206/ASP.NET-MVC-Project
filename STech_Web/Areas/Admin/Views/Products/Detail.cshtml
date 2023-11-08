@@ -20,7 +20,44 @@
     </div>
 
     <div class="product-detail">
-        <div class="form-error"></div>
+        <div class="product-images-wrapper mb-4">
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@Model.ImgSrc" alt="" />
+                </div>
+                <span>Hình ảnh chính</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc1 : "/images/no-image.jpg")" alt="" />
+                </div>
+                <span>Hình ảnh 1</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc2 : "/images/no-image.jpg")" alt="" />
+                </div>
+                <span>Hình ảnh 2</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc3 : "/images/no-image.jpg")" alt="" />
+                </div>
+                <span>Hình ảnh 3</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc4 : "/images/no-image.jpg")" alt="" />
+                </div>
+                <span>Hình ảnh 4</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc5 : "/images/no-image.jpg")" alt="" />
+                </div>
+                <span>Hình ảnh 5</span>
+            </div>
+        </div>
         <form action="#" method="post" class="product-detail-form d-flex flex-wrap">
             <div class="left-form">
                 <div class="form-input-box position-relative d-flex align-items-center">
@@ -103,10 +140,17 @@
                     <input type="text" id="add-product-image-4" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc4 : "")" class="form-input" />
                     <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 4</label>
                 </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-5" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc5 : "")" class="form-input" />
+                    <label for="add-product-image-5" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 5    </label>
+                </div>
             </div>
+
+            <div class="form-error my-1"></div>
 
             <div class="form-btn-box d-flex gap-3">
                 <button type="submit" class="form-submit-btn product-update-submit-btn">SỬA SẢN PHẨM</button>
+                <button type="button" class="form-submit-btn product-update-submit-btn">SỬA SẢN PHẨM</button>
             </div>
         </form>
     </div>

@@ -27,16 +27,28 @@ namespace STech_Web.Areas.Admin.Controllers
         //Product detail page
         public ActionResult Detail(string id)
         {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
-            List<Category> categories = db.Categories.ToList();
-            List<Brand> brands = db.Brands.ToList();
-            ProductImgDetail imgDetail = product.ProductImgDetail;
+            try
+            {
+                if (id == null)
+                {
+                    return Redirect("/admin/products");
+                }
 
-            ViewBag.Categories = categories;
-            ViewBag.Brands = brands;
-            ViewBag.ImgDetail = imgDetail;
-            return View(product);
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
+                List<Category> categories = db.Categories.ToList();
+                List<Brand> brands = db.Brands.ToList();
+                ProductImgDetail imgDetail = product.ProductImgDetail;
+
+                ViewBag.Categories = categories;
+                ViewBag.Brands = brands;
+                ViewBag.ImgDetail = imgDetail;
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+                return Redirect("/admin/products");
+            }
         }
 
         //Check valid value

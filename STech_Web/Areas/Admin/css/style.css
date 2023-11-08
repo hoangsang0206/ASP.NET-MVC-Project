@@ -1096,6 +1096,7 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .select-input {
     font-size: 0.97rem;
+    padding: 0.8rem 1.2rem;
 }
 
 .form-btn-box {
@@ -1164,6 +1165,35 @@ input[name="category"]:checked ~ .categories-label-box {
     padding: 2rem 2.5rem;
 }
 
+.product-images-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.product-image-box {
+    padding: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.product-image-box span {
+    font-weight: 600;
+}
+
+.product-detail-image {
+    border: 1px solid #d8d8d8;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.product-detail-image img {
+    width: 100%;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
