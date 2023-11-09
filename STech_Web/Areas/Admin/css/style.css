@@ -714,6 +714,7 @@ input[name="category"]:checked ~ .categories-label-box {
     grid-template-columns: repeat(7, 1fr);
     overflow-y: scroll;
     overflow-x: hidden;
+    min-height: 10rem;
 }
 
 .lazy-loading .product-img {
@@ -870,13 +871,15 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .delete-cate-confirm-yes,
-.confirm-delete {
+.confirm-delete,
+.confirm-delete-order {
     background: var(--primary-color);
     color: #ffffff;
 }
 
 .delete-cate-confirm-yes:hover,
-.confirm-delete:hover {
+.confirm-delete:hover,
+.confirm-delete-order:hover {
     outline: 2px solid #938afc;
 }
 
@@ -890,7 +893,7 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 #search, #search-orders {
-    width: 85%;
+    width: calc(100% - 3.7rem);
     padding: 0.5rem 1rem;
     outline: none;
     border: 1px solid #c7c7c7;
@@ -944,7 +947,7 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .product-list {
-    height: 20rem;
+    height: 27rem;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -1000,7 +1003,8 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-04);
 }
 /*-----Product Action (add, delete, update) -------------------*/
-.delete-product-confirm, .update-product,
+.delete-product-confirm,
+.delete-order-confirm, .update-product,
 .add-product, .complete-notice,
 .complete-update-notice,
 .complete-delete-notice,
@@ -1230,7 +1234,7 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .search-orders {
-    width: 40%;
+    width: 35%;
 }
 
 .dropdown-search {
@@ -1255,6 +1259,7 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 #search-orders {
+    width: 65%;
     border-radius: 0;
 }
 
@@ -1265,17 +1270,13 @@ input[name="category"]:checked ~ .categories-label-box {
     min-width: 100%;
     background: #0652DD;
     border-radius: 0.3rem;
-    transform: scaleY(0);
-    opacity: 0;
-    transform-origin: top;
-    transition: var(--tran-03);
+    display: none;
     overflow: hidden;
     z-index: 10;
 }
 
 .dropdown-search-list.show {
-    transform: scale(1);
-    opacity: 1;
+   display: block;
 }
 
 .dropdown-search-list ul {
@@ -1306,6 +1307,33 @@ input[name="category"]:checked ~ .categories-label-box {
     border-bottom-right-radius: 0.3rem;
 }
 
+.get-orders-by-date-range span {
+    font-size: 1.1rem;
+    margin: 0 0.5rem;
+}
+
+#date-from, #date-to {
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    border: 1px solid #c7c7c7;
+}
+
+.search-by-date-btn {
+    border: none;
+    border-radius: 0.3rem;
+    background: var(--primary-color);
+    padding: 0.45rem 0.6rem;
+}
+
+.search-by-date-btn:hover {
+    outline: 2px solid #c0bbf8;
+}
+
+.search-by-date-btn i {
+    font-size: 1.4rem;
+    color: #ffffff;
+}
+
 .order-list table td,
 .order-list table th {
     padding: 0.7rem 1rem 0.7rem 0;
@@ -1324,12 +1352,28 @@ input[name="category"]:checked ~ .categories-label-box {
     font-size: 0.9rem;
 }
 
-.order-detail {
+.order-detail-btn {
     background: #0652DD;
 }
 
-.delete-order {
+.order-detail-btn:hover {
+    outline: 2px solid #4779ff
+}
+
+.delete-order-btn {
     background: #e30019;
+}
+
+.delete-order-btn:hover {
+    outline: 2px solid #fe9090;
+}
+
+.order-update-btn {
+    background: var(--primary-color);
+}
+
+.order-update-btn:hover {
+    outline: 2px solid #b0a9fb;
 }
 
 .order-id {

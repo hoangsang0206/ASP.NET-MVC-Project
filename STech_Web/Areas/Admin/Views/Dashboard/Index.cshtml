@@ -134,7 +134,7 @@
                 var dateStr = Date(data.currentTime / 1000);
                 var date = new Date(dateStr)
 
-                $('.realtime').append(date.toLocaleDateString() + ' ' + date.toLocaleTimeString('en-US'));
+                $('.realtime').append(date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-US'));
                 $('.month-order').append(data.orderCount);
                 $('.month-revenue').append(data.revenue.toLocaleString('vi-VN') + 'đ');
                 $('.month-psold').append(data.productSold);

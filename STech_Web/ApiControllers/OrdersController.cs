@@ -13,6 +13,7 @@ namespace STech_Web.ApiControllers
     [AdminAuthorization]
     public class OrdersController : ApiController
     {
+        //Lấy tất cả đơn hàng
         public List<OrderAPI> GetAll()
         {
 
@@ -29,6 +30,8 @@ namespace STech_Web.ApiControllers
             }
             return ordersApi;
         }
+
+        //Tìm kiếm đơn hàng
         public List<OrderAPI> GetOrders(string searchType, string searchValue)
         {
             List<OrderAPI> ordersApi = new List<OrderAPI>();
@@ -58,6 +61,37 @@ namespace STech_Web.ApiControllers
                         break;
                 }
 
+                if (orders.Count > 0)
+                {
+                    foreach (Order order in orders)
+                    {
+                        ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return ordersApi;
+        }
+
+        //Tìm sản phẩm theo khoảng thòi gian
+        public List<OrderAPI> GetOrdersByDateRange(string dateFrom, string dateTo)
+        {
+            List<OrderAPI> ordersApi = new List<OrderAPI>();
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Order> orders = new List<Order>();
+
+            try
+            {
+                
+                DateTime dateF = DateTime.Parse(dateFrom);
+                DateTime dateT = DateTime.Parse(dateTo);
+
+                orders = db.Orders.Where(t => t.OrderDate >= dateF && t.OrderDate <= dateT).ToList();
+                
                 if (orders.Count > 0)
                 {
                     foreach (Order order in orders)

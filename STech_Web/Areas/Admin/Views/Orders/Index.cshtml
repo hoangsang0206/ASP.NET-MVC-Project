@@ -19,7 +19,7 @@
         <div class="action-box orders-action d-flex flex-wrap">
             <button class="add-order-btn">
                 <i class="fa-regular fa-square-plus action-btn-icon"></i>
-                Thêm
+                Tạo đơn hàng
             </button>
             <div class="orders-action-notice"></div>
         </div>
@@ -48,6 +48,19 @@
                         <i class='bx bx-search'></i>
                     </button>
                 </form>
+                <div class="get-orders-by-date-range d-flex flex-wrap align-items-center gap-2">
+                    <span>Từ</span>
+                    <div class="date-input">
+                        <input type="date" id="date-from" name="date-from" value="" />
+                    </div>
+                    <span>đến</span>
+                    <div class="date-input">
+                        <input type="date" id="date-to" name="date-to" value="" />
+                    </div>
+                    <button class="search-by-date-btn">
+                        <i class='bx bx-search'></i>
+                    </button>
+                </div>
                 <button class="page-btn get-all-order">Tất cả đơn hàng</button>
             </div>
 
@@ -68,3 +81,46 @@
         </div>
     </div>
 </section>
+
+<div class="order-infomation-box">
+
+</div>
+
+<div class="delete-order-confirm">
+    <div class="delete-confirm-box d-flex flex-column align-items-center">
+        <i class="fa-regular fa-circle-question"></i>
+        <span>Xóa sản phẩm này ?</span>
+        <div class="delete-button-box">
+            <button class="cancel-delete">
+                Hủy
+            </button>
+            <button class="confirm-delete-order">
+                Xóa
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="complete-notice">
+    <div class="complete-notice-box d-flex flex-column align-items-center">
+        <i class='bx bx-check-circle bx-tada'></i>
+        <span>Thêm thành công.</span>
+        <button>OK</button>
+    </div>
+</div>
+
+<div class="complete-update-notice">
+    <div class="complete-notice-box d-flex flex-column align-items-center">
+        <i class='bx bx-check-circle bx-tada'></i>
+        <span>Sửa thành công.</span>
+        <button>OK</button>
+    </div>
+</div>
+
+<div class="complete-delete-notice">
+    <div class="complete-notice-box d-flex flex-column align-items-center">
+        <i class='bx bx-check-circle bx-tada'></i>
+        <span>Xóa thành công.</span>
+        <button>OK</button>
+    </div>
+</div>

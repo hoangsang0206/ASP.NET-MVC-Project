@@ -23,7 +23,7 @@ namespace STech_Web.Areas.Admin.Controllers
             List<Customer> customer = db.Customers.ToList();
             List<Order> orders = db.Orders.ToList();
 
-            decimal total = orders.Sum(t => t.TotalPaymentAmout);
+            decimal total = orders.Where(t => t.Status != "Chờ thanh toán").Sum(t => t.TotalPaymentAmout);
             double millions = Convert.ToDouble(total) / 1000000;
             
             ViewBag.productCount = products.Count;
@@ -69,7 +69,7 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
             }
 
-            decimal totalRevenue = orders.Sum(t => t.TotalPaymentAmout);
+            decimal totalRevenue = orders.Where(t => t.Status != "Chờ thanh toán").Sum(t => t.TotalPaymentAmout);
             int totalProductSold = 0;
             if(orders.Count > 0)
             {
