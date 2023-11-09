@@ -24,16 +24,21 @@
             <div class="orders-action-notice"></div>
         </div>
         <div class="orders-page-content mt-3">
-            <div class="orders-search-wrapper d-flex flex-wrap align-items-center justify-content-between">
+            <div class="orders-search-wrapper d-flex flex-wrap align-items-center justify-content-between gap-2">
                 <form action="#" method="post" class="search-orders d-flex">
                     <div class="search-by">
                         <div class="dropdown-search position-relative">
-                            <div class="dropdown-search-main d-flex align-items-center">
-                                <span class="dropdown-search-selected">Tìm kiếm theo</span>
+                            <div class="dropdown-search-main d-flex align-items-center justify-content-between">
+                                <span class="dropdown-search-selected" data-search="order-id">Mã đơn hàng</span>
+                                <i class="fa-solid fa-chevron-down ms-2"></i>
                             </div>
-                            <div class="dropdown-search-list d-none">
+                            <div class="dropdown-search-list">
                                 <ul>
-                                    <li></li>
+                                    <li class="order-search-value" data-search-select="order-id">Mã đơn hàng</li>
+                                    <li class="order-search-value" data-search-select="customer-phone">SĐT khách hàng</li>
+                                    <li class="order-search-value" data-search-select="customer-name">Tên khách hàng</li>
+                                    <li class="order-search-value" data-search-select="order-date">Ngày/tháng/năm</li>
+                                    <li class="order-search-value" data-search-select="order-month">Tháng/năm</li>
                                 </ul>
                             </div>
                         </div>
@@ -43,8 +48,23 @@
                         <i class='bx bx-search'></i>
                     </button>
                 </form>
-
+                <button class="page-btn get-all-order">Tất cả đơn hàng</button>
             </div>
+
+            <div class="order-list">
+                <table class="table">
+                    <tr>
+                        <th>Mã ĐH</th>
+                        <th>Tên khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>H.thức thanh toán</th>
+                        <th>Trạng thái thanh toán</th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+
         </div>
     </div>
 </section>

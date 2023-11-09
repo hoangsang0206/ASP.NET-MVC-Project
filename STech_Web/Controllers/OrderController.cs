@@ -672,7 +672,7 @@ namespace STech_Web.Controllers
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
@@ -719,7 +719,7 @@ namespace STech_Web.Controllers
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();

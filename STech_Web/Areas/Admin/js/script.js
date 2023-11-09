@@ -569,7 +569,7 @@ $('.search-products').submit((e) => {
 })
 
 //Get all product -------------------
-$('.get-all-poduct').click(() => {
+$('.get-all-product').click(() => {
     $('.loading').css('display', 'grid');
     $('#search').val('');
     $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
@@ -1134,4 +1134,115 @@ $('.delete-product-in-cate-confirm .confirm-delete').click(() => {
 
     $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
     $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
+})
+
+//----Orders page --------------------------------------------------------
+$('.dropdown-search-main').click(() => {
+    $('.dropdown-search-list').toggleClass('show');
+})
+
+$('.order-search-value').click((e) => {
+    var text = $(e.target).text();
+    var value = $(e.target).data('search-select');
+
+    $('.dropdown-search-selected').text(text);
+    $('.dropdown-search-selected').data('search', value);
+    $('.dropdown-search-list').removeClass('show');
+})
+
+//--Search orders
+$('.search-orders').submit((e) => {
+    e.preventDefault();
+    var searchType = $('.dropdown-search-selected').data('search');
+    var searchVal = $('#search-orders').val();
+    if (searchType.length > 0 && searchVal.length > 0) {
+        $('.loading').css('display', 'grid');
+        $('.order-list table tbody').empty();
+        $.ajax({
+            type: 'get',
+            url: '/api/orders',
+            data: {
+                searchType: searchType,
+                searchValue: searchVal
+            },
+            success: (res) => {
+                hideLoading();
+                let options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+                if (res.length > 0) {
+                    $('.order-list table tbody').append(`<tr> <th>Mã ĐH</th><th>Tên khách hàng</th>
+                        <th>Ngày đặt</th><th>Tổng tiền</th><th>H.thức thanh toán</th>
+                        <th>Trạng thái thanh toán</th><th></th></tr>`);
+                    for (var i = 0; i < res.length; i++) {
+                        var date = new Date(res[i].OrderDate);
+                        var dateFormat = date.toLocaleString('en-GB', options);
+
+                        var statusClass = "order-success";
+                        if (res[i].Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
+                        else if (res[i].Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+
+                        var str = `<tr>
+                            <td><div class="order-id">${res[i].OrderID}</div></td>
+                            <td><div class="cus-name">${res[i].CustomerName}</div></td>
+                            <td><div class="order-date">${dateFormat}</div></td>
+                            <td><div class="total-payment">${res[i].TotalPaymentAmout.toLocaleString('vi-VN') + 'đ'}</div></td>
+                            <td><div class="order-payment">${res[i].PaymentMethod}</div></td>
+                            <td><div class="order-status ${statusClass}">${res[i].Status}</div></td>
+                            <td><div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
+                                <button class="order-btn order-detail">Chi tiết</button>
+                                <button class="order-btn delete-order">Xóa</button>
+                            </div></td>
+                        </tr>`;
+
+                        $('.order-list table tbody').append(str);
+                    }
+                }
+            },
+            error: (err) => { console.log(err) }
+        })
+    }
+})
+
+//---Get all orders -----
+$('.get-all-order').click(() => {
+    $('.loading').css('display', 'grid');
+    $('.order-list table tbody').empty();
+    $.ajax({
+        type: 'get',
+        url: '/api/orders',
+        success: (res) => {
+            hideLoading();
+            let options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+            if (res.length > 0) {
+                $('.order-list table tbody').append(`<tr> <th>Mã ĐH</th><th>Tên khách hàng</th>
+                        <th>Ngày đặt</th><th>Tổng tiền</th><th>H.thức thanh toán</th>
+                        <th>Trạng thái thanh toán</th><th></th></tr>`);
+                for (var i = 0; i < res.length; i++) {
+                    var date = new Date(res[i].OrderDate);
+                    var dateFormat = date.toLocaleString('en-GB', options);
+
+                    var statusClass = "order-success";
+                    if (res[i].Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
+                    else if (res[i].Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+
+                    var str = `<tr>
+                            <td><div class="order-id">${res[i].OrderID}</div></td>
+                            <td><div class="cus-name">${res[i].CustomerName}</div></td>
+                            <td><div class="order-date">${dateFormat}</div></td>
+                            <td><div class="total-payment">${res[i].TotalPaymentAmout.toLocaleString('vi-VN') + 'đ'}</div></td>
+                            <td><div class="order-payment">${res[i].PaymentMethod}</div></td>
+                            <td><div class="order-status ${statusClass}">${res[i].Status}</div></td>
+                            <td><div class="order-button-box d-flex flex-wrap justify-content-end gap-2">
+                                <button class="order-btn order-detail">Chi tiết</button>
+                                <button class="order-btn delete-order">Xóa</button>
+                            </div></td>
+                        </tr>`;
+
+                    $('.order-list table tbody').append(str);
+                }
+            }
+        },
+        error: (err) => { console.log(err) }
+    })
 })
