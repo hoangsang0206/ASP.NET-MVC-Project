@@ -889,7 +889,7 @@ input[name="category"]:checked ~ .categories-label-box {
     width: 33%;
 }
 
-#search {
+#search, #search-orders {
     width: 85%;
     padding: 0.5rem 1rem;
     outline: none;
@@ -899,7 +899,7 @@ input[name="category"]:checked ~ .categories-label-box {
     border-bottom-left-radius: 0.3rem;
 }
 
-.submit-search {
+.submit-search, .submit-orders-search {
     width: 15%;
     background: var(--primary-color);
     border: 1px solid var(--primary-color);
@@ -908,7 +908,7 @@ input[name="category"]:checked ~ .categories-label-box {
     border-bottom-right-radius: 0.3rem;
 }
 
-.submit-search i {
+.submit-search i, .submit-orders-search i {
     display: grid;
     place-items: center;
     font-size: 1.5rem;
@@ -1213,6 +1213,35 @@ input[name="category"]:checked ~ .categories-label-box {
     padding: 0.6rem 1rem;
     width: 10rem;
 }
+
+/*---------Orders page ---------------------------------*/
+.orders-page-content {
+    border-radius: 0.3rem;
+    background: #ffffff;
+    padding: 1rem 1.5rem;
+}
+
+.search-orders {
+    width: 50%;
+}
+
+.dropdown-search {
+    height: 100%;
+}
+
+.dropdown-search-main {
+    height: 100%;
+    background: #000000;
+    color: #ffffff;
+    padding: 0 0.9rem;
+    border-bottom-left-radius: 0.3rem;
+    border-top-left-radius: 0.3rem;
+}
+
+.dropdown-search-main span {
+    font-size: 0.87rem;
+    white-space: nowrap;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
@@ -1331,12 +1360,12 @@ input[name="category"]:checked ~ .categories-label-box {
     }
 
     /* -------------- Products page ---------------------*/
-    .search-products {
+    .search-products, .search-orders {
         width: 100%;
         white-space: nowrap;
     }
 
-    #search, .submit-search, .get-all-poduct {
+    #search, #search-orders, .submit-search, .get-all-poduct {
         white-space: nowrap;
     }
 

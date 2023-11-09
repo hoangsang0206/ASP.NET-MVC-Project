@@ -98,6 +98,10 @@ $('.dashboard-products').click(() => {
     window.location.href = '/admin/products';
 })
 
+$('.dashboard-orders').click(() => {
+    window.location.href = '/admin/orders';
+})
+
 //--AJAX get list category --------------------
 function reloadCategories() {
     $('.loading').css('display', 'grid');

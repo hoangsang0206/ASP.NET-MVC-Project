@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+}
+
+<section class="orders-page">
+    <h2 class="title">Quản lý đơn hàng</h2>
+    <div class="breadcrumb">
+        <ul class="breadcrumb-list d-flex">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                Quản lý đơn hàng
+            </li>
+        </ul>
+    </div>
+    <div class="orders-page-main mb-4">
+        <div class="action-box orders-action d-flex flex-wrap">
+            <button class="add-order-btn">
+                <i class="fa-regular fa-square-plus action-btn-icon"></i>
+                Thêm
+            </button>
+            <div class="orders-action-notice"></div>
+        </div>
+        <div class="orders-page-content mt-3">
+            <div class="orders-search-wrapper d-flex flex-wrap align-items-center justify-content-between">
+                <form action="#" method="post" class="search-orders d-flex">
+                    <div class="search-by">
+                        <div class="dropdown-search position-relative">
+                            <div class="dropdown-search-main d-flex align-items-center">
+                                <span class="dropdown-search-selected">Tìm kiếm theo</span>
+                            </div>
+                            <div class="dropdown-search-list d-none">
+                                <ul>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="search-orders" name="search-orders" placeholder="Tìm kiếm" required autocomplete="off" />
+                    <button type="submit" class="submit-orders-search">
+                        <i class='bx bx-search'></i>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
