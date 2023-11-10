@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using Google.Cloud.Storage.V1;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.Owin.Security.Provider;
 
 namespace STech_Web.Controllers
 {
@@ -295,12 +296,12 @@ namespace STech_Web.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(imageFile.FileName))
+                if (imageFile == null || imageFile.ContentLength <= 0)
                 {
-                    return Json(new { success = false, error = "File không được để trống." });
+                    return Json(new { success = false, error = "Hình ảnh không được để trống." });
                 }
 
-                if (imageFile.ContentLength > 512000000)
+                if (imageFile.ContentLength > 5120000)
                 {
                     return Json(new { success = false, error = "Kích thước hình không lớn hơn 5MB." });
                 }
@@ -318,22 +319,44 @@ namespace STech_Web.Controllers
                 var userManager = new AppUserManager(userStore);
                 var user = userManager.FindById(userID);
 
-                var fileName = user.UserName + imageFile.FileName + fileEx;
-                imageFile.SaveAs(fileName);
-
+                var fileName = user.UserName + '-' + randomString(30);
+                
                 //Upload hình ảnh lên Google Cloud Storage
-                string projectID = "magnetic-music-400416";
                 string bucketName = "stech-product-images";
-                string keyPath = Server.MapPath("/GoogleCloud/magnetic-music-400416-46124f59dd7b.json");
+                string keyPath = Server.MapPath("/GoogleCloud/magnetic-music-400416-1df1c9c33391.json");
 
                 var credential = GoogleCredential.FromFile(keyPath);
                 var storage = StorageClient.Create(credential);
 
-                using (var memoryStream  = new MemoryStream())
+                var objectName = Path.Combine("user-images/", fileName);
+                storage.UploadObject(bucketName, objectName, "image/" + fileEx, imageFile.InputStream);
+
+                if(storage.GetObject(bucketName, objectName) != null)
                 {
-                    imageFile.InputStream.CopyToAsync(memoryStream);
-                    var objectName = Path.Combine("/user-images/", imageFile.FileName);
-                    storage.UploadObject(bucketName, objectName, null, memoryStream);
+                    //Xóa hình ảnh khỏi Google Cloud Storage nếu user đã upload ảnh trước đó
+                    if (!string.IsNullOrEmpty(user.ImgSrc))
+                    {
+                        try
+                        {
+                            Uri uri = new Uri(user.ImgSrc);
+                            string oldFileName = uri.Segments[uri.Segments.Length - 1];
+                            storage.DeleteObject(bucketName, "user-images/" + oldFileName);
+                        }
+                        catch (Google.GoogleApiException ex) { 
+                            //Xóa đường dẫn ảnh trong cơ sở dữ liệu nếu không tìm thấy ảnh này trên Cloud
+                            if(ex.Error.Code == 404)
+                            {
+                                user.ImgSrc = null;
+                            }
+                        }
+                            
+                    }
+
+                    //Gán đường dẫn hình ảnh đó cho user
+                    var imgSrc = "https://storage.googleapis.com/stech-product-images/user-images/" + fileName;
+                    user.ImgSrc = imgSrc;
+
+                    userManager.Update(user);
                 }
 
                 return Json(new { success = true });
@@ -341,9 +364,25 @@ namespace STech_Web.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, error = "Đã xãy ra lỗi nào đó." });
+                return Json(new { success = false, error = "Đã xãy ra lỗi trong quá trình tải lên." });
             }
-           
+        }
+
+        //Tạo ngẫu nhiên chuỗi
+        private string randomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            char[] randomChars = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                randomChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            string uniqueFileName = new string(randomChars);
+
+            return uniqueFileName;
         }
     }
 }

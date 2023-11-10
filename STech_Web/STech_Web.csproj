@@ -233,6 +233,7 @@
     <Content Include="images\logo\stech-logo-mobile.png" />
     <Content Include="images\logo\stech-logo.png" />
     <Content Include="images\no-image.jpg" />
+    <Content Include="images\no-user-image-icon.png" />
     <Content Include="images\payment\cash-payment.png" />
     <Content Include="images\payment\internet-banking.jpg" />
     <Content Include="images\payment\mastercard.png" />
@@ -264,6 +265,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
+    <Content Include="GoogleCloud\magnetic-music-400416-1df1c9c33391.json" />
     <None Include="Properties\PublishProfiles\lehoangsang - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
@@ -325,6 +327,10 @@
     <Compile Include="IdentityMigration\202311071558464_init2.cs" />
     <Compile Include="IdentityMigration\202311071558464_init2.designer.cs">
       <DependentUpon>202311071558464_init2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IdentityMigration\202311100549377_init3.cs" />
+    <Compile Include="IdentityMigration\202311100549377_init3.designer.cs">
+      <DependentUpon>202311100549377_init3.cs</DependentUpon>
     </Compile>
     <Compile Include="IdentityMigration\Configuration.cs" />
     <Compile Include="Identity\AppDBContext.cs" />
@@ -457,6 +463,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IdentityMigration\202311071558464_init2.resx">
       <DependentUpon>202311071558464_init2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IdentityMigration\202311100549377_init3.resx">
+      <DependentUpon>202311100549377_init3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

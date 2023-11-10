@@ -223,6 +223,18 @@ $('.change-password-form').submit((e) => {
     })
 })
 
+//--Upload user image ----------
+$('.upload-img-btn').click(() => {
+    $('.upload-user-image').addClass('show');
+    $('.upload-form-box').addClass('show');
+
+})
+
+$('.close-upload-frm').click(() => {
+    $('.upload-user-image').removeClass('show');
+    $('.upload-form-box').removeClass('show');
+})
+
 //-----------------------------------------------
 function setParentHeight() {
     var childHeight = $('.account-right-box.current').outerHeight(true);

@@ -8,8 +8,29 @@
 {
     <section class="account-wrapper d-flex">
         <div class="account-left-side">
-            <div class="account-name d-flex align-items-center">
-                <ion-icon name="person-circle-outline"></ion-icon>
+            <div class="account-name d-flex align-items-center gap-3">
+                @if (string.IsNullOrEmpty(Model.ImgSrc))
+                {
+                    <div class="user-image-box position-relative">
+                        <div class="user-image">
+                            <img src="/images/no-user-image-icon.png" alt="" class="user-img" />
+                        </div>
+                        <button class="upload-img-btn position-absolute">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="user-image-box position-relative">
+                        <div class="user-image">
+                            <img src="@Model.ImgSrc" alt="" class="user-img" />
+                        </div>
+                        <button class="upload-img-btn position-absolute">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                }
                 <span>@User.Identity.Name</span>
             </div>  
             <hr />
@@ -20,11 +41,6 @@
                             <i class="fa-solid fa-user account-list-icon"></i>
                             <span>Thông tin tài khoản</span>
                         </a>
-                        @using (Html.BeginForm("Account", "UploadImage", FormMethod.Post, new { id = "upload-user-img"}))
-                        {
-                            <input type="file" name="imageFile" id="imageFile" />
-                            <button type="submit">Upload</button>
-                        } 
                     </li>
                     <li class="account-nav-list-item" id="orders-nav">
                         <a href="#orders">
@@ -230,4 +246,21 @@
         </div>
        
     </section>
+
+    <div class="upload-user-image position-fixed">
+        <div class="upload-form-box position-relative">
+            <div class="close-upload-frm">
+                <i class='bx bx-x'></i>
+            </div>
+            <h5 class="mb-4">Tải hình ảnh hồ sơ</h5>
+            @using (Html.BeginForm("UploadImage", "Account", FormMethod.Post, new { enctype = "multipart/form-data", id = "upload-user-img" }))
+            {
+                <input type="file" id="imageFile" name="imageFile" required />
+                <button type="submit">Upload</button>
+            }
+            <div class="upload-frm-error">
+                
+            </div>
+        </div>
+    </div>
 }

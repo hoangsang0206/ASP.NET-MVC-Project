@@ -16,5 +16,6 @@ namespace STech_Web.Identity
         public DateTime? DOB { get; set; }
         public string Address { get; set; }
         public DateTime? DateCreate { get; set; }
+        public string ImgSrc { get; set; }
     }
 }
