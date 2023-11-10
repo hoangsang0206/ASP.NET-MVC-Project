@@ -13,7 +13,8 @@ using Microsoft.Owin.Security;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Web.DynamicData;
+using Google.Cloud.Storage.V1;
+using Google.Apis.Auth.OAuth2;
 
 namespace STech_Web.Controllers
 {
@@ -292,33 +293,57 @@ namespace STech_Web.Controllers
         [HttpPost, UserAuthorization]
         public ActionResult UploadImage(HttpPostedFileBase imageFile)
         {
-            if(string.IsNullOrEmpty(imageFile.FileName))
+            try
             {
-                return Json(new { success = false, error = "File không được để trống." });
-            }
+                if (string.IsNullOrEmpty(imageFile.FileName))
+                {
+                    return Json(new { success = false, error = "File không được để trống." });
+                }
 
-            if(imageFile.ContentLength > 512000000)
+                if (imageFile.ContentLength > 512000000)
+                {
+                    return Json(new { success = false, error = "Kích thước hình không lớn hơn 5MB." });
+                }
+
+                var allowExtensions = new[] { ".jpg", ".png", ".jpeg", ".webp" };
+                var fileEx = Path.GetExtension(imageFile.FileName).ToLower();
+                if (!allowExtensions.Contains(fileEx))
+                {
+                    return Json(new { success = false, error = "Chỉ chấp nhận file .jpg, .jpeg, .png, .webp." });
+                }
+
+                string userID = User.Identity.GetUserId();
+                var appDbContext = new AppDBContext();
+                var userStore = new AppUserStore(appDbContext);
+                var userManager = new AppUserManager(userStore);
+                var user = userManager.FindById(userID);
+
+                var fileName = user.UserName + imageFile.FileName + fileEx;
+                imageFile.SaveAs(fileName);
+
+                //Upload hình ảnh lên Google Cloud Storage
+                string projectID = "magnetic-music-400416";
+                string bucketName = "stech-product-images";
+                string keyPath = Server.MapPath("/GoogleCloud/magnetic-music-400416-46124f59dd7b.json");
+
+                var credential = GoogleCredential.FromFile(keyPath);
+                var storage = StorageClient.Create(credential);
+
+                using (var memoryStream  = new MemoryStream())
+                {
+                    imageFile.InputStream.CopyToAsync(memoryStream);
+                    var objectName = Path.Combine("/user-images/", imageFile.FileName);
+                    storage.UploadObject(bucketName, objectName, null, memoryStream);
+                }
+
+                return Json(new { success = true });
+
+            }
+            catch (Exception ex)
             {
-                return Json(new { success = false, error = "Kích thước hình không lớn hơn 5MB." });
+                return Json(new { success = false, error = "Đã xãy ra lỗi nào đó." });
             }
-
-            var allowExtensions = new[] { ".jpg", ".png", ".jpeg", ".webp" };
-            var fileEx = Path.GetExtension(imageFile.FileName).ToLower();
-            if(!allowExtensions.Contains(fileEx))
-            {
-                return Json(new { success = false, error = "Chỉ chấp nhận file .jpg, .jpeg, .png, .webp." });
-            }
-
-            string userID = User.Identity.GetUserId();
-            var appDbContext = new AppDBContext();
-            var userStore = new AppUserStore(appDbContext);
-            var userManager = new AppUserManager(userStore);
-            var user = userManager.FindById(userID);
-
-            var fileName = user.UserName + imageFile.FileName + fileEx;
-            imageFile.SaveAs(fileName);
-
-            return View();
+           
         }
     }
 }

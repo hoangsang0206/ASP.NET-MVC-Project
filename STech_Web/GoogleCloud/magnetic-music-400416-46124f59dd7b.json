@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "magnetic-music-400416",
+  "private_key_id": "46124f59dd7b9c51a70f2c7c53c9d4c0f0b592aa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCcqorfvOb43Bzi\nCNQj9ioqpCy2XQyrzKhuSxRV6sMNvUBF2P6MwuAPROOYlK18s1G/1/hKwUBi7RB7\n/d8O9yTtSCmj3644SvaL8YQlokFPyHQmnWEKipaq85AB3YeBERE+P0C5cSl8jExm\ntXuudLJqZxu1AebJWrWShdtVVId+icuyiOpSXA0iWQuAlNXtJYO2ILMwmZBkzTAO\n1vXBD+Ne2P1QcxzroEi7KEP9om2gmGYRdF3b2LhaLXUinEScERkH/2uRe6L5mWEF\nLRmXWpAKu0cFTJaRDNQPWYqkczBG/fqI0BN2xnWddBoUxRBlGL9YkuEpmSsqalEy\nwfZU7V3LAgMBAAECggEAAfYeo/t09tOmpuvOYB7iW0NP7f6PPI1k5HCbMhIs2/yt\nE9LKKQ/9hyNpKA1geKm0Ec9N4/20ZSirpqnAg6rzcucO4mbYAwtpN8pPybrUz39m\neN9Kiju+9Cf1exh/bE2+5gUbtdalWtJU2IpYIJCEdVGSJrt93LJ+iHWVj+VthteE\nx5g8kh9+vPACbGJM4GSHcH96CL4LAeN4jJP6Q9dqjhGXHrf2Pv6jH0ss4IV4iT3c\nV1xNGIMkeNVyapD6Kdpdd6lDu75nJ+kms8twnqCsZ0SjCyGmPLOGJYkzcWcEt9Ou\nkZLWzTCAS7TMuHy3an/WNNI3tb6IArnjv/va1vo0KQKBgQDVM35ZLN6Aj1LTLZZw\nas8E7M7x0FwYcTTZQG4is5dUWxLChXTnttaMxMEvU1NjoTUHqnlJ2VWcRJ3/TwF0\nK3GBdS1laM04jRdHmQCUKCvO/5ZNRhxvl57IvH/RxCPAVW4/ok634co1bjDgl2Nt\nm4PRbjwoa8mLvrRcfqHttydzqQKBgQC8HbDQXwjnE6YqeSUA+7y6rtM6NaCbsoyA\nmYQsf5uxByk7egCPE8B+XPWdGyVeVCEypw2n9VVn6KgvxwB0w3OnyiD+gx7EzrGl\nD8atqW+kM4lYC2nCFl1mQR0fLnrEs4DxQ/rEQC589frcvB0uV58BXc3l1opHMvT9\nAt+o4hauUwKBgQCijzq9X9rfh2iNoGremHH0vWMlOcuez2KOa/QN/YVbSn3JV9zF\neMGqX7M1FIG2q4o1qCQGzPHbzu3xZxoiq6VGIkRU2E3x2pJvgxfP37lXgcXmcZjo\n9WCaii+jj7v6wKjpWCZRSpXVm4klFgk336Xon/a6k0T/io8XH270Q/yO0QKBgQCA\nNVQej8bHhrLHW82GgAu+yAwaLhaKRwRPWVGl6kq4OoM1kA71dKbK+JxFOQ0c3wXJ\nOeWqxSAyM3T9Kwn6ioM2piIalE7SH3UfZEMqdMIsDRvcL9sido+tc09fwxPVH+oP\nhR9RxdRpQlR5QJQ602kBS2da7/9KS0aBcgXxWjXPFQKBgA7Cc2+t0cXkHELfl98l\n4o2dzpifthT9o9gy75f+jk6GWRSmxDYcpIMDWGUmD8H9q4V67NpXX5MCkxS/qF0+\nqTDtnYtNGSMPwqyaYVxGEjEyM1J6Zs9TszSCjjZT8WG5DXA/1Uh0PYkIMHaQqUB9\ndGe5rlbRZm1UqPH20mqz5uh8\n-----END PRIVATE KEY-----\n",
+  "client_email": "lhsang-service-ggcloud@magnetic-music-400416.iam.gserviceaccount.com",
+  "client_id": "101396232099216014571",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/lhsang-service-ggcloud%40magnetic-music-400416.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

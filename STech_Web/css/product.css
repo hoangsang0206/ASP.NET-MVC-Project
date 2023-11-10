@@ -103,7 +103,7 @@
     z-index: 1;
 }
 
-.buy-action-btn::after {
+/*.buy-action-btn::after {
     content: '\f217';
     font-family: "FontAwesome";
     font-size: 1.8rem;
@@ -119,15 +119,15 @@
     display: grid;
     place-items: center;
     transition: var(--trans-all-03);
-}
+}*/
 
 .buy-action-btn:not(:disabled):hover {
     outline: 2px solid var(--primary-color-hover);
 }
 
-.buy-action-btn:not(:disabled):hover::after {
+/*.buy-action-btn:not(:disabled):hover::after {
     opacity: 1;
-}
+}*/
 
 .buy-action-btn:disabled {
     padding: 0.9rem 5rem;

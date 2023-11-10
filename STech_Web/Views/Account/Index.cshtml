@@ -20,6 +20,11 @@
                             <i class="fa-solid fa-user account-list-icon"></i>
                             <span>Thông tin tài khoản</span>
                         </a>
+                        @using (Html.BeginForm("Account", "UploadImage", FormMethod.Post, new { id = "upload-user-img"}))
+                        {
+                            <input type="file" name="imageFile" id="imageFile" />
+                            <button type="submit">Upload</button>
+                        } 
                     </li>
                     <li class="account-nav-list-item" id="orders-nav">
                         <a href="#orders">
@@ -48,7 +53,7 @@
                 <div class="account-info-wrapper">
                     <form action="#" method="post" class="user-update-form">
                         @{
-                            
+
                         }
                         <div class="user-form-box d-flex align-items-center">
                             <div class="user-input-label text-end">
