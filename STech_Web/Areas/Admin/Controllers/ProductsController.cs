@@ -118,89 +118,99 @@ namespace STech_Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddProduct(Product product, int quantity, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
         {
-            string checkValue = checkValidValue(product, quantity);
-            if(checkValue != null)
+            if(ModelState.IsValid)
             {
-                return Json(new { success = false, error = checkValue });
+                string checkValue = checkValidValue(product, quantity);
+                if (checkValue != null)
+                {
+                    return Json(new { success = false, error = checkValue });
+                }
+
+                //--------------
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Product> products = db.Products.ToList();
+                //Kiểm tra xem sản phẩm đã tồn tại chưa
+                Product pro = products.FirstOrDefault(t => t.ProductID == product.ProductID);
+                if (pro != null)
+                {
+                    return Json(new { success = false, error = "Sản phẩm này đã tồn tại." });
+                }
+
+                //---
+                if (product.Price == null)
+                {
+                    product.Price = product.Cost;
+                }
+                //---
+                db.Products.Add(product);
+
+                //---
+                WareHouse wh = new WareHouse();
+                wh.ProductID = product.ProductID;
+                wh.Quantity = quantity;
+                db.WareHouses.Add(wh);
+
+                //---
+                ProductImgDetail imgDetail = new ProductImgDetail();
+                updateProductImages(db, imgDetail, product.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
+                //---
+                db.SaveChanges();
+                //---
+                return Json(new { success = true });
             }
 
-            //--------------
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.ToList();
-            //Kiểm tra xem sản phẩm đã tồn tại chưa
-            Product pro = products.FirstOrDefault(t => t.ProductID == product.ProductID);
-            if(pro != null)
-            {
-                return Json(new { success = false, error = "Sản phẩm này đã tồn tại." });
-            }
-
-            //---
-            if (product.Price == null)
-            {
-                product.Price = product.Cost;
-            }
-            //---
-            db.Products.Add(product);
-
-            //---
-            WareHouse wh = new WareHouse();
-            wh.ProductID = product.ProductID;
-            wh.Quantity = quantity;
-            db.WareHouses.Add(wh);
-
-            //---
-            ProductImgDetail imgDetail = new ProductImgDetail();
-            updateProductImages(db, imgDetail, product.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
-            //---
-            db.SaveChanges();
-            //---
-            return Json(new { success = true });
+            return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
         }
 
         //Update product
         [HttpPost]
         public ActionResult UpdateProduct(Product product, int quantity, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
         {
-            string checkValue = checkValidValue(product, quantity);
-            if(checkValue != null)
+            if(ModelState.IsValid)
             {
-                return Json(new { success = false, error = checkValue });
+                string checkValue = checkValidValue(product, quantity);
+                if (checkValue != null)
+                {
+                    return Json(new { success = false, error = checkValue });
+                }
+
+                //--------------
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Product> products = db.Products.ToList();
+                //Kiểm tra xem sản phẩm có tồn tại không
+                Product pro = products.FirstOrDefault(t => t.ProductID == product.ProductID);
+                if (pro == null)
+                {
+                    return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
+                }
+
+                //------------
+                if (product.Price == null)
+                {
+                    product.Price = product.Cost;
+                }
+                pro.ProductName = product.ProductName;
+                pro.ImgSrc = product.ImgSrc;
+                pro.Cost = product.Cost;
+                pro.Price = product.Price;
+                pro.CateID = product.CateID;
+                pro.BrandID = product.BrandID;
+                pro.Warranty = product.Warranty;
+
+                //--------------
+                WareHouse wh = pro.WareHouse;
+                wh.Quantity = quantity;
+
+                //--------------
+                ProductImgDetail imgDetail = pro.ProductImgDetail;
+                updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
+
+                //----------
+                db.SaveChanges();
+                return Json(new { success = true });
             }
 
-            //--------------
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.ToList();
-            //Kiểm tra xem sản phẩm có tồn tại không
-            Product pro = products.FirstOrDefault(t => t.ProductID == product.ProductID);
-            if (pro == null)
-            {
-                return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
-            }
-
-            //------------
-            if (product.Price == null)
-            {
-                product.Price = product.Cost;
-            }
-            pro.ProductName = product.ProductName;
-            pro.ImgSrc = product.ImgSrc;
-            pro.Cost = product.Cost;
-            pro.Price = product.Price;
-            pro.CateID = product.CateID;
-            pro.BrandID = product.BrandID;
-            pro.Warranty = product.Warranty;
-
-            //--------------
-            WareHouse wh = pro.WareHouse;
-            wh.Quantity = quantity;
-
-            //--------------
-            ProductImgDetail imgDetail = pro.ProductImgDetail;
-            updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
-
-            //----------
-            db.SaveChanges();
-            return Json(new { success = true });
+            return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
         }
 
         //--Add product to backup table

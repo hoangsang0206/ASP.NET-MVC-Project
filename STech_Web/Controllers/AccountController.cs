@@ -12,8 +12,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
-using System.Web.Security;
-using System.Web.Management;
+using System.IO;
+using System.Web.DynamicData;
 
 namespace STech_Web.Controllers
 {
@@ -152,7 +152,7 @@ namespace STech_Web.Controllers
                     return Json(new { success = true, redirectUrl = "/admin/dashboard" });
                 }
 
-                return Json(new { success = true, redirectUrl = "/account" });
+                return Json(new { success = true, redirectUrl = "" });
             }
             else
             {
@@ -244,7 +244,8 @@ namespace STech_Web.Controllers
 
             return Json(new { success = false, error = "Không thể cập nhật." });
         }
-
+        
+        //Đổi mật khẩu
         [HttpPost, UserAuthorization]
         public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword)
         {
@@ -285,6 +286,39 @@ namespace STech_Web.Controllers
             }
             
             return Json(new { success = false, error = "Không thể đổi mật khẩu" });
+        }
+
+        //Upload hình ảnh
+        [HttpPost, UserAuthorization]
+        public ActionResult UploadImage(HttpPostedFileBase imageFile)
+        {
+            if(string.IsNullOrEmpty(imageFile.FileName))
+            {
+                return Json(new { success = false, error = "File không được để trống." });
+            }
+
+            if(imageFile.ContentLength > 512000000)
+            {
+                return Json(new { success = false, error = "Kích thước hình không lớn hơn 5MB." });
+            }
+
+            var allowExtensions = new[] { ".jpg", ".png", ".jpeg", ".webp" };
+            var fileEx = Path.GetExtension(imageFile.FileName).ToLower();
+            if(!allowExtensions.Contains(fileEx))
+            {
+                return Json(new { success = false, error = "Chỉ chấp nhận file .jpg, .jpeg, .png, .webp." });
+            }
+
+            string userID = User.Identity.GetUserId();
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var user = userManager.FindById(userID);
+
+            var fileName = user.UserName + imageFile.FileName + fileEx;
+            imageFile.SaveAs(fileName);
+
+            return View();
         }
     }
 }

@@ -1351,7 +1351,7 @@ footer {
     height: 100%;
     top: 0;
     bottom: 0;
-    z-index: 100;
+    z-index: 19;
     display: none;
     place-items: center;
 }

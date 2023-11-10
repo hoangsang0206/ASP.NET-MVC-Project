@@ -94,6 +94,8 @@ $('.login-form').submit((e) => {
                 $('.login .form-error').hide();
                 $('.login .form-error').empty();
                 $('.login-form').unbind('submit').submit();
+
+                window.location.href = response.redirectUrl;
             }
             else {
                 var str = `<span>

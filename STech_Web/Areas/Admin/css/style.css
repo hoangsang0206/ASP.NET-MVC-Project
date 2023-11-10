@@ -1392,6 +1392,30 @@ input[name="category"]:checked ~ .categories-label-box {
     color: #ff6a00;
 }
 
+.order-infomation-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #00000075;
+    display: grid;
+    visibility: hidden;
+    place-items: center;
+    z-index: 55;
+}
+
+.order-infomation-box {
+    position: relative;
+    background: var(--sidebar-color);
+    width: 33%;
+    padding: 1.5rem 2rem;
+    border-radius: 0.3rem;
+    cursor: auto;
+    transform: scale(0);
+    opacity: 0;
+    transition: var(--tran-03);
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {

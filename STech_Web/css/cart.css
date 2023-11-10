@@ -334,6 +334,10 @@ input[name="quantity"] {
     padding: 0.3rem 0;
 }
 
+.payment-method-box input, .payment-method-box label {
+    cursor: pointer;
+}
+
 .payment-method-box label span {
     font-size: 1rem;
 }

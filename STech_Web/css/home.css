@@ -392,14 +392,14 @@
     align-items: center;
 }
 
-    .section-header-box::after {
-        content: '';
-        background-color: #000000;
-        height: 3px;
-        width: 100%;
-        position: absolute;
-        bottom: -0.2rem;
-    }
+.section-header-box::after {
+    content: '';
+    background-color: #000000;
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: -0.2rem;
+}
 
 .section-title a {
     text-decoration: none;
@@ -409,9 +409,9 @@
     transition: all .2s linear;
 }
 
-    .section-title a:hover {
-        color: var(--primary-color);
-    }
+.section-title a:hover {
+    color: var(--primary-color);
+}
 
 .section-title .fa-circle-check {
     font-size: 1.5rem;
@@ -559,6 +559,7 @@
 
     .section-title a {
         font-size: 1.3rem;
+        padding: 0;
     }
 
     .section-sub-header-box {
