@@ -664,7 +664,6 @@ $(document).ready(() => {
             success: (data) => {
                 if (data.success) {
                     totalSeconds = data.times.TotalSeconds;
-                    console.log(data.times)
                 }
                 else {
                     totalSeconds = 0;

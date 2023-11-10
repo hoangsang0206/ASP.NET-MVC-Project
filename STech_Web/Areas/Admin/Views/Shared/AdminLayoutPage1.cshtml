@@ -29,7 +29,7 @@
 
 <body>
 
-    <nav class="sidebar">
+    <nav class="sidebar d-flex flex-column justify-content-between">
         <header class="position-relative">
             <div class="logo-text d-flex align-items-center">
                 <div class="logo-box">
@@ -43,54 +43,53 @@
 
             <i class='bx bx-chevron-right toggle'></i>
 
+            <div class="menu-bar">
+                <div class="menu">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <a href="/admin/dashboard" class="@( ViewBag.ActiveNav == "dashboard" ? "active" : "" )">
+                                <i class='bx bx-home menu-icon'></i>
+                                <span class="sidebar-text">Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/admin/categories" class="@( ViewBag.ActiveNav == "categories" ? "active" : "" )">
+                                <i class='bx bx-category menu-icon'></i>
+                                <span class="sidebar-text">Danh mục</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/admin/products" class="@( ViewBag.ActiveNav == "products" ? "active" : "" )">
+                                <i class='bx bx-laptop menu-icon'></i>
+                                <span class="sidebar-text">Sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/admin/orders" class="@( ViewBag.ActiveNav == "orders" ? "active" : "" )">
+                                <i class='bx bx-notepad menu-icon'></i>
+                                <span class="sidebar-text">Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="@( ViewBag.ActiveNav == "users" ? "active" : "" )">
+                                <i class='bx bx-user-circle menu-icon'></i>
+                                <span class="sidebar-text">Quản lý tài khoản</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="@( ViewBag.ActiveNav == "others" ? "active" : "" )">
+                                <i class='bx bx-dots-horizontal-rounded menu-icon'></i>
+                                <span class="sidebar-text">Khác</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </header>
 
-        <div class="menu-bar">
-            <div class="menu">
-                <ul class="menu-list">
-                    <li class="menu-item">
-                        <a href="/admin/dashboard" class="@( ViewBag.ActiveNav == "dashboard" ? "active" : "" )">
-                            <i class='bx bx-home menu-icon'></i>
-                            <span class="sidebar-text">Trang chủ</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/admin/categories" class="@( ViewBag.ActiveNav == "categories" ? "active" : "" )">
-                            <i class='bx bx-category menu-icon'></i>
-                            <span class="sidebar-text">Danh mục</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/admin/products" class="@( ViewBag.ActiveNav == "products" ? "active" : "" )">
-                            <i class='bx bx-laptop menu-icon'></i>
-                            <span class="sidebar-text">Sản phẩm</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/admin/orders" class="@( ViewBag.ActiveNav == "orders" ? "active" : "" )">
-                            <i class='bx bx-notepad menu-icon'></i>
-                            <span class="sidebar-text">Đơn hàng</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="#" class="@( ViewBag.ActiveNav == "users" ? "active" : "" )">
-                            <i class='bx bx-user-circle menu-icon'></i>
-                            <span class="sidebar-text">Quản lý tài khoản</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="#" class="@( ViewBag.ActiveNav == "others" ? "active" : "" )">
-                            <i class='bx bx-dots-horizontal-rounded menu-icon'></i>
-                            <span class="sidebar-text">Khác</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <hr />
-
         <div class="bottom-menu">
+            <hr />
             <div>
                 <a href="/">
                     <i class='bx bx-left-arrow-alt menu-icon'></i>

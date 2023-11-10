@@ -2,35 +2,35 @@
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Semibold.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Semibold.woff2') format('woff2');
     font-weight: 600;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Bold.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Bold.woff2') format('woff2');
     font-weight: bold;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Medium.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Medium.woff2') format('woff2');
     font-weight: 500;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Light.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Light.woff2') format('woff2');
     font-weight: 300;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Regular.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Regular.woff2') format('woff2');
     font-weight: normal;
     font-display: swap;
 }
@@ -729,7 +729,7 @@ header {
 }
 
 .logout-confirm-box {
-    width: 30%;
+    width: 30rem;
     background: var(--content-color-white);
     padding: 2rem 2rem 1.5rem 2rem;
     border-radius: 0.3rem;
@@ -1046,7 +1046,9 @@ hidden-menu .megamenu-item:hover .megamenu-content,
         }
 
 .mobile-sidebar {
-    width: 80%;
+    max-width: 90%;
+    min-width: 15rem;
+    width: 22rem;
     height: 100vh;
     background: var(--content-color-white);
     position: fixed;
@@ -1118,7 +1120,10 @@ hidden-menu .megamenu-item:hover .megamenu-content,
 
 .mobile-sidebar .megamenu-link {
     text-transform: uppercase;
-    width: 75%;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .mobile-sidebar .megamenu-icon {
@@ -1738,6 +1743,12 @@ input[name="theme"]:checked ~ .theme-label-box .theme-label::after {
 
     .logout-confirm-box {
         width: 85%;
+        max-width: 20rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .logout-confirm-box span {
+        font-size: 1rem;
     }
 
     .cart-btn {
@@ -1909,7 +1920,7 @@ input[name="theme"]:checked ~ .theme-label-box .theme-label::after {
     }
 
     .login-btn {
-        padding: 0.7rem 1rem;
+        padding: 0.2rem 1rem;
     }
 
     .login-link i {
@@ -1923,7 +1934,7 @@ input[name="theme"]:checked ~ .theme-label-box .theme-label::after {
     }
 
     .mobile-sidebar {
-        width: 65%;
+        width: 27rem;
     }
 
     .slider {
@@ -2010,7 +2021,7 @@ input[name="theme"]:checked ~ .theme-label-box .theme-label::after {
     }
 
     .login-btn {
-        padding: 0.7rem 1rem;
+        padding: 0.2rem 1rem;
     }
 
     .login-link i {

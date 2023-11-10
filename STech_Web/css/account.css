@@ -50,11 +50,13 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    overflow: hidden;
+    overflow: hidden;  
 }
 
 .user-img {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .upload-img-btn {
@@ -64,7 +66,7 @@
     width: 1.5rem;
     height: 1.5rem;
     bottom: 0;
-    right: 0.3rem;
+    right: 0;
     display: grid;
     place-items: center;
 }
@@ -101,8 +103,8 @@
 }
 
 .upload-form-box {
-    width: 20rem;
-    padding: 1.7rem 2.3rem;
+    width: 30rem;
+    padding: 2.5rem 3rem;
     border-radius: 0.2rem;
     background: #ffffff;
     transform: scale(0);
@@ -113,6 +115,96 @@
 .upload-form-box.show {
     transform: scale(1);
     opacity: 1;
+}
+
+.upload-user-img {
+    border: 2px dashed #0652dd;
+    border-radius: 0.3rem;
+    padding: 2.5rem 1.5rem;
+    color: #3990e6;
+    cursor: pointer;
+}
+
+.upload-user-img * {
+    pointer-events: none;
+}
+
+.upload-user-img i {
+    font-size: 2.2rem;
+}
+
+.upload-user-img span {
+    font-size: 1.1rem;
+}
+
+.upload-user-img.img-uploaded {
+    border: none;
+    overflow: hidden;
+    padding: 0;
+    aspect-ratio: 1;
+}
+
+.upload-user-img.img-uploaded img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-frm-notice {
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.8rem;
+    display: none;
+}
+
+.upload-frm-notice i {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.upload-frm-notice.success {
+    background: #75fd5b98;
+}
+
+.upload-frm-notice.success * {
+    color: #10b605;
+}
+
+.upload-frm-notice.failed {
+    background: #fff3cd;
+    color: #000000;
+}
+
+.upload-frm-notice.failed i {
+    color: #e30019;
+}
+
+.upload-progress-bar {
+    border-radius: 0.3rem;
+    background: #E9F0FF;
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    display: none;
+}
+
+.upload-progress-bar i {
+    font-size: 2rem;
+    color: #3990e6;
+}
+
+.progress-bar {
+    width: 90%;
+}
+
+.progress-bar .bar {
+    height: 5px;
+    background: #437ce5;
+    border-radius: 2rem;
+}
+
+.progress-percent {
+    font-size: 0.88rem;
+    color: #3990e6;
+    width: 2.5rem;
 }
 
 .account-nav-list {
@@ -458,6 +550,12 @@
 
     .user-input-label {
         width: 27%;
+    }
+
+    .upload-form-box {
+        max-width: 22rem;
+        width: 90%;
+        padding: 1.8rem;
     }
 
     .order-info-wrapper {

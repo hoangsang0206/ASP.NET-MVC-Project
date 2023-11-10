@@ -266,6 +266,11 @@
     </Content>
     <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
     <Content Include="GoogleCloud\magnetic-music-400416-1df1c9c33391.json" />
+    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Bold.woff2" />
+    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Light.woff2" />
+    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Medium.woff2" />
+    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Regular.woff2" />
+    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Semibold.woff2" />
     <None Include="Properties\PublishProfiles\lehoangsang - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
@@ -286,6 +291,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BrandsController.cs" />
@@ -424,11 +435,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Bold.otf" />
-    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Light.otf" />
-    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Medium.otf" />
-    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Regular.otf" />
-    <Content Include="fonts\SFProDisplay\SF-Pro-Display-Semibold.otf" />
     <None Include="packages.config" />
     <Content Include="Views\Collections\Index.cshtml" />
     <Content Include="Views\Collections\Search.cshtml" />
@@ -447,12 +453,6 @@
     <Content Include="Views\Order\Failed.cshtml" />
     <Content Include="Views\Order\Detail.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="IdentityMigration\202310081805216_init.resx">

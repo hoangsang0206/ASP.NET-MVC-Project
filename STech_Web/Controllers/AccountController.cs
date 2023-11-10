@@ -292,10 +292,16 @@ namespace STech_Web.Controllers
 
         //Upload hình ảnh
         [HttpPost, UserAuthorization]
-        public ActionResult UploadImage(HttpPostedFileBase imageFile)
+        public ActionResult UploadImage()
         {
             try
             {
+                HttpPostedFileBase imageFile = null;
+                if(HttpContext.Request.Files.Count > 0)
+                {
+                    imageFile = HttpContext.Request.Files[0];
+                }
+
                 if (imageFile == null || imageFile.ContentLength <= 0)
                 {
                     return Json(new { success = false, error = "Hình ảnh không được để trống." });
@@ -303,14 +309,14 @@ namespace STech_Web.Controllers
 
                 if (imageFile.ContentLength > 5120000)
                 {
-                    return Json(new { success = false, error = "Kích thước hình không lớn hơn 5MB." });
+                    return Json(new { success = false, error = "Kích thước hình ảnh không lớn hơn 5MB." });
                 }
 
                 var allowExtensions = new[] { ".jpg", ".png", ".jpeg", ".webp" };
                 var fileEx = Path.GetExtension(imageFile.FileName).ToLower();
                 if (!allowExtensions.Contains(fileEx))
                 {
-                    return Json(new { success = false, error = "Chỉ chấp nhận file .jpg, .jpeg, .png, .webp." });
+                    return Json(new { success = false, error = "Vui lòng tải lên hình ảnh dạng .jpg, .jpeg, .png, .webp." });
                 }
 
                 string userID = User.Identity.GetUserId();
@@ -320,6 +326,7 @@ namespace STech_Web.Controllers
                 var user = userManager.FindById(userID);
 
                 var fileName = user.UserName + '-' + randomString(30);
+                string imgSrc = null;
                 
                 //Upload hình ảnh lên Google Cloud Storage
                 string bucketName = "stech-product-images";
@@ -328,8 +335,8 @@ namespace STech_Web.Controllers
                 var credential = GoogleCredential.FromFile(keyPath);
                 var storage = StorageClient.Create(credential);
 
-                var objectName = Path.Combine("user-images/", fileName);
-                storage.UploadObject(bucketName, objectName, "image/" + fileEx, imageFile.InputStream);
+                var objectName = Path.Combine("user-images/", fileName + fileEx);
+                storage.UploadObject(bucketName, objectName, "image/" + fileEx.Replace(".", ""), imageFile.InputStream);
 
                 if(storage.GetObject(bucketName, objectName) != null)
                 {
@@ -353,18 +360,18 @@ namespace STech_Web.Controllers
                     }
 
                     //Gán đường dẫn hình ảnh đó cho user
-                    var imgSrc = "https://storage.googleapis.com/stech-product-images/user-images/" + fileName;
+                    imgSrc = "https://storage.googleapis.com/stech-product-images/user-images/" + fileName + fileEx;
                     user.ImgSrc = imgSrc;
 
                     userManager.Update(user);
                 }
 
-                return Json(new { success = true });
+                return Json(new { success = true, src = imgSrc });
 
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, error = "Đã xãy ra lỗi trong quá trình tải lên." });
+                return Json(new { success = false, error = "Tải lên thất bại." });
             }
         }
 

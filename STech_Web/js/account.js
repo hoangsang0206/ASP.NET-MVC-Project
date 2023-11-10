@@ -234,6 +234,92 @@ $('.close-upload-frm').click(() => {
     $('.upload-user-image').removeClass('show');
     $('.upload-form-box').removeClass('show');
 })
+//------------
+function updateUploadFormNotice(string, status) {
+    $('.upload-frm-notice').empty();
+    $('.upload-frm-notice').show();
+  
+    if (status) {
+        $('.upload-frm-notice').addClass('success')
+        $('.upload-frm-notice').removeClass('failed')
+    }
+    else {
+        $('.upload-frm-notice').addClass('failed')
+        $('.upload-frm-notice').removeClass('success')
+    }
+
+    $('.upload-frm-notice').append(string);
+}
+//------------
+
+$(document).ready(() => {
+    $('.upload-user-img').click(() => {
+        $('.file-input').click();
+    })
+
+    $('.file-input').on('change', ({target}) => {
+        let file = target.files[0];
+        if (file) {
+            let formData = new FormData();
+            formData.append('file', file);
+
+            $('.upload-progress-bar').css('display', 'flex');
+            $('.upload-progress-bar').empty();
+            $.ajax({
+                type: 'POST',
+                url: '/account/uploadimage',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhr: () => {
+                    var xhr = $.ajaxSettings.xhr();
+                    xhr.upload.onprogress = (event) => { //Upload progress
+                        var percentComplete = Math.floor((event.loaded / event.total) * 100);
+                        var progressHtml = ` <i class='bx bxs-file-image'></i>
+                                <div class="progress-bar d-flex align-items-center">
+                                    <div class="bar" style="width: ${percentComplete + '%'}"></div>
+                                </div>
+                                <div class="progress-percent">${percentComplete}%</div>`;
+                        $('.upload-progress-bar').empty();
+                        $('.upload-progress-bar').append(progressHtml);
+                    }
+                    return xhr;
+                },
+                success: (res) => {
+                    $('.upload-progress-bar').empty();
+                    $('.upload-progress-bar').hide();
+
+                    if (res.success) {
+                        var str = `<i class='bx bxs-check-circle'></i>
+                            <span>Tải lên thành công.</span>`;
+                        var strImg = `<img src="${res.src}" alt="" />`
+                        $('.upload-user-img').empty();
+                        $('.upload-user-img').addClass('img-uploaded');
+                        $('.upload-user-img').append(strImg);
+
+                        updateUploadFormNotice(str, res.success);
+                        $('.user-img').attr('src', res.src);
+                    }
+                    else {
+                        var str = `<i class='bx bxs-x-circle'></i>
+                            <span>${res.error}</span>`;
+                        var strElement = ` <i class="fa-solid fa-cloud-arrow-up"></i><span>Tải hình ảnh lên</span>`
+                        $('.upload-user-img').empty();
+                        $('.upload-user-img').removeClass('img-uploaded');
+                        $('.upload-user-img').append(strElement);
+                        updateUploadFormNotice(str, res.success);
+                    }
+                },
+                error: (err) => {
+                    var str = `<i class='bx bxs-check-circle'></i>
+                            <span>Tải lên thất bại.</span>`;
+                    updateUploadFormNotice(str, false);
+                    console.log(err);
+                }
+            })
+        }
+    });
+});
 
 //-----------------------------------------------
 function setParentHeight() {
@@ -252,12 +338,10 @@ function showCard() {
     setParentHeight();
 }
 
-$(document).ready(() => {
-    showCard();
+showCard();
 
-    $(window).on('hashchange' ,() => {
-        showCard();
-    })
+$(window).on('hashchange' ,() => {
+    showCard();
 })
 
 // Format datetime ASP.NET to "dd/MM/yyyy"

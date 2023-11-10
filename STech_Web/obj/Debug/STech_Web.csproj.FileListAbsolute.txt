@@ -1,4 +1,3 @@
-D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\STech_Web.dll.config
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\STech_Web.dll
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\STech_Web.pdb
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\roslyn\csc.exe
@@ -143,3 +142,4 @@ D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\Microsoft.Extensions.Depe
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\System.CodeDom.xml
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\System.ValueTuple.xml
 D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\obj\Debug\STech_Web.IdentityMigration.init3.resources
+D:\VS Studio\ASP.NET MVC\DoAn\DoAn_LTWeb\STech_Web\bin\STech_Web.dll.config

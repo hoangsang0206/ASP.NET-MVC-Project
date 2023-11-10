@@ -1,34 +1,34 @@
 ﻿@font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Bold.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Bold.woff2');
     font-weight: bold;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Semibold.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Semibold.woff2');
     font-weight: 600;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Medium.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Medium.woff2');
     font-weight: 500;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Light.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Light.woff2');
     font-weight: 300;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SF-Pro-Display-Regular.otf');
+    src: url('/fonts/SFProDisplay/SF-Pro-Display-Regular.woff2');
     font-display: swap;
 }
 
@@ -88,7 +88,7 @@ body {
 
 .sidebar .toggle {
     position: absolute;
-    top: 50%;
+    top: 2rem;
     transform: translateY(-50%) rotate(0);
     right: -2.2rem;
     height: 25px;
@@ -1435,7 +1435,7 @@ input[name="category"]:checked ~ .categories-label-box {
 
         .sidebar .toggle {
             right: -1.4rem;
-            top: 140%;
+            top: 5rem;
         }
 
     .menu-item a, .bottom-menu a {

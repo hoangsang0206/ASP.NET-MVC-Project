@@ -252,14 +252,21 @@
             <div class="close-upload-frm">
                 <i class='bx bx-x'></i>
             </div>
-            <h5 class="mb-4">Tải hình ảnh hồ sơ</h5>
-            @using (Html.BeginForm("UploadImage", "Account", FormMethod.Post, new { enctype = "multipart/form-data", id = "upload-user-img" }))
-            {
-                <input type="file" id="imageFile" name="imageFile" required />
-                <button type="submit">Upload</button>
-            }
-            <div class="upload-frm-error">
-                
+            <h4>Tải hình ảnh hồ sơ</h4>
+            <div>* Kích thước hình ảnh không lớn hơn 5MB.</div>
+            <div class="mb-3">* Hãy chọn ảnh có tỉ lệ 1:1</div>
+            <div class="upload-user-img d-flex flex-column align-items-center justify-content-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Tải hình ảnh lên</span>
+            </div>
+            <form action="#" class="form-upload-image" enctype="multipart/form-data">
+                <input type="file" class="file-input" id="imageFile" name="imageFile" hidden required />
+            </form>
+            <div class="upload-progress-bar align-items-center gap-2 justify-content-between mt-3">
+               
+            </div>
+            <div class="upload-frm-notice d-flex align-items-center mt-3">
+
             </div>
         </div>
     </div>
