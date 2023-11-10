@@ -14,8 +14,6 @@ using Microsoft.Owin.Security.DataHandler.Encoder;
 using System.Text;
 using System.Data.Entity.Migrations;
 using STech_Web.Identity;
-using System.Runtime.Remoting.Messaging;
-using System.Web.DynamicData;
 
 namespace STech_Web.Controllers
 {
@@ -309,7 +307,7 @@ namespace STech_Web.Controllers
         }
 
         //Update cart item quantity
-        public ActionResult UpdateQuantity(string productID, string updateType)
+        public ActionResult UpdateQuantity(string productID, string updateType, int qtity = 0)
         {
             try
             {
@@ -340,6 +338,17 @@ namespace STech_Web.Controllers
                             cart.Quantity -= 1;
                             if (cart.Quantity <= 0) cart.Quantity = 1;
                         }
+                        else
+                        {
+                            if (qtity <= 0) qtity = 1;
+                            if (qtity >= inventory)
+                            {
+                                qtity = inventory;
+                                updateError = "Sản phẩm này chỉ còn " + inventory + " sản phẩm trong kho.";
+                            }
+                           
+                            cart.Quantity = qtity;
+                        }
                         quantity = cart.Quantity;
                         db.Carts.AddOrUpdate(cart);
                         db.SaveChanges();
@@ -358,7 +367,7 @@ namespace STech_Web.Controllers
                         DatabaseSTechEntities db = new DatabaseSTechEntities();
                         int inventory = (int)db.Products.FirstOrDefault(t => t.ProductID == cartCCItem.ProductID).WareHouse.Quantity;
 
-                        if (updateType == "increase" && cartCCItem != null)
+                        if (updateType == "increase")
                         {
                             cartCCItem.Quantity += 1;
                             if (cartCCItem.Quantity > inventory)
@@ -367,25 +376,29 @@ namespace STech_Web.Controllers
                                 updateError = "Sản phẩm này chỉ còn " + inventory + " sản phẩm trong kho.";
                             }
                         }
-                        else if (updateType == "decrease" && cartCCItem != null)
+                        else if (updateType == "decrease")
                         {
                             cartCCItem.Quantity -= 1;
                             if (cartCCItem.Quantity <= 0) cartCCItem.Quantity = 1;
+                        }
+                        else
+                        {
+                            if (qtity <= 0) qtity = 1;
+                            if (qtity >= inventory)
+                            {
+                                qtity = inventory;
+                                updateError = "Sản phẩm này chỉ còn " + inventory + " sản phẩm trong kho.";
+                            }
+
+                            cartCCItem.Quantity = qtity;
                         }
                         quantity = cartCCItem.Quantity;
                         cartCookie.Remove(cartCCItem);
                         cartCookie.Add(cartCCItem);
 
-                        var cartJson = JsonConvert.SerializeObject(cartCookie);
-                        var bytesToEncode = Encoding.UTF8.GetBytes(cartJson);
-                        var base64String = Convert.ToBase64String(bytesToEncode);
-                        string json = JsonConvert.SerializeObject(cartCookie);
-                        Response.Cookies["CartItems"].Value = base64String;
-                        //Cookie will expire in 30 days from the date the new product is added
-                        Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(30);
+                        saveCartToCookie(cartCookie);
 
                         //Update total price in cart page
-                        cartCookie = getCartFromCookie();
                         List<CartTemp> cartTemp = new List<CartTemp>();
                         if (cartCookie.Count > 0)
                         {
@@ -395,7 +408,7 @@ namespace STech_Web.Controllers
                                 int qty = item.Quantity;
                                 product = db.Products.FirstOrDefault(t => t.ProductID == item.ProductID);
 
-                                CartTemp cTemp = new CartTemp(product, quantity);
+                                CartTemp cTemp = new CartTemp(product, qty);
                                 cartTemp.Add(cTemp);
                             }
                         }

@@ -166,7 +166,6 @@ $('.update-quantity').click((e) => {
                 setTimeout(hideWebLoader, 500);
                 inputQuantity.val(res.qty);
 
-                console.log(res.total);
                 var total = res.total.toLocaleString("vi-VN") + 'đ';
                 $('.total-price').empty();
                 $('.total-price').text(total);
@@ -187,4 +186,47 @@ $('.update-quantity').click((e) => {
             error: () => { hideWebLoader(); }
         })
     }
+})
+
+//--------
+$('input[name="quantity"]').focus((e) => {
+    var currentVal = $(e.target).val();
+
+    $(e.target).blur(() => {
+        var newVal = $(e.target).val();
+        var productID = $(e.target).data('product');
+        if (newVal != currentVal) {
+            showWebLoader();    
+            $.ajax({
+                type: 'Post',
+                url: '/cart/updatequantity',
+                data: {
+                    productID: productID,
+                    qtity: newVal
+                },
+                success: (res) => {
+                    setTimeout(hideWebLoader, 500);
+                    $(e.target).val(res.qty);
+
+                    var total = res.total.toLocaleString("vi-VN") + 'đ';
+                    $('.total-price').empty();
+                    $('.total-price').text(total);
+
+                    if (res.error.length > 0) {
+                        $('.cart-error').empty();
+                        $('.cart-error').show();
+                        var str = `<span><i class="fa-solid fa-circle-exclamation"></i>
+                    ${res.error}</span>`;
+                        $('.cart-error').append(str);
+
+                        var timeout = setTimeout(() => {
+                            $('.cart-error').hide()
+                            clearTimeout(timeout);
+                        }, 7000)
+                    }
+                },
+                error: () => { hideWebLoader(); }
+            })
+        }
+    })
 })
