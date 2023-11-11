@@ -427,7 +427,7 @@ namespace STech_Web.Controllers
 
         //Count item in cart
         [HttpPost]
-        public ActionResult CartCount()
+        public JsonResult CartCount()
         {
             //Count item in cart when user logged in
             if(User.Identity.IsAuthenticated)

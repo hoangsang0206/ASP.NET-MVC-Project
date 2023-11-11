@@ -27,12 +27,56 @@
 
 <section class="filter-products">
     <div class="filter-box d-flex justify-content-between">
-        <div class="filter-button-list">
-            <div class="filter-all-dropdown filter-btn">
+        <div class="filter-button-list d-flex flex-wrap gap-2 align-items-center">
+            <div class="filter-all-dropdown filter-btn position-relative">
                 <div class="filter-all-btn">
                     <i class='bx bx-filter-alt filter-icon'></i>
                     <span>Lọc</span>
                 </div>
+            </div>
+            <div class="filter-brands filter-btn position-relative">
+                <div class="filter-head">
+                    Hãng
+                </div>
+                <form class="filter-contents">
+                    <div class="filter-brands-box">
+
+                    </div>
+                    <div class="filter-action">
+
+                    </div>
+                </form>
+            </div>
+            <div class="filter-price filter-btn position-relative">
+                <div class="filter-head">
+                    Giá
+                </div>
+                <form class="filter-contents">
+                    <div class="filter-price-box">
+                        <div class="filter-price-value d-flex align-items-center justify-content-between gap-2">
+                            <div class="filter-input d-flex align-items-center gap-2">
+                                <span>Từ</span>
+                                <input type="text" id="minPrice" name="minPrice" value="0" pattern="[0-9]+" />
+                            </div>
+                            <span>-</span>
+                            <div class="filter-input d-flex align-items-center gap-2">
+                                <span>Đến</span>
+                                <input type="text" id="maxPrice" name="maxPrice" value="100000" pattern="[0-9]+" />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="filter-price-range position-relative">
+                            <div class="range-progress position-absolute">
+
+                            </div>
+                            <input type="range" class="input-range range-min" name="range-min" min="100000" max="129000000" value="0" />
+                            <input type="range" class="input-range range-max" name="range-max" min="200000" max="130000000" value="130000000" />
+                        </div>
+                    </div>
+                    <div class="filter-action">
+
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -275,3 +319,36 @@
     </div>
 
 </section>
+
+<script>
+    const priceGap = 1000000;
+    const rangeInput = document.querySelectorAll('.input-range');
+    const progress = document.querySelector('.range-progress');
+    rangeInput.forEach(input => {
+        input.addEventListener('input', e => {
+            let minVal = parseInt(rangeInput[0].value);
+            let maxVal = parseInt(rangeInput[1].value);
+
+            progress.style.left = (minVal / rangeInput[0].value.max) * 100 + '%';
+            progress.style.right = 100 - (maxVal / rangeInput[1].value.max) * 100 + '%';
+
+            console.log(progress)
+
+            if (maxVal - minVal < priceGap) {
+                if (e.target.className === 'range-min') {
+                    rangeInput[0].value = maxVal - priceGap;
+                  
+                }
+                else {
+                    rangeInput[1].value = minVal + priceGap;
+                    
+                }
+            }
+            else {
+                rangeInput[0].value = minVal;
+                rangeInput[1].value = maxVal;               
+            }
+            console.log(rangeInput[0].value, rangeInput[1].value)
+        })
+    })
+</script>

@@ -41,7 +41,7 @@ namespace STech_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterVM register)
+        public JsonResult Register(RegisterVM register)
         {
             if(ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace STech_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginVM login)
+        public JsonResult Login(LoginVM login)
         {
             //Tên đăng nhập và mật khẩu không để trống
             if (login.Username == null || login.Password == null)
@@ -173,7 +173,7 @@ namespace STech_Web.Controllers
 
         //Update account info
         [HttpPost, UserAuthorization]
-        public ActionResult Update(UpdateUserVM update)
+        public JsonResult Update(UpdateUserVM update)
         {
 
             if (User.Identity.IsAuthenticated)
@@ -249,7 +249,7 @@ namespace STech_Web.Controllers
         
         //Đổi mật khẩu
         [HttpPost, UserAuthorization]
-        public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword)
+        public JsonResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword)
         {
             if(User.Identity.IsAuthenticated)
             {
@@ -292,7 +292,7 @@ namespace STech_Web.Controllers
 
         //Upload hình ảnh
         [HttpPost, UserAuthorization]
-        public ActionResult UploadImage()
+        public JsonResult UploadImage()
         {
             try
             {
