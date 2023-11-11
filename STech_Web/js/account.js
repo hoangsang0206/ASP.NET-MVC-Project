@@ -275,8 +275,8 @@ $(document).ready(() => {
                     var xhr = $.ajaxSettings.xhr();
                     xhr.upload.onprogress = (event) => { //Upload progress
                         var percentComplete = Math.floor((event.loaded / event.total) * 100);
-                        var progressHtml = ` <i class='bx bxs-file-image'></i>
-                                <div class="progress-bar d-flex align-items-center">
+                        var progressHtml = `<i class='bx bxs-file-image'></i>
+                                <div class="progress-bar d-flex flex-row align-items-center justify-content-start">
                                     <div class="bar" style="width: ${percentComplete + '%'}"></div>
                                 </div>
                                 <div class="progress-percent">${percentComplete}%</div>`;
@@ -311,9 +311,13 @@ $(document).ready(() => {
                     }
                 },
                 error: (err) => {
-                    var str = `<i class='bx bxs-check-circle'></i>
+                    var str = `<i class='bx bxs-x-circle'></i>
                             <span>Tải lên thất bại.</span>`;
                     updateUploadFormNotice(str, false);
+                    var strElement = ` <i class="fa-solid fa-cloud-arrow-up"></i><span>Tải hình ảnh lên</span>`
+                    $('.upload-user-img').empty();
+                    $('.upload-user-img').removeClass('img-uploaded');
+                    $('.upload-user-img').append(strElement);
                     console.log(err);
                 }
             })

@@ -593,9 +593,14 @@ namespace STech_Web.Controllers
         {
             try
             {
+                string userID = User.Identity.GetUserId();
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
-                STech_Web.Models.Order order = db.Orders.FirstOrDefault(t => t.OrderID == id);
-                List<OrderDetail> orderDetail = order.OrderDetails.ToList();
+                STech_Web.Models.Order order = db.Orders.FirstOrDefault(t => t.OrderID == id && t.Customer.AccountID == userID);
+
+                if (order == null)
+                {
+                    return Redirect("/account#orders");
+                }
 
                 //Tạo danh sách Breadcrumb
                 List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
@@ -605,6 +610,9 @@ namespace STech_Web.Controllers
 
                 //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
                 CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+
+                //Lấy chi tiết đơn hàng
+                List<OrderDetail> orderDetail = order.OrderDetails.ToList();
 
                 //Lấy thông tin khách hàng
                 STech_Web.Models.Customer customer = order.Customer;

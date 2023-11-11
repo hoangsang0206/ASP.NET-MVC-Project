@@ -253,5 +253,12 @@ namespace STech_Web.Controllers
             return Redirect("/error/notfound");
         }
 
+        //Lọc sản phẩm theo khoảng giá, danh sách hãng,...
+        public ActionResult FilterCollections(List<string> brands = null, decimal minPrice = 0, decimal maxPrice = 0)
+        {
+
+            return View();
+        }
+
     }
 }
