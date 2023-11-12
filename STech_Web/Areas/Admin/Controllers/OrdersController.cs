@@ -15,7 +15,5 @@ namespace STech_Web.Areas.Admin.Controllers
             ViewBag.ActiveNav = "orders";
             return View();
         }
-
-
     }
 }

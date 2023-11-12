@@ -108,11 +108,10 @@
     </div>
 </div>
 
-
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+
     //--Get current month data ---------------------------------------
     function getCurrentMonthData() {
         $('.loading').css('display', 'grid');
@@ -146,7 +145,7 @@
     $(document).ready(() => {
         getCurrentMonthData();
 
-        $('.summary-update').click(() => { 
+        $('.summary-update').click(() => {
             getCurrentMonthData();
         })
     })
