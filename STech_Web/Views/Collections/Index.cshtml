@@ -51,30 +51,35 @@
                 <div class="filter-head">
                     Giá
                 </div>
-                <form class="filter-contents">
+                <form action="/collections/filtercollections" method="post" class="filter-contents">
+                    <input type="hidden" name="currentCate" value="@ViewBag.cateID" />
+                    <input type="hidden" name="sort" value="@ViewBag.sortValue" />
                     <div class="filter-price-box">
                         <div class="filter-price-value d-flex align-items-center justify-content-between gap-2">
                             <div class="filter-input d-flex align-items-center gap-2">
                                 <span>Từ</span>
-                                <input type="text" id="minPrice" name="minPrice" value="0" pattern="[0-9]+" />
+                                <input type="text" id="minPrice" name="minPrice" value="100.000đ" />
                             </div>
                             <span>-</span>
                             <div class="filter-input d-flex align-items-center gap-2">
                                 <span>Đến</span>
-                                <input type="text" id="maxPrice" name="maxPrice" value="100000" pattern="[0-9]+" />
+                                <input type="text" id="maxPrice" name="maxPrice" value="130.000.000đ" />
                             </div>
                         </div>
                         <hr />
                         <div class="filter-price-range position-relative">
-                            <div class="range-progress position-absolute">
-
-                            </div>
+                            <div class="range-progress position-absolute"> </div>
                             <input type="range" class="input-range range-min" name="range-min" min="100000" max="129000000" value="0" />
                             <input type="range" class="input-range range-max" name="range-max" min="200000" max="130000000" value="130000000" />
                         </div>
                     </div>
-                    <div class="filter-action">
-
+                    <div class="filter-action d-flex gap-3 mt-3">
+                        <button type="reset" class="filter-action-btn cancel-filter">
+                            Bỏ chọn
+                        </button>
+                        <button type="submit" class="filter-action-btn confirm-filter">
+                            Xác nhận
+                        </button>
                     </div>
                 </form>
             </div>
@@ -320,35 +325,38 @@
 
 </section>
 
+<section class="side-overlay"></section>
+
 <script>
     const priceGap = 1000000;
     const rangeInput = document.querySelectorAll('.input-range');
     const progress = document.querySelector('.range-progress');
+    const minPrice = document.getElementById("minPrice");
+    const maxPrice = document.getElementById("maxPrice");
+
     rangeInput.forEach(input => {
         input.addEventListener('input', e => {
             let minVal = parseInt(rangeInput[0].value);
             let maxVal = parseInt(rangeInput[1].value);
 
-            progress.style.left = (minVal / rangeInput[0].value.max) * 100 + '%';
-            progress.style.right = 100 - (maxVal / rangeInput[1].value.max) * 100 + '%';
-
-            console.log(progress)
-
             if (maxVal - minVal < priceGap) {
                 if (e.target.className === 'range-min') {
-                    rangeInput[0].value = maxVal - priceGap;
-                  
+                    rangeInput[0].value = maxVal - priceGap; 
                 }
                 else {
-                    rangeInput[1].value = minVal + priceGap;
-                    
+                    rangeInput[1].value = minVal + priceGap; 
                 }
             }
             else {
                 rangeInput[0].value = minVal;
                 rangeInput[1].value = maxVal;               
             }
-            console.log(rangeInput[0].value, rangeInput[1].value)
+
+            progress.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+            progress.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+
+            minPrice.value = parseInt(rangeInput[0].value).toLocaleString('vi-VN') + 'đ';
+            maxPrice.value = parseInt(rangeInput[1].value).toLocaleString('vi-VN') + 'đ';
         })
     })
 </script>

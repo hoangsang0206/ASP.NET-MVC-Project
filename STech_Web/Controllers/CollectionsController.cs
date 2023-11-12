@@ -6,9 +6,11 @@ using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using System.Web.UI;
 
 namespace STech_Web.Controllers
@@ -238,6 +240,12 @@ namespace STech_Web.Controllers
                 breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
                 breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
 
+                //Sắp xếp danh sách sản phẩm
+                if (sort.Length > 0)
+                {
+                    products = Sort(sort, products);
+                }
+
                 //Paging ------
                 products = Pagination(products, page);
 
@@ -254,10 +262,61 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm theo khoảng giá, danh sách hãng,...
-        public ActionResult FilterCollections(List<string> brands = null, decimal minPrice = 0, decimal maxPrice = 0)
+        [HttpPost]
+        public ActionResult FilterCollections(List<string> brandList = null, string currentCate = "", string minPrice = "", string maxPrice = "", string sort = "", int page = 1)
         {
+            try
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Category> categories = db.Categories.ToList();
+                List<Product> products = db.Products.Where(t => t.CateID == currentCate).ToList();
 
-            return View();
+                decimal minprice = Convert.ToDecimal(minPrice.Replace("đ", "").Replace(".", ""));
+                decimal maxprice = Convert.ToDecimal(maxPrice.Replace("đ", "").Replace(".", ""));
+
+                string breadcrumbItem = "" + db.Categories.FirstOrDefault(t => t.CateID == currentCate);
+
+                //Lọc danh sách sản phẩm
+                if (products != null)
+                {
+                    products = Filter(products, "price", null, null, minprice, maxprice);
+                    ViewBag.FilterType = "price";
+                    ViewBag.Filter = "";
+                    ViewBag.Sbrand = "";
+                    ViewBag.MinPrice = minprice;
+                    ViewBag.MaxPrice = maxprice;
+                    if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
+                    {
+                        breadcrumbItem += " " + ViewBag.filterName;
+                    }
+                }
+
+                //Tạo danh sách Breadcrumb
+                List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
+                breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
+                breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
+
+                //Sắp xếp danh sách sản phẩm
+                if (sort.Length > 0)
+                {
+                    products = Sort(sort, products);
+                }
+
+                //Paging ------
+                products = Pagination(products, page);
+
+                //-----------
+                ViewBag.cateID = currentCate;
+                ViewBag.title = breadcrumbItem;
+                ViewBag.Breadcrumb = breadcrumb;
+                ViewBag.sortValue = sort;
+
+                return View("Index", products);
+            }
+            catch(Exception ex) { }
+            {
+                return Redirect("/error/notfound");
+            }   
         }
 
     }

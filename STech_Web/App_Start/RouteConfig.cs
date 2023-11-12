@@ -14,6 +14,12 @@ namespace STech_Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+             name: "FilterPost",
+             url: "collections/filtercollections",
+             defaults: new { controller = "Collections", action = "FilterCollections" }
+           );
+
+            routes.MapRoute(
              name: "Filter",
              url: "collections/{id}",
              defaults: new { controller = "Collections", action = "GetProduct", id = UrlParameter.Optional }

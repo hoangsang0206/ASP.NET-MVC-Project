@@ -243,6 +243,7 @@
     <Content Include="js\account.js" />
     <Content Include="js\cart.js" />
     <Content Include="js\order.js" />
+    <Content Include="js\products.js" />
     <Content Include="js\script.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\AdminLayoutPage1.cshtml" />
@@ -354,7 +355,7 @@
     <Compile Include="Models\Brand.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BrandAPI.cs" />
+    <Compile Include="ApiModels\BrandAPI.cs" />
     <Compile Include="Models\Breadcrumb.cs" />
     <Compile Include="Models\Cart.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -364,7 +365,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CategoryAPI.cs" />
+    <Compile Include="ApiModels\CategoryAPI.cs" />
     <Compile Include="Models\Countdown.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -393,7 +394,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrderAPI.cs" />
+    <Compile Include="ApiModels\OrderAPI.cs" />
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -402,7 +403,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductAPI.cs" />
+    <Compile Include="ApiModels\ProductAPI.cs" />
     <Compile Include="Models\ProductImgDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

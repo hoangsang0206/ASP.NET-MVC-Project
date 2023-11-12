@@ -232,11 +232,11 @@
     border-radius: 0.2rem;
     border: 1px solid #cecece;
     padding: 0.5rem 0.8rem;
-    cursor: not-allowed;
+    cursor: pointer;
 }
 
 .filter-btn:hover {
-    outline: 1px solid #000000;
+    border-color: #656565;
 }
 
 .filter-all-btn {
@@ -256,6 +256,27 @@
     place-items: center;
 }
 
+.filter-contents {
+    border-radius: 0.2rem;
+    padding: 1rem;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    box-shadow: 1px 1px 10px #313131;
+    visibility: hidden;
+    opacity: 0;
+    cursor: auto;
+    z-index: 10;
+}
+
+.filter-contents.show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .7s ease;
+}
+
 .filter-input input {
     outline: none;
     border: 1px solid #dddddd;
@@ -263,10 +284,17 @@
     text-align: center;
     border-radius: 0.2rem;
     font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .filter-input input:focus {
     border-color: #0d71d4;
+}
+
+.filter-price-range {
+    height: 5px;
+    border-radius: 1rem;
+    background: #b8dbaf;
 }
 
 .range-progress {
@@ -283,8 +311,8 @@
     width: 100%;
     height: 5px;
     -webkit-appearance: none;
-    background: none;
     pointer-events: none;
+    background: none;
 }
 
 .filter-price-range input[type="range"]::-webkit-slider-thumb {
@@ -295,7 +323,26 @@
     -webkit-appearance: none;
     pointer-events: auto;
 }
-   
+
+.filter-action-btn {
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.2rem;
+    white-space: nowrap;
+    font-weight: 600;
+    border: none;
+    outline: none;
+}
+
+.confirm-filter {
+    background: #2485f6;
+    color: #ffffff;
+}
+
+.cancel-filter {
+    background: none;
+    color: #e30019;
+    border: 1px solid #e30019;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
