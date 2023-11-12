@@ -23,7 +23,7 @@ namespace STech_Web.ApiControllers
                 {
                     p.Cost = 0;
                 }
-                ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+                ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
                 productsAPI.Add(product);
             }
 
@@ -45,7 +45,7 @@ namespace STech_Web.ApiControllers
             foreach (Product p in products)
             {
                 ProductAPI productAPI =
-                    new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+                    new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
 
                 productAPIs.Add(productAPI);
             }
@@ -66,7 +66,7 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Product p in products)
                 {
-                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
 
                     productsApi.Add(product);
                 }
@@ -86,7 +86,7 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Product p in products)
                 {
-                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
 
                     productsApi.Add(product);
                 }
@@ -119,7 +119,7 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Product p in products)
                 {
-                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID);
+                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
 
                     productsApi.Add(product);
                 }
@@ -127,6 +127,28 @@ namespace STech_Web.ApiControllers
 
             return productsApi;
         }
-    
+
+
+        //Lấy sản phẩm đã hết hàng
+        public List<ProductAPI> GetOutOfStock(string type)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = db.Products.Where(t => t.WareHouse.Quantity <= 0).ToList();
+            List<ProductAPI> productsApi = new List<ProductAPI>();
+
+
+            if (products.Count > 0)
+            {
+                foreach (Product p in products)
+                {
+                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+
+                    productsApi.Add(product);
+                }
+            }
+
+            return productsApi;
+        }
+
     }
 }

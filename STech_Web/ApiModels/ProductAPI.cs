@@ -15,10 +15,11 @@ namespace STech_Web.Models
         public int Warranty { get; set; }
         public string BrandID { get; set; }
         public string CateID { get; set; }
+        public int Quantity { get; set; }
 
         public ProductAPI() { } 
 
-        public ProductAPI(string ProductID, string ProductName, string ImgSrc, decimal Cost, decimal Price, int Warranty, string BrandID, string CateID)
+        public ProductAPI(string ProductID, string ProductName, string ImgSrc, decimal Cost, decimal Price, int Warranty, string BrandID, string CateID, int quantity)
         {
             this.ProductID = ProductID;
             this.ProductName = ProductName;
@@ -28,6 +29,7 @@ namespace STech_Web.Models
             this.Warranty = Warranty;
             this.BrandID = BrandID;
             this.CateID = CateID;
+            this.Quantity = quantity;
         }
     }
 }

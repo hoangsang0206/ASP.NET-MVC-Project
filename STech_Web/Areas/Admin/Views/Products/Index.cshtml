@@ -35,7 +35,7 @@
                 </form>
 
                 <select class="get-product-by-cate" id="cateID">
-                    <option value="" selected>Sản phẩm theo danh mục</option>
+                    <option value="" selected>SP theo danh mục</option>
                     @foreach (var cate in ViewBag.Categories)
                     {
                         <option value="@cate.CateID">@cate.CateName</option>
@@ -43,14 +43,16 @@
                 </select>
 
                 <select class="get-product-by-brand" id="brandID">
-                    <option value="" selected>Sản phẩm theo hãng</option>
+                    <option value="" selected>SP theo hãng</option>
                     @foreach (var brand in ViewBag.Brands)
                     {
                         <option value="@brand.BrandID">@brand.BrandName</option>
                     }
                 </select>
 
-                <button class="page-btn get-all-product">Tất cả sản phẩm</button>
+                <button class="page-btn get-all-product">Tất cả SP</button>
+
+                <button class="page-btn get-out-of-stock">SP hết hàng</button>
 
                 <button class="reload-products">
                     Bỏ chọn

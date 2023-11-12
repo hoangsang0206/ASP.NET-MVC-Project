@@ -29,6 +29,67 @@ function lazyLoading() {
 
 //---------Add, update, detele product --------------------------------------
 //Get product list ---------------------------------------------------
+function appendProductList(responses) {
+    if (responses != null) {
+        $('.product-list').empty();
+        if (responses.length > 14) {
+            $('.product-list').css('height', '40rem');
+        }
+        else if (responses.length <= 0) {
+            $('.product-list').css('height', '27rem');
+        }
+        else {
+            $('.product-list').css('height', 'auto');
+        }
+
+        var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
+        $('.total-result').empty();
+        $('.total-result').append(str1);
+
+        for (var i = 0; i <= responses.length; i++) {
+            if (responses[i] != null) {
+                var str2 = `<div class="product-box-container">
+                                            <div class="product-box position-relative">
+                                                ${responses[i].Quantity <= 0 ? `<div class="product-oot">
+                                                    <span>Hết hàng</span>
+                                                </div>` : ""}
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-image lazy-loading">
+                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                    </div>
+                                                </a>
+                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
+                                                    <div class="product-name">
+                                                        ${responses[i].ProductName}
+                                                    </div>
+                                                </a>
+                                                <div class="product-original-price">
+                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
+                        `<span style="visibility: hidden">0</span>`
+                    }
+                                                </div>
+                                                <div class="product-price d-flex align-items-center">
+                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
+                                                </div>
+                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
+                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                                </button>
+                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>`;
+
+                $('.product-list').append(str2);
+            }
+        }
+
+        lazyLoading();
+    }
+    else {
+
+    }
+}
 //Reload ----------------------------
 $('.reload-products').click(() => {
     $('.loading').css('display', 'grid');
@@ -55,62 +116,7 @@ $('.search-products').submit((e) => {
             },
             success: (responses) => {
                 hideLoading();
-                if (responses != null) {
-                    $('.product-list').empty();
-                    if (responses.length > 14) {
-                        $('.product-list').css('height', '40rem');
-                    }
-                    else if (responses.length <= 0) {
-                        $('.product-list').css('height', '27rem');
-                    }
-                    else {
-                        $('.product-list').css('height', 'auto');
-                    }
-
-                    var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
-                    $('.total-result').empty();
-                    $('.total-result').append(str1);
-
-                    for (var i = 0; i <= responses.length; i++) {
-                        if (responses[i] != null) {
-                            var str2 = `<div class="product-box-container">
-                                            <div class="product-box position-relative">
-                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
-                                                    <div class="product-image lazy-loading">
-                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                                                    </div>
-                                                </a>
-                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
-                                                    <div class="product-name">
-                                                        ${responses[i].ProductName}
-                                                    </div>
-                                                </a>
-                                                <div class="product-original-price">
-                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
-                                    `<span style="visibility: hidden">0</span>`
-                                }
-                                                </div>
-                                                <div class="product-price d-flex align-items-center">
-                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
-                                                </div>
-                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                                                </button>
-                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>`;
-
-                            $('.product-list').append(str2);
-                        }
-                    }
-
-                    lazyLoading();
-                }
-                else {
-
-                }
+                appendProductList(responses);
             },
             error: (err) => {
                 hideLoading();
@@ -130,61 +136,7 @@ $('.get-all-product').click(() => {
         url: '/api/products',
         success: (responses) => {
             hideLoading();
-            if (responses != null) {
-                $('.product-list').empty();
-                if (responses.length > 14) {
-                    $('.product-list').css('height', '40rem');
-                }
-                else if (responses.length > 7) {
-                    $('.product-list').css('height', '36.5rem');
-                }
-                else {
-                    $('.product-list').css('height', '20rem');
-                }
-
-                var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
-                $('.total-result').empty();
-                $('.total-result').append(str1);
-
-                for (var i = 0; i <= responses.length; i++) {
-                    if (responses[i] != null) {
-                        var str2 = `<div class="product-box-container">
-                                            <div class="product-box position-relative">
-                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
-                                                    <div class="product-image lazy-loading">
-                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                                                    </div>
-                                                </a>
-                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
-                                                    <div class="product-name">
-                                                        ${responses[i].ProductName}
-                                                    </div>
-                                                </a>
-                                                <div class="product-original-price">
-                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
-                                `<span style="visibility: hidden">0</span>`}
-                                                </div>
-                                                <div class="product-price d-flex align-items-center">
-                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
-                                                </div>
-                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                                                </button>
-                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>`;
-
-                        $('.product-list').append(str2);
-                    }
-                }
-
-                lazyLoading();
-            }
-            else {
-
-            }
+            appendProductList(responses);
         },
         error: (err) => {
             hideLoading();
@@ -209,62 +161,7 @@ $('#cateID, #brandID').on('change', () => {
         },
         success: (responses) => {
             hideLoading();
-            if (responses != null) {
-                $('.product-list').empty();
-                if (responses.length > 14) {
-                    $('.product-list').css('height', '40rem');
-                }
-                else if (responses.length > 7) {
-                    $('.product-list').css('height', '36.5rem');
-                }
-                else {
-                    $('.product-list').css('height', '20rem');
-                }
-
-                var str1 = "Tìm thấy: " + responses.length + " sản phẩm";
-                $('.total-result').empty();
-                $('.total-result').append(str1);
-
-                for (var i = 0; i <= responses.length; i++) {
-                    if (responses[i] != null) {
-                        var str2 = `<div class="product-box-container">
-                                            <div class="product-box position-relative">
-                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
-                                                    <div class="product-image lazy-loading">
-                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
-                                                    </div>
-                                                </a>
-                                                <a href="/admin/product/${responses[i].ProductID}" class="product-link">
-                                                    <div class="product-name">
-                                                        ${responses[i].ProductName}
-                                                    </div>
-                                                </a>
-                                                <div class="product-original-price">
-                                                    ${responses[i].Cost > responses[i].Price ? responses[i].Cost.toLocaleString("vi-VN") + 'đ' :
-                                `<span style="visibility: hidden">0</span>`
-                            }
-                                                </div>
-                                                <div class="product-price d-flex align-items-center">
-                                                    ${responses[i].Price.toLocaleString("vi-VN") + 'đ'}
-                                                </div>
-                                                <button class="update-product-btn product-hidden-btn" onclick="window.location.href='/admin/product/${responses[i].ProductID}'">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                                                </button>
-                                                <button class="delete-product-btn product-hidden-btn" data-product-id="${responses[i].ProductID}">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>`;
-
-                        $('.product-list').append(str2);
-                    }
-                }
-
-                lazyLoading();
-            }
-            else {
-
-            }
+            appendProductList(responses);
         },
         error: (err) => {
             hideLoading();
@@ -272,6 +169,32 @@ $('#cateID, #brandID').on('change', () => {
         }
     })
 })
+
+//--Get product out of stock
+$('.get-out-of-stock').click(() => {
+    $('.loading').css('display', 'grid');
+    $('#search').val('');
+    $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
+
+    $.ajax({
+        type: 'get',
+        url: '/api/products',
+        data: {
+            type: 'OOT'
+        },
+        success: (responses) => {
+            hideLoading();
+            appendProductList(responses);
+        },
+        error: () => {
+            hideLoading();
+            console.log('Cannot get product list');
+        }
+    })
+
+})
+
+
 
 //Add product --------------------------------------------------------
 //Check quantity > 0
@@ -583,17 +506,28 @@ $(document).on('click ', '.delete-product-btn', (e) => {
 //-----
 $('.product-delete-frm-btn').click(() => {
     var productID = $('#ProductID').val();
-    $.ajax({
-        type: 'POST',
-        url: '/admin/products/deleteproduct',
-        data: {
-            productID: productID
-        },
-        success: (res) => {
-            window.location.href = '/admin/products'
-        },
-        error: () => {
-        }
+    //----------
+    $('.pro-detail-del').css('visibility', 'visible');
+    $('.pro-detail-del .delete-confirm-box').addClass('show');
+    //----------
+    $('.pro-detail-del .cancel-delete').click(() => {
+        $('.pro-detail-del').css('visibility', 'hidden');
+        $('.pro-detail-del .delete-confirm-box').removeClass('show');
+    })
+    //----------
+    $('.pro-detail-del .confirm-delete').click(() => {
+        $.ajax({
+            type: 'POST',
+            url: '/admin/products/deleteproduct',
+            data: {
+                productID: productID
+            },
+            success: (res) => {
+                window.location.href = '/admin/products'
+            },
+            error: () => {
+            }
+        })
     })
 })
 //-----
