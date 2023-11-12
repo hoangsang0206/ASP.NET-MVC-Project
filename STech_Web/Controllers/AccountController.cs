@@ -48,7 +48,7 @@ namespace STech_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterVM register)
+        public JsonResult Register(RegisterVM register)
         {
             if(ModelState.IsValid)
             {

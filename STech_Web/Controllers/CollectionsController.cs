@@ -274,7 +274,7 @@ namespace STech_Web.Controllers
                 decimal minprice = Convert.ToDecimal(minPrice.Replace("đ", "").Replace(".", ""));
                 decimal maxprice = Convert.ToDecimal(maxPrice.Replace("đ", "").Replace(".", ""));
 
-                string breadcrumbItem = "" + db.Categories.FirstOrDefault(t => t.CateID == currentCate);
+                string breadcrumbItem = "" + db.Categories.FirstOrDefault(t => t.CateID == currentCate).CateName;
 
                 //Lọc danh sách sản phẩm
                 if (products != null)
@@ -285,10 +285,6 @@ namespace STech_Web.Controllers
                     ViewBag.Sbrand = "";
                     ViewBag.MinPrice = minprice;
                     ViewBag.MaxPrice = maxprice;
-                    if (ViewBag.filterName != null || ViewBag.filterName.Length > 0)
-                    {
-                        breadcrumbItem += " " + ViewBag.filterName;
-                    }
                 }
 
                 //Tạo danh sách Breadcrumb
