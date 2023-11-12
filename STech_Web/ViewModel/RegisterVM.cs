@@ -11,15 +11,15 @@ namespace STech_Web.ViewModel
         [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập.")]
         [StringLength(15, ErrorMessage = "Tên đăng nhập không quá 15 kí tự.")]
         [RegularExpression("^[a-zA-Z0-9_]*$", ErrorMessage = "Tên đăng nhập không chứa kí tự đặc biệt.")]
-        public string Username { get; set; }
+        public string ResUsername { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
-        [StringLength(30, ErrorMessage = "Mật khẩu không vượt quá 30 kí tự.")]
-        public string Password { get; set; }
+        [StringLength(20, ErrorMessage = "Mật khẩu không vượt quá 20 kí tự.")]
+        public string ResPassword { get; set; }
 
         [Required(ErrorMessage = "Vui lòng xác nhận mật khẩu.")]
-        [Compare("Password" ,ErrorMessage = "Xác nhận mật khẩu không đúng.")]
-        public string ConfirmPassword { get; set; }
+        [Compare("ResPassword", ErrorMessage = "Xác nhận mật khẩu không đúng.")]
+        public string ResConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Email không để trống.")]
         [EmailAddress(ErrorMessage = "Email không đúng định dạng.")]

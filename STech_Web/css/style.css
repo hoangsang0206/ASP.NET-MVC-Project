@@ -669,7 +669,7 @@ header {
 .form-input-box {
     border: 1px solid #cfcfcf;
     border-radius: 0.3rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .form-input {
@@ -692,6 +692,10 @@ header {
     padding: 0 0.4rem;
     background: var(--content-color-white);
     transition: transform .4s ease;
+}
+
+.forgot-password-box {
+    margin-top: 1rem;
 }
 
 .forgot-password-link {
@@ -804,6 +808,12 @@ header {
 
 .form-error ul li {
     padding: 0.3rem 0;
+}
+
+.field-validation-error span {
+    margin: 0.3rem 0;
+    color: #e30019;
+    font-size: 0.85rem !important;
 }
 /* ------------------------------------ */
 nav {

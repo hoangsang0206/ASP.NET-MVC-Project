@@ -176,6 +176,8 @@
 
     @{
         Html.RenderPartial("Account_Partial");
+        Html.RenderPartial("LoginPartial", new STech_Web.ViewModel.LoginVM());
+        Html.RenderPartial("RegisterPartial", new STech_Web.ViewModel.RegisterVM());
     }
 
     <nav>

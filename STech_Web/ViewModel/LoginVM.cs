@@ -14,7 +14,7 @@ namespace STech_Web.ViewModel
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
-        [StringLength(30, ErrorMessage = "Mật khẩu không vượt quá 30 kí tự.")]
+        [StringLength(20, ErrorMessage = "Mật khẩu không vượt quá 20 kí tự.")]
         public string Password { get; set; }
     }
 }

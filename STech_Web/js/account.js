@@ -34,10 +34,10 @@ $('#re-enter-password').keyup(() => {
 
 $('.register-form').submit((e) => {
     e.preventDefault();
-    var userName = $('#register-username').val();
-    var password = $('#register-password').val();
-    var confirmPassword = $('#re-enter-password').val();
-    var email = $('#register-email').val();
+    var userName = $('.register #ResUsername').val();
+    var password = $('.register #ResPassword').val();
+    var confirmPassword = $('.register #ResConfirmPassword').val();
+    var email = $('#Email').val();
 
     var submitBtn = $(e.target).find('.form-submit-btn');
     var btnText = showBtnLoading(submitBtn);
@@ -45,9 +45,9 @@ $('.register-form').submit((e) => {
         type: 'POST',
         url: '/account/register',
         data: {
-            Username: userName,
-            Password: password,
-            ConfirmPassword: confirmPassword,
+            ResUsername: userName,
+            ResPassword: password,
+            ResConfirmPassword: confirmPassword,
             Email: email
         },
         success: (response) => {
@@ -55,20 +55,19 @@ $('.register-form').submit((e) => {
             if (response.success) {
                 $('.register .form-error').hide();
                 $('.register .form-error').empty();
-                $('.register-form').unbind('submit').submit();
+
+                window.location.href = response.redirectUrl;
             }
             else {
-                var str = '<ul>';
-                $.each(response.error, (index, message) => {
-                    str += `<li>
+                if (response.error.length > 0) {
+                    var str = `<span>
                     <i class="fa-solid fa-circle-exclamation"></i>`
-                        + message + `</li>`;
-                })
-                str += '</ul>'
+                        + response.error + `</span>`;
 
-                $('.register .form-error').show();
-                $('.register .form-error').empty();
-                $('.register .form-error').append(str);
+                    $('.login .form-error').show();
+                    $('.login .form-error').empty();
+                    $('.login .form-error').append(str);
+                }
             }
         },
         error: (err) => { resetBtn(submitBtn, btnText); }
@@ -80,8 +79,8 @@ $('.register-form').submit((e) => {
 //--Login with Ajax -----------------------------------------------
 $('.login-form').submit((e) => {
     e.preventDefault();
-    var userName = $('#login-username').val();
-    var password = $('#login-password').val();
+    var userName = $('.login #Username').val();
+    var password = $('.login #Password').val();
 
     var submitBtn = $(e.target).find('.form-submit-btn');
     var btnText = showBtnLoading(submitBtn);
@@ -97,18 +96,19 @@ $('.login-form').submit((e) => {
             if (response.success) {
                 $('.login .form-error').hide();
                 $('.login .form-error').empty();
-                $('.login-form').unbind('submit').submit();
 
                 window.location.href = response.redirectUrl;
             }
             else {
-                var str = `<span>
+                if (response.error.length > 0) {
+                    var str = `<span>
                     <i class="fa-solid fa-circle-exclamation"></i>`
-                    + response.error + `</span>`;
+                        + response.error + `</span>`;
 
-                $('.login .form-error').show();
-                $('.login .form-error').empty();
-                $('.login .form-error').append(str);
+                    $('.login .form-error').show();
+                    $('.login .form-error').empty();
+                    $('.login .form-error').append(str);
+                }
             }
         },
         error: (err) => { resetBtn(submitBtn, btnText); }

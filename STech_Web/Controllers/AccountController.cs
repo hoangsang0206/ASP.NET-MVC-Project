@@ -48,48 +48,34 @@ namespace STech_Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Register(RegisterVM register)
+        public ActionResult Register(RegisterVM register)
         {
             if(ModelState.IsValid)
             {
-                //Các thông tin không được bỏ trống
-                if (register.Username == null ||
-                    register.Password == null ||
-                    register.ConfirmPassword == null ||
-                    register.Email == null)
-                {
-                    string err = "Vui lòng nhập đầy đủ thông tin.";
-                    return Json(new { success = false, error = err });
-                }
-
                 var appDbContext = new AppDBContext();
                 var userStore = new AppUserStore(appDbContext);
                 var userManager = new AppUserManager(userStore);
-                var passwordHash = Crypto.HashPassword(register.Password);
+                var passwordHash = Crypto.HashPassword(register.ResPassword);
                 var user = new AppUser() { 
                     Email = register.Email,
-                    UserName = register.Username, 
+                    UserName = register.ResUsername, 
                     PasswordHash = passwordHash,
                     DateCreate = DateTime.Now
                 };
 
-                var existingUser = userManager.FindByName(register.Username);
+                var existingUser = userManager.FindByName(register.ResUsername);
                 var existingUserEmail = userManager.FindByEmail(register.Email);
-                bool containsSpace = Regex.IsMatch(register.Username, @"\s");
-                bool containsSpecialCharacter = Regex.IsMatch(register.Username, @"[^a-zA-Z0-9_]");
 
                 //Kiểm tra xem user đã tồn tại chưa
                 if (existingUser != null)
                 {
-                    List<string> err = new List<string>() { "Tài khoản nãy đã tồn tại." };
-                    return Json(new { success = false, error = err });
+                    return Json(new { success = false, error = "Tài khoản nãy đã tồn tại." });
                 }
 
                 //Kiểm tra xem email đã tồn tại chưa
                 if(existingUserEmail != null)
                 {
-                    List<string> err = new List<string>() { "Email này đã tồn tại." };
-                    return Json(new { success = false, error = err });
+                    return Json(new { success = false, error = "Email này đã tồn tại." });
                 }
 
                 IdentityResult identityResult = userManager.Create(user);
@@ -108,43 +94,41 @@ namespace STech_Web.Controllers
             }
             else
             {
-                var validations = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return Json(new { success = false, error = validations });
+                return Json(new { success = false, error = "" });
             }
         }
 
         [HttpPost]
         public JsonResult Login(LoginVM login)
         {
-            //Tên đăng nhập và mật khẩu không để trống
-            if (login.Username == null || login.Password == null)
+            if(ModelState.IsValid)
             {
-                string err = "Vui lòng nhập đầy đủ thông tin.";
-                return Json(new { success = false, error = err });
-            }
+                var appDbContext = new AppDBContext();
+                var userStore = new AppUserStore(appDbContext);
+                var userManager = new AppUserManager(userStore);
+                var user = userManager.Find(login.Username, login.Password);
 
-            var appDbContext = new AppDBContext();
-            var userStore = new AppUserStore(appDbContext);
-            var userManager = new AppUserManager(userStore);
-            var user = userManager.Find(login.Username, login.Password);
-
-            if (user != null)
-            {
-                var authenManager = HttpContext.GetOwinContext().Authentication;
-                var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                authenManager.SignIn(new AuthenticationProperties(), userIdentity);
-
-                if(userManager.IsInRole(user.Id, "admin"))
+                if (user != null)
                 {
-                    return Json(new { success = true, redirectUrl = "/admin/dashboard" });
-                }
+                    var authenManager = HttpContext.GetOwinContext().Authentication;
+                    var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    authenManager.SignIn(new AuthenticationProperties(), userIdentity);
 
-                return Json(new { success = true, redirectUrl = "" });
+                    if (userManager.IsInRole(user.Id, "admin"))
+                    {
+                        return Json(new { success = true, redirectUrl = "/admin/dashboard" });
+                    }
+
+                    return Json(new { success = true, redirectUrl = "" });
+                }
+                else
+                {
+                    return Json( new {success = false, error = "Sai tên đăng nhập hoặc mật khẩu."});
+                }   
             }
             else
             {
-                string err = "Sai tên đăng nhập hoặc mật khẩu.";
-                return Json(new { success = false, error = err });
+                return Json(new { success = false, error = "" });
             }
         }
 
