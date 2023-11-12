@@ -322,6 +322,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="CustomValidations\BirthDay.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Filters\AdminAuthorization.cs" />
     <Compile Include="Filters\UserAuthorization.cs" />

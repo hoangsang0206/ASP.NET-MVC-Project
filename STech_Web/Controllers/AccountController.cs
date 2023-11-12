@@ -78,38 +78,17 @@ namespace STech_Web.Controllers
                 bool containsSpace = Regex.IsMatch(register.Username, @"\s");
                 bool containsSpecialCharacter = Regex.IsMatch(register.Username, @"[^a-zA-Z0-9_]");
 
-                //Tên đăng nhập không quá 15 ký tự
-                if (register.Username.Length > 15)
-                {
-                    string err = "Tên đăng tối đa 15 ký tự.";
-                    return Json(new { success = false, error = err });
-                }
-
-                //Tên đăng nhập không chứa khoảng trắng và ký tự đặc biệt
-                if (containsSpace || containsSpecialCharacter)
-                {
-                    string err = "Tên đăng nhập không chứa ký tự đặc biệt trừ '_'.";
-                    return Json(new { success = false, error = err });
-                }
-
-                //Xác nhận mật khẩu phải trùng với mật khẩu
-                if(register.Password != register.ConfirmPassword)
-                {
-                    string err = "Xác nhận mật khẩu không đúng.";
-                    return Json(new { success = false, error = err });
-                }
-
                 //Kiểm tra xem user đã tồn tại chưa
                 if (existingUser != null)
                 {
-                    string err = "Tài khoản nãy đã tồn tại.";
+                    List<string> err = new List<string>() { "Tài khoản nãy đã tồn tại." };
                     return Json(new { success = false, error = err });
                 }
 
                 //Kiểm tra xem email đã tồn tại chưa
                 if(existingUserEmail != null)
                 {
-                    string err = "Email này đã tồn tại.";
+                    List<string> err = new List<string>() { "Email này đã tồn tại." };
                     return Json(new { success = false, error = err });
                 }
 
@@ -125,13 +104,12 @@ namespace STech_Web.Controllers
 
                 }
 
-                //return Redirect("/");
                 return Json(new { success = true, redirectUrl = "/" });  
             }
             else
             {
-                string err = "Dữ liệu không hợp lệ.";
-                return Json(new { success = false, error = err });
+                var validations = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, error = validations });
             }
         }
 

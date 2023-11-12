@@ -58,9 +58,13 @@ $('.register-form').submit((e) => {
                 $('.register-form').unbind('submit').submit();
             }
             else {
-                var str = `<span>
+                var str = '<ul>';
+                $.each(response.error, (index, message) => {
+                    str += `<li>
                     <i class="fa-solid fa-circle-exclamation"></i>`
-                        + response.error + `</span>`;
+                        + message + `</li>`;
+                })
+                str += '</ul>'
 
                 $('.register .form-error').show();
                 $('.register .form-error').empty();

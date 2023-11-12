@@ -6,6 +6,8 @@ using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using STech_Web.Models;
+using System.ComponentModel.DataAnnotations;
+using STech_Web.CustomValidations;
 
 namespace STech_Web.Identity
 {
