@@ -3,7 +3,11 @@
     ViewBag.Title = "Quản lý - STech";
 }
 
-<div class="dashboard">
+<div class="dashboard position-relative">
+    @{
+        Html.RenderPartial("WeatherPartial");
+    }
+
     <h2 class="title">Trang chủ</h2>
     <div class="breadcrumb">
         <ul class="breadcrumb-list d-flex">

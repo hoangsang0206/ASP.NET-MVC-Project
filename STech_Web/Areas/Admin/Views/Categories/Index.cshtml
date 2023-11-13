@@ -5,7 +5,11 @@
 
 @model List<STech_Web.Models.Category>
 
-<div class="categories">
+<div class="categories position-relative">
+    @{
+        Html.RenderPartial("WeatherPartial");
+    }
+
     <h2 class="title">Quản lý danh mục</h2>
     <div class="breadcrumb">
         <ul class="breadcrumb-list d-flex">

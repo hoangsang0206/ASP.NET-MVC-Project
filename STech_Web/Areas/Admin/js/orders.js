@@ -155,7 +155,6 @@ $(document).on('click', '.order-detail-btn', (e) => {
                         $('.order-products-info table tbody').empty();
                         var strH = ` <tr>
                                     <th>Số lượng</th>
-                                    <th>Hình ảnh</th>
                                     <th>Mã sản phẩm</th>
                                     <th>Tên sản phẩm</th>
                                     <th>Giá bán</th>
@@ -166,9 +165,6 @@ $(document).on('click', '.order-detail-btn', (e) => {
                             for (var i = 0; i < data1.length; i++) {
                                 str += `<tr>
                                             <td>${data1[i].Quantity}</td>
-                                            <td>
-                                                <img src="${data1[i].Product.ImgSrc}" alt="" />
-                                            </td>
                                             <td>${data1[i].Product.ProductID}</td>
                                             <td>${data1[i].Product.ProductName}</td>
                                             <td>${data1[i].Product.Price.toLocaleString('vi-VN') + 'đ'}</td>

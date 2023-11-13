@@ -3,7 +3,10 @@
     ViewBag.Title = "Quản lý đơn hàng";
 }
 
-<section class="orders-page">
+<section class="orders-page position-relative">
+    @{
+        Html.RenderPartial("WeatherPartial");
+    }
     <h2 class="title">Quản lý đơn hàng</h2>
     <div class="breadcrumb">
         <ul class="breadcrumb-list d-flex">
@@ -139,7 +142,6 @@
             <table class="table">
                 <tr>
                     <th>Số lượng</th>
-                    <th>Hình ảnh</th>
                     <th>Mã sản phẩm</th>
                     <th>Tên sản phẩm</th>
                     <th>Giá bán</th>
