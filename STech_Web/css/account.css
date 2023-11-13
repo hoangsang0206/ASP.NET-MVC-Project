@@ -125,6 +125,11 @@
     cursor: pointer;
 }
 
+.upload-user-img.dragenter {
+    border-color: #7abafa;
+    color: #7abafa;
+}
+
 .upload-user-img * {
     pointer-events: none;
 }
@@ -420,14 +425,17 @@
     padding: 0;
 }
 
+.order-pstatus.order-success,
 .order-status.order-success {
     color: #44bd32;
 }
 
+.order-pstatus.order-failed,
 .order-status.order-failed {
     color: #e30019;
 }
 
+.order-pstatus.order-waiting,
 .order-status.order-waiting {
     color: #ff6a00;
 }

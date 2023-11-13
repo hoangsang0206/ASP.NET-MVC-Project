@@ -26,7 +26,7 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Order order in orders)
                 {
-                    ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
             }
             return ordersApi;
@@ -40,7 +40,7 @@ namespace STech_Web.ApiControllers
             OrderAPI orderApi = new OrderAPI();
             if(order != null)
             {
-                orderApi = new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod);
+                orderApi = new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod);
 
             }
 
@@ -101,7 +101,7 @@ namespace STech_Web.ApiControllers
                 {
                     foreach (Order order in orders)
                     {
-                        ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                        ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                     }
                 }
             }
@@ -132,7 +132,7 @@ namespace STech_Web.ApiControllers
                 {
                     foreach (Order order in orders)
                     {
-                        ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                        ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                     }
                 }
             }

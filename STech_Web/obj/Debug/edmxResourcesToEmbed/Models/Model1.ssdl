@@ -85,22 +85,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="CustomerID" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="OrderDate" Type="datetime" />
     <Property Name="TotalPrice" Type="money" Nullable="false" />
-    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="PaymentStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="Note" Type="nvarchar(max)" />
     <Property Name="DeliveryFee" Type="money" />
     <Property Name="TotalPaymentAmout" Type="money" Nullable="false" />
     <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProductImgDetail">
-    <Key>
-      <PropertyRef Name="ProductID" />
-    </Key>
-    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ImgSrc1" Type="nvarchar(max)" />
-    <Property Name="ImgSrc2" Type="nvarchar(max)" />
-    <Property Name="ImgSrc3" Type="nvarchar(max)" />
-    <Property Name="ImgSrc4" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ProductOutStanding">
     <Key>
@@ -115,26 +106,21 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </Key>
     <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
-    <Property Name="ImgSrc" Type="varchar(max)" />
+    <Property Name="ImgSrc" Type="nvarchar(max)" />
     <Property Name="Cost" Type="money" />
     <Property Name="Price" Type="money" />
     <Property Name="Warranty" Type="int" />
     <Property Name="BrandID" Type="varchar" MaxLength="20" />
     <Property Name="CateID" Type="varchar" MaxLength="50" />
     <Property Name="ManufacturingDate" Type="int" />
-  </EntityType>
-  <EntityType Name="ProductsBackup">
-    <Key>
-      <PropertyRef Name="ProductID" />
-    </Key>
-    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
-    <Property Name="ImgSrc" Type="varchar(max)" />
-    <Property Name="Cost" Type="money" />
-    <Property Name="Price" Type="money" />
-    <Property Name="Warranty" Type="int" />
-    <Property Name="BrandID" Type="varchar" MaxLength="20" />
-    <Property Name="CateID" Type="varchar" MaxLength="50" />
+    <Property Name="ImgSrc1" Type="nvarchar(max)" />
+    <Property Name="ImgSrc2" Type="nvarchar(max)" />
+    <Property Name="ImgSrc3" Type="nvarchar(max)" />
+    <Property Name="ImgSrc4" Type="nvarchar(max)" />
+    <Property Name="ImgSrc5" Type="nvarchar(max)" />
+    <Property Name="ImgSrc6" Type="nvarchar(max)" />
+    <Property Name="ImgSrc7" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Sales">
     <Key>
@@ -190,18 +176,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
         <PropertyRef Name="ProductID" />
       </Principal>
       <Dependent Role="Cart">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DetailImg_Pro">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
-    <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductImgDetail">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -347,10 +321,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <EntitySet Name="MegamenuItem" EntityType="Self.MegamenuItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductImgDetail" EntityType="Self.ProductImgDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductsBackup" EntityType="Self.ProductsBackup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
@@ -372,10 +344,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <AssociationSet Name="FK_Cart_Product" Association="Self.FK_Cart_Product">
       <End Role="Products" EntitySet="Products" />
       <End Role="Cart" EntitySet="Cart" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DetailImg_Pro" Association="Self.FK_DetailImg_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductImgDetail" EntitySet="ProductImgDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_Megamenu_SidebarNav" Association="Self.FK_Megamenu_SidebarNav">
       <End Role="SidebarMenuNav" EntitySet="SidebarMenuNav" />

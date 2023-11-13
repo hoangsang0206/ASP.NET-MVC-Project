@@ -18,8 +18,8 @@ $('.order-search-value').click((e) => {
 
 function appendOrderList(res) {
     var strHead = `<tr> <th>Mã ĐH</th><th>Tên khách hàng</th>
-                        <th>Ngày đặt</th><th>Tổng tiền</th><th>H.thức TT</th>
-                        <th>Trạng thái thanh toán</th><th></th></tr>`;
+                        <th>Ngày đặt</th><th>Tổng tiền</th><th>Trạng thái thanh toán</th>
+                        <th>Trạng thái</th><th></th></tr>`;
     if (res.length > 0) {
         $('.order-list table tbody').append(strHead);
         for (var i = 0; i < res.length; i++) {
@@ -27,23 +27,24 @@ function appendOrderList(res) {
             var dateFormat = date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-US');
 
             var statusClass = "order-success";
-            if (res[i].Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
-            else if (res[i].Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+            if (res[i].PaymentStatus == "Thanh toán thất bại") { statusClass = "order-failed"; }
+            else if (res[i].PaymentStatus == "Chờ thanh toán") { statusClass = "order-waiting"; }
 
             var str = `<tr>
                             <td><div class="order-id">${res[i].OrderID}</div></td>
                             <td><div class="cus-name">${res[i].CustomerName}</div></td>
                             <td><div class="order-date">${dateFormat}</div></td>
                             <td><div class="total-payment">${res[i].TotalPaymentAmout.toLocaleString('vi-VN') + 'đ'}</div></td>
-                            <td><div class="order-payment">${res[i].PaymentMethod}</div></td>
-                            <td><div class="order-status ${statusClass}">${res[i].Status}</div></td>
+                            <td><div class="order-pstatus ${statusClass}">${res[i].PaymentStatus}</div></td>
+                            <td><div class="order-status ${res[i].Status == 'Đã xác nhận' ? 'order-success' : 'order-waiting'}">${res[i].Status}</div></td>
                             <td><div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
                                 <button class="order-btn order-print-btn" data-print-order="${res[i].OrderID}">In HĐ</button>
                                 <button class="order-btn order-detail-btn" data-detail-order="${res[i].OrderID}">Chi tiết</button>
-                                <button class="order-btn order-update-btn" data-update-order="${res[i].OrderID}">Sửa</button>
                                 <button class="order-btn delete-order-btn" data-del-order="${res[i].OrderID}">Xóa</button>
                             </div></td>
                         </tr>`;
+
+                        //<button class="order-btn order-update-btn" data-update-order="${res[i].OrderID}">Sửa</button>
 
             $('.order-list table tbody').append(str);
         }

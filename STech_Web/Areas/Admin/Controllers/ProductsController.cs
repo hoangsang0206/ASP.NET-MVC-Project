@@ -38,11 +38,9 @@ namespace STech_Web.Areas.Admin.Controllers
 
                 List<Category> categories = db.Categories.ToList();
                 List<Brand> brands = db.Brands.ToList();
-                ProductImgDetail imgDetail = product.ProductImgDetail;
 
                 ViewBag.Categories = categories;
                 ViewBag.Brands = brands;
-                ViewBag.ImgDetail = imgDetail;
                 return View(product);
             }
             catch (Exception ex)
@@ -92,31 +90,9 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
 
-        //Update product imgage detail -------------------------------------------------
-        public void updateProductImages(DatabaseSTechEntities db, ProductImgDetail imgDetail, string productID, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
-        {
-            if (imgDetail == null)
-            {
-                imgDetail = new ProductImgDetail();
-                imgDetail.ProductID = productID;
-                imgDetail.ImgSrc1 = imgSrc1;
-                imgDetail.ImgSrc2 = imgSrc2;
-                imgDetail.ImgSrc3 = imgSrc3;
-                imgDetail.ImgSrc4 = imgSrc4;
-
-                db.ProductImgDetails.Add(imgDetail);
-                return;
-            }
-
-            imgDetail.ImgSrc1 = imgSrc1;
-            imgDetail.ImgSrc2 = imgSrc2;
-            imgDetail.ImgSrc3 = imgSrc3;
-            imgDetail.ImgSrc4 = imgSrc4;
-        }
-
         //Add new product --------
         [HttpPost]
-        public JsonResult AddProduct(Product product, int quantity, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
+        public JsonResult AddProduct(Product product, int quantity)
         {
             if(ModelState.IsValid)
             {
@@ -149,11 +125,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 wh.ProductID = product.ProductID;
                 wh.Quantity = quantity;
                 db.WareHouses.Add(wh);
-
-                //---
-                ProductImgDetail imgDetail = new ProductImgDetail();
-                updateProductImages(db, imgDetail, product.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
-                //---
                 db.SaveChanges();
                 //---
                 return Json(new { success = true });
@@ -164,7 +135,7 @@ namespace STech_Web.Areas.Admin.Controllers
 
         //Update product
         [HttpPost]
-        public JsonResult UpdateProduct(Product product, int quantity, string imgSrc1, string imgSrc2, string imgSrc3, string imgSrc4)
+        public JsonResult UpdateProduct(Product product, int quantity)
         {
             if(ModelState.IsValid)
             {
@@ -191,6 +162,13 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
                 pro.ProductName = product.ProductName;
                 pro.ImgSrc = product.ImgSrc;
+                pro.ImgSrc1 = product.ImgSrc1;
+                pro.ImgSrc2 = product.ImgSrc2;
+                pro.ImgSrc3 = product.ImgSrc3;
+                pro.ImgSrc4 = product.ImgSrc4;
+                pro.ImgSrc5 = product.ImgSrc5;
+                pro.ImgSrc6 = product.ImgSrc6;
+                pro.ImgSrc7 = product.ImgSrc7;
                 pro.Cost = product.Cost;
                 pro.Price = product.Price;
                 pro.CateID = product.CateID;
@@ -200,12 +178,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 //--------------
                 WareHouse wh = pro.WareHouse;
                 wh.Quantity = quantity;
-
-                //--------------
-                ProductImgDetail imgDetail = pro.ProductImgDetail;
-                updateProductImages(db, imgDetail, pro.ProductID, imgSrc1, imgSrc2, imgSrc3, imgSrc4);
-
-                //----------
                 db.SaveChanges();
                 return Json(new { success = true });
             }
@@ -230,7 +202,6 @@ namespace STech_Web.Areas.Admin.Controllers
 
                 //--------------------
                 WareHouse wh = product.WareHouse;
-                ProductImgDetail imgDetail = product.ProductImgDetail;
                 ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
                 Sale productSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
                 List<OrderDetail> orderDetailList = db.OrderDetails.Where(t => t.ProductID == productID).ToList();
@@ -245,10 +216,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 if (wh != null)
                 {
                     db.WareHouses.Remove(wh);
-                }
-                if (imgDetail != null)
-                {
-                    db.ProductImgDetails.Remove(imgDetail);
                 }
                 if (proOSD != null)
                 {
@@ -298,7 +265,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 //-----------------
                 List<Product> products = category.Products.ToList();
                 List<WareHouse> wareHouses = new List<WareHouse>();
-                List<ProductImgDetail> productImgDetails = new List<ProductImgDetail>();
                 List<ProductOutStanding> productOSDs = new List<ProductOutStanding>();
                 List<Sale> productSale = new List<Sale>();
 
@@ -317,12 +283,6 @@ namespace STech_Web.Areas.Admin.Controllers
                     if (wh != null)
                     {
                         wareHouses.Add(wh);
-                    }
-
-                    ProductImgDetail imgDetail = product.ProductImgDetail;
-                    if (imgDetail != null)
-                    {
-                        productImgDetails.Add(imgDetail);
                     }
 
                     ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
@@ -346,11 +306,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 if (wareHouses.Count > 0)
                 {
                     db.WareHouses.RemoveRange(wareHouses);
-                }
-
-                if (productImgDetails.Count > 0)
-                {
-                    db.ProductImgDetails.RemoveRange(productImgDetails);
                 }
 
                 if (productOSDs.Count > 0)

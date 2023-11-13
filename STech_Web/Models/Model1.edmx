@@ -90,22 +90,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="CustomerID" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" />
           <Property Name="TotalPrice" Type="money" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="DeliveryFee" Type="money" />
           <Property Name="TotalPaymentAmout" Type="money" Nullable="false" />
           <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProductImgDetail">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ImgSrc1" Type="nvarchar(max)" />
-          <Property Name="ImgSrc2" Type="nvarchar(max)" />
-          <Property Name="ImgSrc3" Type="nvarchar(max)" />
-          <Property Name="ImgSrc4" Type="nvarchar(max)" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ProductOutStanding">
           <Key>
@@ -120,26 +111,21 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           </Key>
           <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
-          <Property Name="ImgSrc" Type="varchar(max)" />
+          <Property Name="ImgSrc" Type="nvarchar(max)" />
           <Property Name="Cost" Type="money" />
           <Property Name="Price" Type="money" />
           <Property Name="Warranty" Type="int" />
           <Property Name="BrandID" Type="varchar" MaxLength="20" />
           <Property Name="CateID" Type="varchar" MaxLength="50" />
           <Property Name="ManufacturingDate" Type="int" />
-        </EntityType>
-        <EntityType Name="ProductsBackup">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
-          <Property Name="ImgSrc" Type="varchar(max)" />
-          <Property Name="Cost" Type="money" />
-          <Property Name="Price" Type="money" />
-          <Property Name="Warranty" Type="int" />
-          <Property Name="BrandID" Type="varchar" MaxLength="20" />
-          <Property Name="CateID" Type="varchar" MaxLength="50" />
+          <Property Name="ImgSrc1" Type="nvarchar(max)" />
+          <Property Name="ImgSrc2" Type="nvarchar(max)" />
+          <Property Name="ImgSrc3" Type="nvarchar(max)" />
+          <Property Name="ImgSrc4" Type="nvarchar(max)" />
+          <Property Name="ImgSrc5" Type="nvarchar(max)" />
+          <Property Name="ImgSrc6" Type="nvarchar(max)" />
+          <Property Name="ImgSrc7" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
@@ -195,18 +181,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
               <PropertyRef Name="ProductID" />
             </Principal>
             <Dependent Role="Cart">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DetailImg_Pro">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="ProductImgDetail">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -352,10 +326,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="MegamenuItem" EntityType="Self.MegamenuItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductImgDetail" EntityType="Self.ProductImgDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductsBackup" EntityType="Self.ProductsBackup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
@@ -377,10 +349,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <AssociationSet Name="FK_Cart_Product" Association="Self.FK_Cart_Product">
             <End Role="Products" EntitySet="Products" />
             <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetailImg_Pro" Association="Self.FK_DetailImg_Pro">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="ProductImgDetail" EntitySet="ProductImgDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Megamenu_SidebarNav" Association="Self.FK_Megamenu_SidebarNav">
             <End Role="SidebarMenuNav" EntitySet="SidebarMenuNav" />
@@ -516,25 +484,15 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
           <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DeliveryFee" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalPaymentAmout" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="ShipMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customer" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Order" FromRole="Orders" ToRole="OrderDetail" />
-        </EntityType>
-        <EntityType Name="ProductImgDetail">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ImgSrc1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ImgSrc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ImgSrc3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ImgSrc4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_DetailImg_Pro" FromRole="ProductImgDetail" ToRole="Products" />
         </EntityType>
         <EntityType Name="ProductOutStanding">
           <Key>
@@ -550,35 +508,29 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           </Key>
           <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Warranty" Type="Int32" />
           <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ManufacturingDate" Type="Int32" />
+          <Property Name="ImgSrc1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc6" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc7" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
           <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Product" FromRole="Products" ToRole="Cart" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Product" FromRole="Products" ToRole="OrderDetail" />
-          <NavigationProperty Name="ProductImgDetail" Relationship="Self.FK_DetailImg_Pro" FromRole="Products" ToRole="ProductImgDetail" />
           <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
           <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
-        </EntityType>
-        <EntityType Name="ProductsBackup">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Warranty" Type="Int32" />
-          <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -732,18 +684,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetailImg_Pro">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProductImgDetail" Type="Self.ProductImgDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="ProductImgDetail">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductOutStading_Pro">
           <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
           <End Role="ProductOutStanding" Type="Self.ProductOutStanding" Multiplicity="*" />
@@ -801,10 +741,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="MegamenuItems" EntityType="Self.MegamenuItem" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="ProductImgDetails" EntityType="Self.ProductImgDetail" />
           <EntitySet Name="ProductOutStandings" EntityType="Self.ProductOutStanding" />
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="ProductsBackups" EntityType="Self.ProductsBackup" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="SidebarMenuNavs" EntityType="Self.SidebarMenuNav" />
           <EntitySet Name="Specifications" EntityType="Self.Specification" />
@@ -842,10 +780,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <AssociationSet Name="FK_OrderDetail_Product" Association="Self.FK_OrderDetail_Product">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetailImg_Pro" Association="Self.FK_DetailImg_Pro">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="ProductImgDetail" EntitySet="ProductImgDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductOutStading_Pro" Association="Self.FK_ProductOutStading_Pro">
             <End Role="Products" EntitySet="Products" />
@@ -949,23 +883,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="DeliveryFee" ColumnName="DeliveryFee" />
                 <ScalarProperty Name="TotalPaymentAmout" ColumnName="TotalPaymentAmout" />
                 <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
                 <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductImgDetails">
-            <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
-              <MappingFragment StoreEntitySet="ProductImgDetail">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
-                <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
-                <ScalarProperty Name="ImgSrc3" ColumnName="ImgSrc3" />
-                <ScalarProperty Name="ImgSrc4" ColumnName="ImgSrc4" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -989,20 +913,14 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="CateID" ColumnName="CateID" />
                 <ScalarProperty Name="ManufacturingDate" ColumnName="ManufacturingDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductsBackups">
-            <EntityTypeMapping TypeName="DatabaseSTechModel.ProductsBackup">
-              <MappingFragment StoreEntitySet="ProductsBackup">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Warranty" ColumnName="Warranty" />
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="CateID" ColumnName="CateID" />
+                <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
+                <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
+                <ScalarProperty Name="ImgSrc3" ColumnName="ImgSrc3" />
+                <ScalarProperty Name="ImgSrc4" ColumnName="ImgSrc4" />
+                <ScalarProperty Name="ImgSrc5" ColumnName="ImgSrc5" />
+                <ScalarProperty Name="ImgSrc6" ColumnName="ImgSrc6" />
+                <ScalarProperty Name="ImgSrc7" ColumnName="ImgSrc7" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -174,20 +174,25 @@
                                         <th>Mã ĐH</th>
                                         <th>Ngày đặt</th>
                                         <th>Tổng tiền</th>
+                                        <th>Trạng thái thanh toán</th>
                                         <th>Trạng thái</th>
                                         <th></th>
                                     </tr>
                                     @foreach (var item in ViewBag.Orders)
                                     {
-                                        var statusClass = "order-success";
-                                        if (item.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
-                                        else if (item.Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+                                        var paymentStatusClass = "order-success";
+                                        if (item.PaymentStatus == "Thanh toán thất bại") { paymentStatusClass = "order-failed"; }
+                                        else if (item.PaymentStatus == "Chờ thanh toán") { paymentStatusClass = "order-waiting"; }
+
                                         <tr>
                                             <td class="order-id">@item.OrderID</td>
                                             <td class="order-date">@item.OrderDate.ToString("dd/MM/yyyy")</td>
                                             <td class="order-total">@item.TotalPaymentAmout.ToString("##,###", ViewBag.cul)đ</td>
                                             <td>
-                                                <div class="order-status @statusClass">@item.Status </div>
+                                                <div class="order-pstatus @paymentStatusClass">@item.PaymentStatus </div>
+                                            </td>
+                                            <td>
+                                                <div class="order-status @(item.Status == "Đã xác nhận" ? "order-success" : "order-waiting")">@item.Status</div>
                                             </td>
                                             <td> <a href="/order/detail/@item.OrderID">Chi tiết</a></td>
                                         </tr>
@@ -254,7 +259,7 @@
             <div class="mb-3">* Hãy chọn ảnh có tỉ lệ 1:1</div>
             <div class="upload-user-img d-flex flex-column align-items-center justify-content-center gap-2">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
-                <span>Tải hình ảnh lên</span>
+                <span>Tải tên hoặc kéo thả hình ảnh vào đây</span>
             </div>
             <form action="#" class="form-upload-image" enctype="multipart/form-data">
                 <input type="file" class="file-input" id="imageFile" name="imageFile" hidden required />

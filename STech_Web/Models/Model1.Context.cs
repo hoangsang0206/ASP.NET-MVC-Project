@@ -33,10 +33,8 @@ namespace STech_Web.Models
         public virtual DbSet<MegamenuItem> MegamenuItems { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<ProductImgDetail> ProductImgDetails { get; set; }
         public virtual DbSet<ProductOutStanding> ProductOutStandings { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<ProductsBackup> ProductsBackups { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<SidebarMenuNav> SidebarMenuNavs { get; set; }
         public virtual DbSet<Specification> Specifications { get; set; }

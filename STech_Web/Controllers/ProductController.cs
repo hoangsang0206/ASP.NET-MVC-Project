@@ -24,8 +24,6 @@ namespace STech_Web.Controllers
                     Category cate = db.Categories.Where(t => t.CateID == product.CateID)
                         .FirstOrDefault();
 
-                    ProductImgDetail imgDetail = product.ProductImgDetail;
-
                     List<Product> products = db.Products.Where(t => t.CateID == product.CateID).OrderBy(t => Guid.NewGuid()).Take(15).ToList();
 
                     List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
@@ -35,7 +33,6 @@ namespace STech_Web.Controllers
 
                     ViewBag.Title = product.ProductName;
                     ViewBag.Breadcrumb = breadcrumb;
-                    ViewBag.ImgDetail = imgDetail;
                     ViewBag.Products = products;
 
                     return View(product);

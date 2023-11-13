@@ -33,6 +33,14 @@ namespace STech_Web.Models
         public string BrandID { get; set; }
         public string CateID { get; set; }
         public Nullable<int> ManufacturingDate { get; set; }
+        public string ImgSrc1 { get; set; }
+        public string ImgSrc2 { get; set; }
+        public string ImgSrc3 { get; set; }
+        public string ImgSrc4 { get; set; }
+        public string ImgSrc5 { get; set; }
+        public string ImgSrc6 { get; set; }
+        public string ImgSrc7 { get; set; }
+        public string Description { get; set; }
     
         public virtual Brand Brand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -40,7 +48,6 @@ namespace STech_Web.Models
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual ProductImgDetail ProductImgDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductOutStanding> ProductOutStandings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

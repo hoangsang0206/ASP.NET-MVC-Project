@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -76,6 +79,9 @@
     </Reference>
     <Reference Include="Google.Cloud.Storage.V1, Version=4.7.0.0, Culture=neutral, PublicKeyToken=185c282632e132a0, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Cloud.Storage.V1.4.7.0\lib\net462\Google.Cloud.Storage.V1.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -263,13 +269,6 @@
     <Content Include="Areas\Admin\Views\Products\Detail.cshtml" />
     <Content Include="DataFiles\countdown.json" />
     <Content Include="DataFiles\CartTemp.json" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
     <Content Include="GoogleCloud\magnetic-music-400416-1df1c9c33391.json" />
     <Content Include="fonts\SFProDisplay\SF-Pro-Display-Bold.woff2" />
@@ -279,6 +278,13 @@
     <Content Include="fonts\SFProDisplay\SF-Pro-Display-Semibold.woff2" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\WeatherPartial.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\lehoangsang - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
@@ -361,24 +367,25 @@
     <Compile Include="Identity\AppUser.cs" />
     <Compile Include="Identity\AppUserManager.cs" />
     <Compile Include="Identity\AppUserStore.cs" />
+    <Compile Include="ApiModels\BrandAPI.cs" />
     <Compile Include="Models\Banner1.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Brand.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApiModels\BrandAPI.cs" />
     <Compile Include="Models\Breadcrumb.cs" />
     <Compile Include="Models\Cart.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\CartTemp.cs" />
+    <Compile Include="ApiModels\CategoryAPI.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApiModels\CategoryAPI.cs" />
     <Compile Include="Models\Countdown.cs" />
+    <Compile Include="ApiModels\OrderAPI.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -406,23 +413,16 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApiModels\OrderAPI.cs" />
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderTemp.cs" />
     <Compile Include="Models\PaypalConfiguration.cs" />
+    <Compile Include="ApiModels\ProductAPI.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApiModels\ProductAPI.cs" />
-    <Compile Include="Models\ProductImgDetail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProductOutStanding.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProductsBackup.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sale.cs">

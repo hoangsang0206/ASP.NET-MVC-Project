@@ -1493,7 +1493,7 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .product-form-container {
     width: 90%;
-    height: 90%;
+    height: 97%;
     padding: 2rem 3rem;
     border-radius: 0.3rem;
     background: var(--sidebar-color);
@@ -1632,7 +1632,7 @@ input[name="category"]:checked ~ .categories-label-box {
 .product-images-wrapper {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
 }
 
 .product-image-box {
@@ -1852,14 +1852,17 @@ input[name="category"]:checked ~ .categories-label-box {
     font-weight: 600;
 }
 
+.order-pstatus.order-success,
 .order-status.order-success {
     color: #44bd32;
 }
 
+.order-pstatus.order-failed,
 .order-status.order-failed {
     color: #e30019;
 }
 
+.order-pstatus.order-waiting,
 .order-status.order-waiting {
     color: #ff6a00;
 }

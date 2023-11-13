@@ -268,12 +268,14 @@ function updateImgBox(input, imgbox) {
 }
 
 $(document).ready(() => {
-    updateImgBox($('#ImgSrc'), $('.p-img-1'));
-    updateImgBox($('#add-product-image-1'), $('.p-img-2'));
-    updateImgBox($('#add-product-image-2'), $('.p-img-3'));
-    updateImgBox($('#add-product-image-3'), $('.p-img-4'));
-    updateImgBox($('#add-product-image-4'), $('.p-img-5'));
-    updateImgBox($('#add-product-image-5'), $('.p-img-6'));
+    updateImgBox($('.add-product #ImgSrc'), $('.p-img-1'));
+    updateImgBox($('.add-product #add-product-image-1'), $('.p-img-2'));
+    updateImgBox($('.add-product #add-product-image-2'), $('.p-img-3'));
+    updateImgBox($('.add-product #add-product-image-3'), $('.p-img-4'));
+    updateImgBox($('.add-product #add-product-image-4'), $('.p-img-5'));
+    updateImgBox($('.add-product #add-product-image-5'), $('.p-img-6'));
+    updateImgBox($('.add-product #add-product-image-6'), $('.p-img-7'));
+    updateImgBox($('.add-product #add-product-image-7'), $('.p-img-8'));
 })
 
 $(document).ready(() => {
@@ -284,6 +286,8 @@ $(document).ready(() => {
     updateImgBox($('.product-detail #add-product-image-3'), $(imageList[3]));
     updateImgBox($('.product-detail #add-product-image-4'), $(imageList[4]));
     updateImgBox($('.product-detail #add-product-image-5'), $(imageList[5]));
+    updateImgBox($('.product-detail #add-product-image-6'), $(imageList[6]));
+    updateImgBox($('.product-detail #add-product-image-7'), $(imageList[7]));
 })
 
 //Add product --------------------------------
@@ -301,6 +305,9 @@ $('.add-product-form').submit((e) => {
     var imgSrc2 = $('.add-product #add-product-image-2').val();
     var imgSrc3 = $('.add-product #add-product-image-3').val();
     var imgSrc4 = $('.add-product #add-product-image-4').val();
+    var imgSrc5 = $('.add-product #add-product-image-5').val();
+    var imgSrc6 = $('.add-product #add-product-image-6').val();
+    var imgSrc7 = $('.add-product #add-product-image-7').val();
     e.preventDefault();
 
     //Clear input value
@@ -330,10 +337,13 @@ $('.add-product-form').submit((e) => {
             'ImgSrc': imgSrc,
             'Warranty': warranty,
             quantity: quantity,
-            imgSrc1: imgSrc1,
-            imgSrc2: imgSrc2,
-            imgSrc3: imgSrc3,
-            imgSrc4: imgSrc4
+            'ImgSrc1': imgSrc1,
+            'ImgSrc2': imgSrc2,
+            'ImgSrc3': imgSrc3,
+            'ImgSrc4': imgSrc4,
+            'ImgSrc5': imgSrc5,
+            'ImgSrc6': imgSrc6,
+            'ImgSrc7': imgSrc7
         },
         success: (responses) => {
             hideLoading();
@@ -411,6 +421,9 @@ $('.product-detail-form').submit((e) => {
     var imgSrc2 = $('.product-detail-form #add-product-image-2').val();
     var imgSrc3 = $('.product-detail-form #add-product-image-3').val();
     var imgSrc4 = $('.product-detail-form #add-product-image-4').val();
+    var imgSrc5 = $('.product-detail-form #add-product-image-5').val();
+    var imgSrc6 = $('.product-detail-form #add-product-image-6').val();
+    var imgSrc7 = $('.product-detail-form #add-product-image-7').val();
     $('.loading').css('display', 'grid');
     $.ajax({
         type: 'POST',
@@ -425,10 +438,13 @@ $('.product-detail-form').submit((e) => {
             'ImgSrc': imgSrc,
             'Warranty': warranty,
             quantity: quantity,
-            imgSrc1: imgSrc1,
-            imgSrc2: imgSrc2,
-            imgSrc3: imgSrc3,
-            imgSrc4: imgSrc4
+            'ImgSrc1': imgSrc1,
+            'ImgSrc2': imgSrc2,
+            'ImgSrc3': imgSrc3,
+            'ImgSrc4': imgSrc4,
+            'ImgSrc5': imgSrc5,
+            'ImgSrc6': imgSrc6,
+            'ImgSrc7': imgSrc7
         },
         success: (responses) => {
             hideLoading();

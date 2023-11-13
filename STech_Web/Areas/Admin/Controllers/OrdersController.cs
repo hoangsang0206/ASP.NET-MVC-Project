@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using STech_Web.Filters;
+using iTextSharp;
+using iTextSharp.text.pdf;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
@@ -13,8 +15,15 @@ namespace STech_Web.Areas.Admin.Controllers
         // GET: Admin/Order
         public ActionResult Index()
         {
-
             ViewBag.ActiveNav = "orders";
+            return View();
+        }
+
+        //In hóa đơn ----------------
+        public ActionResult PrintOrder()
+        {
+           
+
             return View();
         }
     }

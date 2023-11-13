@@ -23,39 +23,51 @@
         <div class="product-images-wrapper mb-4">
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@Model.ImgSrc" alt="" />
+                    <img src="@(Model.ImgSrc != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="/images/no-image.jpg" />
                 </div>
                 <span>Hình ảnh chính</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc1) == false ? ViewBag.ImgDetail.ImgSrc1 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(Model.ImgSrc1 != null ? Model.ImgSrc1 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 1</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc2) == false ? ViewBag.ImgDetail.ImgSrc2 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(Model.ImgSrc2 != null ? Model.ImgSrc2 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 2</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc3) == false ? ViewBag.ImgDetail.ImgSrc3 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(Model.ImgSrc3 != null ? Model.ImgSrc3 : "/images/no-image.jpg")" alt="" />
                 </div>
                 <span>Hình ảnh 3</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="@(ViewBag.ImgDetail != null && String.IsNullOrEmpty(ViewBag.ImgDetail.ImgSrc4) == false ? ViewBag.ImgDetail.ImgSrc4 : "/images/no-image.jpg")" alt="" />
+                    <img src="@(Model.ImgSrc4 != null ? Model.ImgSrc4 : "")" alt="" />
                 </div>
                 <span>Hình ảnh 4</span>
             </div>
             <div class="product-image-box">
                 <div class="product-detail-image">
-                    <img src="/images/no-image.jpg" alt="" />
+                    <img src="@(Model.ImgSrc5 != null ? Model.ImgSrc5 : "")" alt="" />
                 </div>
                 <span>Hình ảnh 5</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(Model.ImgSrc5 != null ? Model.ImgSrc6 : "")" alt="" />
+                </div>
+                <span>Hình ảnh 6</span>
+            </div>
+            <div class="product-image-box">
+                <div class="product-detail-image">
+                    <img src="@(Model.ImgSrc5 != null ? Model.ImgSrc7 : "")" alt="" />
+                </div>
+                <span>Hình ảnh 7</span>
             </div>
         </div>
         <form action="#" method="post" class="product-detail-form d-flex flex-wrap">
@@ -113,36 +125,44 @@
                     <input type="number" id="Warranty" name="Warranty" value="@Model.Warranty" class="form-input" min="0" required />
                     <label for="add-product-quantity" class="input-label position-absolute">Thời gian bảo hành (tháng)</label>
                 </div>
-            </div>
-
-            <div class="right-form">
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="number" id="add-product-quantity" value="@Model.WareHouse.Quantity" class="form-input" min="0" required />
                     <label for="add-product-quantity" class="input-label position-absolute">Số lượng</label>
                 </div>
+            </div>
+
+            <div class="right-form">           
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="ImgSrc" name="ImgSrc" value="@Model.ImgSrc" class="form-input" required />
                     <label for="ImgSrc" class="input-label position-absolute">Đường dẫn hình ảnh chính</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-1" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc1 : "")" class="form-input" />
+                    <input type="text" id="add-product-image-1" value="@(Model.ImgSrc1 != null ? Model.ImgSrc1 : "")" class="form-input" />
                     <label for="add-product-image-1" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 1</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-2" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc2 : "")" class="form-input" />
+                    <input type="text" id="add-product-image-2" value="@(Model.ImgSrc2 != null ? Model.ImgSrc2 : "")" class="form-input" />
                     <label for="add-product-image-2" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 2</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-3" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc3 : "")" class="form-input" />
+                    <input type="text" id="add-product-image-3" value="@(Model.ImgSrc3 != null ? Model.ImgSrc3 : "")" class="form-input" />
                     <label for="add-product-image-3" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 3</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-4" value="@(ViewBag.ImgDetail != null ? ViewBag.ImgDetail.ImgSrc4 : "")" class="form-input" />
+                    <input type="text" id="add-product-image-4" value="@(Model.ImgSrc4 != null ? Model.ImgSrc4 : "")" class="form-input" />
                     <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 4</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="add-product-image-5" value="" class="form-input" />
-                    <label for="add-product-image-5" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 5    </label>
+                    <input type="text" id="add-product-image-5" value="@(Model.ImgSrc5 != null ? Model.ImgSrc5 : "")" class="form-input" />
+                    <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 5</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-6" value="@(Model.ImgSrc6 != null ? Model.ImgSrc6 : "")" class="form-input" />
+                    <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 6</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="add-product-image-7" value="@(Model.ImgSrc7 != null ? Model.ImgSrc7 : "")" class="form-input" />
+                    <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 7</label>
                 </div>
             </div>
 

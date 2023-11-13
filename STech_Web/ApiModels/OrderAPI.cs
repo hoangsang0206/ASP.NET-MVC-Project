@@ -11,6 +11,7 @@ namespace STech_Web.Models
         public string OrderID { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
+        public string PaymentStatus { get; set; }
         public string Status { get; set; }
         public string Note { get; set; }
         public decimal DeliveryFee { get; set; }
@@ -20,12 +21,13 @@ namespace STech_Web.Models
 
         public OrderAPI() { }
 
-        public OrderAPI(string CustomerName, string OrderID, DateTime OrderDate, decimal TotalPrice, string Status, string Note, decimal DeliveryFee, decimal TotalPaymentAmout, string ShipMethod, string PaymentMethod)
+        public OrderAPI(string CustomerName, string OrderID, DateTime OrderDate, decimal TotalPrice, string PaymentStatus, string Status, string Note, decimal DeliveryFee, decimal TotalPaymentAmout, string ShipMethod, string PaymentMethod)
         {
             this.CustomerName = CustomerName;
             this.OrderID = OrderID;
             this.OrderDate = OrderDate;
             this.TotalPrice = TotalPrice;
+            this.PaymentStatus = PaymentStatus;
             this.Status = Status;
             this.Note = Note;
             this.DeliveryFee = DeliveryFee;

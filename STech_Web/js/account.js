@@ -237,6 +237,14 @@ $('.upload-img-btn').click(() => {
 $('.close-upload-frm').click(() => {
     $('.upload-user-image').removeClass('show');
     $('.upload-form-box').removeClass('show');
+
+    $('.upload-user-img').empty();
+    $('.upload-user-img').removeClass('img-uploaded');
+    $('.upload-user-img').append(`<i class="fa-solid fa-cloud-arrow-up"></i><span>Tải tên hoặc kéo thả hình ảnh vào đây</span>`);
+    $('.upload-frm-notice').empty();
+    $('.upload-frm-notice').removeClass('success')
+    $('.upload-frm-notice').removeClass('failed')
+    $('.upload-frm-notice').css('display', 'none !important');
 })
 //------------
 function updateUploadFormNotice(string, status) {
@@ -257,12 +265,7 @@ function updateUploadFormNotice(string, status) {
 //------------
 
 $(document).ready(() => {
-    $('.upload-user-img').click(() => {
-        $('.file-input').click();
-    })
-
-    $('.file-input').on('change', ({target}) => {
-        let file = target.files[0];
+    function uploadUserImage(file) {
         if (file) {
             let formData = new FormData();
             formData.append('file', file);
@@ -326,7 +329,34 @@ $(document).ready(() => {
                 }
             })
         }
+    }
+
+    $('.upload-user-img').on('dragover dragenter', () => {
+        $('.upload-user-img').addClass('dragenter');
+    })
+
+    $('.upload-user-img').on('dragleave dragend drop', () => {
+        $('.upload-user-img').removeClass('dragenter');
+    })
+
+    $('.upload-user-img').click(() => {
+        $('.file-input').click();
+    })
+
+    $('.file-input').on('change', ({target}) => {
+        let file = target.files[0];
+        uploadUserImage(file);
     });
+
+    $('.upload-user-img').on('dragover', (e) => {
+        e.preventDefault();
+    })
+
+    $('.upload-user-img').on('drop', (e) => {
+        e.preventDefault();
+        var files = e.originalEvent.dataTransfer.files;
+        uploadUserImage(files[0]);
+    })
 });
 
 //-----------------------------------------------
@@ -384,20 +414,24 @@ $('.order-search-form').submit((e) => {
                     <th>Mã ĐH</th>
                     <th>Ngày đặt</th>
                     <th>Tổng tiền</th>
+                    <th>Trạng thái thanh toán</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>`;
             $('.order-list table tbody').empty();
             $.each(data.orders, (index, order) => {
                 var statusClass = "order-success";
-                if (order.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
-                else if (order.Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+                if (order.PaymentStatus == "Thanh toán thất bại") { statusClass = "order-failed"; }
+                else if (order.PaymentStatus == "Chờ thanh toán") { statusClass = "order-waiting"; }
                 str += `<tr>
                     <td class="order-id">${order.OrderID}</td>
                     <td class="order-date">${formatDateFromAspNet(order.OrderDate)}</td>
                     <td class="order-total">${order.TotalPaymentAmout.toLocaleString("vi-VN")}đ</td>
                     <td>
-                        <div class="order-status ${statusClass}">${order.Status}</div>
+                        <div class="order-status ${statusClass}">${order.PaymentStatus}</div>
+                    </td>
+                     <td>
+                        <div class="order-status ${order.Status == 'Đã xác nhận' ? 'order-success' : 'order-waiting'}">${order.Status}</div>
                     </td>
                     <td> <a href="/order/detail/${order.OrderID}">Chi tiết</a></td>
                 </tr>`;
@@ -430,20 +464,24 @@ $('.order-header-list li').click((e) => {
                     <th>Mã ĐH</th>
                     <th>Ngày đặt</th>
                     <th>Tổng tiền</th>
+                    <th>Trạng thái thanh toán</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>`;
                 $('.order-list table tbody').empty();
                 $.each(data.orders, (index, order) => {
                     var statusClass = "order-success";
-                    if (order.Status == "Thanh toán thất bại.") { statusClass = "order-failed"; }
-                    else if (order.Status == "Chờ thanh toán") { statusClass = "order-waiting"; }
+                    if (order.PaymentStatus == "Thanh toán thất bại") { statusClass = "order-failed"; }
+                    else if (order.PaymentStatus == "Chờ thanh toán") { statusClass = "order-waiting"; }
                     str += `<tr>
                     <td class="order-id">${order.OrderID}</td>
                     <td class="order-date">${formatDateFromAspNet(order.OrderDate)}</td>
                     <td class="order-total">${order.TotalPaymentAmout.toLocaleString("vi-VN")}đ</td>
                     <td>
-                        <div class="order-status ${statusClass}">${order.Status}</div>
+                        <div class="order-pstatus ${statusClass}">${order.PaymentStatus}</div>
+                    </td>
+                    <td>
+                        <div class="order-status ${order.Status == 'Đã xác nhận' ? 'order-success' : 'order-waiting'}">${order.Status}</div>
                     </td>
                     <td> <a href="/order/detail/${order.OrderID}">Chi tiết</a></td>
                 </tr>`;

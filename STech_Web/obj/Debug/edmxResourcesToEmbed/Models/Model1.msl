@@ -80,23 +80,13 @@
           <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
           <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
           <ScalarProperty Name="Note" ColumnName="Note" />
           <ScalarProperty Name="DeliveryFee" ColumnName="DeliveryFee" />
           <ScalarProperty Name="TotalPaymentAmout" ColumnName="TotalPaymentAmout" />
           <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
           <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductImgDetails">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductImgDetail">
-        <MappingFragment StoreEntitySet="ProductImgDetail">
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
-          <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
-          <ScalarProperty Name="ImgSrc3" ColumnName="ImgSrc3" />
-          <ScalarProperty Name="ImgSrc4" ColumnName="ImgSrc4" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -120,20 +110,14 @@
           <ScalarProperty Name="BrandID" ColumnName="BrandID" />
           <ScalarProperty Name="CateID" ColumnName="CateID" />
           <ScalarProperty Name="ManufacturingDate" ColumnName="ManufacturingDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductsBackups">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductsBackup">
-        <MappingFragment StoreEntitySet="ProductsBackup">
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-          <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Warranty" ColumnName="Warranty" />
-          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-          <ScalarProperty Name="CateID" ColumnName="CateID" />
+          <ScalarProperty Name="ImgSrc1" ColumnName="ImgSrc1" />
+          <ScalarProperty Name="ImgSrc2" ColumnName="ImgSrc2" />
+          <ScalarProperty Name="ImgSrc3" ColumnName="ImgSrc3" />
+          <ScalarProperty Name="ImgSrc4" ColumnName="ImgSrc4" />
+          <ScalarProperty Name="ImgSrc5" ColumnName="ImgSrc5" />
+          <ScalarProperty Name="ImgSrc6" ColumnName="ImgSrc6" />
+          <ScalarProperty Name="ImgSrc7" ColumnName="ImgSrc7" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

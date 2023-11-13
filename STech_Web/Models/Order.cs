@@ -24,12 +24,13 @@ namespace STech_Web.Models
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
-        public string Status { get; set; }
+        public string PaymentStatus { get; set; }
         public string Note { get; set; }
         public Nullable<decimal> DeliveryFee { get; set; }
         public decimal TotalPaymentAmout { get; set; }
         public string ShipMethod { get; set; }
         public string PaymentMethod { get; set; }
+        public string Status { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

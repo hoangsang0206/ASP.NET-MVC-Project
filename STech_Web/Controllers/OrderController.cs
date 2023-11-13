@@ -167,7 +167,8 @@ namespace STech_Web.Controllers
                 order.DeliveryFee = 0;
                 order.TotalPrice = totalPrice;
                 order.TotalPaymentAmout = totalPrice;
-                order.Status = "Chờ thanh toán";
+                order.PaymentStatus = "Chờ thanh toán";
+                order.Status = "Chờ xác nhận";
 
                 //Tạo chi tiết đơn hàng
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -393,7 +394,8 @@ namespace STech_Web.Controllers
             order.DeliveryFee = 0;
             order.TotalPrice = totalPrice;
             order.TotalPaymentAmout = totalPrice;
-            order.Status = "Chờ thanh toán";
+            order.PaymentStatus = "Chờ thanh toán";
+            order.Status = "Chờ xác nhận";
 
             //Tạo chi tiết đơn hàng
             List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -449,7 +451,7 @@ namespace STech_Web.Controllers
                     //If executed payment failed then we will show payment failure message to user  
                     if (executedPayment.state.ToLower() != "approved")
                     {
-                        order.Status = "Thanh toán thất bại.";
+                        order.PaymentStatus = "Thanh toán thất bại";
                         db.Orders.Add(order);
                         db.OrderDetails.AddRange(orderDetails);
                         db.Carts.RemoveRange(cart);
@@ -461,6 +463,7 @@ namespace STech_Web.Controllers
             }
             catch (Exception ex)
             {
+                order.PaymentStatus = "Thanh toán thất bại";
                 db.Orders.Add(order);
                 db.OrderDetails.AddRange(orderDetails);
                 db.Carts.RemoveRange(cart);
@@ -468,7 +471,7 @@ namespace STech_Web.Controllers
 
                 return Redirect("/order/failed");
             }
-            order.Status = "Thanh toán thành công.";
+            order.PaymentStatus = "Thanh toán thành công";
             db.Orders.Add(order);
             db.OrderDetails.AddRange(orderDetails);
             db.Carts.RemoveRange(cart);
@@ -574,14 +577,14 @@ namespace STech_Web.Controllers
 
             if (session.PaymentStatus == "paid")
             {
-                order.Status = "Thanh toán thành công.";
+                order.PaymentStatus = "Thanh toán thành công";
                 db.Orders.AddOrUpdate(order);
                 db.SaveChanges();
 
                 return RedirectToAction("Succeeded");
             }
 
-            order.Status = "Thanh toán thất bại.";
+            order.PaymentStatus = "Thanh toán thất bại";
             db.Orders.AddOrUpdate(order);
             db.SaveChanges();
 
@@ -648,7 +651,7 @@ namespace STech_Web.Controllers
                 STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
                 STech_Web.Models.Order order = customer.Orders.FirstOrDefault(t => t.OrderID == orderID);
 
-                if (order != null && order.Status == "Chờ thanh toán")
+                if (order != null && order.PaymentStatus == "Chờ thanh toán" && order.Status == "Chờ xác nhận")
                 {
                     List<OrderDetail> orderDetails = order.OrderDetails.ToList();
                     db.OrderDetails.RemoveRange(orderDetails);
@@ -680,7 +683,7 @@ namespace STech_Web.Controllers
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
@@ -718,16 +721,16 @@ namespace STech_Web.Controllers
                         orders = customer.Orders.Where(t => t.OrderDate >= DateTime.Now.AddDays(-2)).ToList();
                         break;
                     case "wait-for-pay":
-                        orders = customer.Orders.Where(t => t.Status == "Chờ thanh toán").ToList();
+                        orders = customer.Orders.Where(t => t.PaymentStatus == "Chờ thanh toán").ToList();
                         break;
                     case "paid":
-                        orders = customer.Orders.Where(t => t.Status == "Thanh toán thành công.").ToList();
+                        orders = customer.Orders.Where(t => t.PaymentStatus == "Thanh toán thành công.").ToList();
                         break;
                 }
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
