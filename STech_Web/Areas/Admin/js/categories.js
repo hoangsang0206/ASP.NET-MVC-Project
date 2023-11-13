@@ -86,6 +86,9 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                     if (responses[i] != null) {
                         var str2 = `<div class="product-box-container">
                         <div class="product-box position-relative">
+                        ${responses[i].Quantity <= 0 ? `<div class="product-oot">
+                                                    <span>Hết hàng</span>
+                                                </div>` : ""}
                             <a href="/admin/product/${responses[i].ProductID}" class="product-link">
                                 <div class="product-image lazy-loading">
                                     <img lazy-src="${responses[i].ImgSrc}" class="product-img">

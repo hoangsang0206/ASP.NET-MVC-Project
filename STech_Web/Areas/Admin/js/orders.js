@@ -18,7 +18,7 @@ $('.order-search-value').click((e) => {
 
 function appendOrderList(res) {
     var strHead = `<tr> <th>Mã ĐH</th><th>Tên khách hàng</th>
-                        <th>Ngày đặt</th><th>Tổng tiền</th><th>H.thức thanh toán</th>
+                        <th>Ngày đặt</th><th>Tổng tiền</th><th>H.thức TT</th>
                         <th>Trạng thái thanh toán</th><th></th></tr>`;
     if (res.length > 0) {
         $('.order-list table tbody').append(strHead);
@@ -38,6 +38,7 @@ function appendOrderList(res) {
                             <td><div class="order-payment">${res[i].PaymentMethod}</div></td>
                             <td><div class="order-status ${statusClass}">${res[i].Status}</div></td>
                             <td><div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
+                                <button class="order-btn order-print-btn" data-print-order="${res[i].OrderID}">In HĐ</button>
                                 <button class="order-btn order-detail-btn" data-detail-order="${res[i].OrderID}">Chi tiết</button>
                                 <button class="order-btn order-update-btn" data-update-order="${res[i].OrderID}">Sửa</button>
                                 <button class="order-btn delete-order-btn" data-del-order="${res[i].OrderID}">Xóa</button>
@@ -116,9 +117,78 @@ $('.search-by-date-btn').click(() => {
     }
 })
 
-//--Get order detail
+//--Get order detail ------------------------
+$('.close-order-info').click(() => {
+    $('.order-infomation-wrapper').css('visibility', 'hidden');
+    $('.order-infomation-box').removeClass('show');
+})
 
+$(document).on('click', '.order-detail-btn', (e) => {
+    var orderID = $(e.target).data('detail-order');
+    if (orderID.length > 0) {
+        $('.loading').css('display', 'grid');
+        $.ajax({
+            tpe: 'get',
+            url: '/api/orders',
+            data: { id: orderID },
+            success: (data) => {
+                var date = new Date(data.OrderDate);
+                var dateFormat = date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-US');
 
+                $('.order-info-header').text('Chi tiết đơn hàng - ' + data.OrderID)
+                $('.order-info-id').text(data.OrderID);
+                $('.order-info-date').text(dateFormat);
+                $('.order-info-payment').text(data.PaymentMethod);
+                $('.order-info-ship').text(data.ShipMethod);
+                $('.order-info-note').text(data.Note);
+                $('.order-info-total').text(data.TotalPrice.toLocaleString('vi-VN') + 'đ');
+                $('.order-info-ship-total').text(data.DeliveryFee.toLocaleString('vi-VN') + 'đ');
+                $('.order-info-totalpay').text(data.TotalPaymentAmout.toLocaleString('vi-VN') + 'đ');  
+                $('.order-info-status').text(data.Status);
+
+                $.ajax({
+                    type: 'get',
+                    url: '/api/orders',
+                    data: { orderID: data.OrderID },
+                    success: (data1) => {
+                        hideLoading();
+                        $('.order-products-info table tbody').empty();
+                        var strH = ` <tr>
+                                    <th>Số lượng</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá bán</th>
+                                    <th>Thành tiền</th>
+                                </tr>`;
+                        var str = ``;
+                        if (data1.length > 0) {
+                            for (var i = 0; i < data1.length; i++) {
+                                str += `<tr>
+                                            <td>${data1[i].Quantity}</td>
+                                            <td>
+                                                <img src="${data1[i].Product.ImgSrc}" alt="" />
+                                            </td>
+                                            <td>${data1[i].Product.ProductID}</td>
+                                            <td>${data1[i].Product.ProductName}</td>
+                                            <td>${data1[i].Product.Price.toLocaleString('vi-VN') + 'đ'}</td>
+                                            <td class="fw-bold">${(data1[i].Product.Price * data1[i].Quantity).toLocaleString('vi-VN') + 'đ'}</td>
+                                        </tr>`;
+                            }
+
+                            $('.order-info-cnt').text('Số sản phẩm - ' + data1.length);
+                            $('.order-infomation-wrapper').css('visibility', 'visible');
+                            $('.order-infomation-box').addClass('show');
+                            $('.order-products-info table tbody').append(strH + str);
+                        }
+                    },
+                    error: () => {  }
+                })
+            },
+            error: () => { console.log('Error') }
+        })
+    }
+})
 
 //--Delete order
 $(document).on('click', '.delete-order-btn', (e) => {

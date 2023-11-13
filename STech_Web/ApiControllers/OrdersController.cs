@@ -7,10 +7,11 @@ using System.Web.DynamicData;
 using System.Web.Http;
 using STech_Web.Filters;
 using STech_Web.Models;
+using STech_Web.ApiModels;
 
 namespace STech_Web.ApiControllers
 {
-    [AdminAuthorization]
+    [Authorize(Roles = "Admin")]
     public class OrdersController : ApiController
     {
         //Lấy tất cả đơn hàng
@@ -29,6 +30,41 @@ namespace STech_Web.ApiControllers
                 }
             }
             return ordersApi;
+        }
+
+        //Lấy 1 đơn hàng
+        public OrderAPI GetOne(string id)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Order order = db.Orders.FirstOrDefault(t => t.OrderID ==  id);
+            OrderAPI orderApi = new OrderAPI();
+            if(order != null)
+            {
+                orderApi = new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod);
+
+            }
+
+            return orderApi;
+        }
+
+        //Lấy chi tiết 1 sản phẩm
+        public List<OrderDetailAPI> GetOrderDetail(string orderID)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<OrderDetail> orderDetails = db.OrderDetails.Where(t => t.OrderID == orderID).ToList();
+            List<OrderDetailAPI> orderDetailAPIs = new List<OrderDetailAPI>();
+
+            if(orderDetails.Count > 0)
+            {
+                foreach(OrderDetail orderDetail in orderDetails)
+                {
+                    Product p = db.Products.FirstOrDefault(t => t.ProductID == orderDetail.ProductID);
+                    ProductAPI productAPI = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+                    orderDetailAPIs.Add(new OrderDetailAPI(productAPI, orderDetail.OrderID, orderDetail.Quantity));
+                }
+            }
+
+            return orderDetailAPIs;
         }
 
         //Tìm kiếm đơn hàng

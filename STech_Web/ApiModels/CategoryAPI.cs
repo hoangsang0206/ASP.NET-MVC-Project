@@ -11,6 +11,8 @@ namespace STech_Web.Models
         public string CateID { get; set; }
         public string CateName { get; set; }
 
+        public CategoryAPI() { }
+
         public CategoryAPI(string CateID, string CateName) 
         {
             this.CateID = CateID;

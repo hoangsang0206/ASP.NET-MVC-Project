@@ -1367,6 +1367,14 @@ input[name="category"]:checked ~ .categories-label-box {
     font-size: 0.9rem;
 }
 
+.order-print-btn {
+    background: #009432;
+}
+
+.order-print-btn:hover {
+    outline: 2px solid #9cf185;
+}
+
 .order-detail-btn {
     background: #0652DD;
 }
@@ -1423,14 +1431,48 @@ input[name="category"]:checked ~ .categories-label-box {
 .order-infomation-box {
     position: relative;
     background: var(--sidebar-color);
-    width: 33%;
+    width: 80%;
+    max-height: 90%;
+    overflow-y: scroll;
     padding: 1.5rem 2rem;
     border-radius: 0.3rem;
     cursor: auto;
     transform: scale(0);
     opacity: 0;
-    transition: var(--tran-03);
+    transition: var(--tran-02);
 }
+
+.order-infomation-box.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.order-infomation {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.order-info-item span {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.order-products-info img {
+    width: 4rem;
+}
+
+.close-order-info {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    cursor: pointer;
+}
+
+.close-order-info i {
+    font-size: 2rem;
+}
+
+
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
@@ -1592,6 +1634,12 @@ input[name="category"]:checked ~ .categories-label-box {
 
     .dropdown-search-main {
         width: auto;
+    }
+
+    /*------------Order page -------------------------------*/
+    .order-infomation {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 

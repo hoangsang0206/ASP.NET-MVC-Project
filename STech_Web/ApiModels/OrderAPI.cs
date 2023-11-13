@@ -18,6 +18,8 @@ namespace STech_Web.Models
         public string ShipMethod { get; set; }
         public string PaymentMethod { get; set; }
 
+        public OrderAPI() { }
+
         public OrderAPI(string CustomerName, string OrderID, DateTime OrderDate, decimal TotalPrice, string Status, string Note, decimal DeliveryFee, decimal TotalPaymentAmout, string ShipMethod, string PaymentMethod)
         {
             this.CustomerName = CustomerName;
