@@ -3,6 +3,8 @@
     ViewBag.Title = "Quản lý đơn hàng";
 }
 
+@model List<STech_Web.Models.Order> 
+
 <section class="orders-page position-relative">
     @{
         Html.RenderPartial("WeatherPartial");
@@ -80,7 +82,68 @@
                     </tr>
                 </table>
             </div>
-
+            <div class="orders-search-wrapper mt-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div>
+                    <h5 class="m-0 p-0">Đơn hàng chờ xác nhận</h5>
+                </div>
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <button class="page-btn get-accept-order">Đã xác nhận</button>
+                    <button class="page-btn get-refuse-order">Đã hủy</button>
+                    <button class="page-btn get-paid-order">Đã thanh toán</button>
+                    <button class="page-btn get-notpaid-order">Chưa thanh toán</button>
+                    <button class="page-btn reload-orders">Tải lại</button>
+                </div>
+            </div>
+            <div class="order-waiting-list">
+                <table class="table">
+                    <tr>
+                        <th>Mã ĐH</th>
+                        <th>Tên khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái thanh toán</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                    @foreach(var order in Model)
+                    {
+                        var statusClass = "order-success";
+                        if (order.PaymentStatus == "Thanh toán thất bại") { statusClass = "order-failed"; }
+                        else if (order.PaymentStatus == "Chờ thanh toán") { statusClass = "order-waiting"; }
+                        <tr>
+                            <td><div class="order-id">@order.OrderID</div></td>
+                            <td><div class="cus-name">@order.Customer.CustomerName</div></td>
+                            <td><div class="order-date">@order.OrderDate</div></td>
+                            <td><div class="total-payment">@order.TotalPaymentAmout.ToString("##,###", ViewBag.cul)đ</div></td>
+                            <td><div class="order-pstatus @statusClass">@order.PaymentStatus</div></td>
+                            @if (order.Status == "Chờ xác nhận")
+                            {
+                                <td>
+                                    <div class="order-status">
+                                        <button class="order-btn order-status-accept" data-accept-order="@order.OrderID">Xác nhận</button>
+                                        <button class="order-btn order-status-refuse" data-refuse-order="@order.OrderID">Hủy</button>
+                                    </div>
+                                </td>
+                            }
+                            else if (order.Status == "Đã xác nhận")
+                            {
+                                <td><div class="order-status order-success">@order.Status</div></td>
+                            }
+                            else if (order.Status == "Đã hủy")
+                            {
+                                <td><div class="order-status order-failed">@order.Status</div></td>
+                            }
+                            <td>
+                                <div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
+                                    <button class="order-btn order-detail-btn" data-detail-order="@order.OrderID">Chi tiết</button>
+                                    <button class="order-btn order-update-btn" data-update-order="@order.OrderID">Sửa</button>
+                                    <button class="order-btn delete-order-btn" data-del-order="@order.OrderID">Xóa</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -141,10 +204,10 @@
         <div class="order-products-info my-3">
             <table class="table">
                 <tr>
-                    <th>Số lượng</th>
                     <th>Mã sản phẩm</th>
                     <th>Tên sản phẩm</th>
                     <th>Giá bán</th>
+                    <th>Số lượng</th>
                     <th>Thành tiền</th>
                 </tr>
                 <tr></tr>

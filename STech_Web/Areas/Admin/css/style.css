@@ -1684,13 +1684,13 @@ input[name="category"]:checked ~ .categories-label-box {
     z-index: 2;
 }
 /*---------Orders page ---------------------------------*/
-.orders-search-wrapper, .order-list {
+.orders-search-wrapper, .order-list, .order-waiting-list {
     background: #ffffff;
     padding: 1.2rem 1.5rem;
     border-radius: 0.3rem;
 }
 
-.order-list {
+.order-list, .order-waiting-list {
     margin-top: 1rem;
     min-height: 30rem;
     max-height: 40rem;
@@ -1799,7 +1799,9 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .order-list table td,
-.order-list table th {
+.order-list table th,
+.order-waiting-list td,
+.order-waiting-list th {
     padding: 0.7rem 1rem 0.7rem 0;
     white-space: nowrap;
 }
@@ -1816,11 +1818,11 @@ input[name="category"]:checked ~ .categories-label-box {
     font-size: 0.9rem;
 }
 
-.order-print-btn {
+.order-print-btn, .order-status-accept {
     background: #009432;
 }
 
-.order-print-btn:hover {
+.order-print-btn:hover, .order-status-accept:hover {
     outline: 2px solid #9cf185;
 }
 
@@ -1832,11 +1834,11 @@ input[name="category"]:checked ~ .categories-label-box {
     outline: 2px solid #4779ff
 }
 
-.delete-order-btn {
+.delete-order-btn, .order-status-refuse {
     background: #e30019;
 }
 
-.delete-order-btn:hover {
+.delete-order-btn:hover, .order-status-refuse:hover {
     outline: 2px solid #fe9090;
 }
 
@@ -1846,6 +1848,17 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .order-update-btn:hover {
     outline: 2px solid #b0a9fb;
+}
+
+.reload-orders {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.reload-orders:hover {
+    background: var(--primary-color);
+    color: #fff;
 }
 
 .order-id {

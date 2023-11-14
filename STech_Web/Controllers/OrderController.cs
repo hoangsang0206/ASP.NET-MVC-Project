@@ -180,6 +180,10 @@ namespace STech_Web.Controllers
                     orderDetail.Quantity = c.Quantity;
 
                     orderDetails.Add(orderDetail);
+
+                    //Trừ số lượng khỏi kho
+                    WareHouse wh = c.Product.WareHouse;
+                    wh.Quantity -= c.Quantity;
                 }
 
 
@@ -407,6 +411,10 @@ namespace STech_Web.Controllers
                 orderDetail.Quantity = c.Quantity;
 
                 orderDetails.Add(orderDetail);
+
+                //Trừ số lượng khỏi kho
+                WareHouse wh = c.Product.WareHouse;
+                wh.Quantity -= c.Quantity;
             }
 
             try
@@ -654,6 +662,13 @@ namespace STech_Web.Controllers
                 if (order != null && order.PaymentStatus == "Chờ thanh toán" && order.Status == "Chờ xác nhận")
                 {
                     List<OrderDetail> orderDetails = order.OrderDetails.ToList();
+                    //Cập nhật lại số lượng của sản phẩm
+                    foreach(OrderDetail orderDetail in orderDetails)
+                    {
+                        WareHouse wh = orderDetail.Product.WareHouse;
+                        wh.Quantity += orderDetail.Quantity;
+                    }
+
                     db.OrderDetails.RemoveRange(orderDetails);
                     db.Orders.Remove(order);
                     db.SaveChanges();

@@ -20,6 +20,8 @@ function getWeatherIcon(description) {
             return `<div class="mostlycloudy"><div class="inner"></div></div>`;
         case 'broken clouds':
             return `<div class="mostlysunny"><div class="inner"></div></div>`;
+        case 'light rain':
+            return `<div class="rain"><div class="inner"></div></div>`;
         case 'shower rain':
             return `<div class="rain"><div class="inner"></div></div>`;
         case 'rain':
@@ -48,6 +50,7 @@ $(document).ready(() => {
             var str = getWeatherIcon(data.weather[0].description);
             $('.weatherIcon').append(str);
             $('.city').text(data.name);
+            console.log(data.weather[0].description)
         },
         error: () => { console.log('Cannot get weather data'); }
     })

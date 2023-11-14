@@ -47,7 +47,7 @@ namespace STech_Web.ApiControllers
             return orderApi;
         }
 
-        //Lấy chi tiết 1 sản phẩm
+        //Lấy chi tiết 1 đơn hàng
         public List<OrderDetailAPI> GetOrderDetail(string orderID)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
@@ -144,6 +144,31 @@ namespace STech_Web.ApiControllers
             return ordersApi;
         }
 
+        //Lấy các đơn hàng chờ xác nhận
+        public List<OrderAPI> GetOrderWaiting(string type, string status)
+        {
+            List<OrderAPI> ordersApi = new List<OrderAPI>();
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Order> orders = new List<Order>();
+
+            if(type == "status")
+            {
+                orders = db.Orders.Where(t => t.Status == status).ToList();
+            }
+            else if(type == "payment-stt")
+            {
+                orders = db.Orders.Where(t => t.PaymentStatus == status).ToList();
+            }
+
+            if (orders.Count > 0)
+            {
+                foreach (Order order in orders)
+                {
+                    ordersApi.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                }
+            }
+            return ordersApi;
+        }
 
     }
 }
