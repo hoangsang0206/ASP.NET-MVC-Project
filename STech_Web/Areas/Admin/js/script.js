@@ -1,4 +1,5 @@
-﻿function updateCurrentTime() {
+﻿//Lấy thời gian và thời tiết hiện tại -----------------------------------------
+function updateCurrentTime() {
     var currentTime = new Date();
     var date = currentTime.toLocaleDateString('en-GB');
     var time = currentTime.toLocaleTimeString('en-US');
@@ -20,6 +21,8 @@ function getWeatherIcon(description) {
             return `<div class="mostlycloudy"><div class="inner"></div></div>`;
         case 'broken clouds':
             return `<div class="mostlysunny"><div class="inner"></div></div>`;
+        case 'overcast clouds':
+            return `<div class="cloudy"><div class="inner"></div></div>`;
         case 'light rain':
             return `<div class="rain"><div class="inner"></div></div>`;
         case 'shower rain':
@@ -53,5 +56,23 @@ $(document).ready(() => {
             console.log(data.weather[0].description)
         },
         error: () => { console.log('Cannot get weather data'); }
+    })
+})
+
+//Đếm số đơn hàng mới
+$(document).ready(() => {
+    $.ajax({
+        type: 'get',
+        url: '/admin/orders/countneworder',
+        success: (data) => {
+            if (data.count > 0) {
+                $('.new-order-count').css('display', 'grid');
+                $('.new-order-count').text(data.count);
+            }
+            else {
+                $('.new-order-count').hide();
+            }
+        },
+        error: () => { }
     })
 })

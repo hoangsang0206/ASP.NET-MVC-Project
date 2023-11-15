@@ -746,6 +746,18 @@ main {
     overflow: hidden;
 }
 
+.new-order-count {
+    height: 1.7rem;
+    width: 1.7rem;
+    display: none;
+    place-items: center;
+    border-radius: 50%;
+    background: #ffd700;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #000;
+}
+
 footer {
     left: 270px;
     width: calc(100% - 270px);
@@ -1288,25 +1300,29 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .delete-cate-confirm-box i,
-.delete-confirm-box i{
+.delete-confirm-box i,
+.payment-acception i {
     font-size: 4rem;
     color: #ff6606;
     margin-bottom: 1rem;
 }
 
 .delete-cate-confirm-box span,
-.delete-confirm-box span {
+.delete-confirm-box span,
+.payment-acception span {
     font-size: 1.1rem;
 }
 
 .delete-cate-confirm-btn-box,
-.delete-button-box {
+.delete-button-box,
+.accept-paid-btn-box {
     width: 90%;
     margin-top: 1.5rem;
 }
 
 .delete-cate-confirm-btn-box button,
-.delete-button-box button{
+.delete-button-box button,
+.accept-paid-btn-box button {
     border: none;
     padding: 0.7rem 1rem;
     border-radius: 0.2rem;
@@ -1315,20 +1331,23 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .delete-cate-confirm-no:hover,
-.cancel-delete:hover {
+.cancel-delete:hover,
+.cancel-acception:hover {
     background: #d4d4d4;
 }
 
 .delete-cate-confirm-yes,
 .confirm-delete,
-.confirm-delete-order {
+.confirm-delete-order,
+.confirm-acception {
     background: var(--primary-color);
     color: #ffffff;
 }
 
 .delete-cate-confirm-yes:hover,
 .confirm-delete:hover,
-.confirm-delete-order:hover {
+.confirm-delete-order:hover,
+.confirm-acception:hover {
     outline: 2px solid #938afc;
 }
 
@@ -1798,12 +1817,16 @@ input[name="category"]:checked ~ .categories-label-box {
     color: #ffffff;
 }
 
-.order-list table td,
-.order-list table th,
-.order-waiting-list td,
-.order-waiting-list th {
-    padding: 0.7rem 1rem 0.7rem 0;
+.table th, .order-button-box button, .order-status button {
     white-space: nowrap;
+}
+
+.table th, .table td {
+    padding: 0.7rem 2rem 0.7rem 0;
+}
+
+.table th:last-child, .table td:last-child {
+    padding-right: 0;
 }
 
 .order-list-item * {
@@ -1818,11 +1841,22 @@ input[name="category"]:checked ~ .categories-label-box {
     font-size: 0.9rem;
 }
 
-.order-print-btn, .order-status-accept {
+.accept-paid {
+    padding: 0.3rem 0.4rem;
+    display: grid;
+    place-items: center;
+}
+
+.accept-paid i {
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.order-print-btn, .order-status-accept, .accept-paid {
     background: #009432;
 }
 
-.order-print-btn:hover, .order-status-accept:hover {
+.order-print-btn:hover, .order-status-accept:hover, .accept-paid:hover {
     outline: 2px solid #9cf185;
 }
 
@@ -1880,7 +1914,9 @@ input[name="category"]:checked ~ .categories-label-box {
     color: #ff6a00;
 }
 
-.order-infomation-wrapper {
+.order-infomation-wrapper,
+.order-update-wrapper,
+.payment-acception-confirm {
     position: fixed;
     top: 0;
     left: 0;
@@ -1893,7 +1929,8 @@ input[name="category"]:checked ~ .categories-label-box {
     z-index: 55;
 }
 
-.order-infomation-box {
+.order-infomation-box,
+.order-update-box {
     position: relative;
     background: var(--sidebar-color);
     width: 80%;
@@ -1907,12 +1944,39 @@ input[name="category"]:checked ~ .categories-label-box {
     transition: var(--tran-02);
 }
 
-.order-infomation-box.show {
+.order-infomation-box.show,
+.order-update-box.show,
+.payment-acception.show {
     transform: scale(1);
     opacity: 1;
 }
 
-.order-infomation {
+.form-box-header {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #dbdbdb;
+}
+
+.form-header-text {
+    font-weight: 600;
+    padding-bottom: 1rem;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.form-header-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--primary-color);
+}
+
+.order-infomation,
+.order-cus-info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
@@ -1922,18 +1986,16 @@ input[name="category"]:checked ~ .categories-label-box {
     white-space: nowrap;
 }
 
-.order-products-info img {
-    width: 4rem;
-}
-
-.close-order-info {
+.close-order-info,
+.close-order-update {
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
     cursor: pointer;
 }
 
-.close-order-info i {
+.close-order-info i,
+.close-order-update i {
     font-size: 2rem;
 }
 
@@ -1965,7 +2027,6 @@ input[name="category"]:checked ~ .categories-label-box {
         }
 
     .menu-item a, .bottom-menu a {
-        column-gap: 0.8rem;
         padding: 0.6rem 0.4rem 0.6rem 0.6rem;
     }
 
@@ -2106,9 +2167,19 @@ input[name="category"]:checked ~ .categories-label-box {
     }
 
     /*------------Order page -------------------------------*/
-    .order-infomation {
+    .order-infomation,
+    .order-cus-info {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .order-infomation-box,
+    .order-update-box {
+        width: 95%;
+    }
+
+    .order-products-info {
+        overflow-x: scroll;
     }
 }
 

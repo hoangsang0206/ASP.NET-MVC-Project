@@ -92,7 +92,7 @@ function appendProductList(responses) {
 }
 //Reload ----------------------------
 $('.reload-products').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     hideLoading();
     $('.product-list').empty();
     $('.total-result').empty();
@@ -106,7 +106,7 @@ $('.search-products').submit((e) => {
     var searchText = $('#search').val();
 
     if (searchText.length > 0) {
-        $('.loading').css('display', 'grid');
+       showLoading();
         $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
         $.ajax({
             type: 'GET',
@@ -128,7 +128,7 @@ $('.search-products').submit((e) => {
 
 //Get all product -------------------
 $('.get-all-product').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('#search').val('');
     $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
     $.ajax({
@@ -150,7 +150,7 @@ $('#cateID, #brandID').on('change', () => {
     var cateID = $('#cateID').val();
     var brandID = $('#brandID').val();
     $('#search').val('');
-    $('.loading').css('display', 'grid');
+   showLoading();
 
     $.ajax({
         type: 'GET',
@@ -172,7 +172,7 @@ $('#cateID, #brandID').on('change', () => {
 
 //--Get product out of stock
 $('.get-out-of-stock').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('#search').val('');
     $('.get-product-by-cate, .get-product-by-brand').prop('selectedIndex', 0);
 
@@ -323,7 +323,7 @@ $('.add-product-form').submit((e) => {
             $(select).prop('selectedIndex', 0);
         })
     }
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'POST',
         url: '/admin/products/addproduct',
@@ -424,7 +424,7 @@ $('.product-detail-form').submit((e) => {
     var imgSrc5 = $('.product-detail-form #add-product-image-5').val();
     var imgSrc6 = $('.product-detail-form #add-product-image-6').val();
     var imgSrc7 = $('.product-detail-form #add-product-image-7').val();
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'POST',
         url: '/admin/products/updateproduct',
@@ -492,7 +492,7 @@ $(document).on('click ', '.delete-product-btn', (e) => {
     //----------
     $('.confirm-delete').click(() => {
         //----------
-        $('.loading').css('display', 'grid');
+       showLoading();
         $.ajax({
             type: 'POST',
             url: '/admin/products/deleteproduct',
@@ -608,7 +608,7 @@ $('.delete-product-in-cate-confirm .cancel-delete').click(() => {
 $('.delete-product-in-cate-confirm .confirm-delete').click(() => {
     var cateID = $('input[name="category"]:checked').val();
 
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'POST',
         url: '/admin/products/deleteallincategory',

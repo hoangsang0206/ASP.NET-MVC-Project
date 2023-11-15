@@ -35,12 +35,11 @@ function appendOrderList(res) {
                             <td><div class="cus-name">${res[i].CustomerName}</div></td>
                             <td><div class="order-date">${dateFormat}</div></td>
                             <td><div class="total-payment">${res[i].TotalPaymentAmout.toLocaleString('vi-VN') + 'đ'}</div></td>
-                            <td><div class="order-pstatus ${statusClass}">${res[i].PaymentStatus}</div></td>
+                            <td><div class="order-pstatus d-flex ${statusClass}">${res[i].PaymentStatus} ${res[i].PaymentStatus == 'Chờ thanh toán' ? `&nbsp;<button class='order-btn accept-paid' data-accept-paid="${res[i].OrderID}"><i class='bx bx-check'></i></button>` : ''}</div></td>
                             <td><div class="order-status ${res[i].Status == 'Đã xác nhận' ? 'order-success' : res[i].Status == 'Chờ xác nhận' ? 'order-waiting' : 'order-failed'}">${res[i].Status}</div></td>
                             <td><div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
                                 <button class="order-btn order-print-btn" data-print-order="${res[i].OrderID}">In HĐ</button>
                                 <button class="order-btn order-detail-btn" data-detail-order="${res[i].OrderID}">Chi tiết</button>
-                                <button class="order-btn order-update-btn" data-update-order="${res[i].OrderID}">Sửa</button>
                                 <button class="order-btn delete-order-btn" data-del-order="${res[i].OrderID}">Xóa</button>
                             </div></td>
                         </tr>`;
@@ -58,7 +57,7 @@ $('.search-orders').submit((e) => {
     var searchType = $('.dropdown-search-selected').data('search');
     var searchVal = $('#search-orders').val();
     if (searchType.length > 0 && searchVal.length > 0) {
-        $('.loading').css('display', 'grid');
+       showLoading();
         $('.order-list table tbody').empty();
         $.ajax({
             type: 'get',
@@ -78,7 +77,7 @@ $('.search-orders').submit((e) => {
 
 //---Get all orders -----
 $('.get-all-order').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('.order-list table tbody').empty();
     $.ajax({
         type: 'get',
@@ -97,7 +96,7 @@ $('.search-by-date-btn').click(() => {
     var dateTo = $('#date-to').val();
 
     if (dateFrom.length > 0 && dateTo.length > 0) {
-        $('.loading').css('display', 'grid');
+       showLoading();
         $('.order-list table tbody').empty();
         $.ajax({
             type: 'get',
@@ -137,7 +136,7 @@ function appendOrderWaitingList(res) {
                                     <td><div class="cus-name">${res[i].CustomerName}</div></td>
                                     <td><div class="order-date">${dateFormat}</div></td>
                                     <td><div class="total-payment">${res[i].TotalPaymentAmout.toLocaleString('vi-VN') + 'đ'}</div></td>
-                                    <td><div class="order-pstatus ${statusClass}">${res[i].PaymentStatus}</div></td>`;
+                                    <td><div class="order-pstatus d-flex ${statusClass}">${res[i].PaymentStatus} ${res[i].PaymentStatus == 'Chờ thanh toán' ? `&nbsp;<button class='order-btn accept-paid' data-accept-paid="${res[i].OrderID}"><i class='bx bx-check'></i></button>` : ''}</div></td>`;
             if (res[i].Status === 'Chờ xác nhận') {
                 str += `<td><div class="order-status">
                         <button class="order-btn order-status-accept" data-accept-order="${res[i].OrderID}">Xác nhận</button>
@@ -153,7 +152,6 @@ function appendOrderWaitingList(res) {
 
             str += `<td><div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
                         <button class="order-btn order-detail-btn" data-detail-order="${res[i].OrderID}">Chi tiết</button>
-                        <button class="order-btn order-update-btn" data-update-order="${res[i].OrderID}">Sửa</button>
                         <button class="order-btn delete-order-btn" data-del-order="${res[i].OrderID}">Xóa</button>
                     </div></td>
                 </tr>`;
@@ -165,7 +163,7 @@ function appendOrderWaitingList(res) {
 
 //Get order with Status = "Chờ xác nhận"
 $('.reload-orders').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('.order-waiting-list table tbody').empty();
     $.ajax({
         type: 'get',
@@ -177,6 +175,20 @@ $('.reload-orders').click(() => {
         success: (res) => {
             hideLoading();
             appendOrderWaitingList(res);
+
+            $.ajax({
+                type: 'get',
+                url: '/admin/orders/countneworder',
+                success: (data) => {
+                    if (data.count > 0) {
+                        $('.new-order-count').css('display', 'grid');
+                        $('.new-order-count').text(data.count);
+                    }
+                    else {
+                        $('.new-order-count').hide();
+                    }
+                }
+            })
         },
         error: () => {  }
     })
@@ -184,7 +196,7 @@ $('.reload-orders').click(() => {
 
 //Get order with Status = "Đã xác nhận"
 $('.get-accept-order').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('.order-waiting-list table tbody').empty();
     $.ajax({
         type: 'get',
@@ -202,7 +214,7 @@ $('.get-accept-order').click(() => {
 })
 //Get order with Status = "Đã hủy"
 $('.get-refuse-order').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('.order-waiting-list table tbody').empty();
     $.ajax({
         type: 'get',
@@ -220,7 +232,7 @@ $('.get-refuse-order').click(() => {
 })
 //Get order with payment status = "Thanh toán thành công"
 $('.get-paid-order').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('.order-waiting-list table tbody').empty();
     $.ajax({
         type: 'get',
@@ -238,7 +250,7 @@ $('.get-paid-order').click(() => {
 })
 //Get order with payment status = "Chờ thanh toán"
 $('.get-notpaid-order').click(() => {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $('.order-waiting-list table tbody').empty();
     $.ajax({
         type: 'get',
@@ -259,7 +271,7 @@ $('.get-notpaid-order').click(() => {
 $(document).on('click', '.order-status-accept', (e) => {
     var orderID = $(e.target).data('accept-order');
     if (orderID.length > 0) {
-        $('.loading').css('display', 'grid');
+       showLoading();
         $.ajax({
             type: 'post',
             url: '/admin/orders/updatestatus',
@@ -270,6 +282,20 @@ $(document).on('click', '.order-status-accept', (e) => {
             success: () => {
                 hideLoading();
                 $(e.target).closest('tr').remove();
+
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/orders/countneworder',
+                    success: (data) => {
+                        if (data.count > 0) {
+                            $('.new-order-count').css('display', 'grid');
+                            $('.new-order-count').text(data.count);
+                        }
+                        else {
+                            $('.new-order-count').hide();
+                        }
+                    }
+                })
             },
             error: () => {}
         })
@@ -279,7 +305,7 @@ $(document).on('click', '.order-status-accept', (e) => {
 $(document).on('click', '.order-status-refuse', (e) => {
     var orderID = $(e.target).data('refuse-order');
     if (orderID.length > 0) {
-        $('.loading').css('display', 'grid');
+       showLoading();
         $.ajax({
             type: 'post',
             url: '/admin/orders/updatestatus',
@@ -290,8 +316,50 @@ $(document).on('click', '.order-status-refuse', (e) => {
             success: () => {
                 hideLoading();
                 $(e.target).closest('tr').remove();
+
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/orders/countneworder',
+                    success: (data) => {
+                        if (data.count > 0) {
+                            $('.new-order-count').css('display', 'grid');
+                            $('.new-order-count').text(data.count);
+                        }
+                        else {
+                            $('.new-order-count').hide();
+                        }
+                    }
+                })
             },
             error: () => { }
+        })
+    }
+})
+
+//--Change order status to "Thanh toán thành công"
+$(document).on('click', '.accept-paid', (e) => {
+    var orderID = $(e.target).data('accept-paid');
+    if (orderID.length > 0) {
+        $('.payment-acception-confirm').css('visibility', 'visible');
+        $('.payment-acception').addClass('show');
+
+        $('.cancel-acception').click(() => {
+            $('.payment-acception-confirm').css('visibility', 'hidden');
+            $('.payment-acception').removeClass('show');
+        })
+
+        $('.confirm-acception').click(() => {
+            $.ajax({
+                type: 'post',
+                url: '/admin/orders/acceptpaid',
+                data: { orderID: orderID },
+                success: (res) => {
+                    if (res.success) {
+                        $('.payment-acception-confirm').css('visibility', 'hidden');
+                        $('.payment-acception').removeClass('show');
+                    }
+                }
+            })
         })
     }
 })
@@ -305,7 +373,7 @@ $('.close-order-info').click(() => {
 $(document).on('click', '.order-detail-btn', (e) => {
     var orderID = $(e.target).data('detail-order');
     if (orderID.length > 0) {
-        $('.loading').css('display', 'grid');
+       showLoading();
         $.ajax({
             tpe: 'get',
             url: '/api/orders',
@@ -314,8 +382,7 @@ $(document).on('click', '.order-detail-btn', (e) => {
                 var date = new Date(data.OrderDate);
                 var dateFormat = date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-US');
 
-                $('.order-info-header').text('Chi tiết đơn hàng - ' + data.OrderID)
-                $('.order-info-id').text(data.OrderID);
+                $('.order-info-header').text('Đơn hàng - ' + data.OrderID)
                 $('.order-info-date').text(dateFormat);
                 $('.order-info-payment').text(data.PaymentMethod);
                 $('.order-info-ship').text(data.ShipMethod);
@@ -323,8 +390,10 @@ $(document).on('click', '.order-detail-btn', (e) => {
                 $('.order-info-total').text(data.TotalPrice.toLocaleString('vi-VN') + 'đ');
                 $('.order-info-ship-total').text(data.DeliveryFee.toLocaleString('vi-VN') + 'đ');
                 $('.order-info-totalpay').text(data.TotalPaymentAmout.toLocaleString('vi-VN') + 'đ');  
+                $('.order-info-pstatus').text(data.PaymentStatus);
                 $('.order-info-status').text(data.Status);
 
+                //Get list product in order
                 $.ajax({
                     type: 'get',
                     url: '/api/orders',
@@ -352,12 +421,27 @@ $(document).on('click', '.order-detail-btn', (e) => {
                             }
 
                             $('.order-info-cnt').text('Số sản phẩm - ' + data1.length);
-                            $('.order-infomation-wrapper').css('visibility', 'visible');
-                            $('.order-infomation-box').addClass('show');
                             $('.order-products-info table tbody').append(strH + str);
+                            setTimeout(() => {
+                                $('.order-infomation-wrapper').css('visibility', 'visible');
+                                $('.order-infomation-box').addClass('show');
+                            }, 500)
                         }
-                    },
-                    error: () => {  }
+                    }
+                })
+
+                //Get customer info
+                $.ajax({
+                    type: 'get',
+                    url: '/api/users',
+                    data: { customerID: data.CustomerID },
+                    success: (data2) => {
+                        $('.order-cus-id').text(data2.CustomerID);
+                        $('.order-cus-name').text(data2.CustomerName);
+                        $('.order-cus-phone').text(data2.Phone);
+                        $('.order-cus-email').text(data2.Email);
+                        $('.order-cus-address').text(data2.Address);
+                    }
                 })
             },
             error: () => { console.log('Error') }

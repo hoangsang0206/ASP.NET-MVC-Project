@@ -1,6 +1,6 @@
 ﻿//--AJAX get list category --------------------
 function reloadCategories() {
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'GET',
         url: '/api/categories',
@@ -36,7 +36,7 @@ $('.reload-categories').click(() => {
 //--AJAX get list product in category --------------------
 
 $('.remove-action-btn').click(() => {
-    $('.loading').css('display', 'grid');
+    showLoading();
 
     $('.products-cate-list').empty();
     $('.products-cate-list').css('height', 'auto');
@@ -56,10 +56,14 @@ function hideLoading() {
     }, 600);
 }
 
+function showLoading() {
+    $('.loading').css('display', 'grid');
+}
+
 $(document).on('change', 'input[name = "category"]', (e) => {
     var categoryValue = $(e.target).val();
 
-    $('.loading').css('display', 'grid');
+   showLoading();
 
     $.ajax({
         type: 'GET',
@@ -159,7 +163,7 @@ $('.add-category-form').submit((e) => {
     e.preventDefault();
     var cateID = $('#category-id').val();
     var cateName = $('#category-name').val();
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'POST',
         url: '/admin/categories/addcategory',
@@ -242,7 +246,7 @@ $('.delete-cate-confirm-no').click(() => {
 
 $('.delete-cate-confirm-yes').click(() => {
     var cateID = $('input[name="category"]:checked').val();
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'POST',
         url: '/admin/categories/deletecategory',
@@ -344,7 +348,7 @@ $('.update-category-form').submit((e) => {
     e.preventDefault();
     var cateID = $('#update-category-id').val();
     var cateName = $('#update-category-name').val();
-    $('.loading').css('display', 'grid');
+   showLoading();
     $.ajax({
         type: 'POST',
         url: '/admin/categories/updatecategory',

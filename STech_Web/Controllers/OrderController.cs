@@ -94,6 +94,10 @@ namespace STech_Web.Controllers
         {
             try
             {
+                if (paymentMethod == "paypal") //Thanh toán bằng Paypal
+                {
+                    return Json(new { url = "/order/paymentwithpaypal" });
+                }
                 //--
                 string userID = User.Identity.GetUserId();
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
@@ -196,7 +200,7 @@ namespace STech_Web.Controllers
                     db.Carts.RemoveRange(cart);
                     db.SaveChanges();
                     //--
-                    return Json(new { url = "/order/succeeded", order = orderID });
+                    return Json(new { url = "/order/succeeded" });
                 }
                 else if (paymentMethod == "card") //Thanh toán bằng thẻ visa/mastercard
                 {
@@ -250,10 +254,6 @@ namespace STech_Web.Controllers
                     return Json(new { url = session.Url });
 
 
-                }
-                else if (paymentMethod == "paypal") //Thanh toán bằng Paypal
-                {
-                    return Json(new { url = "/order/paymentwithpaypal" });
                 }
                 else
                 {
@@ -698,7 +698,7 @@ namespace STech_Web.Controllers
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
@@ -739,13 +739,13 @@ namespace STech_Web.Controllers
                         orders = customer.Orders.Where(t => t.PaymentStatus == "Chờ thanh toán").ToList();
                         break;
                     case "paid":
-                        orders = customer.Orders.Where(t => t.PaymentStatus == "Thanh toán thành công.").ToList();
+                        orders = customer.Orders.Where(t => t.PaymentStatus == "Thanh toán thành công").ToList();
                         break;
                 }
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();

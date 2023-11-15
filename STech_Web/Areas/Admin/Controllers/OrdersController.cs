@@ -9,6 +9,7 @@ using iTextSharp.text.pdf;
 using STech_Web.Models;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
+using Microsoft.Owin.Security;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
@@ -27,6 +28,15 @@ namespace STech_Web.Areas.Admin.Controllers
             return View(orders);
         }
 
+        //Đếm số hóa đơn mới chờ xác nhận---
+        [HttpGet]
+        public JsonResult CountNewOrder()
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Order> order = db.Orders.Where(t => t.Status == "Chờ xác nhận").ToList();
+            return Json(new { count = order.Count }, JsonRequestBehavior.AllowGet);
+        }
+
         //In hóa đơn ----------------
         public ActionResult PrintOrder()
         {
@@ -35,10 +45,18 @@ namespace STech_Web.Areas.Admin.Controllers
             return View();
         }
 
-        //Cập nhật trạng thái thanh toán -----------
+        //Xác nhận đã thanh toán -----------
         [HttpPost]
-        public JsonResult UpdatePaymentStatus(string orderID = "")
+        public JsonResult AcceptPaid(string orderID = "")
         {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Order order = db.Orders.FirstOrDefault(t => t.OrderID == orderID);
+            if(order != null)
+            {
+                order.PaymentStatus = "Thanh toán thành công";
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
 
             return Json(new { success = false });
         }
@@ -66,6 +84,13 @@ namespace STech_Web.Areas.Admin.Controllers
 
             db.SaveChanges();
             return Json(new { success = true });
+        }
+
+        //Tạo đơn hàng ---------------
+        public JsonResult CreateOrder()
+        {
+
+            return Json(new { success = false });
         }
 
         //Xóa đơn hàng ---------------

@@ -43,7 +43,7 @@ namespace STech_Web.Areas.Admin.Controllers
 
         //Lấy chi thiết doanh thu tháng hiện tại
         [HttpGet]
-        public ActionResult GetCurrentMonthSumarry()
+        public JsonResult GetCurrentMonthSumarry()
         {
             string userID = User.Identity.GetUserId();
 

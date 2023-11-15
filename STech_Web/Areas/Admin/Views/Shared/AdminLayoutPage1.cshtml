@@ -71,9 +71,14 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="/admin/orders" class="@( ViewBag.ActiveNav == "orders" ? "active" : "" )">
-                                <i class='bx bx-notepad menu-icon'></i>
-                                <span class="sidebar-text">Đơn hàng</span>
+                            <a href="/admin/orders" class="@( ViewBag.ActiveNav == "orders" ? "active" : "" ) d-flex justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class='bx bx-notepad menu-icon'></i>
+                                    <span class="sidebar-text">Đơn hàng</span>
+                                </div>
+                                <div class="new-order-count">
+
+                                </div>
                             </a>
                         </li>
                         <li class="menu-item">
