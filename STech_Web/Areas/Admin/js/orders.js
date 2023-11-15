@@ -338,17 +338,18 @@ $(document).on('click', '.order-status-refuse', (e) => {
 
 //--Change order status to "Thanh toán thành công"
 $(document).on('click', '.accept-paid', (e) => {
-    var orderID = $(e.target).data('accept-paid');
-    if (orderID.length > 0) {
-        $('.payment-acception-confirm').css('visibility', 'visible');
-        $('.payment-acception').addClass('show');
+    $('.payment-acception-confirm').css('visibility', 'visible');
+    $('.payment-acception').addClass('show');
 
-        $('.cancel-acception').click(() => {
-            $('.payment-acception-confirm').css('visibility', 'hidden');
-            $('.payment-acception').removeClass('show');
-        })
+    $('.cancel-acception').off('click').click(() => {
+        $('.payment-acception-confirm').css('visibility', 'hidden');
+        $('.payment-acception').removeClass('show');
+    })
 
-        $('.confirm-acception').click(() => {
+    $('.confirm-acception').off('click').click(() => {
+        var orderID = $(e.target).data('accept-paid');
+        if (orderID.length > 0) {
+            console.log(orderID);
             $.ajax({
                 type: 'post',
                 url: '/admin/orders/acceptpaid',
@@ -360,8 +361,8 @@ $(document).on('click', '.accept-paid', (e) => {
                     }
                 }
             })
-        })
-    }
+        }
+    })
 })
 
 //--Get order detail ---------------------------------------
@@ -454,12 +455,12 @@ $(document).on('click', '.delete-order-btn', (e) => {
     $('.delete-order-confirm').css('visibility', 'visible');
     $('.delete-order-confirm .delete-confirm-box').addClass('show');
     //----------
-    $('.cancel-delete').click(() => {
+    $('.cancel-delete').off('click').click(() => {
         $('.delete-order-confirm').css('visibility', 'hidden');
         $('.delete-order-confirm .delete-confirm-box').removeClass('show');
     })
 
-    $('.delete-order-confirm .confirm-delete-order').click(() => {
+    $('.delete-order-confirm .confirm-delete-order').off('click').click(() => {
         var orderID = $(e.target).data('del-order');
         if (orderID.length > 0) {
             $.ajax({
@@ -481,3 +482,6 @@ $(document).on('click', '.delete-order-btn', (e) => {
         }
     })
 })
+
+
+//--Create order --------------------------------

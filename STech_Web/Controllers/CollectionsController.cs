@@ -274,8 +274,6 @@ namespace STech_Web.Controllers
                 decimal minprice = Convert.ToDecimal(minPrice.Replace("đ", "").Replace(".", ""));
                 decimal maxprice = Convert.ToDecimal(maxPrice.Replace("đ", "").Replace(".", ""));
 
-                string breadcrumbItem = "" + db.Categories.FirstOrDefault(t => t.CateID == currentCate).CateName;
-
                 //Lọc danh sách sản phẩm
                 if (products != null)
                 {
@@ -290,7 +288,7 @@ namespace STech_Web.Controllers
                 //Tạo danh sách Breadcrumb
                 List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
                 breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
-                breadcrumb.Add(new Breadcrumb(breadcrumbItem, ""));
+                breadcrumb.Add(new Breadcrumb("Lọc sản phẩm", ""));
 
                 //Sắp xếp danh sách sản phẩm
                 if (sort.Length > 0)
@@ -303,7 +301,7 @@ namespace STech_Web.Controllers
 
                 //-----------
                 ViewBag.cateID = currentCate;
-                ViewBag.title = breadcrumbItem;
+                ViewBag.title = "Lọc sản phẩm";
                 ViewBag.Breadcrumb = breadcrumb;
                 ViewBag.sortValue = sort;
 

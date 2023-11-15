@@ -125,7 +125,7 @@
                             @item.Quantity x
                         </div>
                         <div class="order-product-img">
-                            <img src="@item.Product.ImgSrc" alt="" />
+                            <img src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" />
                         </div>
                         <div class="order-product-box d-flex flex-column gap-2">
                             <div class="order-product-name">

@@ -55,7 +55,7 @@
                                         <div class="cart-product-left d-flex flex-column align-items-center gap-2">
                                             <a href="/product/@item.Product.ProductID">
                                                 <div class="cart-img">
-                                                    <img src="@item.Product.ImgSrc" alt="" />
+                                                    <img src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" />
                                                 </div>
                                             </a>
                                             <a href="/cart/deletecartitem?line=@i" class="delete-cart-item d-flex gap-2 align-items-center">

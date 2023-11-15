@@ -84,7 +84,7 @@
                     <div class="product-box">
                         <a href="/product/@item.ProductID" class="product-link">
                             <div class="product-image lazy-loading">
-                                <img lazy-src="@item.ImgSrc" alt="" class="product-img">
+                                <img lazy-src="@(item.ImgSrc != null ? item.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                             </div>
                         </a>
                         @if (item.WareHouse.Quantity <= 0)

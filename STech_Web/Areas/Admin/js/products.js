@@ -55,7 +55,7 @@ function appendProductList(responses) {
                                                 </div>` : ""}
                                                 <a href="/admin/product/${responses[i].ProductID}" class="product-link">
                                                     <div class="product-image lazy-loading">
-                                                        <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                                        <img lazy-src="${responses[i].ImgSrc != null ? responses[i].ImgSrc : '/images/no-image.jpg'}" class="product-img">
                                                     </div>
                                                 </a>
                                                 <a href="/admin/product/${responses[i].ProductID}" class="product-link">
@@ -485,12 +485,12 @@ $(document).on('click ', '.delete-product-btn', (e) => {
     $('.delete-product-confirm').css('visibility', 'visible');
     $('.delete-product-confirm .delete-confirm-box').addClass('show');
     //----------
-    $('.cancel-delete').click(() => {
+    $('.cancel-delete').off('click').click(() => {
         $('.delete-product-confirm').css('visibility', 'hidden');
         $('.delete-product-confirm .delete-confirm-box').removeClass('show');
     })
     //----------
-    $('.confirm-delete').click(() => {
+    $('.confirm-delete').off('click').click(() => {
         //----------
        showLoading();
         $.ajax({
@@ -526,12 +526,12 @@ $('.product-delete-frm-btn').click(() => {
     $('.pro-detail-del').css('visibility', 'visible');
     $('.pro-detail-del .delete-confirm-box').addClass('show');
     //----------
-    $('.pro-detail-del .cancel-delete').click(() => {
+    $('.pro-detail-del .cancel-delete').off('click').click(() => {
         $('.pro-detail-del').css('visibility', 'hidden');
         $('.pro-detail-del .delete-confirm-box').removeClass('show');
     })
     //----------
-    $('.pro-detail-del .confirm-delete').click(() => {
+    $('.pro-detail-del .confirm-delete').off('click').click(() => {
         $.ajax({
             type: 'POST',
             url: '/admin/products/deleteproduct',

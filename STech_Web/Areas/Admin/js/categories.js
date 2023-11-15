@@ -95,7 +95,7 @@ $(document).on('change', 'input[name = "category"]', (e) => {
                                                 </div>` : ""}
                             <a href="/admin/product/${responses[i].ProductID}" class="product-link">
                                 <div class="product-image lazy-loading">
-                                    <img lazy-src="${responses[i].ImgSrc}" class="product-img">
+                                    <img lazy-src="${responses[i].ImgSrc != null ? responses[i].ImgSrc : '/images/no-image.jpg'}" class="product-img">
                                 </div>
                             </a>
                             <a href="/admin/product/${responses[i].ProductID}" class="product-link">

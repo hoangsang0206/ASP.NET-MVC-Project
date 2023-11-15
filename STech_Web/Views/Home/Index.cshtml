@@ -118,7 +118,7 @@
                         <div class="product-box">
                             <a href="/product/@item.Product.ProductID" class="product-link">
                                 <div class="product-image lazy-loading">
-                                    <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                                    <img lazy-src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                                 </div>
                             </a>
                             @if(item.Product.WareHouse.Quantity <= 0)
@@ -460,7 +460,7 @@
                         <div class="product-box">
                             <a href="/product/@item.Product.ProductID" class="product-link">
                                 <div class="product-image lazy-loading">
-                                    <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                                    <img lazy-src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                                 </div>
                             </a>
                             @if (item.Product.WareHouse.Quantity <= 0)
@@ -541,7 +541,7 @@
                         <div class="product-box">
                             <a href="/product/@item.Product.ProductID" class="product-link">
                                 <div class="product-image lazy-loading">
-                                    <img lazy-src="@item.Product.ImgSrc" alt="" class="product-img">
+                                    <img lazy-src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                                 </div>
                             </a>
                             @if (item.Product.WareHouse.Quantity <= 0)

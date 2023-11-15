@@ -25,24 +25,72 @@
         <div class="row">
             <div class="col-lg-5 col-md-12 col-sm-12 col-12 product-detail-box product-gallery">
                 <div class="slider-main">
-                    <img src="@(Model.ImgSrc != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc1 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc2 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc3 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc4 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc5 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc6 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc7 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
+                    @if (Model.ImgSrc != null)
+                    {
+                        <img src="@(Model.ImgSrc)" alt="" />
+                    }
+                    @if (Model.ImgSrc1 != null)
+                    {
+                        <img src="@(Model.ImgSrc1)" alt="" />
+                    }
+                    @if (Model.ImgSrc2 != null)
+                    {
+                        <img src="@(Model.ImgSrc2)" alt="" />
+                    }
+                    @if (Model.ImgSrc3 != null)
+                    {
+                        <img src="@(Model.ImgSrc3)" alt="" />
+                    }
+                    @if (Model.ImgSrc4 != null)
+                    {
+                        <img src="@(Model.ImgSrc4)" alt="" />
+                    }
+                    @if (Model.ImgSrc5 != null)
+                    {
+                        <img src="@(Model.ImgSrc5)" alt="" />
+                    }
+                    @if (Model.ImgSrc6 != null)
+                    {
+                        <img src="@(Model.ImgSrc6)" alt="" />
+                    }
+                    @if (Model.ImgSrc7 != null)
+                    {
+                        <img src="@(Model.ImgSrc7)" alt="" />
+                    }
                 </div>
-                <div class="slider-nav">
-                    <img src="@(Model.ImgSrc != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc1 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc2 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc3 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc4 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc5 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc6 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
-                    <img src="@(Model.ImgSrc7 != null ? Model.ImgSrc : "/images/no-image.jpg")" alt="" />
+                <div class="slider-nav mt-3">
+                    @if (Model.ImgSrc != null)
+                    {
+                        <img src="@(Model.ImgSrc)" alt="" />
+                    }
+                    @if (Model.ImgSrc1 != null)
+                    {
+                        <img src="@(Model.ImgSrc1)" alt="" />
+                    }
+                    @if (Model.ImgSrc2 != null)
+                    {
+                        <img src="@(Model.ImgSrc2)" alt="" />
+                    }
+                    @if (Model.ImgSrc3 != null)
+                    {
+                        <img src="@(Model.ImgSrc3)" alt="" />
+                    }
+                    @if (Model.ImgSrc4 != null)
+                    {
+                        <img src="@(Model.ImgSrc4)" alt="" />
+                    }
+                    @if (Model.ImgSrc5 != null)
+                    {
+                        <img src="@(Model.ImgSrc5)" alt="" />
+                    }
+                    @if (Model.ImgSrc6 != null)
+                    {
+                        <img src="@(Model.ImgSrc6)" alt="" />
+                    }
+                    @if (Model.ImgSrc7 != null)
+                    {
+                        <img src="@(Model.ImgSrc7)" alt="" />
+                    }
                 </div>
             </div>
             <div class="col-lg-7 col-md-12 col-sm-12 col-12 product-detail-box product-info">
