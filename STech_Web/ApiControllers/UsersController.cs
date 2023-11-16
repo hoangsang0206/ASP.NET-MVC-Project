@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace STech_Web.ApiControllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : ApiController
     {
         public CustomerAPI GetCustomer(string customerID)
@@ -22,6 +23,19 @@ namespace STech_Web.ApiControllers
             }
 
             return customerAPI;
+        }
+
+        public CustomerAPI GetCustomerByPhone(string phone)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Customer customer = db.Customers.FirstOrDefault(t => t.Phone == phone);
+            CustomerAPI customerApi = new CustomerAPI();
+            if(customer != null)
+            {
+                customerApi = new CustomerAPI(customer.CustomerID, customer.CustomerName, customer.Phone, customer.Address, customer.Gender, customer.DoB, customer.Email);
+            }
+
+            return customerApi;
         }
     }
 }

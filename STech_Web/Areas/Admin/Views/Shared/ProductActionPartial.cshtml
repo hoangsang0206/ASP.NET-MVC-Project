@@ -80,43 +80,64 @@
                     <input type="text" id="ProductName" name="ProductName" value="" class="form-input" required />
                     <label for="ProductName" class="input-label position-absolute">Tên sản phẩm</label>
                 </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="Cost" name="Cost" value="" class="form-input" required />
-                    <label for="Cost" class="input-label position-absolute">Giá</label>
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <input type="text" id="Cost" name="Cost" value="" class="form-input" required />
+                                <label for="Cost" class="input-label position-absolute">Giá</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <input type="text" id="Price" name="Price" value="" class="form-input" />
+                                <label for="Price" class="input-label position-absolute">Giá khuyến mãi</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="Price" name="Price" value="" class="form-input" />
-                    <label for="Price" class="input-label position-absolute">Giá khuyến mãi</label>
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <select class="form-input select-input" id="CateID" name="CateID">
+                                    <option value="" selected>Danh mục</option>
+                                    @foreach (var cate in ViewBag.Categories)
+                                    {
+                                        <option value="@cate.CateID">@cate.CateName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <select class="form-input select-input" id="BrandID" name="BrandID">
+                                    <option value="" selected>Hãng</option>
+                                    @foreach (var brand in ViewBag.Brands)
+                                    {
+                                        <option value="@brand.BrandID">@brand.BrandName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <select class="form-input select-input" id="CateID" name="CateID">
-                        <option value="" selected>Danh mục</option>
-                        @foreach (var cate in ViewBag.Categories)
-                        {
-                            <option value="@cate.CateID">@cate.CateName</option>
-                        }
-                    </select>
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <input type="number" id="Warranty" name="Warranty" value="" class="form-input" min="0" required />
+                                <label for="add-product-quantity" class="input-label position-absolute">Bảo hành (tháng)</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <input type="number" id="add-product-quantity" value="" class="form-input" min="0" required />
+                                <label for="add-product-quantity" class="input-label position-absolute">Số lượng</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <select class="form-input select-input" id="BrandID" name="BrandID">
-                        <option value="" selected>Hãng</option>
-                        @foreach (var brand in ViewBag.Brands)
-                        {
-                            <option value="@brand.BrandID">@brand.BrandName</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="number" id="Warranty" name="Warranty" value="" class="form-input" min="0" required />
-                    <label for="add-product-quantity" class="input-label position-absolute">Thời gian bảo hành (tháng)</label>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="number" id="add-product-quantity" value="" class="form-input" min="0" required />
-                    <label for="add-product-quantity" class="input-label position-absolute">Số lượng</label>
-                </div>
-            </div>
-
-            <div class="right-form">
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="ImgSrc" name="ImgSrc" value="" class="form-input" required />
                     <label for="ImgSrc" class="input-label position-absolute">Đường dẫn hình ảnh chính</label>
@@ -125,6 +146,9 @@
                     <input type="text" id="add-product-image-1" value="" class="form-input" />
                     <label for="add-product-image-1" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 1</label>
                 </div>
+            </div>
+
+            <div class="right-form"> 
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="add-product-image-2" value="" class="form-input" />
                     <label for="add-product-image-2" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 2</label>

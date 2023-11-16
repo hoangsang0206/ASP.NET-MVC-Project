@@ -59,18 +59,7 @@
                 </div>
                 <div class="order-info-item d-flex gap-2">
                     <span>Cách thức thanh toán: </span>
-                    @if (ViewBag.Order.PaymentMethod == "COD")
-                    {
-                        <p>Thanh toán khi nhận hàng</p>
-                    }
-                    else if (ViewBag.Order.PaymentMethod == "card")
-                    {
-                        <p>Thanh toán qua thẻ VISA/MASTERCARD</p>
-                    }
-                    else
-                    {
-                        <p>Thanh toán qua ví điện tử Paypal</p>
-                    }
+                    <p>@ViewBag.Order.PaymentMethod</p>
                 </div>
                 <div class="order-info-item d-flex gap-2">
                     <span>Ghi chú: </span>

@@ -484,4 +484,128 @@ $(document).on('click', '.delete-order-btn', (e) => {
 })
 
 
-//--Create order --------------------------------
+//--Create order -------------------------------------------------------
+$('.add-order-btn').click(() => {
+    $('.create-order').css('visibility', 'visible');
+    $('.create-order-box').addClass('show');
+})
+
+$('.close-create-order').click(() => {
+    $('.create-order').css('visibility', 'hidden');
+    $('.create-order-box').removeClass('show');
+})
+
+//---Search customer by phone
+$('.search-cus-by-phone').submit((e) => {
+    e.preventDefault();
+    var phone = $('#search-cus-by-phone').val();
+    if (phone.length > 0) {
+        showLoading();
+        $.ajax({
+            type: 'get',
+            url: '/api/users',
+            data: { phone: phone },
+            success: (data) => {
+                hideLoading();
+                $('#cusID').val(data.CustomerID);
+                $('#cusName').val(data.CustomerName);
+                data.Gender === 'Nam' ? $('#cusGender-Male').prop('checked', true) : data.Gender === 'Nữ' ? $('#cusGender-FeMale').prop('checked', true) : '';
+                $('#cusPhone').val(data.Phone);
+                $('#cusAddress').val(data.Address);
+                $('#cusEmail').val(data.Email);
+            },
+            error: () => {  }
+        })
+    }
+})
+
+//---Search product by id
+function updateTotal() {
+    var total = 0;
+    $('.one-p-total').each((index, item) => {
+        var price = $(item).text().replace('đ', '').replace(/\./g, '').trim();
+        total += parseInt(price);
+    })
+
+    $('.order-totalprice span').text(total.toLocaleString('vi-VN') + 'đ');
+}
+
+
+$('.search-pro-id').submit((e) => {
+    e.preventDefault();
+    var productID = $('#search-pro-id').val();
+    if (productID.length > 0) {
+        showLoading();
+        $.ajax({
+            type: 'get',
+            url: '/api/products',
+            data: { productID: productID },
+            success: (data) => {
+                hideLoading();
+                if (data.ProductID != null || data.ProductID.length > 0) {
+                    var currentPro = $('input[name="order-pro-qty"]').toArray();
+                    var exist = currentPro.some(function (el) {
+                        return $(el).data('order-pro') === data.ProductID;
+                    });
+
+                    if (exist === false) {
+                        var str = `<tr>
+                            <td>
+                                <input type="hidden" name="order-pro-id" value="${data.ProductID}" />
+                                ${data.ProductID}
+                            </td>
+                            <td>${data.ProductName}</td>
+                            <td>${data.Price.toLocaleString('vi-VN')}đ</td>
+                            <td>
+                                <input type="number" name="order-pro-qty" value="1" min="1" data-order-pro="${data.ProductID}" required/>
+                            </td>
+                            <td class="one-p-total">
+                                ${data.Price.toLocaleString('vi-VN')}đ
+                            </td>
+                            <td>
+                                <i class='bx bx-trash del-order-pro'></i>
+                            </td>
+                        </tr>`;
+
+                        $('.order-create-products table tbody').append(str);
+                        updateTotal();
+                    }
+                }
+            },
+            error: () => {  }
+        })
+    }
+})
+
+//Update quantity of product in order detail (create order) -------
+$(document).on('focus', 'input[name="order-pro-qty"]', (e) => {
+    var currentQty = $(e.target).val();
+
+    $(e.target).blur(()=> { 
+        var qty = $(e.target).val();
+        if (qty != currentQty) { 
+            $.ajax({
+                type: 'post',
+                url: '/admin/orders/updateproductqty',
+                data: {
+                    productID: $(e.target).data('order-pro'),
+                    qty: qty
+                },
+                success: (data) => { 
+                    if (data.success) {
+                        $(e.target).val(data.quantity);
+                        $(e.target).closest('tr').find('.one-p-total').text(data.total.toLocaleString('vi-VN') + 'đ');
+                        updateTotal();
+                    }
+                },
+                error: () => {  }
+            })
+        }
+    })
+})
+
+//Delete product in create order form
+$(document).on('click', '.del-order-pro', (e) => {
+    $(e.target).closest('tr').remove();
+    updateTotal();
+})

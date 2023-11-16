@@ -151,5 +151,21 @@ namespace STech_Web.ApiControllers
             return productsApi;
         }
 
+        //Lấy sản phẩm theo mã sản phẩm (sản phẩm còn hàng - tạo đơn hàng)
+        public ProductAPI GetByID(string productID)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Product product = db.Products.FirstOrDefault(t => t.ProductID == productID && t.WareHouse.Quantity > 0);
+           ProductAPI productApi = new ProductAPI();
+
+
+            if (product != null)
+            {
+                productApi = new ProductAPI(product.ProductID, product.ProductName, product.ImgSrc, (decimal)product.Cost, (decimal)product.Price, (int)product.Warranty, product.BrandID, product.CateID, (int)product.WareHouse.Quantity);
+            }
+
+            return productApi;
+        }
+
     }
 }

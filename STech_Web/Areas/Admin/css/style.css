@@ -1564,12 +1564,12 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .left-form {
-    width: 45%;
+    width: 50%;
     padding-right: 1rem;
 }
 
 .right-form {
-    width: 55%;
+    width: 50%;
     padding-left: 1rem;
 }
 
@@ -1636,10 +1636,6 @@ input[name="category"]:checked ~ .categories-label-box {
 .form-submit-delete:hover {
     outline: 2px solid #fb7c7c;
 }
-
-.add-product .product-images-wrapper {
-    grid-template-columns: repeat(8, 1fr);
-} 
 
 /*-----------Product detail page -------------------*/
 .product-detail {
@@ -1916,7 +1912,8 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .order-infomation-wrapper,
 .order-update-wrapper,
-.payment-acception-confirm {
+.payment-acception-confirm,
+.create-order {
     position: fixed;
     top: 0;
     left: 0;
@@ -1930,7 +1927,8 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .order-infomation-box,
-.order-update-box {
+.order-update-box,
+.create-order-box {
     position: relative;
     background: var(--sidebar-color);
     width: 80%;
@@ -1946,7 +1944,8 @@ input[name="category"]:checked ~ .categories-label-box {
 
 .order-infomation-box.show,
 .order-update-box.show,
-.payment-acception.show {
+.payment-acception.show,
+.create-order-box.show {
     transform: scale(1);
     opacity: 1;
 }
@@ -1987,7 +1986,8 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .close-order-info,
-.close-order-update {
+.close-order-update,
+.close-create-order {
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
@@ -1995,11 +1995,97 @@ input[name="category"]:checked ~ .categories-label-box {
 }
 
 .close-order-info i,
-.close-order-update i {
+.close-order-update i,
+.close-create-order i {
     font-size: 2rem;
 }
 
+.create-order-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 6rem;
+}
 
+#search-cus-by-phone,
+#search-pro-id {
+    border: 1px solid #c7c7c7;
+    padding: 0.4rem 1rem;
+    border-radius: 0.3rem;
+    width: 85%;
+}
+
+.search-cus-bp-btn,
+.search-pro-id-btn {
+    background: var(--primary-color);
+    display: grid;
+    place-items: center;
+}
+
+.search-cus-bp-btn i,
+.search-pro-id-btn i {
+    font-size: 1.3rem;
+}
+
+.form-add-input {
+    border: 1px solid #c7c7c7;
+    padding: 0.4rem 1rem;
+    border-radius: 0.3rem;
+    outline: none;
+    width: 75%;
+}
+
+.create-order-error {
+    background: #fff3cd;
+    border-radius: 0.3rem;
+    padding: 0.3rem 1rem;
+    display: none;
+}
+
+.add-order-products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5rem;
+}
+
+.order-create-products td input {
+    padding: 0 0 0 0.5rem;
+    display: inline-block;
+    width: 4rem;
+}
+
+.one-p-total {
+    font-weight: 600;
+    color: #e30019 !important;
+}
+
+.del-order-pro {
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.order-totalprice p {
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0;
+    margin: 0;
+}
+
+.order-totalprice span {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #e30019;
+}
+
+.create-order-btn {
+    background: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.6rem 2rem;
+}
+
+.create-order-btn:hover {
+    outline: 2px solid #b5affa;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
@@ -2185,6 +2271,9 @@ input[name="category"]:checked ~ .categories-label-box {
 
 /* For tablet (767 < width < 1024px) ---------------------------------------------*/
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .product-images-wrapper {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 /* For desktop - custom scrollbar ------------------------------------------------*/

@@ -167,7 +167,6 @@ namespace STech_Web.Controllers
                 order.OrderDate = DateTime.Now;
                 order.Note = orderTemp.Note;
                 order.ShipMethod = orderTemp.ShipMethod;
-                order.PaymentMethod = paymentMethod;
                 order.DeliveryFee = 0;
                 order.TotalPrice = totalPrice;
                 order.TotalPaymentAmout = totalPrice;
@@ -195,6 +194,7 @@ namespace STech_Web.Controllers
                 if (paymentMethod == "COD") //Thanh toán khi nhận hàng
                 {
                     //--
+                    order.PaymentMethod = "Thanh toán khi nhận hàng";
                     db.Orders.Add(order);
                     db.OrderDetails.AddRange(orderDetails);
                     db.Carts.RemoveRange(cart);
@@ -246,6 +246,7 @@ namespace STech_Web.Controllers
 
                     //Response.Headers.Add("Location", session.Url);
 
+                    order.PaymentMethod = "Visa/Mastercard";
                     db.Orders.Add(order);
                     db.OrderDetails.AddRange(orderDetails);
                     db.Carts.RemoveRange(cart);
