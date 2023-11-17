@@ -70,7 +70,7 @@ namespace STech_Web.Controllers
         public List<Product> Pagination(List<Product> products, int page)
         {
             //Paging ------
-            int NoOfProductPerPage = 40;
+            int NoOfProductPerPage = 5;
             int NoOfPages = Convert.ToInt32(Math.Ceiling(
                 Convert.ToDouble(products.Count) / Convert.ToDouble(NoOfProductPerPage)));
             int NoOfProductToSkip = (page - 1) * NoOfProductPerPage;
@@ -260,58 +260,5 @@ namespace STech_Web.Controllers
 
             return Redirect("/error/notfound");
         }
-
-        //Lọc sản phẩm theo khoảng giá, danh sách hãng,...
-        [HttpPost]
-        public ActionResult FilterCollections(List<string> brandList = null, string currentCate = "", string minPrice = "", string maxPrice = "", string sort = "", int page = 1)
-        {
-            try
-            {
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
-                List<Category> categories = db.Categories.ToList();
-                List<Product> products = db.Products.Where(t => t.CateID == currentCate).ToList();
-
-                decimal minprice = Convert.ToDecimal(minPrice.Replace("đ", "").Replace(".", ""));
-                decimal maxprice = Convert.ToDecimal(maxPrice.Replace("đ", "").Replace(".", ""));
-
-                //Lọc danh sách sản phẩm
-                if (products != null)
-                {
-                    products = Filter(products, "price", null, null, minprice, maxprice);
-                    ViewBag.FilterType = "price";
-                    ViewBag.Filter = "";
-                    ViewBag.Sbrand = "";
-                    ViewBag.MinPrice = minprice;
-                    ViewBag.MaxPrice = maxprice;
-                }
-
-                //Tạo danh sách Breadcrumb
-                List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
-                breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
-                breadcrumb.Add(new Breadcrumb("Lọc sản phẩm", ""));
-
-                //Sắp xếp danh sách sản phẩm
-                if (sort.Length > 0)
-                {
-                    products = Sort(sort, products);
-                }
-
-                //Paging ------
-                products = Pagination(products, page);
-
-                //-----------
-                ViewBag.cateID = currentCate;
-                ViewBag.title = "Lọc sản phẩm";
-                ViewBag.Breadcrumb = breadcrumb;
-                ViewBag.sortValue = sort;
-
-                return View("Index", products);
-            }
-            catch(Exception ex) { }
-            {
-                return Redirect("/error/notfound");
-            }   
-        }
-
     }
 }

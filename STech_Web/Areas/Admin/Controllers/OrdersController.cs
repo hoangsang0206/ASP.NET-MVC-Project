@@ -95,7 +95,7 @@ namespace STech_Web.Areas.Admin.Controllers
             try
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
-                Customer customer = db.Orders.FirstOrDefault(c => c.CustomerID == customerID);
+                Customer customer = db.Customers.FirstOrDefault(c => c.CustomerID == customerID);
 
 
                 return Json(new { success = true });

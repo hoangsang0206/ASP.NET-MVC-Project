@@ -28,30 +28,11 @@
 <section class="filter-products">
     <div class="filter-box d-flex justify-content-between">
         <div class="filter-button-list d-flex flex-wrap gap-2 align-items-center">
-            <div class="filter-all-dropdown filter-btn position-relative">
-                <div class="filter-all-btn">
-                    <i class='bx bx-filter-alt filter-icon'></i>
-                    <span>Lọc</span>
-                </div>
-            </div>
-            <div class="filter-brands filter-btn position-relative">
-                <div class="filter-head">
-                    Hãng
-                </div>
-                <form class="filter-contents">
-                    <div class="filter-brands-box">
-
-                    </div>
-                    <div class="filter-action">
-
-                    </div>
-                </form>
-            </div>
             <div class="filter-price filter-btn position-relative">
                 <div class="filter-head">
                     Giá
                 </div>
-                <form action="/collections/filtercollections" method="post" class="filter-contents">
+                <form action="#" method="post" class="filter-contents">
                     <input type="hidden" name="currentCate" value="@ViewBag.cateID" />
                     <input type="hidden" name="sort" value="@ViewBag.sortValue" />
                     <div class="filter-price-box">
@@ -244,12 +225,12 @@
         {
             if (ViewBag.NoOfPages > 2)
             {
-                <button class="pagination-first-page pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=1'">
+                <button class="pagination-first-page pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=1'">
                     <img src="/images/icons/double-chevron-left.png" alt="" class="pagination-icon" />
                 </button>
             }
 
-            <button class="pagination-previous pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@(ViewBag.Page - 1)'">
+            <button class="pagination-previous pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@(ViewBag.Page - 1)'">
                 <img src="/images/icons/chevron-left.png" alt="" class="pagination-icon" />
             </button>
         }
@@ -262,7 +243,7 @@
                     for (int i = 1; i <= ViewBag.NoOfPages; i++)
                     {
                         <li class="pagination-item @(i == ViewBag.Page ? "active" : "")">
-                            <a href="/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@i">@i</a>
+                            <a href="/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@i">@i</a>
                         </li>
                     }
                 }
@@ -293,7 +274,7 @@
                     for (int i = startPage; i <= endPage; i++)
                     {
                         <li class="pagination-item @(i == ViewBag.Page ? "active" : "")">
-                            <a href="/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@i">@i</a>
+                            <a href="/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@i">@i</a>
                         </li>
                     }
 
@@ -309,13 +290,13 @@
 
         @if (ViewBag.Page < ViewBag.NoOfPages)
         {
-            <button class="pagination-next pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&page=@(ViewBag.Page + 1)'">
+            <button class="pagination-next pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filter&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@(ViewBag.Page + 1)'">
                 <img src="/images/icons/chevron-right.png" alt="" class="pagination-icon" />
             </button>
 
             if (ViewBag.NoOfPages > 2)
             {
-                <button class="pagination-last-page pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filte&sbrand=@ViewBag.Sbrand&page=@ViewBag.NoOfPages'">
+                <button class="pagination-last-page pagination-btn" onclick="window.location.href='/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filte&sbrand=@ViewBag.Sbrand&minprice=@ViewBag.MinPrice&maxprice=@ViewBag.MaxPrice&page=@ViewBag.NoOfPages'">
                     <img src="/images/icons/double-chevron-right.png" alt="" class="pagination-icon" />
                 </button>
             }
@@ -341,15 +322,15 @@
 
             if (maxVal - minVal < priceGap) {
                 if (e.target.className === 'range-min') {
-                    rangeInput[0].value = maxVal - priceGap; 
+                    rangeInput[0].value = maxVal - priceGap;
                 }
                 else {
-                    rangeInput[1].value = minVal + priceGap; 
+                    rangeInput[1].value = minVal + priceGap;
                 }
             }
             else {
                 rangeInput[0].value = minVal;
-                rangeInput[1].value = maxVal;               
+                rangeInput[1].value = maxVal;
             }
 
             progress.style.left = (minVal / rangeInput[0].max) * 100 + "%";
@@ -358,5 +339,11 @@
             minPrice.value = parseInt(rangeInput[0].value).toLocaleString('vi-VN') + 'đ';
             maxPrice.value = parseInt(rangeInput[1].value).toLocaleString('vi-VN') + 'đ';
         })
+    })
+
+    const formPrice = document.querySelector('.filter-contents');
+    formPrice.addEventListener('submit', (event) => {
+        event.preventDefault();
+        window.location.href = '/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&filtertype=@ViewBag.FilterType&filter=@ViewBag.Filte&sbrand=@ViewBag.Sbrand&minprice=' + rangeInput[0].value + '&maxprice=' + rangeInput[1].value + '&page=1';
     })
 </script>
