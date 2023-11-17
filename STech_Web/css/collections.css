@@ -268,13 +268,13 @@
     visibility: hidden;
     opacity: 0;
     cursor: auto;
-    z-index: 10;
+    z-index: 20;
 }
 
 .filter-contents.show {
     visibility: visible;
     opacity: 1;
-    transition: opacity .7s ease;
+    transition: opacity .5s ease;
 }
 
 .filter-input input {
