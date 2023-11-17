@@ -22,6 +22,7 @@ namespace STech_Web.Models
     
         public string CateID { get; set; }
         public string CateName { get; set; }
+        public string ImgSrc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

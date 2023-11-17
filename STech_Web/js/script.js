@@ -24,13 +24,13 @@ $(".categories-btn").click(() => {
     $(".hidden-menu").toggleClass("showHiddenMenu");
 
     $(".hidden-menu").click((e) => {
-        if ($(e.target).closest('.hidden-menu-box').length <= 0) {
-            $(e.target).removeClass("showHiddenMenu");
+        if ($(e.target).closest('.sidebar').length <= 0) {
+            $('.hidden-menu').removeClass("showHiddenMenu");
             $(".overlay").removeClass("showOverlay");
         }      
     });
 
-    $(".overlay").toggleClass("showOverlay");
+    $(".overlay").addClass("showOverlay");
 
     $(".overlay").click(() => {
         $(".hidden-menu").removeClass("showHiddenMenu");

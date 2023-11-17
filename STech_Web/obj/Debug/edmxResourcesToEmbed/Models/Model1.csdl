@@ -4,11 +4,14 @@
     <Key>
       <PropertyRef Name="BrandID" />
     </Key>
-    <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BrandID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="BrandName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="BrandAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="BrandImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ParentBrandID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Brands1" Relationship="Self.FK_Brands_Brands" FromRole="Brands" ToRole="Brands1" />
+    <NavigationProperty Name="Brand1" Relationship="Self.FK_Brands_Brands" FromRole="Brands1" ToRole="Brands" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Brand" FromRole="Brands" ToRole="Products" />
   </EntityType>
   <EntityType Name="Cart">
@@ -28,6 +31,7 @@
     </Key>
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Cate" FromRole="Categories" ToRole="Products" />
   </EntityType>
   <EntityType Name="Customer">
@@ -112,7 +116,7 @@
     <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Warranty" Type="Int32" />
-    <Property Name="BrandID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BrandID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ManufacturingDate" Type="Int32" />
     <Property Name="ImgSrc1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -123,6 +127,7 @@
     <Property Name="ImgSrc6" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ImgSrc7" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Brand" Relationship="Self.FK_Pro_Brand" FromRole="Products" ToRole="Brands" />
     <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Product" FromRole="Products" ToRole="Cart" />
     <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
@@ -188,6 +193,18 @@
     <Property Name="SliderImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="SliderLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
+  <Association Name="FK_Brands_Brands">
+    <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
+    <End Role="Brands1" Type="Self.Brand" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="Brands1">
+        <PropertyRef Name="ParentBrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Pro_Brand">
     <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
     <End Role="Products" Type="Self.Product" Multiplicity="*" />
@@ -349,6 +366,10 @@
     <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
     <EntitySet Name="Banner1" EntityType="Self.Banner1" />
     <EntitySet Name="Sliders" EntityType="Self.Slider" />
+    <AssociationSet Name="FK_Brands_Brands" Association="Self.FK_Brands_Brands">
+      <End Role="Brands" EntitySet="Brands" />
+      <End Role="Brands1" EntitySet="Brands" />
+    </AssociationSet>
     <AssociationSet Name="FK_Pro_Brand" Association="Self.FK_Pro_Brand">
       <End Role="Brands" EntitySet="Brands" />
       <End Role="Products" EntitySet="Products" />

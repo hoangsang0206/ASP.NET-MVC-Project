@@ -9,15 +9,15 @@
     padding-top: 1rem;
 }
 
-    .search-value h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-    }
+.search-value h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
 
-        .search-value h3 span {
-            font-size: 1.1rem;
-            font-weight: normal;
-        }
+.search-value h3 span {
+    font-size: 1.1rem;
+    font-weight: normal;
+}
 
 .product-search-item-list {
     display: grid;
@@ -70,8 +70,6 @@
 }
 
 .sort-dropdown {
-    margin-right: 1rem;
-    margin-bottom: 1rem;
     position: relative;
     width: auto;
 }
@@ -132,10 +130,10 @@
 
 .filter-products {
     background: #ffffff;
-    padding: 2rem 0 1rem 0;
+    padding: 1rem 0.2rem;
     border-radius: 0.2rem;
+    overflow-x: hidden;
 }
-
 
 .filter-item-list {
     display: grid;
@@ -231,8 +229,9 @@
 .filter-btn {
     border-radius: 0.2rem;
     border: 1px solid #cecece;
-    padding: 0.5rem 0.8rem;
     cursor: pointer;
+    z-index: 5;
+    background: #fff;
 }
 
 .filter-btn:hover {
@@ -256,9 +255,14 @@
     place-items: center;
 }
 
+.filter-head {
+    padding: 0.5rem 0.8rem;
+}
+
 .filter-contents {
-    border-radius: 0.2rem;
+    width: 33rem;
     padding: 1rem;
+    border-radius: 0.2rem;
     position: absolute;
     top: calc(100% + 10px);
     left: 0;
@@ -268,7 +272,7 @@
     visibility: hidden;
     opacity: 0;
     cursor: auto;
-    z-index: 20;
+    z-index: 5;
 }
 
 .filter-contents.show {
@@ -324,6 +328,21 @@
     pointer-events: auto;
 }
 
+
+
+.filter-checkbox label {
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    border: 1px solid #c7c7c7;
+    font-weight: 500;
+}
+
+.filter-checkbox input[type="checkbox"]:checked ~ label {
+    border-color: #1991fa;
+    color: #1991fa;
+}
+
 .filter-action-btn {
     padding: 0.5rem 0.9rem;
     border-radius: 0.2rem;
@@ -342,6 +361,33 @@
     background: none;
     color: #e30019;
     border: 1px solid #e30019;
+}
+
+.side-overlay {
+    z-index: 4;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #00000075;
+    display: none;
+}
+
+.close-filter {
+    top: 0.5rem;
+    right: 0.5rem;
+    outline: none;
+    border: 1px solid #cfcfcf;
+    border-radius: 0.2rem;
+    width: 2rem;
+    height: 2rem;
+    background: #fff;
+    cursor: pointer;
+}
+
+.side-overlay.show {
+    display: block;
 }
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
@@ -368,6 +414,14 @@
 
     .breadcrumb {
         overflow-x: scroll;
+    }
+
+    .filter-btn:not(:first-child) {
+        display: none !important;
+    }
+
+    .filter-contents {
+        max-width: 85vw;
     }
 }
 

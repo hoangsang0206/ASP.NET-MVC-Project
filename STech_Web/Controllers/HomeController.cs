@@ -25,7 +25,7 @@ namespace STech_Web.Controllers
             List<ProductOutStanding> laptopGamingOSD = productOutStandings.Where(t => t.Product.CateID == "laptop-gaming").ToList();
             List<Slider> sliders = db.Sliders.ToList();
             List<Banner1> banner1 = db.Banner1.ToList();
-            List<Brand> brands = db.Brands.ToList();
+            List<Brand> brands = db.Brands.Where(t => t.ParentBrandID == null).ToList();
 
             //--Countdown -----
             Countdown countdown = GetCountdown();

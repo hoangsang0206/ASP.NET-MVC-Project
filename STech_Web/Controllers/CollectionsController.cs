@@ -112,7 +112,7 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm
-        public List<Product> Filter(List<Product> products, string brand, string sbrand, decimal? minprice, decimal? maxprice)
+        public List<Product> Filter(List<Product> products, string brand, string type, decimal? minprice, decimal? maxprice, string vendors)
         {
             if(products.Count <= 0)
             {
@@ -121,15 +121,20 @@ namespace STech_Web.Controllers
 
             string filterName = "";
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-            
-            if(!string.IsNullOrEmpty(brand))
+
+            if (!string.IsNullOrEmpty(vendors))
             {
-                //Lọc sản phẩm theo thương hiệu
-                products = products.Where(t => t.Brand.BrandID == brand).ToList();
+                //Lọc sản phẩm theo nhiều thương hiệu
+                List<string> brands = vendors.Split(',').ToList();
+                products = products.Where(t => brands.Contains(t.Brand.BrandID)).ToList();
+            }
+            else if (!string.IsNullOrEmpty(brand))
+            {
+                //Lọc sản phẩm theo 1 thương hiệu
+                products = products.Where(t => t.Brand.BrandID == brand || t.Brand.ParentBrandID == brand).ToList();
                 if (products.Count > 0)
                 {
-                    Product product = products[0];
-                    filterName = product.Brand.BrandName.ToUpper();
+                    filterName = products[0].Brand.BrandName.ToUpper();
                 }
                 else
                 {
@@ -137,20 +142,20 @@ namespace STech_Web.Controllers
                 }
             }
             
-            if(!string.IsNullOrEmpty(sbrand))
+            if(!string.IsNullOrEmpty(type))
             {
                 //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
-                products = products.Where(t => t.Brand.BrandID == brand && t.ProductName.ToLower().Contains(sbrand)).ToList();
+                products = products.Where(t => t.Brand.BrandID == brand && t.Type == type).ToList();
                 if (products.Count > 0)
                 {
                     Product product = products[0];
-                    Regex regex = new Regex(sbrand, RegexOptions.IgnoreCase);
+                    Regex regex = new Regex(type.Replace('-', ' '), RegexOptions.IgnoreCase);
                     Match match = regex.Match(product.ProductName);
                     filterName = product.Brand.BrandName.ToUpper() + " " + match.Value;
                 }
                 else
                 {
-                    filterName = textInfo.ToTitleCase(brand) + " " + textInfo.ToTitleCase(sbrand);
+                    filterName = textInfo.ToTitleCase(brand.Replace('-', ' ')) + " " + textInfo.ToTitleCase(type.Replace('-', ' '));
                 }
             }
             
@@ -158,49 +163,16 @@ namespace STech_Web.Controllers
             if (minprice == null && maxprice != null)
             {
                 products = products.Where(t => t.Price <= maxprice).ToList();
-                if (minprice < 1000000)
-                {
-                    filterName += " giá dưới " + (int)((decimal)maxprice / 1000) + " ngàn";
-                }
-                else
-                {
-                    filterName += " giá dưới " + (int)((decimal)maxprice / 1000000) + " triệu";
-                }
                 
             }
             else if (maxprice == null && minprice != null)
             {
                 products = products.Where(t => t.Price >= minprice).ToList();
-                if (maxprice < 1000000)
-                {
-                    filterName += " giá trên " + (int)((decimal)minprice / 1000) + " ngàn";
-                }
-                else
-                {
-                    filterName += " giá trên " + (int)((decimal)minprice / 1000000) + " triệu";
-                }
                 
             }
             else if(minprice != null && maxprice != null)
             {
                 products = products.Where(t => t.Price >= minprice && t.Price <= maxprice).ToList();
-                if (minprice < 1000000)
-                {
-                    filterName += " giá từ " + (int)((decimal)minprice / 1000) + " ngàn";
-                }
-                else
-                {
-                    filterName += " giá từ " + (int)((decimal)minprice / 1000000) + " triệu";
-                }
-
-                if(maxprice < 1000000)
-                {
-                    filterName += " đến " + (int)((decimal)maxprice / 1000) + " ngàn";
-                }
-                else
-                {
-                    filterName += " đến " + (int)((decimal)maxprice / 1000000) + " triệu";
-                }
             }
 
             ViewBag.filterName = filterName;
@@ -219,7 +191,7 @@ namespace STech_Web.Controllers
         }
 
         //Lọc sản phẩm theo id danh mục
-        public ActionResult GetProduct(string id = "", string sort = "", string brand = "", string sbrand = "", decimal? minprice = null, decimal? maxprice = null, int page = 1)
+        public ActionResult GetProduct(string id = "", string sort = "", string brand = "", string type = "", decimal? minprice = null, decimal? maxprice = null, int page = 1, string vendors = "")
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             if (id.Length > 0 && checkCateExist(db, id))
@@ -253,9 +225,9 @@ namespace STech_Web.Controllers
                 //Lọc danh sách sản phẩm
                 if (products.Count > 0)
                 {
-                    products = Filter(products, brand, sbrand, minprice, maxprice);
+                    products = Filter(products, brand, type, minprice, maxprice, vendors);
                     ViewBag.Brand = brand;
-                    ViewBag.Sbrand = sbrand;
+                    ViewBag.Type = type;
                     ViewBag.MinPrice = minprice;
                     ViewBag.MaxPrice = maxprice;
                     if (!string.IsNullOrEmpty(ViewBag.filterName))
@@ -283,6 +255,9 @@ namespace STech_Web.Controllers
                 ViewBag.title = breadcrumbItem;
                 ViewBag.Breadcrumb = breadcrumb;
                 ViewBag.sortValue = sort;
+
+                List<Brand> brands = products.Select(t => t.Brand).Where(t => t.ParentBrandID == null).Distinct().ToList();
+                ViewBag.ProductBrands = brands;
 
                 return View("Index", products);
             }

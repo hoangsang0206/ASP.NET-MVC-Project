@@ -9,6 +9,7 @@
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="BrandAddress" ColumnName="BrandAddress" />
           <ScalarProperty Name="BrandImgSrc" ColumnName="BrandImgSrc" />
+          <ScalarProperty Name="ParentBrandID" ColumnName="ParentBrandID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -27,6 +28,7 @@
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="CateID" ColumnName="CateID" />
           <ScalarProperty Name="CateName" ColumnName="CateName" />
+          <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -118,6 +120,7 @@
           <ScalarProperty Name="ImgSrc6" ColumnName="ImgSrc6" />
           <ScalarProperty Name="ImgSrc7" ColumnName="ImgSrc7" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

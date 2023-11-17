@@ -913,8 +913,9 @@ main {
     cursor: pointer;
 }
 
-.hidden-menu .menu {
+.hidden-menu .sidebar{
     z-index: 17;
+    cursor: auto;
 }
 
 .hidden-menu .slider {
@@ -1531,7 +1532,7 @@ footer {
     font-size: 1rem;
     font-weight: 600;
     position: relative;
-    z-index: 10;
+    z-index: 1;
 }
 
 .to-home-page-btn::before {
