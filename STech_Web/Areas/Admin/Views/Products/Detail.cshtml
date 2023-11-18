@@ -84,14 +84,14 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-input-box position-relative d-flex align-items-center">
-                                <input type="text" id="Cost" name="Cost" value="@(Model.Cost > Model.Price ? Math.Round((double)Model.Cost).ToString() : "")" class="form-input" required />
+                                <input type="text" id="Cost" name="Cost" value="@(Model.Cost >= Model.Price || Model.Cost != null ? Math.Round((double)Model.Cost).ToString() : "")" class="form-input" required />
                                 <label for="Cost" class="input-label position-absolute">Giá</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-input-box position-relative d-flex align-items-center">
                                 <input type="text" id="Price" name="Price" value="@(Model.Cost <= Model.Price ? "" : Math.Round((double)Model.Price).ToString())" class="form-input" />
-                                <label for="Price" class="input-label position-absolute">Giá khuyến mãi</label>
+                                <label for="Price" class="input-label position-absolute">Giá bán</label>
                             </div>
                         </div>
                     </div>
@@ -154,6 +154,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <input type="number" id="ManufacturingDate" name="ManufacturingDate" value="@Model.ManufacturingDate" class="form-input" />
+                                <label for="ManufacturingDate" class="input-label position-absolute">Năm sản xuất</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-input-box position-relative d-flex align-items-center">
+                                <input type="text" id="Type" name="Type" value="@Model.Type" class="form-input" min="0" />
+                                <label for="Type" class="input-label position-absolute">Loại (vd: vivobook)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="ImgSrc" name="ImgSrc" value="@Model.ImgSrc" class="form-input" required />
                     <label for="ImgSrc" class="input-label position-absolute">Đường dẫn hình ảnh chính</label>
@@ -189,6 +205,9 @@
                     <input type="text" id="add-product-image-7" value="@(Model.ImgSrc7 != null ? Model.ImgSrc7 : "")" class="form-input" />
                     <label for="add-product-image-4" class="input-label position-absolute">Đường dẫn hình ảnh chi tiết 7</label>
                 </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <textarea class="form-input form-area" id="Description" placeholder="Mô tả sản phẩm, tách dòng bằng dấu '/'">@Model.Description</textarea>
+                </div>
             </div>
 
             <div class="form-error my-1"></div>
@@ -198,6 +217,21 @@
                 <button type="button" class="product-delete-frm-btn">XÓA SẢN PHẨM</button>
             </div>
         </form>
+    </div>
+
+    <div class="mt-3 product-pro-gift">
+        <h6>Quà tặng khuyến mãi</h6>
+        <div class="search-gift-product">
+            <div class="sgift-by">
+
+            </div>
+            <div class="sgift-box">
+                <input type="text" name="sgift" id="sgift" value="" placeholder="Tìm kiếm sản phẩm" />
+                <button>
+                    <i class="bx bx-search"></i>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -38,6 +38,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="CateID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CateName" Type="nvarchar" MaxLength="100" />
     <Property Name="ImgSrc" Type="nvarchar(max)" />
+    <Property Name="Sort" Type="int" />
   </EntityType>
   <EntityType Name="Customers">
     <Key>

@@ -174,6 +174,9 @@ namespace STech_Web.Areas.Admin.Controllers
                 pro.CateID = product.CateID;
                 pro.BrandID = product.BrandID;
                 pro.Warranty = product.Warranty;
+                pro.ManufacturingDate = product.ManufacturingDate;
+                pro.Type = product.Type;
+                pro.Description = product.Description;
 
                 //--------------
                 WareHouse wh = pro.WareHouse;

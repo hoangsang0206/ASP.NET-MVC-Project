@@ -29,6 +29,7 @@
           <ScalarProperty Name="CateID" ColumnName="CateID" />
           <ScalarProperty Name="CateName" ColumnName="CateName" />
           <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

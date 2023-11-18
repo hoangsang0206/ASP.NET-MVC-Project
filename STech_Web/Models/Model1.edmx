@@ -43,6 +43,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="CateID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CateName" Type="nvarchar" MaxLength="100" />
           <Property Name="ImgSrc" Type="nvarchar(max)" />
+          <Property Name="Sort" Type="int" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -451,6 +452,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Cate" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Customer">
@@ -872,6 +874,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
                 <ScalarProperty Name="CateID" ColumnName="CateID" />
                 <ScalarProperty Name="CateName" ColumnName="CateName" />
                 <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

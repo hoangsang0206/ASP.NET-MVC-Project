@@ -198,8 +198,8 @@ $('.get-out-of-stock').click(() => {
 
 //Add product --------------------------------------------------------
 //Check quantity > 0
-$('#add-product-quantity').keyup(() => {
-    var inputVal = $('#add-product-quantity').val();
+$('.add-product #Quantity').keyup(() => {
+    var inputVal = $('.add-product #Quantity').val();
     if (isNaN(inputVal)) {
         var str = `<span>
             <i class="fa-solid fa-circle-exclamation error-icon"></i>
@@ -300,7 +300,7 @@ $('.add-product-form').submit((e) => {
     var brandID = $('.add-product #BrandID').val();
     var imgSrc = $('.add-product #ImgSrc').val();
     var warranty = $('.add-product #Warranty').val();
-    var quantity = $('.add-product #add-product-quantity').val();
+    var quantity = $('.add-product #Quantity').val();
     var imgSrc1 = $('.add-product #add-product-image-1').val();
     var imgSrc2 = $('.add-product #add-product-image-2').val();
     var imgSrc3 = $('.add-product #add-product-image-3').val();
@@ -308,6 +308,9 @@ $('.add-product-form').submit((e) => {
     var imgSrc5 = $('.add-product #add-product-image-5').val();
     var imgSrc6 = $('.add-product #add-product-image-6').val();
     var imgSrc7 = $('.add-product #add-product-image-7').val();
+    var mDate = $('.add-product #ManufacturingDate').val();
+    var type = $('.add-product #Type').val();
+    var description = $('.add-product #Description').val();
     e.preventDefault();
 
     //Clear input value
@@ -322,6 +325,8 @@ $('.add-product-form').submit((e) => {
         selectArr.forEach((select) => {
             $(select).prop('selectedIndex', 0);
         })
+
+        $('.add-product textarea').val('');
     }
    showLoading();
     $.ajax({
@@ -343,7 +348,10 @@ $('.add-product-form').submit((e) => {
             'ImgSrc4': imgSrc4,
             'ImgSrc5': imgSrc5,
             'ImgSrc6': imgSrc6,
-            'ImgSrc7': imgSrc7
+            'ImgSrc7': imgSrc7,
+            'ManufacturingDate': mDate,
+            'Description': description,
+            'Type': type
         },
         success: (responses) => {
             hideLoading();
@@ -424,6 +432,9 @@ $('.product-detail-form').submit((e) => {
     var imgSrc5 = $('.product-detail-form #add-product-image-5').val();
     var imgSrc6 = $('.product-detail-form #add-product-image-6').val();
     var imgSrc7 = $('.product-detail-form #add-product-image-7').val();
+    var mDate = $('.product-detail-form #ManufacturingDate').val();
+    var type = $('.product-detail-form #Type').val();
+    var description = $('.product-detail-form #Description').val();
    showLoading();
     $.ajax({
         type: 'POST',
@@ -444,7 +455,10 @@ $('.product-detail-form').submit((e) => {
             'ImgSrc4': imgSrc4,
             'ImgSrc5': imgSrc5,
             'ImgSrc6': imgSrc6,
-            'ImgSrc7': imgSrc7
+            'ImgSrc7': imgSrc7,
+            'ManufacturingDate': mDate,
+            'Description': description,
+            'Type': type
         },
         success: (responses) => {
             hideLoading();

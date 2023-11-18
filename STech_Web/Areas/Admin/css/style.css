@@ -816,6 +816,14 @@ footer {
     font-size: 1.1rem;
 }
 
+.form-area {
+    height: 6.7rem;
+}
+
+.form-area::placeholder {
+    font-size: 1rem;
+}
+
 .form-input:focus ~ .input-label , .form-input.input-valid ~ .input-label  {
     transform: translateY(-110%);
     font-size: 0.8rem;

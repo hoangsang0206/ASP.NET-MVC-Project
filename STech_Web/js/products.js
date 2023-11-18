@@ -23,4 +23,9 @@
 
         $('.side-overlay').removeClass('show');
     })
+
+    $('.close-filter').click(() => {
+        $('.filter-all-dropdown .filter-contents').removeClass('show');
+        $('.side-overlay').removeClass('show');
+    })
 });

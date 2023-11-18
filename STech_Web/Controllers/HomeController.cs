@@ -26,6 +26,7 @@ namespace STech_Web.Controllers
             List<Slider> sliders = db.Sliders.ToList();
             List<Banner1> banner1 = db.Banner1.ToList();
             List<Brand> brands = db.Brands.Where(t => t.ParentBrandID == null).ToList();
+            List<Category> categories = db.Categories.ToList();
 
             //--Countdown -----
             Countdown countdown = GetCountdown();
@@ -39,6 +40,7 @@ namespace STech_Web.Controllers
             ViewBag.Sliders = sliders;
             ViewBag.Banner1 = banner1;
             ViewBag.Brands = brands;
+            ViewBag.Categories = categories.OrderBy(c => c.Sort);
             ViewBag.ActiveBotNav = "home";
 
             //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn

@@ -132,7 +132,6 @@
     background: #ffffff;
     padding: 1rem 0.2rem;
     border-radius: 0.2rem;
-    overflow-x: hidden;
 }
 
 .filter-item-list {
@@ -223,7 +222,8 @@
 }
 
 .filter-box {
-    margin-left: 0.6rem;
+    padding: 0 1rem;
+    margin: 0 0.6rem;
 }
 
 .filter-btn {
@@ -238,6 +238,16 @@
     border-color: #656565;
 }
 
+.filter-btn.active {
+    border: 1px solid #1991fa;
+    color: #1991fa;
+    font-weight: 500;
+}
+
+.filter-btn.active:hover {
+    border-color: #4facfd;
+}
+
 .filter-all-btn {
     display: flex;
     align-items: center;
@@ -245,6 +255,7 @@
 
 .filter-btn span {
     font-size: 1rem;
+    color: #000 !important;
 }
 
 .filter-icon {
@@ -273,6 +284,7 @@
     opacity: 0;
     cursor: auto;
     z-index: 5;
+    overflow: hidden;
 }
 
 .filter-contents.show {
@@ -328,14 +340,16 @@
     pointer-events: auto;
 }
 
-
-
 .filter-checkbox label {
     padding: 0.4rem 0.6rem;
     cursor: pointer;
     border-radius: 0.2rem;
     border: 1px solid #c7c7c7;
     font-weight: 500;
+}
+
+.filter-checkbox input[type="checkbox"] ~ label {
+    color: #000;
 }
 
 .filter-checkbox input[type="checkbox"]:checked ~ label {
@@ -384,6 +398,12 @@
     height: 2rem;
     background: #fff;
     cursor: pointer;
+    display: grid;
+    place-items: center;
+ }
+
+.close-filter i {
+    font-size: 1.4rem;
 }
 
 .side-overlay.show {
@@ -414,6 +434,10 @@
 
     .breadcrumb {
         overflow-x: scroll;
+    }
+
+    .filter-box {
+        padding: 0;
     }
 
     .filter-btn:not(:first-child) {

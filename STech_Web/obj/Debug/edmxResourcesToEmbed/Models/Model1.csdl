@@ -32,6 +32,7 @@
     <Property Name="CateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="ImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Sort" Type="Int32" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Cate" FromRole="Categories" ToRole="Products" />
   </EntityType>
   <EntityType Name="Customer">
