@@ -47,25 +47,42 @@
                 <button class="reload-action-btn reload-categories">Tải lại</button>
             </div>
             <hr />
-            <div class="categories-list">
+            <div class="categories-list d-flex flex-column gap-2">
                 @{
-                    int i = 1;
-                    foreach (var item in Model)
-                    {
-                        <div>
-                            <input type="radio" id="category-@i" name="category" value="@item.CateID" />
-                            <div class="categories-label-box">
-                                <label for="category-@i">@item.CateName</label>
-                            </div>
-                        </div>
-                        i++;
-                    }
+                    <table class="table">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã danh mục</th>
+                            <th>Tên danh mục</th>
+                            <th>Hình ảnh</th>
+                            <th>Số sản phẩm</th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Sort</td>
+                                <td>@item.CateID</td>
+                                <td>@item.CateName</td>
+                                <td>
+                                    <img src="@item.ImgSrc" alt="" />
+                                </td>
+                                <td>@item.Products.Count</td>
+                                <td>
+                                    <div class="categories-button-box d-flex justify-content-end flex-wrap gap-2">
+                                        <button class="cate-btn cate-update-btn" data-update-cate="@item.CateID">Sửa</button>
+                                        <button class="cate-btn cate-delete-btn" data-del-cate="@item.CateID">Xóa</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
                 }
             </div>
         </div>
         <div class="products-in-category">
             <div class="box-header d-flex align-items-center justify-content-between">
-                <h5>Sản phẩm thuộc danh mục</h5>
+                <h5>Sản phẩm </h5>
                 <button class="remove-action-btn">Bỏ chọn</button>
             </div>
             <hr />
@@ -91,6 +108,10 @@
                     <input type="text" id="category-name" name="category-name" value="" class="form-input" required />
                     <label for="category-name" class="input-label position-absolute">Tên danh mục</label>
                 </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="category-img" name="category-img" value="" class="form-input" required />
+                    <label for="category-img" class="input-label position-absolute">Đường dẫn hình ảnh</label>
+                </div>
                 <button type="submit" class="form-submit-btn">THÊM DANH MỤC</button>
             </form>
         </div>
@@ -111,6 +132,10 @@
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="update-category-name" name="category-name" value="" class="form-input" required />
                     <label for="update-category-name" class="input-label position-absolute">Tên danh mục</label>
+                </div>
+                <div class="form-input-box position-relative d-flex align-items-center">
+                    <input type="text" id="update-category-img" name="category-img" value="" class="form-input" required />
+                    <label for="update-category-img" class="input-label position-absolute">Đường dẫn hình ảnh</label>
                 </div>
                 <button type="submit" class="form-submit-btn">SỬA DANH MỤC</button>
             </form>

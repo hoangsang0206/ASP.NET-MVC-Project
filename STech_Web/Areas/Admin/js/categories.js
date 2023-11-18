@@ -41,7 +41,7 @@ $('.remove-action-btn').click(() => {
     $('.products-cate-list').empty();
     $('.products-cate-list').css('height', 'auto');
     $('input[name="category"]:checked').prop('checked', false);
-    var str1 = "Sản phẩm thuộc danh mục";
+    var str1 = "Sản phẩm";
     $('.products-in-category .box-header h5').empty();
     $('.products-in-category .box-header h5').append(str1);
 
@@ -75,7 +75,7 @@ $(document).on('change', 'input[name = "category"]', (e) => {
             hideLoading();
             if (responses != null) {
                 $('.products-cate-list').empty();
-                var str1 = "Sản phẩm thuộc danh mục - " + responses.length;
+                var str1 = "Sản phẩm - " + responses.length;
                 $('.products-in-category .box-header h5').empty();
                 $('.products-in-category .box-header h5').append(str1);
 

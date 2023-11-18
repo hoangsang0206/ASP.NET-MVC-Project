@@ -18,7 +18,7 @@ namespace STech_Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Category> categories = db.Categories.ToList();
+            List<Category> categories = db.Categories.OrderBy(t => t.Sort).ToList();
 
             ViewBag.ActiveNav = "categories";
             return View(categories);
