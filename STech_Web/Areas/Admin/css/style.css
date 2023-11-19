@@ -55,6 +55,10 @@
     --tran-05: all .5s ease;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: var(--body-color);
 }
@@ -1073,10 +1077,6 @@ footer span {
     border: none;
 }
 
-.action-box button.delete-product-in-cate-btn {
-    padding: 0.7rem 1.5rem;
-}
-
 .action-box button:hover {
     outline: 2px solid #938afc;
 }
@@ -1101,7 +1101,7 @@ footer span {
 }
 
 .categories-content-box,
-.products-in-category,
+.brands,
 .products-content-box {
     width: 100%;
     border-radius: 0.4rem;
@@ -1126,6 +1126,12 @@ footer span {
     vertical-align: middle;
 }
 
+.categories-list,
+.brand-list{
+    overflow-y: scroll;
+    max-height: 40rem;
+}
+
 .categories-list table th:last-child, 
 .categories-list table td:last-child {
     padding-right: 0;
@@ -1141,12 +1147,40 @@ footer span {
     display: none;
 }
 
+.cate-btn {
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+.cate-update-btn,
+.brand-update-btn {
+    background: #009432;
+}
+
+.cate-update-btn:hover,
+.brand-update-btn:hover {
+    outline: 2px solid #9cf185;
+}
+
+.cate-delete-btn,
+.brand-delete-btn {
+    background: #e30019;
+}
+
+.cate-delete-btn:hover,
+.brand-delete-btn:hover {
+    outline: 2px solid #fe9090;
+}
+
 .box-header h5 {
     margin: 0;
     white-space: nowrap;
 }
 
-.remove-action-btn, .reload-action-btn, .reload-products {
+.reload-brands-btn, .reload-action-btn, .reload-products {
     border: 1px solid #d5d5d5;
     padding: 0.4rem 0.8rem;
     background: var(--sidebar-color);
@@ -1155,21 +1189,12 @@ footer span {
     white-space: nowrap;
 }
 
-.remove-action-btn:hover, 
+.reload-brands-btn:hover,
 .reload-action-btn:hover,
 .reload-products:hover {
     color: #ffffff;
     background: var(--primary-color);
     border-color: var(--primary-color);
-}
-
-.products-cate-list {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    overflow-y: scroll;
-    overflow-x: hidden;
-    min-height: 10rem;
 }
 
 .lazy-loading .product-img {
@@ -1230,7 +1255,8 @@ footer span {
     text-decoration: none;
 }
 
-.add-category, .update-category, .delete-cate-confirm {
+.add-category, .update-category, .delete-cate-confirm,
+.add-brand, .update-brand, .delete-brand-confirm {
     position: fixed;
     top: 0;
     left: 0;
@@ -1246,10 +1272,11 @@ footer span {
 
 .form-box,
 .delete-cate-confirm-box,
+.delete-brand-confirm-box,
 .delete-confirm-box {
     position: relative;
     background: var(--sidebar-color);
-    width: 33%;
+    width: 33rem;
     padding: 2rem 2.5rem;
     border-radius: 0.3rem;
     cursor: auto;
@@ -1258,8 +1285,10 @@ footer span {
     transition: var(--tran-03);
 }
 
-.form-box.show, 
+.form-box.show,
 .delete-cate-confirm-box.show,
+.delete-brand-confirm-box.show,
+.delete-brand-confirm-box.show,
 .delete-confirm-box.show {
     transform: scale(1);
     opacity: 1;
@@ -1269,6 +1298,9 @@ footer span {
     white-space: nowrap;
 }
 
+.brand-list table img {
+    width: 4rem;
+}
 /* ----Category Action (add, delete, update)*/
 .close-form {
     padding: 0;
@@ -1282,8 +1314,9 @@ footer span {
     color: #000000;
 }
 
-.delete-cate-confirm-box {
-    width: 30%;
+.delete-cate-confirm-box,
+.delete-brand-confirm-box {
+    width: 30rem;
     background: #ffffff;
     padding: 2rem 2rem 1.5rem 2rem;
     border-radius: 0.3rem;
@@ -1294,6 +1327,7 @@ footer span {
 }
 
 .delete-cate-confirm-box i,
+.delete-brand-confirm-box i,
 .delete-confirm-box i,
 .payment-acception i {
     font-size: 4rem;
@@ -1302,12 +1336,14 @@ footer span {
 }
 
 .delete-cate-confirm-box span,
+.delete-brand-confirm-box span,
 .delete-confirm-box span,
 .payment-acception span {
     font-size: 1.1rem;
 }
 
 .delete-cate-confirm-btn-box,
+.delete-brand-confirm-btn-box,
 .delete-button-box,
 .accept-paid-btn-box {
     width: 90%;
@@ -1315,6 +1351,7 @@ footer span {
 }
 
 .delete-cate-confirm-btn-box button,
+.delete-brand-confirm-btn-box button,
 .delete-button-box button,
 .accept-paid-btn-box button {
     border: none;
@@ -1325,12 +1362,14 @@ footer span {
 }
 
 .delete-cate-confirm-no:hover,
+.delete-brand-confirm-no:hover,
 .cancel-delete:hover,
 .cancel-acception:hover {
     background: #d4d4d4;
 }
 
 .delete-cate-confirm-yes,
+.delete-brand-confirm-yes,
 .confirm-delete,
 .confirm-delete-order,
 .confirm-acception {
@@ -1339,6 +1378,7 @@ footer span {
 }
 
 .delete-cate-confirm-yes:hover,
+.delete-brand-confirm-yes:hover,
 .confirm-delete:hover,
 .confirm-delete-order:hover,
 .confirm-acception:hover {
@@ -1813,6 +1853,8 @@ footer span {
 
 .table th, .table td {
     padding: 0.7rem 2rem 0.7rem 0;
+    text-align: start;
+    vertical-align: middle;
 }
 
 .table th:last-child, .table td:last-child {
@@ -2087,7 +2129,13 @@ footer span {
         font-size: 0.96rem;
     }
 
-    .login-form-box {
+    .login-form-box,
+    .form-box,
+    .delete-cate-confirm-box,
+    .delete-brand-confirm-box,
+    .delete-confirm-box,
+    .delete-cate-confirm-box,
+    .delete-brand-confirm-box {
         width: 90%;
     }
 
@@ -2136,10 +2184,6 @@ footer span {
 
     footer {
         display: none;
-    }
-
-    .form-box, .delete-cate-confirm-box {
-        width: 90%;
     }
 
     /* -------------- Dashboard page ---------------------*/
@@ -2202,7 +2246,7 @@ footer span {
     .bot-left-box span {
         font-size: 0.96rem;
     }
-    /* -------------- Collections page ---------------------*/
+    /* -------------- Categories page ---------------------*/
     .categories-action button {
         font-size: 0.96rem;
         padding: 0.5rem 0.8rem;
@@ -2303,14 +2347,26 @@ footer span {
 }
 
 @media screen and (min-width: 450px) and (max-width: 767px) {
-    .login-form-box {
+    .login-form-box,
+    .form-box,
+    .delete-cate-confirm-box,
+    .delete-brand-confirm-box,
+    .delete-confirm-box,
+    .delete-cate-confirm-box,
+    .delete-brand-confirm-box {
         width: 27rem;
     }
 }
 
 /* For tablet (767 < width < 1024px) ---------------------------------------------*/
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .login-form-box {
+    .login-form-box,
+    .form-box,
+    .delete-cate-confirm-box,
+    .delete-brand-confirm-box,
+    .delete-confirm-box,
+    .delete-cate-confirm-box,
+    .delete-brand-confirm-box {
         width: 30rem;
     }
 

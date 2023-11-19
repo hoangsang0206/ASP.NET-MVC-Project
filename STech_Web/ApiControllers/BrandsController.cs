@@ -19,17 +19,25 @@ namespace STech_Web
 
             foreach (Brand brand in brands)
             {
-                BrandAPI brandAPI = new BrandAPI();
-                brandAPI.BrandID = brand.BrandID;
-                brandAPI.BrandName = brand.BrandName;
-                brandAPI.Phone = brand.Phone;
-                brandAPI.BrandAddress = brand.BrandAddress;
-                brandAPI.BrandImgSrc = brand.BrandImgSrc;
+                BrandAPI brandAPI = new BrandAPI(brand.BrandID, brand.ParentBrandID, brand.BrandName, brand.Phone, brand.BrandAddress, brand.BrandImgSrc);
 
                 brandAPIs.Add(brandAPI);
             }
 
             return brandAPIs;
+        }
+
+        public BrandAPI GetOne(string brandID)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Brand brand = db.Brands.FirstOrDefault(t => t.BrandID == brandID);
+            BrandAPI brandApi = new BrandAPI();
+            if(brand != null)
+            {
+                brandApi = new BrandAPI(brand.BrandID, brand.ParentBrandID, brand.BrandName, brand.Phone, brand.BrandAddress, brand.BrandImgSrc);
+            }
+
+            return brandApi;
         }
     }
 }

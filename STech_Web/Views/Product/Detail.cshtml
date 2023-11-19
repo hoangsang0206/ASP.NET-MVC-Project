@@ -104,7 +104,7 @@
                         decimal cost = Convert.ToDecimal(Model.Cost);
                         <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
 
-                        discountPercent = ((Convert.ToDouble(Model.Cost) - Convert.ToDouble(Model.Price)) 
+                        discountPercent = ((Convert.ToDouble(Model.Cost) - Convert.ToDouble(Model.Price))
                             / Convert.ToDouble(Model.Cost)) * 100;
                     }
                 </div>
@@ -113,7 +113,7 @@
                         decimal price = Convert.ToDecimal(Model.Price);
                     }
                     <h2>@price.ToString("#,###", ViewBag.cul)đ</h2>
-                    @if(discountPercent > 0)
+                    @if (discountPercent > 0)
                     {
                         <div class="product-info-discount-percent">
                             @( "-" + (int)discountPercent + "%" )
@@ -162,11 +162,14 @@
                     }
                 </div>
                 <div class="product-description d-flex flex-column gap-3 mt-4">
-                    @{ 
-                        List<string> desList = Model.Description.Split('/').ToList();
-                        foreach(string des in desList)
+                    @{
+                        if (Model.Description != null)
                         {
-                            <span>✔&nbsp;@des</span>
+                            List<string> desList = Model.Description.Split('/').ToList();
+                            foreach (string des in desList)
+                            {
+                                <span>✔&nbsp;@des</span>
+                            }
                         }
                     }
                 </div>

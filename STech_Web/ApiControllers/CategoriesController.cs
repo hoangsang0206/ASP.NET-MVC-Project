@@ -20,12 +20,25 @@ namespace STech_Web.ApiControllers
 
             foreach (Category cate in categories)
             {
-                CategoryAPI category = new CategoryAPI(cate.CateID, cate.CateName);
+                CategoryAPI category = new CategoryAPI((int)cate.Sort, cate.CateID, cate.CateName, cate.ImgSrc, cate.Products.Count);
 
                 categoriesAPI.Add(category);
             }
 
-            return categoriesAPI;
+            return categoriesAPI.OrderBy(t => t.Sort).ToList();
+        }
+
+        public CategoryAPI GetOne(string CateID)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Category category = db.Categories.FirstOrDefault(t => t.CateID == CateID);
+            CategoryAPI categoryApi = new CategoryAPI();
+            if (category != null)
+            {
+                categoryApi = new CategoryAPI(category.Sort, category.CateID, category.CateName, category.ImgSrc, category.Products.Count);
+            }
+            
+            return categoryApi;
         }
     }
 }

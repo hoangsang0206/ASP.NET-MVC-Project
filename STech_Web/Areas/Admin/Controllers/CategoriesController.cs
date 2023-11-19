@@ -21,36 +21,47 @@ namespace STech_Web.Areas.Admin.Controllers
             List<Category> categories = db.Categories.OrderBy(t => t.Sort).ToList();
 
             ViewBag.ActiveNav = "categories";
+            ViewBag.Brands = db.Brands.ToList();
             return View(categories);
         }
 
         //Thêm danh mục
-        public ActionResult AddCategory(Category cate)
+        [HttpPost]
+        public JsonResult AddCategory(Category cate)
         {
-            if(ModelState.IsValid)
-            {
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
-                List<Category> categories = db.Categories.ToList();
-
-                //Kiểm tra category đã tồn tại chưa
-                Category category = db.Categories.FirstOrDefault(t => t.CateID == cate.CateID);
-
-                if (category != null)
+            try {
+                if (ModelState.IsValid)
                 {
-                    return Json(new { success = false, error = "Danh mục này đã tồn tại." });
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    List<Category> categories = db.Categories.ToList();
+
+                    //Kiểm tra category đã tồn tại chưa
+                    Category category = db.Categories.FirstOrDefault(t => t.CateID == cate.CateID);
+
+                    if (category != null)
+                    {
+                        return Json(new { success = false, error = "Danh mục này đã tồn tại." });
+                    }
+
+                    db.Categories.Add(cate);
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
                 }
-
-                db.Categories.Add(cate);
-                db.SaveChanges();
-
-                return Json(new { success = true });
+                else
+                {
+                    return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
+                }
             }
-
-            return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
+            catch (Exception ex)
+            {
+                return Json(new { success = false, error = "Đã xảy ra lỗi." });
+            }
         }
 
         //Xóa danh mục
-        public ActionResult DeleteCategory(string cateID) 
+        [HttpPost]
+        public JsonResult DeleteCategory(string cateID) 
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
 
@@ -77,32 +88,44 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //Sửa danh mục
-        public ActionResult UpdateCategory(Category cate)
+        [HttpPost]
+        public JsonResult UpdateCategory(Category cate)
         {
-            if(ModelState.IsValid)
+            try
             {
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
-                Category category = db.Categories.FirstOrDefault(t => t.CateID == cate.CateID);
-
-                //Kiểm tra xem danh mục có tồn tại không
-                if (category == null)
+                if (ModelState.IsValid)
                 {
-                    return Json(new { success = false, error = "Danh mục này không tồn tại." });
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    Category category = db.Categories.FirstOrDefault(t => t.CateID == cate.CateID);
+
+                    //Kiểm tra xem danh mục có tồn tại không
+                    if (category == null)
+                    {
+                        return Json(new { success = false, error = "Danh mục này không tồn tại." });
+                    }
+
+                    //------
+                    if (cate.CateName == null || cate.CateName.Length <= 0)
+                    {
+                        return Json(new { success = false, error = "Tên danh mục không được để trống." });
+                    }
+
+                    category.CateName = cate.CateName;
+                    category.ImgSrc = cate.ImgSrc;
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
                 }
 
-                //------
-                if (cate.CateName == null || cate.CateName.Length <= 0)
-                {
-                    return Json(new { success = false, error = "Tên danh mục không được để trống." });
-                }
-
-                category.CateName = cate.CateName;
-                db.SaveChanges();
-
-                return Json(new { success = true });
+                return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
             }
-
-            return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
+            catch(Exception ex)
+            {
+                return Json(new { success = false, error = "Đã xảy ra lỗi." });
+            }
         }
+
+        //---------------------------------------------------------------------------------------------
+
     }
 }
