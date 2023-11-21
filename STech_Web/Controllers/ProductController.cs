@@ -1,6 +1,7 @@
 ﻿using STech_Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,6 +35,10 @@ namespace STech_Web.Controllers
                     ViewBag.Title = product.ProductName;
                     ViewBag.Breadcrumb = breadcrumb;
                     ViewBag.Products = products;
+
+                    //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
+                    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+                    ViewBag.cul = cul;
 
                     return View(product);
                 }

@@ -29,6 +29,8 @@ namespace STech_Web.Controllers
 
                 //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
                 CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+                ViewBag.cul = cul;
+
 
                 if (User.Identity.IsAuthenticated)
                 {

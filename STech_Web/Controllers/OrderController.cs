@@ -169,7 +169,7 @@ namespace STech_Web.Controllers
                 order.ShipMethod = orderTemp.ShipMethod;
                 order.DeliveryFee = 0;
                 order.TotalPrice = totalPrice;
-                order.TotalPaymentAmout = totalPrice;
+                order.TotalPaymentAmout = totalPrice + (decimal)order.DeliveryFee;
                 order.PaymentStatus = "Chờ thanh toán";
                 order.Status = "Chờ xác nhận";
 
@@ -398,7 +398,7 @@ namespace STech_Web.Controllers
             order.PaymentMethod = "Paypal";
             order.DeliveryFee = 0;
             order.TotalPrice = totalPrice;
-            order.TotalPaymentAmout = totalPrice;
+            order.TotalPaymentAmout = totalPrice + (decimal)order.DeliveryFee;
             order.PaymentStatus = "Chờ thanh toán";
             order.Status = "Chờ xác nhận";
 
@@ -646,8 +646,39 @@ namespace STech_Web.Controllers
         //In hóa đơn
         public ActionResult PrintOrder(string orderID)
         {
+            try
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    string userID = User.Identity.GetUserId();
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    STech_Web.Models.Customer customer = db.Customers.FirstOrDefault(t => t.AccountID == userID);
+                    if (customer == null)
+                    {
+                        return Redirect("#");
+                    }
 
-            return Json(new { success = true });
+                    STech_Web.Models.Order order = customer.Orders.FirstOrDefault(t => t.OrderID == orderID);
+                    if (order == null)
+                    {
+                        return Redirect("#");
+                    }
+
+                    PrintInvoice printInvoice = new PrintInvoice(order);
+                    byte[] file = printInvoice.Print();
+
+                    return File(file, printInvoice.ContentType, printInvoice.FileName);
+                }
+                else
+                {
+                    return Redirect("#");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Redirect("#");
+            }
         }
 
         //Xóa hóa đơn có trạng thái chờ thanh toán

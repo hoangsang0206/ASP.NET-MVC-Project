@@ -22,6 +22,10 @@ namespace STech_Web.Controllers
         // GET: Categories
         public ActionResult Index()
         {
+
+            //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+            ViewBag.cul = cul;
             return View();
         }
 
