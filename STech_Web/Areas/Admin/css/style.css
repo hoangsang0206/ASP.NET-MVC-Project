@@ -1954,7 +1954,8 @@ footer span {
 
 .order-infomation-wrapper,
 .order-update-wrapper,
-.payment-acception-confirm {
+.payment-acception-confirm,
+.create-customer-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -1968,7 +1969,8 @@ footer span {
 }
 
 .order-infomation-box,
-.order-update-box {
+.order-update-box,
+.create-customer-box {
     position: relative;
     background: var(--sidebar-color);
     width: 80%;
@@ -1984,7 +1986,8 @@ footer span {
 
 .order-infomation-box.show,
 .order-update-box.show,
-.payment-acception.show {
+.payment-acception.show,
+.create-customer-box.show {
     transform: scale(1);
     opacity: 1;
 }
@@ -2050,13 +2053,12 @@ footer span {
 }
 
 .search-cus-by-phone,
-.search-pro-id {
+.order-search-p {
     border: 1px solid #c7c7c7;
     border-radius: 0.3rem;
 }
 
-.search-cus-by-phone input,
-.search-pro-id input {
+.search-cus-by-phone input {
     height: 100%;
     width: calc(100% - 2.5rem);
     padding: 0.6rem 1rem;
@@ -2064,6 +2066,15 @@ footer span {
     outline: none;
      border-top-left-radius: 0.3rem;
     border-bottom-left-radius: 0.3rem;
+}
+
+.order-search-p input {
+    height: 100%;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 0.3rem;
 }
 
 .form-add-input {
@@ -2085,8 +2096,9 @@ footer span {
     top: calc(100% + 0.3rem);
     width: 100%;
     box-shadow: 1px 1px 4px #363636;
-    max-height: 380px;
+    max-height: 246px;
     overflow-y: auto;
+    overflow-x: hidden;
     display: none;
     z-index: 10;
 }
@@ -2105,8 +2117,12 @@ footer span {
     font-size: 1.3rem;
 }
 
+.create-cus-btn i:hover {
+    color: #01b43e;
+}
+
 .cus-search-item label {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.5rem;
 }
 
 .cus-search-item:hover label,
@@ -2117,9 +2133,41 @@ input[name="cus-search-cbx"]:checked ~ label {
 
 .cus-search-phone {
     font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .cus-search-name {
+    font-size: 0.85rem;
+}
+
+.pro-search-item label {
+    padding: 0.3rem;
+    width: 100%;
+}
+
+.pro-search-item label:hover,
+input[name="pro-search-id"]:checked ~ label {
+    background: #BACEDD;
+}
+
+.pro-search-item img {
+    width: 2.5rem;
+}
+
+.pro-search-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.pro-search-price {
+    font-weight: 600;
+    color: #e30019;
+    white-space: nowrap;
     font-size: 0.9rem;
 }
 
@@ -2132,8 +2180,8 @@ input[name="cus-search-cbx"]:checked ~ label {
 
 .add-order-products {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 3rem;
 }
 
 .order-create-products td input {
@@ -2174,6 +2222,11 @@ input[name="cus-search-cbx"]:checked ~ label {
 
 .create-order-btn:hover {
     outline: 2px solid #b5affa;
+}
+
+.create-customer-box {
+    width: 60rem;
+    height: 40rem;
 }
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/

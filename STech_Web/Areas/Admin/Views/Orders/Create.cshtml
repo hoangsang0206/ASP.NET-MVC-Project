@@ -24,7 +24,7 @@
         </div>
         <div class="create-order-items">
             <div>
-                <h6>Tim khach hang</h6>
+                <h6>Tìm kiếm khách hàng</h6>
                 <div class="d-flex align-items-stretch justify-content-between my-3 position-relative search-cus-by-phone">
                     <input type="text" id="search-cus-by-phone" value="" placeholder="Số điện thoại" required autocomplete="off" />
                     <button class="create-cus-btn">
@@ -74,9 +74,14 @@
             <h5 class="form-header-text mt-3">Thông tin đơn hàng</h5>
         </div>
         <div class="add-order-products">
-            <div class="d-flex align-items-stretch justify-content-between gap-1 my-3 search-pro-id">
-                <input type="text" id="search-pro-id" value="" placeholder="Nhập mã sản phẩm" required autocomplete="off" />
-
+            <div>
+                <h6>Tìm kiếm sản phẩm</h6>
+                <div class="d-flex align-items-stretch justify-content-between my-3 order-search-p position-relative">
+                    <input type="text" id="order-search-p" value="" placeholder="Nhập tên sản phẩm" required autocomplete="off" />
+                    <div class="pro-search-auto-complete position-absolute">
+                       
+                    </div>
+                </div>
             </div>
         </div>
         <div class="order-create-products my-3">
@@ -108,14 +113,6 @@
                     <input type="radio" name="paymentmethod" value="Thanh toán khi nhận hàng" id="cod" />
                     <label for="cod">Thanh toán khi nhận hàng</label>
                 </div>
-                <div class="payment-method-item">
-                    <input type="radio" name="paymentmethod" value="Visa/Mastercard" id="card" />
-                    <label for="card">VISA/MASTERCARD</label>
-                </div>
-                <div class="payment-method-item">
-                    <input type="radio" name="paymentmethod" value="Paypal" id="paypal" />
-                    <label for="paypal">Paypal</label>
-                </div>
             </div>
             <div class="order-totalprice d-flex align-items-center mt-5">
                 <p>Tổng tiền:&nbsp;&nbsp;</p>
@@ -129,3 +126,15 @@
         </div>
     </div>
 </section>
+
+<div class="create-customer-wrapper">
+    <div class="create-customer-box position-relative">
+        <div class="close-form close-create-customer position-absolute">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h5 class="text-center">Tạo mới khách hàng</h5>
+        <form action="#" method="post" class="form-create-customer">
+
+        </form>
+    </div>
+</div>

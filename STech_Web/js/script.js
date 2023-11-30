@@ -507,7 +507,7 @@ $("#search").keyup(function () {
                                             </div>
                                         </div>
                                         <div class="ajax-search-item-image">
-                                            <img src="${product.ImgSrc}" alt="" />
+                                            <img src="${product.ImgSrc != null ? product.ImgSrc : '/images/no-image.jpg'}" alt="" />
                                         </div>
                                     </div>
                                 </a>`;

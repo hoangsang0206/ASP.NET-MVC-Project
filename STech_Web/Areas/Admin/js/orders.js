@@ -509,13 +509,11 @@ $('#search-cus-by-phone').keyup((e) => {
                     for (let i = 0; i < data.length; i++) {
                         var str = `<div class="cus-search-item">
                             <input type="radio" id="cus-search-cbx-${i + 1}" name="cus-search-cbx" class="d-none" value="${data[i].CustomerID}" />
-                            <label for="cus-search-cbx-${i + 1}" class="d-flex gap-2 align-items-center">
+                            <label for="cus-search-cbx-${i + 1}" class="d-flex gap-3 align-items-center">
                                 <span class="cus-search-phone">${data[i].Phone}</span>
                                 <span class="cus-search-name">${data[i].CustomerName}</span>
                             </label>
                         </div>`;
-
-                        console.log(1)
 
                         $('.cus-search-auto-complete').append(str);
                     }
@@ -542,7 +540,7 @@ $(document).on('change', 'input[name="cus-search-cbx"]', (e) => {
         $('#search-cus-by-phone').val('')
         $('.cus-search-auto-complete').empty();
         $('.cus-search-auto-complete').hide();
-
+        showLoading();
         $.ajax({
             type: 'get',
             url: '/api/customers',
@@ -550,11 +548,13 @@ $(document).on('change', 'input[name="cus-search-cbx"]', (e) => {
                 customerID: $(e.target).val()
             },
             success: (data) => {
+                hideLoading();
                 $('#cusName').val(data.CustomerName);
                 $('#cusPhone').val(data.Phone);
                 $('#cusAddress').val(data.Address);
                 $('#cusEmail').val(data.Email);
-    
+                data.Gender === "Nam" ? $('#cusGender-Male').prop('checked', true) :
+                    $('#cusGender-FeMale').prop('checked', true);
             },
             error: () => {  }
         })
@@ -573,18 +573,81 @@ function updateTotal() {
 }
 
 
-$('.search-pro-id').submit((e) => {
-    e.preventDefault();
-    var productID = $('#search-pro-id').val();
-    if (productID.length > 0) {
-        showLoading();
+$('#order-search-p').keyup((e) => {
+    var productName = $(e.target).val();
+    if (productName.length > 0) {
         $.ajax({
             type: 'get',
             url: '/api/products',
-            data: { productID: productID },
+            data: { name: productName },
             success: (data) => {
-                hideLoading();
-                if (data.ProductID != null || data.ProductID.length > 0) {
+                if (data.length > 0) {
+                    $('.pro-search-auto-complete').empty();
+                    $('.pro-search-auto-complete').show();
+
+                    for (let i = 0; i < data.length; i++) {
+                        var str = ` <div class="pro-search-item d-flex align-items-center gap-2">
+                            <input type="radio" class="d-none" name="pro-search-id" id="pro-search-id-${i + 1}" value="${data[i].ProductID}" />
+                            <label for="pro-search-id-${i + 1}" class=" d-flex align-items-center justify-content-between gap-3">
+                                <img src="${data[i].ImgSrc != null ? data[i].ImgSrc : '/images/no-image.jpg'}" alt="" />
+                                <span class="m-0 p-0 pro-search-name">${data[i].ProductName}</span>
+                                <span class="pro-search-price">${data[i].Price.toLocaleString('vi-VN') + 'đ'}</span>
+                            </label>
+                        </div>`;
+
+                        $('.pro-search-auto-complete').append(str);
+                    }
+                }
+                else {
+                    $('.pro-search-auto-complete').empty();
+                    $('.pro-search-auto-complete').hide();
+                }
+            },
+            error: () => {
+                $('.pro-search-auto-complete').empty();
+                $('.pro-search-auto-complete').hide();
+            }
+        })
+    }
+    else {
+        $('.pro-search-auto-complete').empty();
+        $('.pro-search-auto-complete').hide();
+    }
+})
+
+//--------------------
+$(document).on('click', (e) => {
+    var cusSearch = $('.cus-search-auto-complete');
+    if (!$(e.target).closest('.cus-search-auto-complete').length) {
+        cusSearch.hide();
+        cusSearch.empty();
+    }
+
+    var proSearch = $('.pro-search-auto-complete');
+    if (!$(e.target).closest('.pro-search-auto-complete').length) {
+        proSearch.hide();
+        proSearch.empty();
+    }
+})
+
+
+//Add product to create order table
+$(document).on('change', 'input[name="pro-search-id"]', (e) => {
+    if ($(e.target).prop('checked') == true) {
+        var proID = $(e.target).val();
+        $('.pro-search-auto-complete').empty();
+        $('.pro-search-auto-complete').hide();
+        $('#order-search-p').val('');
+        if (proID.length > 0) {
+            showLoading();
+            $.ajax({
+                type: 'get',
+                url: '/api/products',
+                data: {
+                    productID: proID
+                },
+                success: (data) => {
+                    hideLoading();
                     var currentPro = $('input[name="order-pro-qty"]').toArray();
                     var exist = currentPro.some(function (el) {
                         return $(el).data('order-pro') === data.ProductID;
@@ -592,30 +655,30 @@ $('.search-pro-id').submit((e) => {
 
                     if (exist === false) {
                         var str = `<tr>
-                            <td>
-                                <input type="hidden" name="order-pro-id" value="${data.ProductID}" />
-                                ${data.ProductID}
-                            </td>
-                            <td>${data.ProductName}</td>
-                            <td>${data.Price.toLocaleString('vi-VN')}đ</td>
-                            <td>
-                                <input type="number" name="order-pro-qty" value="1" min="1" data-order-pro="${data.ProductID}" required/>
-                            </td>
-                            <td class="one-p-total">
-                                ${data.Price.toLocaleString('vi-VN')}đ
-                            </td>
-                            <td>
-                                <i class='bx bx-trash del-order-pro'></i>
-                            </td>
-                        </tr>`;
+                                        <td>
+                                            <input type="hidden" name="order-pro-id" value="${data.ProductID}" />
+                                            ${data.ProductID}
+                                        </td>
+                                        <td>${data.ProductName}</td>
+                                        <td>${data.Price.toLocaleString('vi-VN')}đ</td>
+                                        <td>
+                                            <input type="number" name="order-pro-qty" value="1" min="1" data-order-pro="${data.ProductID}" required/>
+                                        </td>
+                                        <td class="one-p-total">
+                                            ${data.Price.toLocaleString('vi-VN')}đ
+                                        </td>
+                                        <td>
+                                            <i class='bx bx-trash del-order-pro'></i>
+                                        </td>
+                                    </tr>`;
 
                         $('.order-create-products table tbody').append(str);
                         updateTotal();
                     }
-                }
-            },
-            error: () => {  }
-        })
+                },
+                error: () => { }
+            })
+        }
     }
 })
 
@@ -650,4 +713,16 @@ $(document).on('focus', 'input[name="order-pro-qty"]', (e) => {
 $(document).on('click', '.del-order-pro', (e) => {
     $(e.target).closest('tr').remove();
     updateTotal();
+})
+
+
+//-----------------------------------------------------------
+$('.create-cus-btn').click(() => {
+    $('.create-customer-wrapper').css('visibility', 'visible');
+    $('.create-customer-box').addClass('show');
+})
+
+$('.close-create-customer').click(() => {
+    $('.create-customer-wrapper').css('visibility', 'hidden');
+    $('.create-customer-box').removeClass('show');
 })
