@@ -11,7 +11,7 @@ using STech_Web.Models;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [AdminAuthorization]
+    [ManagerAuthorization]
     public class DashboardController : Controller
     {
         // GET: Admin/Home

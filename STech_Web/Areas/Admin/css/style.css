@@ -512,6 +512,12 @@ body {
 }
 
 /* ------------------------------------------------- */
+button:disabled {
+    background: #c7c7c7 !important;
+    outline: none !important;
+    cursor: not-allowed !important;
+}
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -1948,8 +1954,7 @@ footer span {
 
 .order-infomation-wrapper,
 .order-update-wrapper,
-.payment-acception-confirm,
-.create-order {
+.payment-acception-confirm {
     position: fixed;
     top: 0;
     left: 0;
@@ -1963,8 +1968,7 @@ footer span {
 }
 
 .order-infomation-box,
-.order-update-box,
-.create-order-box {
+.order-update-box {
     position: relative;
     background: var(--sidebar-color);
     width: 80%;
@@ -1980,8 +1984,7 @@ footer span {
 
 .order-infomation-box.show,
 .order-update-box.show,
-.payment-acception.show,
-.create-order-box.show {
+.payment-acception.show {
     transform: scale(1);
     opacity: 1;
 }
@@ -2022,8 +2025,7 @@ footer span {
 }
 
 .close-order-info,
-.close-order-update,
-.close-create-order {
+.close-order-update {
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
@@ -2031,8 +2033,7 @@ footer span {
 }
 
 .close-order-info i,
-.close-order-update i,
-.close-create-order i {
+.close-order-update i {
     font-size: 2rem;
 }
 
@@ -2068,6 +2069,19 @@ footer span {
     border-radius: 0.3rem;
     outline: none;
     width: 75%;
+}
+
+.cus-search-auto-complete {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    background: #fff;
+    top: calc(100% + 0.4rem);
+}
+
+.create-order-box {
+    border-radius: 0.3rem;
+    background: #fff;
+    padding: 2rem;
 }
 
 .create-order-error {

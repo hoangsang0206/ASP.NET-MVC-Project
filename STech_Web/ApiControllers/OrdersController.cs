@@ -11,7 +11,7 @@ using STech_Web.ApiModels;
 
 namespace STech_Web.ApiControllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin"), Authorize(Roles = "Manager")]
     public class OrdersController : ApiController
     {
         //Lấy tất cả đơn hàng

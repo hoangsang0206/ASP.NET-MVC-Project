@@ -8,7 +8,7 @@ using STech_Web.Filters;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [AdminAuthorization]
+    [ManagerAuthorization]
     public class ProductsController : Controller
     {
         // GET: Admin/Products
@@ -190,7 +190,7 @@ namespace STech_Web.Areas.Admin.Controllers
 
 
         //Delete product
-        [HttpPost]
+        [HttpPost, AdminAuthorization]
         public JsonResult DeleteProduct(string productID)
         {
             try
@@ -246,6 +246,7 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //Delete all product in category
+        [AdminAuthorization]
         public JsonResult DeleteAllInCategory(string cateID)
         {
             try

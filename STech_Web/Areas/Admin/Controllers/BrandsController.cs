@@ -8,7 +8,7 @@ using STech_Web.Models;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [AdminAuthorization]  
+    [ManagerAuthorization]  
     public class BrandsController : Controller
     {
         // GET: Admin/Brands
@@ -84,7 +84,7 @@ namespace STech_Web.Areas.Admin.Controllers
 
 
         //Xóa hãng ----------------------
-        [HttpPost]
+        [HttpPost, AdminAuthorization]
         public JsonResult DeleteBrand(string brandID)
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();

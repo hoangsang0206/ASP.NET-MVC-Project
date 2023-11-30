@@ -11,7 +11,7 @@ using STech_Web.Filters;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [AdminAuthorization]
+    [ManagerAuthorization]
     public class CategoriesController : Controller
     {
         // GET: Admin/Categories
@@ -60,7 +60,7 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //Xóa danh mục
-        [HttpPost]
+        [HttpPost, AdminAuthorization]
         public JsonResult DeleteCategory(string cateID) 
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();

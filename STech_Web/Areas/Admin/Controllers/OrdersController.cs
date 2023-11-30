@@ -11,10 +11,11 @@ using Microsoft.Owin.Security;
 using System.Security;
 using STech_Web.Identity;
 using Microsoft.AspNet.Identity;
+using Google.Cloud.Storage.V1;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [AdminAuthorization]
+    [ManagerAuthorization]
     public class OrdersController : Controller
     {
         // GET: Admin/Order
@@ -41,7 +42,7 @@ namespace STech_Web.Areas.Admin.Controllers
         //In hóa đơn ----------------
         public ActionResult PrintOrder()
         {
-           
+
 
             return View();
         }
@@ -52,7 +53,7 @@ namespace STech_Web.Areas.Admin.Controllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Order order = db.Orders.FirstOrDefault(t => t.OrderID == orderID);
-            if(order != null)
+            if (order != null)
             {
                 order.PaymentStatus = "Thanh toán thành công";
                 db.SaveChanges();
@@ -69,12 +70,12 @@ namespace STech_Web.Areas.Admin.Controllers
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Order order = db.Orders.FirstOrDefault(t => t.OrderID == orderID);
 
-            if(order == null)
+            if (order == null)
             {
                 return Json(new { success = false });
             }
 
-            if(type == "accept")
+            if (type == "accept")
             {
                 order.Status = "Đã xác nhận";
             }
@@ -88,6 +89,11 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //Tạo đơn hàng ---------------
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         public JsonResult CreateOrder(string customerID, List<string> productID, string paymentMethod)
         {
             try

@@ -486,8 +486,7 @@ $(document).on('click', '.delete-order-btn', (e) => {
 
 //--Create order -------------------------------------------------------
 $('.add-order-btn').click(() => {
-    $('.create-order').css('visibility', 'visible');
-    $('.create-order-box').addClass('show');
+    window.location.href = '/admin/orders/create';
 })
 
 $('.close-create-order').click(() => {

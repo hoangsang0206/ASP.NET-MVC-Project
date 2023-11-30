@@ -114,7 +114,7 @@ namespace STech_Web.Controllers
                     var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                     authenManager.SignIn(new AuthenticationProperties(), userIdentity);
 
-                    if (userManager.IsInRole(user.Id, "admin"))
+                    if (userManager.IsInRole(user.Id, "admin") || userManager.IsInRole(user.Id, "manager"))
                     {
                         return Json(new { success = true, redirectUrl = "/admin/dashboard" });
                     }

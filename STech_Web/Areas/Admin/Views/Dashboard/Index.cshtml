@@ -118,16 +118,10 @@
 
     //--Get current month data ---------------------------------------
     function getCurrentMonthData() {
-        $('.loading').css('display', 'grid');
         $.ajax({
             type: 'Get',
             url: '/admin/dashboard/getcurrentmonthsumarry',
             success: (data) => {
-                var interval = setInterval(() => {
-                    $('.loading').hide();
-                    clearInterval(interval);
-                }, 500);
-
                 $('.realtime').empty();
                 $('.month-order').empty();
                 $('.month-revenue').empty();
