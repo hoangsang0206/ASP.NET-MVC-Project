@@ -5,13 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using STech_Web.Filters;
 using STech_Web.Models;
-using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using Microsoft.Owin.Security;
 using System.Security;
 using STech_Web.Identity;
 using Microsoft.AspNet.Identity;
-using Google.Cloud.Storage.V1;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
@@ -40,11 +38,19 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //In hóa đơn ----------------
-        public ActionResult PrintOrder()
+        public ActionResult PrintOrder(string orderID)
         {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Order order = db.Orders.FirstOrDefault(t => t.OrderID == orderID);
+            if (order == null)
+            {
+                return Redirect("#");
+            }
 
+            PrintInvoice printInvoice = new PrintInvoice(order);
+            byte[] file = printInvoice.Print();
 
-            return View();
+            return File(file, printInvoice.ContentType, printInvoice.FileName);
         }
 
         //Xác nhận đã thanh toán -----------
@@ -94,14 +100,67 @@ namespace STech_Web.Areas.Admin.Controllers
             return View();
         }
 
-        public JsonResult CreateOrder(string customerID, List<string> productID, string paymentMethod)
+        [HttpPost]
+        public JsonResult Create(string customerID, string productStr, string paymentMethod)
         {
             try
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
+                List<Product> products = new List<Product>();
                 Customer customer = db.Customers.FirstOrDefault(c => c.CustomerID == customerID);
 
+                List<Order> orders = db.Orders.OrderByDescending(t => t.OrderID).ToList();
+                int orderNumber = 1;
+                if (orders.Count > 0)
+                {
+                    orderNumber = int.Parse(orders[0].OrderID.Substring(2)) + 1;
+                }
 
+                string orderID = "DH" + orderNumber.ToString().PadLeft(5, '0');
+                decimal totalPrice = 0;
+
+                Order order = new Order();
+                order.OrderID = orderID;
+                order.CustomerID = customer.CustomerID;
+                order.OrderDate = DateTime.Now;
+                //order.Note = "";
+                order.ShipMethod = "COD";
+                order.DeliveryFee = 0;
+                order.PaymentStatus = "Chờ thanh toán";
+                order.Status = "Chờ xác nhận";
+                order.PaymentMethod = paymentMethod;
+
+                //Tạo chi tiết đơn hàng
+                List<OrderDetail> orderDetails = new List<OrderDetail>();
+
+                List<string> productString = productStr.Split(';').ToList();
+                foreach (string str in productString)
+                {
+                    if(!String.IsNullOrEmpty(str))
+                    {
+                        string[] parts = str.Split('+');
+                        string productID = parts[0];
+                        int qty = Convert.ToInt32(parts[1]);
+
+                        Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
+                        totalPrice += qty * (decimal)product.Price;
+                        OrderDetail orderDetail = new OrderDetail();
+                        orderDetail.OrderID = orderID;
+                        orderDetail.ProductID = product.ProductID;
+                        orderDetail.Quantity = qty;
+                        orderDetails.Add(orderDetail);
+
+                        //Trừ số lượng khỏi kho
+                        WareHouse wh = product.WareHouse;
+                        wh.Quantity -= qty;
+                    }
+                }
+
+                order.TotalPrice = totalPrice;
+                order.TotalPaymentAmout = totalPrice + (decimal)order.DeliveryFee;
+                db.Orders.Add(order);
+                db.OrderDetails.AddRange(orderDetails);
+                db.SaveChanges();
                 return Json(new { success = true });
             }
             catch (Exception ex)

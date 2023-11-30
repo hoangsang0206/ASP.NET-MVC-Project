@@ -1517,6 +1517,7 @@ footer span {
 .add-product, .complete-notice,
 .complete-update-notice,
 .complete-delete-notice,
+.fail-delete-notice,
 .delete-product-in-cate-confirm {
     position: fixed;
     top: 0;
@@ -1542,7 +1543,8 @@ footer span {
 
 .complete-notice,
 .complete-update-notice,
-.complete-delete-notice {
+.complete-delete-notice,
+.fail-delete-notice {
     z-index: 60 !important;
 }
 
@@ -1563,9 +1565,10 @@ footer span {
     transition: var(--tran-03);
 }
 
-.complete-notice-box {
+.complete-notice-box,
+.fail-notice-box {
     gap: 1rem;
-    width: 30%;
+    width: 30rem;
     padding: 2rem;
     border-radius: 0.3rem;
     background: #ffffff;
@@ -1579,11 +1582,18 @@ footer span {
     color: #ff8a00;
 }
 
-.complete-notice-box span {
+.fail-delete-notice i {
+    font-size: 4rem;
+    color: #e30019;
+}
+
+.complete-notice-box span,
+.fail-notice-box span {
     font-size: 1.2rem;
 }
 
-.complete-notice-box button {
+.complete-notice-box button,
+.fail-notice-box button {
     padding: 0.7rem 1.8rem;
     border-radius: 0.3rem;
     border: none;
@@ -1593,12 +1603,14 @@ footer span {
     font-weight: 500;
 }
 
-.complete-notice-box button:hover {
+.complete-notice-box button:hover,
+.fail-notice-box button:hover{
     outline: 2px solid #938afc;
 }
 
 .product-form-container.showForm,
-.complete-notice-box.showForm {
+.complete-notice-box.showForm,
+.fail-notice-box.showForm {
     transform: scale(1);
     opacity: 1;
 }

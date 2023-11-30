@@ -101,7 +101,7 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-input-box position-relative d-flex align-items-center">
                                 <select class="form-input select-input" id="CateID" name="CateID">
-                                    <option value="" selected>Danh mục</option>
+                                    <option value="khac" selected>Danh mục</option>
                                     @foreach (var cate in ViewBag.Categories)
                                     {
                                         <option value="@cate.CateID">@cate.CateName</option>
@@ -112,7 +112,7 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-input-box position-relative d-flex align-items-center">
                                 <select class="form-input select-input" id="BrandID" name="BrandID">
-                                    <option value="" selected>Hãng</option>
+                                    <option value="khac" selected>Hãng</option>
                                     @foreach (var brand in ViewBag.Brands)
                                     {
                                         <option value="@brand.BrandID">@brand.BrandName</option>
@@ -224,6 +224,14 @@
     <div class="complete-notice-box d-flex flex-column align-items-center">
         <i class='bx bx-check-circle bx-tada'></i>
         <span>Xóa thành công.</span>
+        <button>OK</button>
+    </div>
+</div>
+
+<div class="fail-delete-notice">
+    <div class="fail-notice-box d-flex flex-column align-items-center">
+        <i class='bx bxs-error-circle'></i>
+        <span>Xóa thất bại.</span>
         <button>OK</button>
     </div>
 </div>

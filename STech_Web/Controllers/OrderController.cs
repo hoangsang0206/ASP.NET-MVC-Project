@@ -480,7 +480,7 @@ namespace STech_Web.Controllers
 
                 return Redirect("/order/failed");
             }
-            order.PaymentStatus = "Thanh toán thành công";
+            order.PaymentStatus = "Đã thanh toán";
             db.Orders.Add(order);
             db.OrderDetails.AddRange(orderDetails);
             db.Carts.RemoveRange(cart);
@@ -586,7 +586,7 @@ namespace STech_Web.Controllers
 
             if (session.PaymentStatus == "paid")
             {
-                order.PaymentStatus = "Thanh toán thành công";
+                order.PaymentStatus = "Đã thanh toán";
                 db.Orders.AddOrUpdate(order);
                 db.SaveChanges();
 
@@ -771,7 +771,7 @@ namespace STech_Web.Controllers
                         orders = customer.Orders.Where(t => t.PaymentStatus == "Chờ thanh toán").ToList();
                         break;
                     case "paid":
-                        orders = customer.Orders.Where(t => t.PaymentStatus == "Thanh toán thành công").ToList();
+                        orders = customer.Orders.Where(t => t.PaymentStatus == "Đã thanh toán").ToList();
                         break;
                 }
 

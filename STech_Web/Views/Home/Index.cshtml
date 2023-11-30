@@ -121,7 +121,7 @@
                                     <img lazy-src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                                 </div>
                             </a>
-                            @if(item.Product.WareHouse.Quantity <= 0)
+                            @if (item.Product.WareHouse.Quantity <= 0)
                             {
                                 <div class="out-of-stock mt-1 text-center">
                                     Hết hàng
@@ -245,31 +245,31 @@
                 {
                     <div class="slick-slider-item">
                         <div class="product-box">
-                            <a href="/product/@item.Product.ProductID" class="product-link">
+                            <a href="/product/@item.ProductID" class="product-link">
                                 <div class="product-image lazy-loading">
-                                    <img lazy-src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
+                                    <img lazy-src="@(item.ImgSrc != null ? item.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                                 </div>
                             </a>
-                            @if (item.Product.WareHouse.Quantity <= 0)
+                            @if (item.WareHouse.Quantity <= 0)
                             {
                                 <div class="out-of-stock mt-1 text-center">
                                     Hết hàng
                                 </div>
                             }
-                            <a href="/product/@item.Product.ProductID" class="product-link">
+                            <a href="/product/@item.ProductID" class="product-link">
                                 <div class="product-name">
-                                    @item.Product.ProductName
+                                    @item.ProductName
                                 </div>
                             </a>
 
                             @{ double discountPercent = 0; }
                             <div class="product-original-price">
-                                @if (item.Product.Cost > item.Product.Price)
+                                @if (item.Cost > item.Price)
                                 {
-                                    decimal cost = Convert.ToDecimal(item.Product.Cost);
+                                    decimal cost = Convert.ToDecimal(item.Cost);
 
-                                    discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
-                                        / Convert.ToDouble(item.Product.Cost)) * 100;
+                                    discountPercent = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                        / Convert.ToDouble(item.Cost)) * 100;
                                     <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                                 }
                                 else
@@ -279,7 +279,7 @@
                             </div>
                             <div class="product-price d-flex align-items-center">
                                 @{
-                                    decimal price = Convert.ToDecimal(item.Product.Price);
+                                    decimal price = Convert.ToDecimal(item.Price);
                                 }
                                 <span>@price.ToString("##,###", ViewBag.cul)đ</span>
                                 @if (discountPercent > 0)
@@ -289,10 +289,10 @@
                                     </div>
                                 }
                             </div>
-                            <button class="view-product" onclick="window.location.href='/product/@item.Product.ProductID'">
+                            <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
                                 <i class="fa-regular fa-eye"></i>
                             </button>
-                            <button class="btn-add-to-cart" data-product="@item.Product.ProductID">
+                            <button class="btn-add-to-cart" data-product="@item.ProductID">
                                 <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
@@ -326,31 +326,31 @@
                 {
                     <div class="slick-slider-item">
                         <div class="product-box">
-                            <a href="/product/@item.Product.ProductID" class="product-link">
+                            <a href="/product/@item.ProductID" class="product-link">
                                 <div class="product-image lazy-loading">
-                                    <img lazy-src="@(item.Product.ImgSrc != null ? item.Product.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
+                                    <img lazy-src="@(item.ImgSrc != null ? item.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
                                 </div>
                             </a>
-                            @if (item.Product.WareHouse.Quantity <= 0)
+                            @if (item.WareHouse.Quantity <= 0)
                             {
                                 <div class="out-of-stock mt-1 text-center">
                                     Hết hàng
                                 </div>
                             }
-                            <a href="/product/@item.Product.ProductID" class="product-link">
+                            <a href="/product/@item.ProductID" class="product-link">
                                 <div class="product-name">
-                                    @item.Product.ProductName
+                                    @item.ProductName
                                 </div>
                             </a>
 
                             @{ double discountPercent = 0; }
                             <div class="product-original-price">
-                                @if (item.Product.Cost > item.Product.Price)
+                                @if (item.Cost > item.Price)
                                 {
-                                    decimal cost = Convert.ToDecimal(item.Product.Cost);
+                                    decimal cost = Convert.ToDecimal(item.Cost);
 
-                                    discountPercent = ((Convert.ToDouble(item.Product.Cost) - Convert.ToDouble(item.Product.Price))
-                                        / Convert.ToDouble(item.Product.Cost)) * 100;
+                                    discountPercent = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                        / Convert.ToDouble(item.Cost)) * 100;
                                     <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
                                 }
                                 else
@@ -360,7 +360,7 @@
                             </div>
                             <div class="product-price d-flex align-items-center">
                                 @{
-                                    decimal price = Convert.ToDecimal(item.Product.Price);
+                                    decimal price = Convert.ToDecimal(item.Price);
                                 }
                                 <span>@price.ToString("##,###", ViewBag.cul)đ</span>
                                 @if (discountPercent > 0)
@@ -370,10 +370,10 @@
                                     </div>
                                 }
                             </div>
-                            <button class="view-product" onclick="window.location.href='/product/@item.Product.ProductID'">
+                            <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
                                 <i class="fa-regular fa-eye"></i>
                             </button>
-                            <button class="btn-add-to-cart" data-product="@item.Product.ProductID">
+                            <button class="btn-add-to-cart" data-product="@item.ProductID">
                                 <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
@@ -384,93 +384,248 @@
     </section>
 }
 
-<section class="section-collection">
-    <div class="section-header">
-        <div class="section-header-box">
-            <h2 class="section-title">
-                <a href="#">Chuột nổi bậc</a>
-            </h2>
-            <div class="section-sub-header-box">
-                <i class="fa-solid fa-truck"></i>
-                <span>Miễn phí giao hàng</span>
+@if (ViewBag.MouseOSD.Count > 0)
+{
+    <section class="section-collection">
+        <div class="section-header">
+            <div class="section-header-box">
+                <h2 class="section-title">
+                    <a href="#">Chuột nổi bậc</a>
+                </h2>
+                <div class="section-sub-header-box">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Miễn phí giao hàng</span>
+                </div>
+            </div>
+            <div class="section-header-link">
+                <a href="#">Xem tất cả</a>
             </div>
         </div>
-        <div class="section-header-link">
-            <a href="#">Xem tất cả</a>
-        </div>
-    </div>
-    <div class="section-content">
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+        <div class="section-content">
+            <div class="collection-slick-slider">
+                @foreach (var item in ViewBag.MouseOSD)
+                {
+                    <div class="slick-slider-item">
+                        <div class="product-box">
+                            <a href="/product/@item.ProductID" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="@(item.ImgSrc != null ? item.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
+                                </div>
+                            </a>
+                            @if (item.WareHouse.Quantity <= 0)
+                            {
+                                <div class="out-of-stock mt-1 text-center">
+                                    Hết hàng
+                                </div>
+                            }
+                            <a href="/product/@item.ProductID" class="product-link">
+                                <div class="product-name">
+                                    @item.ProductName
+                                </div>
+                            </a>
 
-            </div>
-        </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+                            @{ double discountPercent = 0; }
+                            <div class="product-original-price">
+                                @if (item.Cost > item.Price)
+                                {
+                                    decimal cost = Convert.ToDecimal(item.Cost);
 
+                                    discountPercent = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                        / Convert.ToDouble(item.Cost)) * 100;
+                                    <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                                }
+                                else
+                                {
+                                    <span style="visibility: hidden">0</span>
+                                }
+                            </div>
+                            <div class="product-price d-flex align-items-center">
+                                @{
+                                    decimal price = Convert.ToDecimal(item.Price);
+                                }
+                                <span>@price.ToString("##,###", ViewBag.cul)đ</span>
+                                @if (discountPercent > 0)
+                                {
+                                    <div class="product-discount-percent">
+                                        @( "-" + (int)discountPercent + "%" )
+                                    </div>
+                                }
+                            </div>
+                            <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-add-to-cart" data-product="@item.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+    </section>
+}
 
+@if (ViewBag.MonitorOSD.Count > 0)
+{
+    <section class="section-collection">
+        <div class="section-header">
+            <div class="section-header-box">
+                <h2 class="section-title">
+                    <a href="#">Màn hình nổi bậc</a>
+                </h2>
+                <div class="section-sub-header-box">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Miễn phí giao hàng</span>
+                </div>
+            </div>
+            <div class="section-header-link">
+                <a href="#">Xem tất cả</a>
             </div>
         </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+        <div class="section-content">
+            <div class="collection-slick-slider">
+                @foreach (var item in ViewBag.MonitorOSD)
+                {
+                    <div class="slick-slider-item">
+                        <div class="product-box">
+                            <a href="/product/@item.ProductID" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="@(item.ImgSrc != null ? item.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
+                                </div>
+                            </a>
+                            @if (item.WareHouse.Quantity <= 0)
+                            {
+                                <div class="out-of-stock mt-1 text-center">
+                                    Hết hàng
+                                </div>
+                            }
+                            <a href="/product/@item.ProductID" class="product-link">
+                                <div class="product-name">
+                                    @item.ProductName
+                                </div>
+                            </a>
 
-            </div>
-        </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+                            @{ double discountPercent = 0; }
+                            <div class="product-original-price">
+                                @if (item.Cost > item.Price)
+                                {
+                                    decimal cost = Convert.ToDecimal(item.Cost);
 
+                                    discountPercent = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                        / Convert.ToDouble(item.Cost)) * 100;
+                                    <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                                }
+                                else
+                                {
+                                    <span style="visibility: hidden">0</span>
+                                }
+                            </div>
+                            <div class="product-price d-flex align-items-center">
+                                @{
+                                    decimal price = Convert.ToDecimal(item.Price);
+                                }
+                                <span>@price.ToString("##,###", ViewBag.cul)đ</span>
+                                @if (discountPercent > 0)
+                                {
+                                    <div class="product-discount-percent">
+                                        @( "-" + (int)discountPercent + "%" )
+                                    </div>
+                                }
+                            </div>
+                            <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-add-to-cart" data-product="@item.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 
-<section class="section-collection">
-    <div class="section-header">
-        <div class="section-header-box">
-            <h2 class="section-title">
-                <a href="#">Bàn phím nổi bậc</a>
-            </h2>
-            <div class="section-sub-header-box">
-                <i class="fa-solid fa-truck"></i>
-                <span>Miễn phí giao hàng</span>
+@if (ViewBag.KeyboardOSD.Count > 0)
+{
+    <section class="section-collection">
+        <div class="section-header">
+            <div class="section-header-box">
+                <h2 class="section-title">
+                    <a href="#">Bàn phím nổi bậc</a>
+                </h2>
+                <div class="section-sub-header-box">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Miễn phí giao hàng</span>
+                </div>
+            </div>
+            <div class="section-header-link">
+                <a href="#">Xem tất cả</a>
             </div>
         </div>
-        <div class="section-header-link">
-            <a href="#">Xem tất cả</a>
-        </div>
-    </div>
-    <div class="section-content">
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+        <div class="section-content">
+            <div class="collection-slick-slider">
+                @foreach (var item in ViewBag.KeyboardOSD)
+                {
+                    <div class="slick-slider-item">
+                        <div class="product-box">
+                            <a href="/product/@item.ProductID" class="product-link">
+                                <div class="product-image lazy-loading">
+                                    <img lazy-src="@(item.ImgSrc != null ? item.ImgSrc : "/images/no-image.jpg")" alt="" class="product-img">
+                                </div>
+                            </a>
+                            @if (item.WareHouse.Quantity <= 0)
+                            {
+                                <div class="out-of-stock mt-1 text-center">
+                                    Hết hàng
+                                </div>
+                            }
+                            <a href="/product/@item.ProductID" class="product-link">
+                                <div class="product-name">
+                                    @item.ProductName
+                                </div>
+                            </a>
 
-            </div>
-        </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
+                            @{ double discountPercent = 0; }
+                            <div class="product-original-price">
+                                @if (item.Cost > item.Price)
+                                {
+                                    decimal cost = Convert.ToDecimal(item.Cost);
 
+                                    discountPercent = ((Convert.ToDouble(item.Cost) - Convert.ToDouble(item.Price))
+                                        / Convert.ToDouble(item.Cost)) * 100;
+                                    <span>@cost.ToString("#,###", ViewBag.cul)đ</span>
+                                }
+                                else
+                                {
+                                    <span style="visibility: hidden">0</span>
+                                }
+                            </div>
+                            <div class="product-price d-flex align-items-center">
+                                @{
+                                    decimal price = Convert.ToDecimal(item.Price);
+                                }
+                                <span>@price.ToString("##,###", ViewBag.cul)đ</span>
+                                @if (discountPercent > 0)
+                                {
+                                    <div class="product-discount-percent">
+                                        @( "-" + (int)discountPercent + "%" )
+                                    </div>
+                                }
+                            </div>
+                            <button class="view-product" onclick="window.location.href='/product/@item.ProductID'">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <button class="btn-add-to-cart" data-product="@item.ProductID">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
-
-            </div>
-        </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
-
-            </div>
-        </div>
-        <div class="section-content-item">
-            <div class="section-collection-box loading">
-
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+}
 
 <section class="section-brands">
     <div class="section-header">

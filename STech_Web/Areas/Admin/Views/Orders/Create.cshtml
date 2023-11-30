@@ -18,7 +18,7 @@
             </li>
         </ul>
     </div>
-    <div class="create-order-box mb-4">
+    <form action="#" method="post" class="create-order-box mb-4">
         <div class="form-box-header">
             <h5 class="form-header-text">Thông tin khách hàng</h5>
         </div>
@@ -26,7 +26,7 @@
             <div>
                 <h6>Tìm kiếm khách hàng</h6>
                 <div class="d-flex align-items-stretch justify-content-between my-3 position-relative search-cus-by-phone">
-                    <input type="text" id="search-cus-by-phone" value="" placeholder="Số điện thoại" required autocomplete="off" />
+                    <input type="text" id="search-cus-by-phone" value="" placeholder="Số điện thoại" autocomplete="off" />
                     <button class="create-cus-btn">
                         <i class='bx bx-plus'></i>
                     </button>
@@ -45,11 +45,11 @@
                     <span>Giới tính</span>
                     <div class="d-flex gap-3">
                         <div>
-                            <input type="radio" name="cusGender" id="cusGender-Male" value="Nam" />
+                            <input type="radio" name="cusGender" id="cusGender-Male" value="Nam" required/>
                             <label for="cusGender-Male">Nam</label>
                         </div>
                         <div>
-                            <input type="radio" name="cusGender" id="cusGender-FeMale" value="Nữ" />
+                            <input type="radio" name="cusGender" id="cusGender-FeMale" value="Nữ" required/>
                             <label for="cusGender-FeMale">Nữ</label>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
             <div>
                 <h6>Tìm kiếm sản phẩm</h6>
                 <div class="d-flex align-items-stretch justify-content-between my-3 order-search-p position-relative">
-                    <input type="text" id="order-search-p" value="" placeholder="Nhập tên sản phẩm" required autocomplete="off" />
+                    <input type="text" id="order-search-p" value="" placeholder="Nhập tên sản phẩm" autocomplete="off" />
                     <div class="pro-search-auto-complete position-absolute">
                        
                     </div>
@@ -102,15 +102,15 @@
         <div class="order-pay">
             <div class="select-payment-method d-flex column-gap-5 row-gap-2 my-3 flex-wrap">
                 <div class="payment-method-item">
-                    <input type="radio" name="paymentmethod" value="Tiền mặt" id="cash" />
+                    <input type="radio" name="paymentmethod" value="Tiền mặt" id="cash" required/>
                     <label for="cash">Tiền mặt</label>
                 </div>
                 <div class="payment-method-item">
-                    <input type="radio" name="paymentmethod" value="Chuyển khoản" id="transfer" />
+                    <input type="radio" name="paymentmethod" value="Chuyển khoản" id="transfer" required />
                     <label for="transfer">Chuyển khoản</label>
                 </div>
                 <div class="payment-method-item">
-                    <input type="radio" name="paymentmethod" value="Thanh toán khi nhận hàng" id="cod" />
+                    <input type="radio" name="paymentmethod" value="Thanh toán khi nhận hàng" id="cod"required />
                     <label for="cod">Thanh toán khi nhận hàng</label>
                 </div>
             </div>
@@ -120,11 +120,11 @@
             </div>
         </div>
         <div class="create-order-action mt-2">
-            <button class="order-btn create-order-btn">
+            <button type="submit" class="order-btn create-order-btn">
                 TẠO ĐƠN HÀNG
             </button>
         </div>
-    </div>
+    </form>
 </section>
 
 <div class="create-customer-wrapper">

@@ -6,10 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using Newtonsoft.Json;
-using System.Collections.Specialized;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Web.Management;
-using Microsoft.Owin.Security.Provider;
 
 namespace STech_Web.Controllers
 {
@@ -19,14 +15,20 @@ namespace STech_Web.Controllers
         public ActionResult Index()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
+
             List<Sale> sales = db.Sales.ToList();
-            List<ProductOutStanding> productOutStandings = db.ProductOutStandings.ToList();
-            List<ProductOutStanding> laptopOSD = productOutStandings.Where(t => t.Product.CateID == "laptop").ToList();
-            List<ProductOutStanding> laptopGamingOSD = productOutStandings.Where(t => t.Product.CateID == "laptop-gaming").ToList();
+
+            List<Product> laptopOSD = db.Products.Where(t => t.CateID == "laptop").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+            List<Product> laptopGamingOSD = db.Products.Where(t => t.CateID == "laptop-gaming").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+            List<Product> mouseOSD = db.Products.Where(t => t.CateID == "chuot").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+            List<Product> keyboardOSD = db.Products.Where(t => t.CateID == "ban-phim").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+            List<Product> monitorOSD = db.Products.Where(t => t.CateID == "man-hinh").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+
             List<Slider> sliders = db.Sliders.ToList();
             List<Banner1> banner1 = db.Banner1.ToList();
-            List<Brand> brands = db.Brands.Where(t => t.ParentBrandID == null).ToList();
-            List<Category> categories = db.Categories.ToList();
+
+            List<Brand> brands = db.Brands.Where(t => t.ParentBrandID == null && t.BrandID != "khac").ToList();
+            List<Category> categories = db.Categories.Where(t => t.CateID != "khac").ToList();
 
             //--Countdown -----
             Countdown countdown = GetCountdown();
@@ -37,6 +39,10 @@ namespace STech_Web.Controllers
             ViewBag.Sales = sales;
             ViewBag.LaptopOSD = laptopOSD;
             ViewBag.LaptopGamingOSD = laptopGamingOSD;
+            ViewBag.MouseOSD = mouseOSD;
+            ViewBag.KeyboardOSD = keyboardOSD;
+            ViewBag.MonitorOSD = monitorOSD;
+
             ViewBag.Sliders = sliders;
             ViewBag.Banner1 = banner1;
             ViewBag.Brands = brands;

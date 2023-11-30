@@ -508,19 +508,20 @@ $(document).on('click ', '.delete-product-btn', (e) => {
         //----------
        showLoading();
         $.ajax({
-            type: 'POST',
-            url: '/admin/products/deleteproduct',
-            data: {
-                productID: productID
-            },
+            type: 'Delete',
+            url: `/api/products?productID=${productID}`,
             success: (res) => {
                 hideLoading();
-                if (res.success) {
+                if (res) {
                     var interval = setInterval(() => {
                         $('.complete-delete-notice').css('visibility', 'visible');
                         $('.complete-delete-notice .complete-notice-box').addClass('showForm');
                         clearInterval(interval);
                     }, 620);
+                }
+                else {
+                    $('.fail-delete-notice').css('visibility', 'visible')
+                    $('.fail-delete-notice .fail-notice-box').addClass('showForm');
                 }
             },
             error: () => {
@@ -547,13 +548,12 @@ $('.product-delete-frm-btn').click(() => {
     //----------
     $('.pro-detail-del .confirm-delete').off('click').click(() => {
         $.ajax({
-            type: 'POST',
-            url: '/admin/products/deleteproduct',
-            data: {
-                productID: productID
-            },
+            type: 'Delete',
+            url: `/api/products?productID=${productID}`,
             success: (res) => {
-                window.location.href = '/admin/products'
+                if (res) {
+                    window.location.href = '/admin/products'
+                }
             },
             error: () => {
             }
@@ -581,85 +581,7 @@ $('.complete-delete-notice').click((e) => {
     }
 })
 
-//--Delete all product in one category ------------------------------------
-$('.delete-product-in-cate-confirm').click((e) => {
-    if ($(e.target).closest('.delete-confirm-box').length <= 0) {
-        $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
-        $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
-    }
-})
-
-$('.delete-product-in-cate-btn').click(() => {
-    var cateID = $('input[name="category"]:checked').val();
-
-    if (cateID == null) {
-        var str = `<span>
-            <i class="fa-solid fa-circle-exclamation error-icon"></i>
-            Chọn danh mục muốn xóa từ danh sách phía dưới.
-        </span>`
-        $('.categories-action-notice').empty();
-        showCateNotice();
-        $('.categories-action-notice').append(str);
-
-        var interval = setInterval(() => {
-            hideCateNotice();
-            clearInterval(interval);
-        }, 4000);
-
-    }
-    else {
-
-        $('.delete-product-in-cate-confirm').css('visibility', 'visible');
-        $('.delete-product-in-cate-confirm .delete-confirm-box').addClass('show');
-    }
-})
-
-$('.delete-product-in-cate-confirm .cancel-delete').click(() => {
-    $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
-    $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
-})
-
-$('.delete-product-in-cate-confirm .confirm-delete').click(() => {
-    var cateID = $('input[name="category"]:checked').val();
-
-   showLoading();
-    $.ajax({
-        type: 'POST',
-        url: '/admin/products/deleteallincategory',
-        data: {
-            cateID: cateID
-        },
-        success: (response) => {
-            hideLoading();
-            if (response.success) {
-                var interval = setInterval(() => {
-                    $('.complete-delete-notice').css('visibility', 'visible');
-                    $('.complete-delete-notice .complete-notice-box').addClass('showForm');
-                    clearInterval(interval);
-                }, 620);
-            }
-            else {
-                var str = `<span>
-                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
-                    ${response.error}
-                    </span>`
-                $('.categories-action-notice').empty();
-                showCateNotice();
-                $('.categories-action-notice').append(str);
-                $('.delete-cate-confirm').css('visibility', 'hidden');
-                $('.delete-cate-confirm-box').removeClass('show');
-
-                var interval = setInterval(() => {
-                    hideCateNotice();
-                    clearInterval(interval);
-                }, 6000);
-            }
-        },
-        error: () => {
-            hideLoading();
-        }
-    })
-
-    $('.delete-product-in-cate-confirm').css('visibility', 'hidden');
-    $('.delete-product-in-cate-confirm .delete-confirm-box').removeClass('show');
+$('.fail-delete-notice .fail-notice-box button').click(() => {
+    $('.fail-delete-notice').css('visibility', 'hidden')
+    $('.fail-delete-notice .fail-notice-box').removeClass('showForm');
 })

@@ -93,11 +93,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProductOutStandings">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductOutStanding">
-        <MappingFragment StoreEntitySet="ProductOutStanding">
-          <ScalarProperty Name="StandingID" ColumnName="StandingID" />
+    <EntitySetMapping Name="ProductGifts">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductGift">
+        <MappingFragment StoreEntitySet="ProductGifts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="GiftID" ColumnName="GiftID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -130,7 +131,6 @@
         <MappingFragment StoreEntitySet="Sales">
           <ScalarProperty Name="SaleID" ColumnName="SaleID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="OriginalCost" ColumnName="OriginalCost" />
           <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
           <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
         </MappingFragment>

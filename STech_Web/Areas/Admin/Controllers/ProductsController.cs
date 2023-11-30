@@ -15,7 +15,7 @@ namespace STech_Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Category> categories = db.Categories.ToList();
+            List<Category> categories = db.Categories.OrderBy(t => t.Sort).ToList();
             List<Brand> brands = db.Brands.ToList();
 
             ViewBag.ActiveNav = "products";
@@ -36,7 +36,7 @@ namespace STech_Web.Areas.Admin.Controllers
                     return Redirect("/admin/products");
                 }
 
-                List<Category> categories = db.Categories.ToList();
+                List<Category> categories = db.Categories.OrderBy(t => t.Sort).ToList();
                 List<Brand> brands = db.Brands.ToList();
 
                 ViewBag.Categories = categories;
@@ -117,6 +117,17 @@ namespace STech_Web.Areas.Admin.Controllers
                 {
                     product.Price = product.Cost;
                 }
+                
+                //---
+                if(product.Category == null)
+                {
+                    product.CateID = "khac";
+                }
+                if(product.Brand == null)
+                {
+                    product.BrandID = "khac";
+                }
+
                 //---
                 db.Products.Add(product);
 
@@ -187,151 +198,5 @@ namespace STech_Web.Areas.Admin.Controllers
 
             return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
         }
-
-
-        //Delete product
-        [HttpPost, AdminAuthorization]
-        public JsonResult DeleteProduct(string productID)
-        {
-            try
-            {
-
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
-                Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
-                if (product == null)
-                {
-                    return Json(new { success = false, error = "Sản phẩm này không tồn tại." });
-                }
-
-                //--------------------
-                WareHouse wh = product.WareHouse;
-                ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
-                Sale productSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
-                List<OrderDetail> orderDetailList = db.OrderDetails.Where(t => t.ProductID == productID).ToList();
-                List<Cart> cartList = db.Carts.Where(t => t.ProductID == productID).ToList();
-
-                if (orderDetailList.Count > 0)
-                {
-                    return Json(new { success = false, error = "Không thể xóa sản phẩm này." });
-                }
-
-                //-----------------------
-                if (wh != null)
-                {
-                    db.WareHouses.Remove(wh);
-                }
-                if (proOSD != null)
-                {
-                    db.ProductOutStandings.Remove(proOSD);
-                }
-                if (productSale != null)
-                {
-                    db.Sales.Remove(productSale);
-                }
-                if (cartList.Count > 0)
-                {
-                    db.Carts.RemoveRange(cartList);
-                }
-
-                //----------------------
-
-                db.Products.Remove(product);
-                db.SaveChanges();
-                return Json(new { success = true });
-            }
-            catch(Exception ex)
-            {
-                return Json(new { success = false });
-            }
-        }
-
-        //Delete all product in category
-        [AdminAuthorization]
-        public JsonResult DeleteAllInCategory(string cateID)
-        {
-            try
-            {
-                DatabaseSTechEntities db = new DatabaseSTechEntities();
-                Category category = db.Categories.FirstOrDefault(t => t.CateID == cateID);
-
-                //Kiểm tra danh mục có tồn tại không
-                if (category == null)
-                {
-                    return Json(new { success = false, error = "Danh mục " + category.CateName + " không tồn tại." });
-                }
-
-                //Kiểm tra có sản phẩm nào trong danh mục không
-                if (category.Products.Count <= 0)
-                {
-                    return Json(new { success = false, error = "Không có sản phẩm nào thuộc danh mục " + category.CateName + "." });
-                }
-
-                //-----------------
-                List<Product> products = category.Products.ToList();
-                List<WareHouse> wareHouses = new List<WareHouse>();
-                List<ProductOutStanding> productOSDs = new List<ProductOutStanding>();
-                List<Sale> productSale = new List<Sale>();
-
-                //------------------
-                foreach (Product product in products)
-                {
-                    List<OrderDetail> orderDetailList = db.OrderDetails.Where(t => t.ProductID == product.ProductID).ToList();
-                    List<Cart> cartList = db.Carts.Where(t => t.ProductID == product.ProductID).ToList();
-
-                    if (orderDetailList.Count > 0)
-                    {
-                        continue;
-                    }
-
-                    WareHouse wh = product.WareHouse;
-                    if (wh != null)
-                    {
-                        wareHouses.Add(wh);
-                    }
-
-                    ProductOutStanding proOSD = product.ProductOutStandings.FirstOrDefault(t => t.ProductID == product.ProductID);
-                    if (proOSD != null)
-                    {
-                        productOSDs.Add(proOSD);
-                    }
-
-                    Sale proSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
-                    if (proSale != null)
-                    {
-                        productSale.Add(proSale);
-                    }
-
-                    db.Carts.RemoveRange(cartList);
-
-                }
-
-
-                //---------------------------
-                if (wareHouses.Count > 0)
-                {
-                    db.WareHouses.RemoveRange(wareHouses);
-                }
-
-                if (productOSDs.Count > 0)
-                {
-                    db.ProductOutStandings.RemoveRange(productOSDs);
-                }
-
-                if (productSale.Count > 0)
-                {
-                    db.Sales.RemoveRange(productSale);
-                }
-
-                db.Products.RemoveRange(products);
-                db.SaveChanges();
-
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false });
-            }
-        }
-
     }
 }

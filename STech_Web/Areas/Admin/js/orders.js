@@ -38,7 +38,7 @@ function appendOrderList(res) {
                             <td><div class="order-pstatus d-flex ${statusClass}">${res[i].PaymentStatus} ${res[i].PaymentStatus == 'Chờ thanh toán' ? `&nbsp;<button class='order-btn accept-paid' data-accept-paid="${res[i].OrderID}"><i class='bx bx-check'></i></button>` : ''}</div></td>
                             <td><div class="order-status ${res[i].Status == 'Đã xác nhận' ? 'order-success' : res[i].Status == 'Chờ xác nhận' ? 'order-waiting' : 'order-failed'}">${res[i].Status}</div></td>
                             <td><div class="order-button-box d-flex justify-content-end flex-wrap gap-2">
-                                <button class="order-btn order-print-btn" data-print-order="${res[i].OrderID}">In HĐ</button>
+                                <button class="order-btn order-print-btn" data-print-order="${res[i].OrderID}" onclick="window.open('/admin/orders/printorder?orderID=${res[i].OrderID}', '_blank')">In HĐ</button>
                                 <button class="order-btn order-detail-btn" data-detail-order="${res[i].OrderID}">Chi tiết</button>
                                 <button class="order-btn delete-order-btn" data-del-order="${res[i].OrderID}">Xóa</button>
                             </div></td>
@@ -230,7 +230,7 @@ $('.get-refuse-order').click(() => {
         error: () => { }
     })
 })
-//Get order with payment status = "Thanh toán thành công"
+//Get order with payment status = "Đã thanh toán"
 $('.get-paid-order').click(() => {
    showLoading();
     $('.order-waiting-list table tbody').empty();
@@ -239,7 +239,7 @@ $('.get-paid-order').click(() => {
         url: '/api/orders',
         data: {
             type: 'payment-stt',
-            status: 'Thanh toán thành công'
+            status: 'Đã thanh toán'
         },
         success: (res) => {
             hideLoading();
@@ -549,6 +549,7 @@ $(document).on('change', 'input[name="cus-search-cbx"]', (e) => {
             },
             success: (data) => {
                 hideLoading();
+                $('#cusID').val(data.CustomerID);
                 $('#cusName').val(data.CustomerName);
                 $('#cusPhone').val(data.Phone);
                 $('#cusAddress').val(data.Address);
@@ -654,7 +655,8 @@ $(document).on('change', 'input[name="pro-search-id"]', (e) => {
                     });
 
                     if (exist === false) {
-                        var str = `<tr>
+                        if (data.ProductID != null) {
+                            var str = `<tr>
                                         <td>
                                             <input type="hidden" name="order-pro-id" value="${data.ProductID}" />
                                             ${data.ProductID}
@@ -672,8 +674,9 @@ $(document).on('change', 'input[name="pro-search-id"]', (e) => {
                                         </td>
                                     </tr>`;
 
-                        $('.order-create-products table tbody').append(str);
-                        updateTotal();
+                            $('.order-create-products table tbody').append(str);
+                            updateTotal();
+                        }
                     }
                 },
                 error: () => { }
@@ -725,4 +728,37 @@ $('.create-cus-btn').click(() => {
 $('.close-create-customer').click(() => {
     $('.create-customer-wrapper').css('visibility', 'hidden');
     $('.create-customer-box').removeClass('show');
+}) 
+
+//Create order ---------------------------
+$('.create-order-box').submit((e) => {
+    e.preventDefault();
+    var cusID = $('.create-order #cusID').val();
+    var payment = $('input[name="paymentmethod"]:checked').val();
+    var strProduct = '';
+
+    $('.order-create-products table tr:not(:first-child)').each((index, row) => {
+        const productId = $(row).find('input[name="order-pro-id"]').val();
+        const orderQty = $(row).find('input[name="order-pro-qty"]').val();
+
+        strProduct += productId + '+' + orderQty + ';';
+    })
+
+    if (strProduct.length > 0) {
+        $.ajax({
+            type: 'post',
+            url: '/admin/orders/create',
+            data: {
+                customerID: cusID,
+                paymentMethod: payment,
+                productStr: strProduct
+            },
+            success: (res) => {
+                if (res) {
+                    window.location.href = '';
+                }
+            },
+            error: () => { }
+        })
+    }
 })

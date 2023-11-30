@@ -101,12 +101,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="ProductOutStanding">
+        <EntityType Name="ProductGifts">
           <Key>
-            <PropertyRef Name="StandingID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="StandingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductID" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GiftID" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -137,7 +138,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           </Key>
           <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="OriginalCost" Type="money" />
           <Property Name="OriginalPrice" Type="money" />
           <Property Name="SalePrice" Type="money" />
         </EntityType>
@@ -285,14 +285,26 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductOutStading_Pro">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
-          <End Role="ProductOutStanding" Type="Self.ProductOutStanding" Multiplicity="*" />
+        <Association Name="FK_ProductGifts_G_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductGifts" Type="Self.ProductGifts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="ProductOutStanding">
+            <Dependent Role="ProductGifts">
+              <PropertyRef Name="GiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGifts_P_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductGifts" Type="Self.ProductGifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductGifts">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -342,7 +354,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="MegamenuItem" EntityType="Self.MegamenuItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGifts" EntityType="Self.ProductGifts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
@@ -398,9 +410,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductOutStading_Pro" Association="Self.FK_ProductOutStading_Pro">
+          <AssociationSet Name="FK_ProductGifts_G_Products" Association="Self.FK_ProductGifts_G_Products">
             <End Role="Products" EntitySet="Products" />
-            <End Role="ProductOutStanding" EntitySet="ProductOutStanding" />
+            <End Role="ProductGifts" EntitySet="ProductGifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGifts_P_Products" Association="Self.FK_ProductGifts_P_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductGifts" EntitySet="ProductGifts" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
             <End Role="Products" EntitySet="Products" />
@@ -519,13 +535,15 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customer" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Order" FromRole="Orders" ToRole="OrderDetail" />
         </EntityType>
-        <EntityType Name="ProductOutStanding">
+        <EntityType Name="ProductGift">
           <Key>
-            <PropertyRef Name="StandingID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="StandingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_ProductOutStading_Pro" FromRole="ProductOutStanding" ToRole="Products" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GiftID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductGifts_G_Products" FromRole="ProductGifts" ToRole="Products" />
+          <NavigationProperty Name="Product1" Relationship="Self.FK_ProductGifts_P_Products" FromRole="ProductGifts" ToRole="Products" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -553,7 +571,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Product" FromRole="Products" ToRole="Cart" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Pro_Cate" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Product" FromRole="Products" ToRole="OrderDetail" />
-          <NavigationProperty Name="ProductOutStandings" Relationship="Self.FK_ProductOutStading_Pro" FromRole="Products" ToRole="ProductOutStanding" />
+          <NavigationProperty Name="ProductGifts" Relationship="Self.FK_ProductGifts_G_Products" FromRole="Products" ToRole="ProductGifts" />
+          <NavigationProperty Name="ProductGifts1" Relationship="Self.FK_ProductGifts_P_Products" FromRole="Products" ToRole="ProductGifts" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Specifications" Relationship="Self.FK_Spec_Pro" FromRole="Products" ToRole="Specifications" />
           <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
@@ -564,7 +583,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           </Key>
           <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OriginalCost" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Sale_Pro" FromRole="Sales" ToRole="Products" />
@@ -722,14 +740,26 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductOutStading_Pro">
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="ProductOutStanding" Type="Self.ProductOutStanding" Multiplicity="*" />
+        <Association Name="FK_ProductGifts_G_Products">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductGifts" Type="Self.ProductGift" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="ProductOutStanding">
+            <Dependent Role="ProductGifts">
+              <PropertyRef Name="GiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGifts_P_Products">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductGifts" Type="Self.ProductGift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductGifts">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -779,7 +809,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="MegamenuItems" EntityType="Self.MegamenuItem" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="ProductOutStandings" EntityType="Self.ProductOutStanding" />
+          <EntitySet Name="ProductGifts" EntityType="Self.ProductGift" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="SidebarMenuNavs" EntityType="Self.SidebarMenuNav" />
@@ -823,9 +853,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductOutStading_Pro" Association="Self.FK_ProductOutStading_Pro">
+          <AssociationSet Name="FK_ProductGifts_G_Products" Association="Self.FK_ProductGifts_G_Products">
             <End Role="Products" EntitySet="Products" />
-            <End Role="ProductOutStanding" EntitySet="ProductOutStandings" />
+            <End Role="ProductGifts" EntitySet="ProductGifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGifts_P_Products" Association="Self.FK_ProductGifts_P_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductGifts" EntitySet="ProductGifts" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
             <End Role="Products" EntitySet="Products" />
@@ -938,11 +972,12 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductOutStandings">
-            <EntityTypeMapping TypeName="DatabaseSTechModel.ProductOutStanding">
-              <MappingFragment StoreEntitySet="ProductOutStanding">
-                <ScalarProperty Name="StandingID" ColumnName="StandingID" />
+          <EntitySetMapping Name="ProductGifts">
+            <EntityTypeMapping TypeName="DatabaseSTechModel.ProductGift">
+              <MappingFragment StoreEntitySet="ProductGifts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="GiftID" ColumnName="GiftID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -975,7 +1010,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
               <MappingFragment StoreEntitySet="Sales">
                 <ScalarProperty Name="SaleID" ColumnName="SaleID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="OriginalCost" ColumnName="OriginalCost" />
                 <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
               </MappingFragment>

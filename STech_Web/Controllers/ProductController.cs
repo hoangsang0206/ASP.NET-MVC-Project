@@ -25,7 +25,9 @@ namespace STech_Web.Controllers
                     Category cate = db.Categories.Where(t => t.CateID == product.CateID)
                         .FirstOrDefault();
 
-                    List<Product> products = db.Products.Where(t => t.CateID == product.CateID).OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+                    List<Product> products = db.Products.Where(t => t.CateID == product.CateID && t.CateID != "khac").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
+
+                    List<ProductGift> pGitfs = db.ProductGifts.Where(t => t.ProductID == product.ProductID).ToList();
 
                     List<Breadcrumb> breadcrumb = new List<Breadcrumb>();
                     breadcrumb.Add(new Breadcrumb("Trang chủ", "/"));
@@ -35,6 +37,7 @@ namespace STech_Web.Controllers
                     ViewBag.Title = product.ProductName;
                     ViewBag.Breadcrumb = breadcrumb;
                     ViewBag.Products = products;
+                    ViewBag.ProductGifts = pGitfs;
 
                     //Dùng để chuyển sang định dạng số có dấu phân cách phần nghìn
                     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");

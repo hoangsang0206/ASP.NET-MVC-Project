@@ -96,12 +96,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <EntityType Name="ProductOutStanding">
+  <EntityType Name="ProductGifts">
     <Key>
-      <PropertyRef Name="StandingID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="StandingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProductID" Type="varchar" MaxLength="50" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="GiftID" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -132,7 +133,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </Key>
     <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="OriginalCost" Type="money" />
     <Property Name="OriginalPrice" Type="money" />
     <Property Name="SalePrice" Type="money" />
   </EntityType>
@@ -280,14 +280,26 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProductOutStading_Pro">
-    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
-    <End Role="ProductOutStanding" Type="Self.ProductOutStanding" Multiplicity="*" />
+  <Association Name="FK_ProductGifts_G_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductGifts" Type="Self.ProductGifts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
         <PropertyRef Name="ProductID" />
       </Principal>
-      <Dependent Role="ProductOutStanding">
+      <Dependent Role="ProductGifts">
+        <PropertyRef Name="GiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductGifts_P_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductGifts" Type="Self.ProductGifts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductGifts">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -337,7 +349,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <EntitySet Name="MegamenuItem" EntityType="Self.MegamenuItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductOutStanding" EntityType="Self.ProductOutStanding" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductGifts" EntityType="Self.ProductGifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
@@ -393,9 +405,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProductOutStading_Pro" Association="Self.FK_ProductOutStading_Pro">
+    <AssociationSet Name="FK_ProductGifts_G_Products" Association="Self.FK_ProductGifts_G_Products">
       <End Role="Products" EntitySet="Products" />
-      <End Role="ProductOutStanding" EntitySet="ProductOutStanding" />
+      <End Role="ProductGifts" EntitySet="ProductGifts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductGifts_P_Products" Association="Self.FK_ProductGifts_P_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductGifts" EntitySet="ProductGifts" />
     </AssociationSet>
     <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
       <End Role="Products" EntitySet="Products" />

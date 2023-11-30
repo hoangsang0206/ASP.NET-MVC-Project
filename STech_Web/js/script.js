@@ -311,7 +311,7 @@ $('.slider-nav').on('click', '.slick-slide', function (event) {
 
 
 //------
-//Slick Slider for Collection in main page
+//Slick Slider for Collection in product detail page
 $(".order-product-slick-slider").slick({
     slidesToShow: 6,
     slidesToScroll: 1,

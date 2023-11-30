@@ -156,7 +156,7 @@ namespace STech_Web.ApiControllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             Product product = db.Products.FirstOrDefault(t => t.ProductID == productID && t.WareHouse.Quantity > 0);
-           ProductAPI productApi = new ProductAPI();
+            ProductAPI productApi = new ProductAPI();
 
 
             if (product != null)
@@ -165,6 +165,58 @@ namespace STech_Web.ApiControllers
             }
 
             return productApi;
+        }
+
+        [Authorize(Roles = "Admin")]
+        public bool Delete(string productID)
+        {
+            try
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
+                if (product == null)
+                {
+                    return false;
+                }
+                WareHouse wh = product.WareHouse;
+                Sale productSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
+                List<ProductGift> proGifts = db.ProductGifts.Where(t => t.ProductID == productID).ToList();
+                List<OrderDetail> orderDetailList = product.OrderDetails.ToList();
+                List<Cart> cartList = product.Carts.ToList();
+
+                if (orderDetailList.Count > 0)
+                {
+                    return false;
+                }
+
+                //-----------------------
+                if (wh != null)
+                {
+                    db.WareHouses.Remove(wh);
+                }
+                if(proGifts.Count > 0)
+                {
+                    db.ProductGifts.RemoveRange(proGifts);
+                }
+                if (productSale != null)
+                {
+                    db.Sales.Remove(productSale);
+                }
+                if (cartList.Count > 0)
+                {
+                    db.Carts.RemoveRange(cartList);
+                }
+
+                //----------------------
+
+                db.Products.Remove(product);
+                db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex) 
+            {
+                return false;
+            }
         }
 
     }

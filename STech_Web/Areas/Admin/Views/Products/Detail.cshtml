@@ -101,7 +101,7 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-input-box position-relative d-flex align-items-center">
                                 <select class="form-input select-input" id="CateID" name="CateID">
-                                    <option value="" selected>Danh mục</option>
+                                    <option value="khac" selected>Danh mục</option>
                                     @foreach (var cate in ViewBag.Categories)
                                     {
                                         if (Model.CateID == cate.CateID)
@@ -120,7 +120,7 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-input-box position-relative d-flex align-items-center">
                                 <select class="form-input select-input" id="BrandID" name="BrandID">
-                                    <option value="" selected>Hãng</option>
+                                    <option value="khac" selected>Hãng</option>
                                     @foreach (var brand in ViewBag.Brands)
                                     {
                                         if (Model.BrandID == brand.BrandID)
