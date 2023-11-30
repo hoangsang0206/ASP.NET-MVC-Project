@@ -434,7 +434,7 @@ $(document).on('click', '.order-detail-btn', (e) => {
                 //Get customer info
                 $.ajax({
                     type: 'get',
-                    url: '/api/users',
+                    url: '/api/customers',
                     data: { customerID: data.CustomerID },
                     success: (data2) => {
                         $('.order-cus-id').text(data2.CustomerID);
@@ -495,23 +495,66 @@ $('.close-create-order').click(() => {
 })
 
 //---Search customer by phone
-$('.search-cus-by-phone').submit((e) => {
-    e.preventDefault();
-    var phone = $('#search-cus-by-phone').val();
+$('#search-cus-by-phone').keyup((e) => {
+    var phone = $(e.target).val();
     if (phone.length > 0) {
-        showLoading();
         $.ajax({
             type: 'get',
-            url: '/api/users',
+            url: '/api/customers',
             data: { phone: phone },
             success: (data) => {
-                hideLoading();
-                $('#cusID').val(data.CustomerID);
+                if (data.length > 0) {
+                    $('.cus-search-auto-complete').empty();
+                    $('.cus-search-auto-complete').show();
+                    for (let i = 0; i < data.length; i++) {
+                        var str = `<div class="cus-search-item">
+                            <input type="radio" id="cus-search-cbx-${i + 1}" name="cus-search-cbx" class="d-none" value="${data[i].CustomerID}" />
+                            <label for="cus-search-cbx-${i + 1}" class="d-flex gap-2 align-items-center">
+                                <span class="cus-search-phone">${data[i].Phone}</span>
+                                <span class="cus-search-name">${data[i].CustomerName}</span>
+                            </label>
+                        </div>`;
+
+                        console.log(1)
+
+                        $('.cus-search-auto-complete').append(str);
+                    }
+                }
+                else {
+                    $('.cus-search-auto-complete').empty();
+                    $('.cus-search-auto-complete').hide();
+                }
+            },
+            error: () => {
+                $('.cus-search-auto-complete').empty();
+                $('.cus-search-auto-complete').hide();
+            }
+        })
+    }
+    else {
+        $('.cus-search-auto-complete').empty();
+        $('.cus-search-auto-complete').hide();
+    }
+})
+
+$(document).on('change', 'input[name="cus-search-cbx"]', (e) => {
+    if ($(e.target).prop('checked') == true) {
+        $('#search-cus-by-phone').val('')
+        $('.cus-search-auto-complete').empty();
+        $('.cus-search-auto-complete').hide();
+
+        $.ajax({
+            type: 'get',
+            url: '/api/customers',
+            data: {
+                customerID: $(e.target).val()
+            },
+            success: (data) => {
                 $('#cusName').val(data.CustomerName);
-                data.Gender === 'Nam' ? $('#cusGender-Male').prop('checked', true) : data.Gender === 'Nữ' ? $('#cusGender-FeMale').prop('checked', true) : '';
                 $('#cusPhone').val(data.Phone);
                 $('#cusAddress').val(data.Address);
                 $('#cusEmail').val(data.Email);
+    
             },
             error: () => {  }
         })

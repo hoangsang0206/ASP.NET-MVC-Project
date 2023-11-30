@@ -11,13 +11,12 @@ using STech_Web.ApiModels;
 
 namespace STech_Web.ApiControllers
 {
-    [Authorize(Roles = "Admin"), Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin, Manager")]
     public class OrdersController : ApiController
     {
         //Lấy tất cả đơn hàng
         public List<OrderAPI> GetAll()
         {
-
             List<OrderAPI> ordersApi = new List<OrderAPI>();
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Order> orders = db.Orders.ToList();
@@ -29,6 +28,7 @@ namespace STech_Web.ApiControllers
                     ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
                 }
             }
+
             return ordersApi;
         }
 

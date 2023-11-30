@@ -2040,27 +2040,30 @@ footer span {
 .create-order-items {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 6rem;
+    grid-gap: 3rem;
 }
 
-#search-cus-by-phone,
-#search-pro-id {
-    border: 1px solid #c7c7c7;
-    padding: 0.4rem 1rem;
+.create-order-box {
     border-radius: 0.3rem;
-    width: 85%;
+    background: #fff;
+    padding: 2rem;
 }
 
-.search-cus-bp-btn,
-.search-pro-id-btn {
-    background: var(--primary-color);
-    display: grid;
-    place-items: center;
+.search-cus-by-phone,
+.search-pro-id {
+    border: 1px solid #c7c7c7;
+    border-radius: 0.3rem;
 }
 
-.search-cus-bp-btn i,
-.search-pro-id-btn i {
-    font-size: 1.3rem;
+.search-cus-by-phone input,
+.search-pro-id input {
+    height: 100%;
+    width: calc(100% - 2.5rem);
+    padding: 0.6rem 1rem;
+    border: none;
+    outline: none;
+     border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
 }
 
 .form-add-input {
@@ -2071,17 +2074,53 @@ footer span {
     width: 75%;
 }
 
-.cus-search-auto-complete {
-    padding: 0.5rem;
-    border-radius: 0.3rem;
-    background: #fff;
-    top: calc(100% + 0.4rem);
+.form-add-input:focus {
+    border: 1px solid #00c643;
 }
 
-.create-order-box {
-    border-radius: 0.3rem;
+.cus-search-auto-complete,
+.pro-search-auto-complete {
+    border-radius: 0.2rem;
     background: #fff;
-    padding: 2rem;
+    top: calc(100% + 0.3rem);
+    width: 100%;
+    box-shadow: 1px 1px 4px #363636;
+    max-height: 380px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+}
+
+.create-cus-btn {
+    border: none;
+    background: #fff;
+    width: 2.5rem;
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+    display: grid;
+    place-items: center;
+}
+
+.create-cus-btn i {
+    font-size: 1.3rem;
+}
+
+.cus-search-item label {
+    padding: 0.5rem 1rem;
+}
+
+.cus-search-item:hover label,
+input[name="cus-search-cbx"]:checked ~ label {
+    background: #01b43e;
+    color: #fff;
+}
+
+.cus-search-phone {
+    font-weight: 600;
+}
+
+.cus-search-name {
+    font-size: 0.9rem;
 }
 
 .create-order-error {

@@ -140,7 +140,7 @@ namespace STech_Web.Controllers
             return Redirect("/");
         }
 
-        //Update account info
+        //Cập nhật thông tin tài khoản
         [HttpPost, UserAuthorization]
         public JsonResult Update(UpdateUserVM update)
         {
@@ -183,6 +183,12 @@ namespace STech_Web.Controllers
                     if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10 || !Regex.IsMatch(update.PhoneNumber, @"^[0-9]+$"))
                     {
                         string err = "Số điện thoại không hợp lệ.";
+                        return Json(new { success = false, error = err });
+                    }
+
+                    if(allUsers.Any(t => t.Id != userID && t.PhoneNumber == update.PhoneNumber))
+                    {
+                        string err = "Số điện thoại này đã tồn tại.";
                         return Json(new { success = false, error = err });
                     }
 

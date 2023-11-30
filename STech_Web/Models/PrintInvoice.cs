@@ -132,8 +132,12 @@ namespace STech_Web.Models
                     Cell pCell21 = new Cell(1, 1).Add(new Paragraph(orderDetails[i].Product.ProductName));
                     Cell pCell211 = new Cell(1, 1).Add(new Paragraph(orderDetails[i].Product.Warranty.ToString()));
                     Cell pCell2111 = new Cell(1, 1).Add(new Paragraph(orderDetails[i].Quantity.ToString()));
-                    Cell pCell21111 = new Cell(1, 1).Add(new Paragraph(Convert.ToDecimal(orderDetails[i].Product.Price).ToString("##,###", cul) + "đ"));
-                    Cell pCell211111 = new Cell(1, 1).Add(new Paragraph((orderDetails[i].Product.Price * orderDetails[i].Quantity).Value.ToString("##,###", cul) + "đ"));
+                    Cell pCell21111 = new Cell(1, 1)
+                        .Add(new Paragraph(orderDetails[i].Product.Price > 0 ? 
+                        Convert.ToDecimal(orderDetails[i].Product.Price).ToString("##,###", cul) + "đ" : "0đ"));
+                    Cell pCell211111 = new Cell(1, 1)
+                        .Add(new Paragraph(orderDetails[i].Product.Price * orderDetails[i].Quantity > 0 ?
+                        (orderDetails[i].Product.Price * orderDetails[i].Quantity).Value.ToString("##,###", cul) + "đ" : "0đ"));
 
                     productTable.AddCell(pCell2
                         .SetPadding(4)
@@ -163,19 +167,19 @@ namespace STech_Web.Models
                     .Add(new Paragraph("Tổng tiền: ").SetTextAlignment(TextAlignment.LEFT))
                     .SetBorderRight(Border.NO_BORDER);
                 Cell ttCel11 = new Cell(1, 1)
-                    .Add(new Paragraph(order.TotalPrice.ToString("##,###", cul) + "đ").SetTextAlignment(TextAlignment.RIGHT))
+                    .Add(new Paragraph(order.TotalPrice > 0 ? order.TotalPrice.ToString("##,###", cul) + "đ" : "0đ").SetTextAlignment(TextAlignment.RIGHT))
                     .SetBorderLeft(Border.NO_BORDER);
                 Cell ttCel2 = new Cell(1, 1)
                     .Add(new Paragraph("Phí vận chuyển: ").SetTextAlignment(TextAlignment.LEFT))
                     .SetBorderRight(Border.NO_BORDER);
                 Cell ttCel21 = new Cell(1, 1)
-                    .Add(new Paragraph(Convert.ToInt32(order.DeliveryFee).ToString("##,###", cul) + "đ").SetTextAlignment(TextAlignment.RIGHT))
+                    .Add(new Paragraph(order.DeliveryFee > 0 ? Convert.ToDecimal(order.DeliveryFee).ToString("##,###", cul) + "đ" : "0đ").SetTextAlignment(TextAlignment.RIGHT))
                     .SetBorderLeft(Border.NO_BORDER);
                 Cell ttCel3 = new Cell(1, 1)
                     .Add(new Paragraph("Tổng thanh toán: ").SetTextAlignment(TextAlignment.LEFT))
                     .SetBorderRight(Border.NO_BORDER);
                 Cell ttCel31 = new Cell(1, 1)
-                    .Add(new Paragraph(order.TotalPaymentAmout.ToString("##,###", cul) + "đ").SetTextAlignment(TextAlignment.RIGHT))
+                    .Add(new Paragraph(order.TotalPaymentAmout > 0 ? order.TotalPaymentAmout.ToString("##,###", cul) + "đ" : "0đ").SetTextAlignment(TextAlignment.RIGHT))
                     .SetBorderLeft(Border.NO_BORDER);
 
                 totalTable.AddCell(ttCel1.SetPadding(4));
