@@ -297,7 +297,6 @@ function reloadBrands() {
                 $('.brand-list table tbody').empty();
                 $('.brand-list table tbody').append(`<tr>
                             <th>Mã hãng</th>
-                            <th>Mã hãng cha</th>
                             <th>Tên hãng</th>
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
@@ -309,7 +308,6 @@ function reloadBrands() {
                     var str = `
                         <tr>
                             <td>${responses[i].BrandID}</td>
-                            <td>${responses[i].ParentBrandID != null ? responses[i].ParentBrandID : ''}</td>
                             <td>${responses[i].BrandName}</td>
                             <td>${responses[i].Phone != null ? responses[i].Phone : ''}</td>
                             <td>${responses[i].BrandAddress != null ? responses[i].BrandAddress : ''}</td>
@@ -362,7 +360,6 @@ $('.add-brand').click((e) => {
 $('.add-brand-form').submit((e) => {
     e.preventDefault();
     var brandID = $('#brand-id').val();
-    var parentBrandID = $('#parentbrand-id').val();
     var brandName = $('#brand-name').val();
     var brandAddress = $('#brand-address').val();
     var brandPhone = $('#brand-phone').val();
@@ -373,7 +370,6 @@ $('.add-brand-form').submit((e) => {
         url: '/admin/brands/addbrand',
         data: {
             BrandID: brandID,
-            ParentBrandID: parentBrandID,
             BrandName: brandName,
             BrandAddress: brandAddress,
             Phone: brandPhone,
@@ -383,7 +379,6 @@ $('.add-brand-form').submit((e) => {
             hideLoading();
             if (response.success) {
                 checkInputValid($('#brand-id'));
-                checkInputValid($('#parentbrand-id'));
                 checkInputValid($('#brand-name'));
                 checkInputValid($('#brand-address'));
                 checkInputValid($('#brand-phone'));
@@ -391,7 +386,6 @@ $('.add-brand-form').submit((e) => {
                 var interval = setInterval(() => {
                     showOkForm();
                     $('#brand-id').val('');
-                    $('#parentbrand-id').val('');
                     $('#brand-name').val('');
                     $('#brand-address').val('');
                     $('#brand-phone').val('');
@@ -430,14 +424,12 @@ function setBrandValue(e) {
         data: { brandID: brandID },
         success: (data) => {
             $('#update-brand-id').val(data.BrandID);
-            $('#update-parentbrand-id').val(data.ParentBrandID);
             $('#update-brand-name').val(data.BrandName);
             $('#update-brand-address').val(data.BrandAddress);
             $('#update-brand-phone').val(data.Phone);
             $('#update-brand-img').val(data.BrandImgSrc);
 
             checkInputValid($('#update-brand-id'));
-            checkInputValid($('#update-parentbrand-id'));
             checkInputValid($('#update-brand-name'));
             checkInputValid($('#update-brand-address'));
             checkInputValid($('#update-brand-phone'));
@@ -462,7 +454,6 @@ $('.close-update-brand').click(() => {
     $('.update-brand').css('visibility', 'hidden');
     $('.update-brand .form-box').removeClass('show');
     $('#update-brand-id').val('');
-    $('#update-parentbrand-id').val('');
     $('#update-brand-name').val('');
     $('#update-brand-address').val('');
     $('#update-brand-phone').val('');
@@ -480,7 +471,6 @@ $('.update-brand').click((e) => {
 $('.update-brand-form').submit((e) => {
     e.preventDefault();
     var brandID = $('#update-brand-id').val();
-    var parentBrandID = $('#update-parentbrand-id').val();
     var brandName = $('#update-brand-name').val();
     var brandAddress = $('#update-brand-address').val();
     var brandPhone = $('#update-brand-phone').val();
@@ -492,7 +482,6 @@ $('.update-brand-form').submit((e) => {
         url: '/admin/brands/updatebrand',
         data: {
             BrandID: brandID,
-            ParentBrandID: parentBrandID,
             BrandName: brandName,
             BrandAddress: brandAddress,
             Phone: brandPhone,

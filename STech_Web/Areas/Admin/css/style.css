@@ -2225,14 +2225,16 @@ input[name="pro-search-id"]:checked ~ label {
     color: #e30019;
 }
 
-.create-order-btn {
+.create-order-btn,
+.frm-create-cusomer-btn {
     background: var(--primary-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     padding: 0.6rem 2rem;
 }
 
-.create-order-btn:hover {
+.create-order-btn:hover,
+.frm-create-cusomer-btn:hover {
     outline: 2px solid #b5affa;
 }
 
@@ -2247,7 +2249,16 @@ input[name="pro-search-id"]:checked ~ label {
 
 #order-note {
     width: 80%;
+    border-radius: 0.2rem;
+    border: 1px solid #cfcfcf;
 }
+
+.form-create-customer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem; 
+}
+
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
@@ -2469,6 +2480,39 @@ input[name="pro-search-id"]:checked ~ label {
 
     .order-products-info {
         overflow-x: scroll;
+    }
+
+    .create-order-box {
+       padding: 1rem;
+    }
+
+    .form-create-customer {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .create-order-items {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 0rem;
+    }
+
+    .add-order-products {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
+    }
+
+    #order-note {
+        width: 100%;
+    }
+
+    .order-create-products {
+        overflow-x: auto;
+    }
+
+    .create-customer-box {
+        width: 95vw;
+        height: 90vh;
     }
 }
 

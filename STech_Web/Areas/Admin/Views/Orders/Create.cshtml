@@ -131,14 +131,6 @@
     </form>
 </section>
 
-<div class="create-customer-wrapper">
-    <div class="create-customer-box position-relative">
-        <div class="close-form close-create-customer position-absolute">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-        <h5 class="text-center">Tạo mới khách hàng</h5>
-        <form action="#" method="post" class="form-create-customer">
-
-        </form>
-    </div>
-</div>
+@{
+    Html.RenderPartial("CreateCustomerPartial");
+ }

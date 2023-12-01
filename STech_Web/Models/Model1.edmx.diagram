@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="381708561f6f43e98d532347f1fd8f0f" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseSTechModel.Brand" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+      <Diagram DiagramId="b19270014a054adeb32113ad18944cea" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseSTechModel.Brand" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseSTechModel.Cart" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Category" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Category" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseSTechModel.Customer" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseSTechModel.Megamenu" Width="1.5" PointX="10" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseSTechModel.MegamenuItem" Width="1.5" PointX="12.25" PointY="6.25" IsExpanded="true" />
@@ -21,7 +21,6 @@
         <EntityTypeShape EntityType="DatabaseSTechModel.WareHouse" Width="1.5" PointX="5.25" PointY="19" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseSTechModel.Banner1" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseSTechModel.Slider" Width="1.5" PointX="8.75" PointY="3" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseSTechModel.FK_Brands_Brands" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseSTechModel.FK_Pro_Brand" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseSTechModel.FK_Cart_Product" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseSTechModel.FK_Pro_Cate" ManuallyRouted="false" />

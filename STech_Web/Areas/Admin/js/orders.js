@@ -573,21 +573,23 @@ function updateTotal() {
     $('.order-totalprice span').text(total.toLocaleString('vi-VN') + 'đ');
 }
 
-
+var typingTimeOut;
 $('#order-search-p').keyup((e) => {
-    var productName = $(e.target).val();
-    if (productName.length > 0) {
-        $.ajax({
-            type: 'get',
-            url: '/api/products',
-            data: { nameIS: productName },
-            success: (data) => {
-                if (data.length > 0) {
-                    $('.pro-search-auto-complete').empty();
-                    $('.pro-search-auto-complete').show();
+    clearTimeout(typingTimeOut);
+    typingTimeOut = setTimeout(() => {
+        var productName = $(e.target).val();
+        if (productName.length > 0) {
+            $.ajax({
+                type: 'get',
+                url: '/api/products',
+                data: { nameIS: productName },
+                success: (data) => {
+                    if (data.length > 0) {
+                        $('.pro-search-auto-complete').empty();
+                        $('.pro-search-auto-complete').show();
 
-                    for (let i = 0; i < data.length; i++) {
-                        var str = ` <div class="pro-search-item d-flex align-items-center gap-2">
+                        for (let i = 0; i < data.length; i++) {
+                            var str = ` <div class="pro-search-item d-flex align-items-center gap-2">
                             <input type="radio" class="d-none" name="pro-search-id" id="pro-search-id-${i + 1}" value="${data[i].ProductID}" />
                             <label for="pro-search-id-${i + 1}" class=" d-flex align-items-center justify-content-between gap-3">
                                 <img src="${data[i].ImgSrc != null ? data[i].ImgSrc : '/images/no-image.jpg'}" alt="" />
@@ -596,24 +598,25 @@ $('#order-search-p').keyup((e) => {
                             </label>
                         </div>`;
 
-                        $('.pro-search-auto-complete').append(str);
+                            $('.pro-search-auto-complete').append(str);
+                        }
                     }
-                }
-                else {
+                    else {
+                        $('.pro-search-auto-complete').empty();
+                        $('.pro-search-auto-complete').hide();
+                    }
+                },
+                error: () => {
                     $('.pro-search-auto-complete').empty();
                     $('.pro-search-auto-complete').hide();
                 }
-            },
-            error: () => {
-                $('.pro-search-auto-complete').empty();
-                $('.pro-search-auto-complete').hide();
-            }
-        })
-    }
-    else {
-        $('.pro-search-auto-complete').empty();
-        $('.pro-search-auto-complete').hide();
-    }
+            })
+        }
+        else {
+            $('.pro-search-auto-complete').empty();
+            $('.pro-search-auto-complete').hide();
+        }
+    }, 500)
 })
 
 //--------------------

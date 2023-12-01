@@ -176,42 +176,6 @@ namespace STech_Web.Areas.Admin.Controllers
             }         
         }
 
-        //--Tạo khách hàng mới ---------------
-        public string addNewCustomer(DatabaseSTechEntities db, string userID)
-        {
-
-            var appDbContext = new AppDBContext();
-            var userStore = new AppUserStore(appDbContext);
-            var userManager = new AppUserManager(userStore);
-            var user = userManager.FindById(userID);
-
-            STech_Web.Models.Customer customer = new STech_Web.Models.Customer();
-            List<STech_Web.Models.Customer> customers = db.Customers.OrderByDescending(t => t.CustomerID).ToList();
-            int customerNumber = 1;
-            if (customers.Count > 0)
-            {
-                customerNumber = int.Parse(customers[0].CustomerID.Substring(2)) + 1;
-            }
-
-            string customerID = "KH" + customerNumber.ToString().PadLeft(4, '0');
-
-            customer = new STech_Web.Models.Customer();
-            customer.AccountID = userID;
-            customer.CustomerID = customerID;
-            customer.CustomerName = user.UserFullName;
-            customer.Address = user.Address;
-            customer.Phone = user.PhoneNumber;
-            customer.Email = user.Email;
-            customer.DoB = user.DOB;
-            customer.Gender = user.Gender;
-
-            db.Customers.Add(customer);
-            db.SaveChanges();
-
-            return customerID;
-
-        }
-
         //Tăng/giảm số lượng sản phẩm trong đơn hàng
         [HttpPost]
         public JsonResult UpdateProductQty(string productID, int qty)

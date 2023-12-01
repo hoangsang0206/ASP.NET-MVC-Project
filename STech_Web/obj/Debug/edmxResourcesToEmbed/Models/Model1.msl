@@ -9,7 +9,6 @@
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="BrandAddress" ColumnName="BrandAddress" />
           <ScalarProperty Name="BrandImgSrc" ColumnName="BrandImgSrc" />
-          <ScalarProperty Name="ParentBrandID" ColumnName="ParentBrandID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

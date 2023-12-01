@@ -27,7 +27,7 @@ namespace STech_Web.Controllers
             List<Slider> sliders = db.Sliders.ToList();
             List<Banner1> banner1 = db.Banner1.ToList();
 
-            List<Brand> brands = db.Brands.Where(t => t.ParentBrandID == null && t.BrandID != "khac").ToList();
+            List<Brand> brands = db.Brands.Where(t => t.BrandID != "khac").ToList();
             List<Category> categories = db.Categories.Where(t => t.CateID != "khac").ToList();
 
             //--Countdown -----

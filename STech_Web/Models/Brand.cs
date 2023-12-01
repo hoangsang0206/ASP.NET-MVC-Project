@@ -17,7 +17,6 @@ namespace STech_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Brand()
         {
-            this.Brands1 = new HashSet<Brand>();
             this.Products = new HashSet<Product>();
         }
     
@@ -26,11 +25,7 @@ namespace STech_Web.Models
         public string Phone { get; set; }
         public string BrandAddress { get; set; }
         public string BrandImgSrc { get; set; }
-        public string ParentBrandID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Brand> Brands1 { get; set; }
-        public virtual Brand Brand1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }

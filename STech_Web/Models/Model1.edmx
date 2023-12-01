@@ -24,7 +24,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="Phone" Type="varchar" MaxLength="20" />
           <Property Name="BrandAddress" Type="nvarchar" MaxLength="255" />
           <Property Name="BrandImgSrc" Type="nvarchar(max)" />
-          <Property Name="ParentBrandID" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -177,18 +176,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
-        <Association Name="FK_Brands_Brands">
-          <End Role="Brands" Type="Self.Brands" Multiplicity="0..1" />
-          <End Role="Brands1" Type="Self.Brands" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brands">
-              <PropertyRef Name="BrandID" />
-            </Principal>
-            <Dependent Role="Brands1">
-              <PropertyRef Name="ParentBrandID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Cart_Product">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
@@ -374,10 +361,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     [Slider].[SliderLink] AS [SliderLink]
     FROM [dbo].[Slider] AS [Slider]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_Brands_Brands" Association="Self.FK_Brands_Brands">
-            <End Role="Brands" EntitySet="Brands" />
-            <End Role="Brands1" EntitySet="Brands" />
-          </AssociationSet>
           <AssociationSet Name="FK_Cart_Product" Association="Self.FK_Cart_Product">
             <End Role="Products" EntitySet="Products" />
             <End Role="Cart" EntitySet="Cart" />
@@ -445,9 +428,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="BrandAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BrandImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ParentBrandID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Brands1" Relationship="Self.FK_Brands_Brands" FromRole="Brands" ToRole="Brands1" />
-          <NavigationProperty Name="Brand1" Relationship="Self.FK_Brands_Brands" FromRole="Brands1" ToRole="Brands" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Pro_Brand" FromRole="Brands" ToRole="Products" />
         </EntityType>
         <EntityType Name="Cart">
@@ -632,18 +612,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="SliderImgSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SliderLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_Brands_Brands">
-          <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
-          <End Role="Brands1" Type="Self.Brand" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brands">
-              <PropertyRef Name="BrandID" />
-            </Principal>
-            <Dependent Role="Brands1">
-              <PropertyRef Name="ParentBrandID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Pro_Brand">
           <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
@@ -817,10 +785,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
           <EntitySet Name="Banner1" EntityType="Self.Banner1" />
           <EntitySet Name="Sliders" EntityType="Self.Slider" />
-          <AssociationSet Name="FK_Brands_Brands" Association="Self.FK_Brands_Brands">
-            <End Role="Brands" EntitySet="Brands" />
-            <End Role="Brands1" EntitySet="Brands" />
-          </AssociationSet>
           <AssociationSet Name="FK_Pro_Brand" Association="Self.FK_Pro_Brand">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Products" EntitySet="Products" />
@@ -888,7 +852,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="BrandAddress" ColumnName="BrandAddress" />
                 <ScalarProperty Name="BrandImgSrc" ColumnName="BrandImgSrc" />
-                <ScalarProperty Name="ParentBrandID" ColumnName="ParentBrandID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

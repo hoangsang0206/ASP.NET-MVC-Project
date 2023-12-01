@@ -119,11 +119,11 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
                 
                 //---
-                if(product.Category == null)
+                if(product.CateID == null)
                 {
                     product.CateID = "khac";
                 }
-                if(product.Brand == null)
+                if(product.BrandID == null)
                 {
                     product.BrandID = "khac";
                 }

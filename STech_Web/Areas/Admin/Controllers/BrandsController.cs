@@ -65,7 +65,6 @@ namespace STech_Web.Areas.Admin.Controllers
                     }
 
                     _brand.BrandName = brand.BrandName;
-                    _brand.ParentBrandID = brand.ParentBrandID;
                     _brand.BrandAddress = brand.BrandAddress;
                     _brand.Phone = brand.Phone;
                     _brand.BrandImgSrc = brand.BrandImgSrc;

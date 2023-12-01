@@ -138,7 +138,7 @@ namespace STech_Web.Controllers
                 if (!string.IsNullOrEmpty(brand))
                 {
                     //Lọc sản phẩm theo 1 thương hiệu
-                    products = products.Where(t => t.Brand.BrandID == brand || t.Brand.ParentBrandID == brand).ToList();
+                    products = products.Where(t => t.Brand.BrandID == brand).ToList();
                     if (products.Count > 0)
                     {
                         filterName = products[0].Brand.BrandName.ToUpper();
@@ -228,7 +228,7 @@ namespace STech_Web.Controllers
 
                 if(string.IsNullOrEmpty(type))
                 {
-                    brands = products.Select(p => p.Brand).Where(b => b.ParentBrandID == null).Distinct().ToList();
+                    brands = products.Select(p => p.Brand).Distinct().ToList();
                 }
                 //--------
                 //Sắp xếp danh sách sản phẩm

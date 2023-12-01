@@ -9,7 +9,6 @@ namespace STech_Web.Models
     public class BrandAPI
     {
         public string BrandID { get; set; }
-        public string ParentBrandID { get; set; }
         public string BrandName { get; set; }
         public string Phone { get; set; }
         public string BrandAddress { get; set; }
@@ -17,10 +16,9 @@ namespace STech_Web.Models
 
         public BrandAPI() { }
 
-        public BrandAPI(string BrandID, string ParentBrandID, string BrandName, string Phone, string BrandAddress, string BrandImgSrc)
+        public BrandAPI(string BrandID, string BrandName, string Phone, string BrandAddress, string BrandImgSrc)
         {
             this.BrandID = BrandID;
-            this.ParentBrandID = ParentBrandID;
             this.BrandName = BrandName;
             this.Phone = Phone;
             this.BrandAddress = BrandAddress;

@@ -471,31 +471,35 @@ $(document).ready(function () {
 //---AJAX---------------------------------------------------
 
 //---AJAX autocomplete search----------------------------
+var typingTimeOut;
 $("#search").keyup(function () {
-    var searchText = $(this).val();
-    if (searchText.length > 0) {
-        $.ajax({
-            url: '/api/products',
-            type: 'GET',
-            data: {
-                name: searchText
-            },
-            success: function (responses) {
-                var maxItems = window.innerWidth < 768 ? 25 : 6
+    clearTimeout(typingTimeOut);
 
-                if (responses == null || responses.length <= 0) {
-                    $('.ajax-search-autocomplete').show();
-                    $('.ajax-search-items').empty();
-                    $('.ajax-search-empty').css('display', 'grid');
-                }
-                else {
-                    $('.ajax-search-autocomplete').show();
-                    $('.ajax-search-items').empty();
-                    $('.ajax-search-empty').hide();
-                    for (let i = 0; i <= responses.length && i < maxItems; i++) {
-                        const product = responses[i];
-                        if (product != null) {
-                            const strHTML = `<a href="/product/${product.ProductID}"> 
+    typingTimeOut = setTimeout(() => {
+        var searchText = $(this).val();
+        if (searchText.length > 0) {
+            $.ajax({
+                url: '/api/products',
+                type: 'GET',
+                data: {
+                    name: searchText
+                },
+                success: function (responses) {
+                    var maxItems = window.innerWidth < 768 ? 25 : 6
+
+                    if (responses == null || responses.length <= 0) {
+                        $('.ajax-search-autocomplete').show();
+                        $('.ajax-search-items').empty();
+                        $('.ajax-search-empty').css('display', 'grid');
+                    }
+                    else {
+                        $('.ajax-search-autocomplete').show();
+                        $('.ajax-search-items').empty();
+                        $('.ajax-search-empty').hide();
+                        for (let i = 0; i <= responses.length && i < maxItems; i++) {
+                            const product = responses[i];
+                            if (product != null) {
+                                const strHTML = `<a href="/product/${product.ProductID}"> 
                                     <div class="ajax-search-item d-flex justify-content-between align-items-center">
                                         <div class="ajax-search-item-info">
                                             <div class="ajax-search-item-name d-flex align-items-center">
@@ -512,19 +516,20 @@ $("#search").keyup(function () {
                                     </div>
                                 </a>`;
 
-                            $('.ajax-search-items').append(strHTML);
+                                $('.ajax-search-items').append(strHTML);
+                            }
                         }
                     }
+                },
+                error: () => {
+                    $('.ajax-search-autocomplete').hide();
                 }
-            },
-            error: () => {
-                $('.ajax-search-autocomplete').hide();
-            }
-        })
-    }
-    else {
-        $('.ajax-search-autocomplete').hide();
-    }
+            })
+        }
+        else {
+            $('.ajax-search-autocomplete').hide();
+        }
+    }, 500)
 
     $(document).on('click', (e) => {
         if (window.innerWidth > 768) {

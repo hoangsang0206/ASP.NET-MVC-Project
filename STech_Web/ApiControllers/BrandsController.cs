@@ -19,7 +19,7 @@ namespace STech_Web
 
             foreach (Brand brand in brands)
             {
-                BrandAPI brandAPI = new BrandAPI(brand.BrandID, brand.ParentBrandID, brand.BrandName, brand.Phone, brand.BrandAddress, brand.BrandImgSrc);
+                BrandAPI brandAPI = new BrandAPI(brand.BrandID, brand.BrandName, brand.Phone, brand.BrandAddress, brand.BrandImgSrc);
 
                 brandAPIs.Add(brandAPI);
             }
@@ -34,7 +34,7 @@ namespace STech_Web
             BrandAPI brandApi = new BrandAPI();
             if(brand != null)
             {
-                brandApi = new BrandAPI(brand.BrandID, brand.ParentBrandID, brand.BrandName, brand.Phone, brand.BrandAddress, brand.BrandImgSrc);
+                brandApi = new BrandAPI(brand.BrandID, brand.BrandName, brand.Phone, brand.BrandAddress, brand.BrandImgSrc);
             }
 
             return brandApi;

@@ -14,21 +14,23 @@ namespace STech_Web.ApiControllers
         //Lấy tất cả sản phẩm
         public List<ProductAPI> Get()
         {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.ToList();
-            List<ProductAPI> productsAPI = new List<ProductAPI>();
-
-            foreach (Product p in products)
+            using (DatabaseSTechEntities db = new DatabaseSTechEntities())
             {
-                if (p.Cost == null)
+                List<ProductAPI> products = db.Products.Select(p => new ProductAPI
                 {
-                    p.Cost = 0;
-                }
-                ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
-                productsAPI.Add(product);
-            }
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    ImgSrc = p.ImgSrc,
+                    Cost = p.Cost ?? 0,
+                    Price = p.Price != null ? (decimal)p.Price : 0,
+                    Warranty = p.Warranty != null ? (int)p.Warranty : 0,
+                    BrandID = p.BrandID,
+                    CateID = p.CateID,
+                    Quantity = p.WareHouse != null ? (int)p.WareHouse.Quantity : 0
+                }).ToList();
 
-            return productsAPI;
+                return products;
+            }
         }
 
         //Lấy sản phẩm theo tên (tìm kiếm)
@@ -39,20 +41,23 @@ namespace STech_Web.ApiControllers
                 return null;
             }
 
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.SearchName(name).ToList();
-            List<ProductAPI> productAPIs = new List<ProductAPI>();
-
-            foreach (Product p in products)
+            using (DatabaseSTechEntities db = new DatabaseSTechEntities())
             {
-                ProductAPI productAPI =
-                    new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+                List<ProductAPI> products = db.Products.SearchName(name).Select(p => new ProductAPI
+                {
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    ImgSrc = p.ImgSrc,
+                    Cost = p.Cost ?? 0,
+                    Price = p.Price != null ? (decimal)p.Price : 0,
+                    Warranty = p.Warranty != null ? (int)p.Warranty : 0,
+                    BrandID = p.BrandID,
+                    CateID = p.CateID,
+                    Quantity = p.WareHouse != null ? (int)p.WareHouse.Quantity : 0
+                }).ToList();
 
-                productAPIs.Add(productAPI);
+                return products;
             }
-
-            return productAPIs;
-
         }
 
         public List<ProductAPI> GetByNameAndInstock(string nameIS)
@@ -62,61 +67,68 @@ namespace STech_Web.ApiControllers
                 return null;
             }
 
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.SearchName(nameIS).Where(t => t.WareHouse.Quantity > 0).ToList();
-            List<ProductAPI> productAPIs = new List<ProductAPI>();
-
-            foreach (Product p in products)
+            using (DatabaseSTechEntities db = new DatabaseSTechEntities())
             {
-                ProductAPI productAPI =
-                    new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+                List<ProductAPI> products = db.Products.SearchName(nameIS).Where(t => t.WareHouse.Quantity > 0).Select(p => new ProductAPI
+                {
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    ImgSrc = p.ImgSrc,
+                    Cost = p.Cost ?? 0,
+                    Price = p.Price != null ? (decimal)p.Price : 0,
+                    Warranty = p.Warranty != null ? (int)p.Warranty : 0,
+                    BrandID = p.BrandID,
+                    CateID = p.CateID,
+                    Quantity = p.WareHouse != null ? (int)p.WareHouse.Quantity : 0
+                }).ToList();
 
-                productAPIs.Add(productAPI);
+                return products;
             }
-
-            return productAPIs;
 
         }
 
         //Lấy sản phẩm theo danh mục
         public List<ProductAPI> GetByCategory(string cateID)
         {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products  = db.Products.Where(t => t.CateID == cateID).ToList();
-           
-            List<ProductAPI> productsApi = new List<ProductAPI>();
-
-            if (products.Count > 0)
+            using (DatabaseSTechEntities db = new DatabaseSTechEntities())
             {
-                foreach (Product p in products)
+                List<ProductAPI> products = db.Products.Where(t => t.CateID == cateID).Select(p => new ProductAPI
                 {
-                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    ImgSrc = p.ImgSrc,
+                    Cost = p.Cost ?? 0,
+                    Price = p.Price != null ? (decimal)p.Price : 0,
+                    Warranty = p.Warranty != null ? (int)p.Warranty : 0,
+                    BrandID = p.BrandID,
+                    CateID = p.CateID,
+                    Quantity = p.WareHouse != null ? (int)p.WareHouse.Quantity : 0
+                }).ToList();
 
-                    productsApi.Add(product);
-                }
+                return products;
             }
-
-            return productsApi;
         }
 
         //Lấy sản phẩm theo hãng
         public List<ProductAPI> GetByBrand(string brandID)
         {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.Where(t => t.BrandID == brandID).ToList();
-            List<ProductAPI> productsApi = new List<ProductAPI>();
-
-            if (products.Count > 0)
+            using (DatabaseSTechEntities db = new DatabaseSTechEntities())
             {
-                foreach (Product p in products)
+                List<ProductAPI> products = db.Products.Where(t => t.BrandID == brandID).Select(p => new ProductAPI
                 {
-                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    ImgSrc = p.ImgSrc,
+                    Cost = p.Cost ?? 0,
+                    Price = p.Price != null ? (decimal)p.Price : 0,
+                    Warranty = p.Warranty != null ? (int)p.Warranty : 0,
+                    BrandID = p.BrandID,
+                    CateID = p.CateID,
+                    Quantity = p.WareHouse != null ? (int)p.WareHouse.Quantity : 0
+                }).ToList();
 
-                    productsApi.Add(product);
-                }
+                return products;
             }
-
-            return productsApi;
         }
         
         //Lấy sản phẩm theo danh mục và hãng
@@ -156,22 +168,23 @@ namespace STech_Web.ApiControllers
         //Lấy sản phẩm đã hết hàng
         public List<ProductAPI> GetOutOfStock(string type)
         {
-            DatabaseSTechEntities db = new DatabaseSTechEntities();
-            List<Product> products = db.Products.Where(t => t.WareHouse.Quantity <= 0).ToList();
-            List<ProductAPI> productsApi = new List<ProductAPI>();
-
-
-            if (products.Count > 0)
+            using (DatabaseSTechEntities db = new DatabaseSTechEntities())
             {
-                foreach (Product p in products)
+                List<ProductAPI> products = db.Products.Where(t => t.WareHouse.Quantity <= 0).Select(p => new ProductAPI
                 {
-                    ProductAPI product = new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    ImgSrc = p.ImgSrc,
+                    Cost = p.Cost ?? 0,
+                    Price = p.Price != null ? (decimal)p.Price : 0,
+                    Warranty = p.Warranty != null ? (int)p.Warranty : 0,
+                    BrandID = p.BrandID,
+                    CateID = p.CateID,
+                    Quantity = p.WareHouse != null ? (int)p.WareHouse.Quantity : 0
+                }).ToList();
 
-                    productsApi.Add(product);
-                }
+                return products;
             }
-
-            return productsApi;
         }
 
         //Lấy sản phẩm theo mã sản phẩm (sản phẩm còn hàng - tạo đơn hàng)

@@ -80,7 +80,6 @@
                 <table class="table">
                     <tr>
                         <th>Mã hãng</th>
-                        <th>Mã hãng cha</th>
                         <th>Tên hãng</th>
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
@@ -91,7 +90,6 @@
                     {
                         <tr>
                             <td>@item.BrandID</td>
-                            <td>@item.ParentBrandID</td>
                             <td>@item.BrandName</td>
                             <td>@item.Phone</td>
                             <td>@item.BrandAddress</td>
@@ -147,10 +145,6 @@
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="brand-id" name="brand-id" value="" class="form-input" required />
                     <label for="brand-id" class="input-label position-absolute">Mã hãng</label>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="parentbrand-id" name="parentbrand-id" value="" class="form-input" />
-                    <label for="parentbrand-id" class="input-label position-absolute">Mã hãng cha (nếu có)</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="brand-name" name="brand-name" value="" class="form-input" required />
@@ -209,10 +203,6 @@
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="update-brand-id" name="update-brand-id" value="" class="form-input" required />
                     <label for="update-brand-id" class="input-label position-absolute">Mã hãng</label>
-                </div>
-                <div class="form-input-box position-relative d-flex align-items-center">
-                    <input type="text" id="update-parentbrand-id" name="update-parentbrand-id" value="" class="form-input" />
-                    <label for="update-parentbrand-id" class="input-label position-absolute">Mã hãng cha (nếu có)</label>
                 </div>
                 <div class="form-input-box position-relative d-flex align-items-center">
                     <input type="text" id="update-brand-name" name="update-brand-name" value="" class="form-input" required />
