@@ -178,7 +178,7 @@
     </div>
 
     <div class="container-fluid mt-3 p-0">
-        <div class="product-cts-wrapper d-flex gap-3">
+        <div class="product-cts-wrapper d-flex align-items-start gap-3">
             <div class="product-contents product-cts-box">
                 <div class="box-header">
                     <h4>Mô tả sản phẩm</h4>
@@ -192,7 +192,7 @@
                                 <div class="content-header">
                                     <h5>@content.Title</h5>
                                 </div>
-                                <div class="main-content">
+                                <div class="main-content my-3">
                                     @content.Content
                                 </div>
                                 @if (content.ContentImg != null)
@@ -211,28 +211,44 @@
                         </div>
                     }
                 }
+                else
+                {
+                    <div class="text-center mt-5">
+                        Sản phẩm này chưa có mô tả.
+                    </div>
+                }
             </div>
-            <div class="product-parameter product-cts-box">
-                <div class="box-header">
-                    <h4>Thông số kĩ thuật</h4>
-                </div>
-                <div class="product-para-table">
-                    <table>
-                        <tr>
-                            <td>Hãng SX</td>
-                            <td>@(Model.Brand != null ? Model.Brand.BrandName : "")</td>
-                        </tr>
-                        @if (Model.ProductSpecifications.Count > 0)
-                        {
-                            foreach (var spec in Model.ProductSpecifications)
+            <div class="product-parameter-news d-flex flex-column gap-3">
+                <div class="product-parameter product-cts-box">
+                    <div class="box-header">
+                        <h4>Thông số kĩ thuật</h4>
+                    </div>
+                    <div class="product-para-table mt-4">
+                        <table>
+                            <tr>
+                                <td>Hãng SX</td>
+                                <td>@(Model.Brand != null ? Model.Brand.BrandName : "")</td>
+                            </tr>
+                            @if (Model.ProductSpecifications.Count > 0)
                             {
-                                <tr>
-                                    <td>@spec.SpecName</td>
-                                    <td>@spec.SpecContent</td>
-                                </tr>
+                                foreach (var spec in Model.ProductSpecifications)
+                                {
+                                    <tr>
+                                        <td>@spec.SpecName</td>
+                                        <td>@spec.SpecContent</td>
+                                    </tr>
+                                }
                             }
-                        }
-                    </table>
+                        </table>
+                    </div>
+                </div>
+                <div class="product-news product-cts-box">
+                    <div class="box-header">
+                        <h4>Tin tức nổi bậc</h4>
+                    </div>
+                    <div>
+
+                    </div>
                 </div>
             </div>
         </div>

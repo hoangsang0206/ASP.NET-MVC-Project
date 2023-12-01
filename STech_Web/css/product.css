@@ -219,11 +219,22 @@ button:disabled {
 }
 
 .product-contents {
-    width: 57%;
+    width: 60%;
+    min-height: 13.36rem;
 }
 
-.product-parameter {
-    width: 43%;
+.pro-content-image img {
+    width: 100% !important;
+}
+
+.pro-ytb-content-video iframe {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16/9;
+}
+
+.product-parameter-news {
+    width: 40%;
 }
 
 .box-header h4 {
@@ -252,6 +263,10 @@ button:disabled {
 
 .content-header h5 {
     font-weight: bold;
+}
+
+.main-content {
+    font-size: 1.1rem;
 }
 
 .order-product .product-box {
@@ -284,7 +299,19 @@ button:disabled {
         width: 100%;
     }
 
-    .product-parameter {
+    .product-parameter-news {
         width: 100%;
+    }
+
+    .buy-action-btn {
+        padding: 0.7rem 1rem;
+    }
+
+    .buy-action-btn span {
+        font-size: 0.8rem;
+    }
+
+    .product-description span {
+        font-size: 1rem;
     }
 }
