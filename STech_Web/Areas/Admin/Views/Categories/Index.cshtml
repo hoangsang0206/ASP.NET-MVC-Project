@@ -61,7 +61,7 @@
                                 <td>
                                     <div class="categories-button-box d-flex justify-content-end flex-wrap gap-2">
                                         <button class="cate-btn cate-update-btn" data-update-cate="@item.CateID">Sửa</button>
-                                        <button class="cate-btn cate-delete-btn" data-del-cate="@item.CateID" @(User.IsInRole("Manager") ? "disabled" : "")>Xóa</button>
+                                        <button class="cate-btn cate-delete-btn" data-del-cate="@item.CateID" @(!User.IsInRole("Admin") ? "disabled" : "")>Xóa</button>
                                     </div>
                                 </td>
                             </tr>
@@ -99,7 +99,7 @@
                             <td>
                                 <div class="brands-button-box d-flex justify-content-end flex-wrap gap-2">
                                     <button class="cate-btn brand-update-btn" data-update-brand="@item.BrandID">Sửa</button>
-                                    <button class="cate-btn brand-delete-btn" data-del-brand="@item.BrandID" @(User.IsInRole("Manager") ? "disabled" : "")>Xóa</button>
+                                    <button class="cate-btn brand-delete-btn" data-del-brand="@item.BrandID" @(!User.IsInRole("Admin") ? "disabled" : "")>Xóa</button>
                                 </div>
                             </td>
                         </tr>

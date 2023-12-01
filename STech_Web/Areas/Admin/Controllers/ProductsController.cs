@@ -39,6 +39,7 @@ namespace STech_Web.Areas.Admin.Controllers
                 List<Category> categories = db.Categories.OrderBy(t => t.Sort).ToList();
                 List<Brand> brands = db.Brands.ToList();
 
+                ViewBag.ActiveNav = "products";
                 ViewBag.Categories = categories;
                 ViewBag.Brands = brands;
                 return View(product);

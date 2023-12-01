@@ -95,6 +95,17 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ProductContents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Content" Type="text" />
+    <Property Name="ContentImg" Type="nvarchar(max)" />
+    <Property Name="ContentVideo" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="ProductGifts">
     <Key>
       <PropertyRef Name="Id" />
@@ -126,6 +137,15 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Type" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ProductSpecifications">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SpecName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SpecContent" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Sales">
     <Key>
       <PropertyRef Name="SaleID" />
@@ -153,16 +173,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SliderImgSrc" Type="nvarchar(max)" />
     <Property Name="SliderLink" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="Specifications">
-    <Key>
-      <PropertyRef Name="SpecID" />
-    </Key>
-    <Property Name="SpecID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProductID" Type="varchar" MaxLength="50" />
-    <Property Name="ProductType" Type="nvarchar" MaxLength="100" />
-    <Property Name="SpecName" Type="nvarchar" MaxLength="100" />
-    <Property Name="SpecValue" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="WareHouse">
     <Key>
@@ -267,6 +277,18 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProductContents_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductContents" Type="Self.ProductContents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductContents">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProductGifts_G_Products">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="ProductGifts" Type="Self.ProductGifts" Multiplicity="*" />
@@ -291,6 +313,18 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProductSpecifications_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductSpecifications">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Sale_Pro">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
@@ -299,18 +333,6 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
         <PropertyRef Name="ProductID" />
       </Principal>
       <Dependent Role="Sales">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Spec_Pro">
-    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
-    <End Role="Specifications" Type="Self.Specifications" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="Specifications">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -336,11 +358,12 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <EntitySet Name="MegamenuItem" EntityType="Self.MegamenuItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductContents" EntityType="Self.ProductContents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductGifts" EntityType="Self.ProductGifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banner1" EntityType="Self.Banner1" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -388,6 +411,10 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProductContents_Products" Association="Self.FK_ProductContents_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductContents" EntitySet="ProductContents" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProductGifts_G_Products" Association="Self.FK_ProductGifts_G_Products">
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductGifts" EntitySet="ProductGifts" />
@@ -396,13 +423,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductGifts" EntitySet="ProductGifts" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProductSpecifications_Products" Association="Self.FK_ProductSpecifications_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+    </AssociationSet>
     <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="Sales" EntitySet="Sales" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Spec_Pro" Association="Self.FK_Spec_Pro">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="Specifications" EntitySet="Specifications" />
     </AssociationSet>
     <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
       <End Role="Products" EntitySet="Products" />

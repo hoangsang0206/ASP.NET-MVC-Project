@@ -92,6 +92,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProductContents">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductContent">
+        <MappingFragment StoreEntitySet="ProductContents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="ContentImg" ColumnName="ContentImg" />
+          <ScalarProperty Name="ContentVideo" ColumnName="ContentVideo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProductGifts">
       <EntityTypeMapping TypeName="DatabaseSTechModel.ProductGift">
         <MappingFragment StoreEntitySet="ProductGifts">
@@ -125,6 +137,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProductSpecifications">
+      <EntityTypeMapping TypeName="DatabaseSTechModel.ProductSpecification">
+        <MappingFragment StoreEntitySet="ProductSpecifications">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+          <ScalarProperty Name="SpecContent" ColumnName="SpecContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Sales">
       <EntityTypeMapping TypeName="DatabaseSTechModel.Sale">
         <MappingFragment StoreEntitySet="Sales">
@@ -142,17 +164,6 @@
           <ScalarProperty Name="SidebarItemName" ColumnName="SidebarItemName" />
           <ScalarProperty Name="SidebarLink" ColumnName="SidebarLink" />
           <ScalarProperty Name="SidebarIcon" ColumnName="SidebarIcon" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Specifications">
-      <EntityTypeMapping TypeName="DatabaseSTechModel.Specification">
-        <MappingFragment StoreEntitySet="Specifications">
-          <ScalarProperty Name="SpecID" ColumnName="SpecID" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="ProductType" ColumnName="ProductType" />
-          <ScalarProperty Name="SpecName" ColumnName="SpecName" />
-          <ScalarProperty Name="SpecValue" ColumnName="SpecValue" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

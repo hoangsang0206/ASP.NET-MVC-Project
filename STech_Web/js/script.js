@@ -5,9 +5,9 @@ $(document).ready(() => {
         url: '/api/categories',
         success: (data) => {
             $('.sub-header-item-list').empty();
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.categories.length; i++) {
                 var str = `<li class="sub-header-item">
-                    <a href="/collections/${data[i].CateID}" class="sub-header-link">${data[i].CateName}</a>
+                    <a href="/collections/${data.categories[i].CateID}" class="sub-header-link">${data.categories[i].CateName}</a>
                 </li>`;
 
                 $('.sub-header-item-list').append(str);

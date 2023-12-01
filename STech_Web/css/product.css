@@ -247,6 +247,7 @@ button:disabled {
 .product-para-table table tr td:first-child {
     background: #f7f7f7;
     width: 22%;
+    font-weight: 600;
 }
 
 .content-header h5 {

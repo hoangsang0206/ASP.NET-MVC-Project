@@ -97,6 +97,7 @@ namespace STech_Web.Areas.Admin.Controllers
         //Tạo đơn hàng ---------------
         public ActionResult Create()
         {
+            ViewBag.ActiveNav = "orders";
             return View();
         }
 

@@ -23,7 +23,7 @@ namespace STech_Web.Areas.Admin.Controllers
             List<Customer> customer = db.Customers.ToList();
             List<Order> orders = db.Orders.ToList();
 
-            decimal total = orders.Where(t => t.PaymentStatus == "Thanh toán thành công" && t.Status == "Đã xác nhận").Sum(t => t.TotalPaymentAmout);
+            decimal total = orders.Where(t => t.PaymentStatus == "Đã thanh toán" && t.Status == "Đã xác nhận").Sum(t => t.TotalPaymentAmout);
             double millions = Convert.ToDouble(total) / 1000000;
             
             ViewBag.productCount = products.Count;
@@ -69,14 +69,14 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
             }
 
-            decimal totalRevenue = orders.Where(t => t.PaymentStatus == "Thanh toán thành công"  && t.Status == "Đã xác nhận").Sum(t => t.TotalPaymentAmout);
+            decimal totalRevenue = orders.Where(t => t.PaymentStatus == "Đã thanh toán"  && t.Status == "Đã xác nhận").Sum(t => t.TotalPaymentAmout);
             int totalProductSold = 0;
             if(orders.Count > 0)
             {
                 foreach(var order in orders)
                 {
                     List<OrderDetail> orderDetails = order.OrderDetails.ToList();
-                    if(orderDetails.Count > 0 && order.PaymentStatus == "Thanh toán thành công" && order.Status == "Đã xác nhận")
+                    if(orderDetails.Count > 0 && order.PaymentStatus == "Đã thanh toán" && order.Status == "Đã xác nhận")
                     {
                         foreach(var ordDetail in orderDetails)
                         {

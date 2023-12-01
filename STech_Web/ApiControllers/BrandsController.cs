@@ -11,8 +11,9 @@ namespace STech_Web
 {
     public class BrandsController : ApiController
     {
-        public List<BrandAPI> Get()
+        public IHttpActionResult Get()
         {
+            bool _isAdmin = User.IsInRole("Admin") ? true : false;
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Brand> brands = db.Brands.ToList();
             List<BrandAPI> brandAPIs = new List<BrandAPI>();
@@ -24,7 +25,7 @@ namespace STech_Web
                 brandAPIs.Add(brandAPI);
             }
 
-            return brandAPIs;
+            return Ok(new { brands = brandAPIs, isAdmin = _isAdmin });
         }
 
         public BrandAPI GetOne(string brandID)

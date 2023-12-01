@@ -19,10 +19,11 @@ namespace STech_Web.Models
         {
             this.Carts = new HashSet<Cart>();
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.ProductContents = new HashSet<ProductContent>();
             this.ProductGifts = new HashSet<ProductGift>();
             this.ProductGifts1 = new HashSet<ProductGift>();
+            this.ProductSpecifications = new HashSet<ProductSpecification>();
             this.Sales = new HashSet<Sale>();
-            this.Specifications = new HashSet<Specification>();
         }
     
         public string ProductID { get; set; }
@@ -51,13 +52,15 @@ namespace STech_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductContent> ProductContents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductGift> ProductGifts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductGift> ProductGifts1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Specification> Specifications { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
         public virtual WareHouse WareHouse { get; set; }
     }
 }

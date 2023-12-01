@@ -12,8 +12,10 @@ namespace STech_Web.ApiControllers
 {
     public class CategoriesController : ApiController
     {
-        public List<CategoryAPI> Get()
+        public IHttpActionResult Get()
         {
+            bool _isAdmin = User.IsInRole("Admin") ? true : false;
+
             DatabaseSTechEntities db = new DatabaseSTechEntities();
             List<Category> categories = db.Categories.ToList();
             List<CategoryAPI> categoriesAPI = new List<CategoryAPI>();
@@ -24,8 +26,9 @@ namespace STech_Web.ApiControllers
 
                 categoriesAPI.Add(category);
             }
+            categoriesAPI = categoriesAPI.OrderBy(t => t.Sort).ToList();
 
-            return categoriesAPI.OrderBy(t => t.Sort).ToList();
+            return Ok(new { categories = categoriesAPI, isAdmin = _isAdmin });
         }
 
         public CategoryAPI GetOne(string CateID)

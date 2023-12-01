@@ -16,20 +16,20 @@ function reloadCategories() {
                             <th>Số sản phẩm</th>
                             <th></th>
                         </tr>`);
-
-                for (var i = 0; i < responses.length; i++) {
+                var categories = responses.categories;
+                for (var i = 0; i < categories.length; i++) {
                     var str = `
                         <tr>
-                            <td>${responses[i].CateID}</td>
-                            <td>${responses[i].CateName}</td>
+                            <td>${categories[i].CateID}</td>
+                            <td>${categories[i].CateName}</td>
                             <td>
-                                <img src="${responses[i].ImgSrc != null ? responses[i].ImgSrc : '/images/no-image.jpg'}" alt="" />
+                                <img src="${categories[i].ImgSrc != null ? categories[i].ImgSrc : '/images/no-image.jpg'}" alt="" />
                             </td>
-                            <td>${responses[i].ProductCount}</td>
+                            <td>${categories[i].ProductCount}</td>
                             <td>
                                 <div class="categories-button-box d-flex justify-content-end flex-wrap gap-2">
-                                    <button class="cate-btn cate-update-btn" data-update-cate="${responses[i].CateID}">Sửa</button>
-                                    <button class="cate-btn cate-delete-btn" data-del-cate="${responses[i].CateID}">Xóa</button>
+                                    <button class="cate-btn cate-update-btn" data-update-cate="${categories[i].CateID}">Sửa</button>
+                                    <button class="cate-btn cate-delete-btn" data-del-cate="${categories[i].CateID}" ${!responses.isAdmin ? "disabled" : "" }>Xóa</button>
                                 </div>
                             </td>
                         </tr>
@@ -303,21 +303,21 @@ function reloadBrands() {
                             <th>Hình ảnh</th>
                             <th></th>
                         </tr>`);
-
-                for (var i = 0; i < responses.length; i++) {
+                var brands = responses.brands;
+                for (var i = 0; i < brands.length; i++) {
                     var str = `
                         <tr>
-                            <td>${responses[i].BrandID}</td>
-                            <td>${responses[i].BrandName}</td>
-                            <td>${responses[i].Phone != null ? responses[i].Phone : ''}</td>
-                            <td>${responses[i].BrandAddress != null ? responses[i].BrandAddress : ''}</td>
+                            <td>${brands[i].BrandID}</td>
+                            <td>${brands[i].BrandName}</td>
+                            <td>${brands[i].Phone != null ? brands[i].Phone : ''}</td>
+                            <td>${brands[i].BrandAddress != null ? brands[i].BrandAddress : ''}</td>
                             <td>
-                                ${responses[i].BrandImgSrc != null ? `<img src="${responses[i].BrandImgSrc}" alt="" />` : ''}
+                                ${brands[i].BrandImgSrc != null ? `<img src="${brands[i].BrandImgSrc}" alt="" />` : ''}
                             </td>
                             <td>
                                 <div class="brands-button-box d-flex justify-content-end flex-wrap gap-2">
-                                    <button class="cate-btn brand-update-btn" data-update-brand="${responses[i].BrandID}">Sửa</button>
-                                    <button class="cate-btn  brand-delete-btn" data-del-brand="${responses[i].BrandID}">Xóa</button>
+                                    <button class="cate-btn brand-update-btn" data-update-brand="${brands[i].BrandID}">Sửa</button>
+                                    <button class="cate-btn  brand-delete-btn" data-del-brand="${brands[i].BrandID}" ${!responses.isAdmin ? "disabled" : ""}>Xóa</button>
                                 </div>
                             </td>
                         </tr>

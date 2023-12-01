@@ -156,10 +156,15 @@
     -webkit-box-orient: vertical;
 }
 
-.product-img {
+.product-image {
     width: 100%;
     height: auto;
     aspect-ratio: 1;
+}
+
+.product-img {
+    width: 100%;
+    height: auto;
 }
 
 
