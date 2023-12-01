@@ -55,6 +55,29 @@ namespace STech_Web.ApiControllers
 
         }
 
+        public List<ProductAPI> GetByNameAndInstock(string nameIS)
+        {
+            if (string.IsNullOrWhiteSpace(nameIS))
+            {
+                return null;
+            }
+
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Product> products = db.Products.SearchName(nameIS).Where(t => t.WareHouse.Quantity > 0).ToList();
+            List<ProductAPI> productAPIs = new List<ProductAPI>();
+
+            foreach (Product p in products)
+            {
+                ProductAPI productAPI =
+                    new ProductAPI(p.ProductID, p.ProductName, p.ImgSrc, (decimal)p.Cost, (decimal)p.Price, (int)p.Warranty, p.BrandID, p.CateID, (int)p.WareHouse.Quantity);
+
+                productAPIs.Add(productAPI);
+            }
+
+            return productAPIs;
+
+        }
+
         //Lấy sản phẩm theo danh mục
         public List<ProductAPI> GetByCategory(string cateID)
         {

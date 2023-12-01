@@ -101,13 +101,13 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult Create(string customerID, string productStr, string paymentMethod)
+        public JsonResult Create(Customer cus, string productStr, string paymentMethod, string note)
         {
             try
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 List<Product> products = new List<Product>();
-                Customer customer = db.Customers.FirstOrDefault(c => c.CustomerID == customerID);
+                Customer customer = db.Customers.FirstOrDefault(c => c.CustomerID == cus.CustomerID);
 
                 List<Order> orders = db.Orders.OrderByDescending(t => t.OrderID).ToList();
                 int orderNumber = 1;
@@ -119,11 +119,18 @@ namespace STech_Web.Areas.Admin.Controllers
                 string orderID = "DH" + orderNumber.ToString().PadLeft(5, '0');
                 decimal totalPrice = 0;
 
+                //Cập nhật thông tin khách hàng
+                customer.CustomerName = cus.CustomerName;
+                customer.Phone = cus.Phone;
+                customer.Address = cus.Address;
+                customer.Gender = cus.Gender;
+                customer.Email = cus.Email;
+
                 Order order = new Order();
                 order.OrderID = orderID;
                 order.CustomerID = customer.CustomerID;
                 order.OrderDate = DateTime.Now;
-                //order.Note = "";
+                order.Note = note;
                 order.ShipMethod = "COD";
                 order.DeliveryFee = 0;
                 order.PaymentStatus = "Chờ thanh toán";

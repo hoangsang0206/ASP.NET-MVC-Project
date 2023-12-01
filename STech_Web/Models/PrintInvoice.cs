@@ -98,8 +98,18 @@ namespace STech_Web.Models
 
                 Cell cusCell3 = new Cell(1, 1)
                   .Add(new Paragraph("Địa chỉ:"));
-                Cell cusCell31 = new Cell(1, 1)
-                    .Add(new Paragraph(customer.Address));
+                Cell cusCell31 = new Cell(1, 2)
+                    .Add(new Paragraph(customer.Address != null ? customer.Address : ""));
+
+                Cell cusCell4 = new Cell(1, 1)
+                  .Add(new Paragraph("HT giao hàng:"));
+                Cell cusCell41 = new Cell(1, 2)
+                    .Add(new Paragraph(order.ShipMethod == "COD" ? "Giao hàng tận nơi" : "Nhận tại cửa hàng"));
+
+                Cell cusCell5 = new Cell(1, 1)
+                 .Add(new Paragraph("Ghi chú:"));
+                Cell cusCell51 = new Cell(1, 2)
+                    .Add(new Paragraph(order.Note != null ? order.Note : ""));
 
                 customerTable.AddCell(cusCell1.SetBorder(Border.NO_BORDER));
                 customerTable.AddCell(cusCell11.SetBorder(Border.NO_BORDER));
@@ -109,6 +119,10 @@ namespace STech_Web.Models
                 customerTable.AddCell(cusCell211.SetBorder(Border.NO_BORDER));
                 customerTable.AddCell(cusCell3.SetBorder(Border.NO_BORDER));
                 customerTable.AddCell(cusCell31.SetBorder(Border.NO_BORDER));
+                customerTable.AddCell(cusCell4.SetBorder(Border.NO_BORDER));
+                customerTable.AddCell(cusCell41.SetBorder(Border.NO_BORDER));
+                customerTable.AddCell(cusCell5.SetBorder(Border.NO_BORDER));
+                customerTable.AddCell(cusCell51.SetBorder(Border.NO_BORDER));
                 customerTable.AddCell(new Cell(1, 1).SetBorder(Border.NO_BORDER));
 
                 Table productTable = new Table(new float[] { 30f, 300f, 30f, 30f, 100f, 110f });

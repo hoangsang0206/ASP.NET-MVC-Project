@@ -580,7 +580,7 @@ $('#order-search-p').keyup((e) => {
         $.ajax({
             type: 'get',
             url: '/api/products',
-            data: { name: productName },
+            data: { nameIS: productName },
             success: (data) => {
                 if (data.length > 0) {
                     $('.pro-search-auto-complete').empty();
@@ -734,7 +734,13 @@ $('.close-create-customer').click(() => {
 $('.create-order-box').submit((e) => {
     e.preventDefault();
     var cusID = $('.create-order #cusID').val();
+    var cusName = $('.create-order #cusName').val();
+    var cusPhone = $('.create-order #cusPhone').val();
+    var cusAddress = $('.create-order #cusAddress').val();
+    var cusGender = $('.create-order input[name="cusGender"]:checked').val();
+    var cusEmail = $('.create-order #cusEmail').val();
     var payment = $('input[name="paymentmethod"]:checked').val();
+    var note = $('#order-note').val();
     var strProduct = '';
 
     $('.order-create-products table tr:not(:first-child)').each((index, row) => {
@@ -749,9 +755,15 @@ $('.create-order-box').submit((e) => {
             type: 'post',
             url: '/admin/orders/create',
             data: {
-                customerID: cusID,
+                'CustomerID': cusID,
+                'CustomerName': cusName,
+                'Phone': cusPhone,
+                'Address': cusAddress,
+                'Gender': cusGender,
+                'Email': cusEmail,
                 paymentMethod: payment,
-                productStr: strProduct
+                productStr: strProduct,
+                note: note
             },
             success: (res) => {
                 if (res) {

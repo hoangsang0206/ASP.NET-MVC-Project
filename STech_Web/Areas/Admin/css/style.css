@@ -2240,6 +2240,14 @@ input[name="pro-search-id"]:checked ~ label {
     width: 60rem;
     height: 40rem;
 }
+
+.order-note-box {
+    width: 100%;
+}
+
+#order-note {
+    width: 80%;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
