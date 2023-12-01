@@ -256,7 +256,7 @@ function showUpdateOkForm() {
 
 //Update image box
 function updateImgBox(input, imgbox) {
-    input.mouseleave(() => {
+    input.on('change mouseleave blur', () => {
         var imgVal = input.val();
         if (imgVal.length > 0) {
             imgbox.attr('src', imgVal);

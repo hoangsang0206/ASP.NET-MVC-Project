@@ -444,6 +444,7 @@
     })
 
     const formAll = document.querySelector('.filter-all-dropdown .filter-contents');
+    const cancelFilterAll = formAll.querySelector('.cancel-filter');
     formAll.addEventListener('submit', (event) => {
         event.preventDefault();
         var brandBox = formAll.querySelector('.filter-brands-box');
@@ -462,6 +463,10 @@
         else {
             window.location.href = '/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&brand=@ViewBag.Brand&type=@ViewBag.Type&minprice=' + rangeInputFormAll[0].value + '&maxprice=' + rangeInputFormAll[1].value + '&page=1';
         }
+    })
+    cancelFilterAll.addEventListener('click', () => {
+        window.location.href = '/collections/@ViewBag.cateID?sort=@ViewBag.sortValue&page=1'
+
     })
 
     const formPrice = document.querySelector('.filter-price .filter-contents');

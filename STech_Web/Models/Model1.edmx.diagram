@@ -4,24 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="84fcea0c4e1045d5b77f7120722e433e" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseSTechModel.Brand" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Cart" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Category" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Customer" Width="1.5" PointX="3.75" PointY="23.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Megamenu" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.MegamenuItem" Width="1.5" PointX="12.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.OrderDetail" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Order" Width="1.5" PointX="6" PointY="23.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.ProductContent" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.ProductGift" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Product" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.ProductSpecification" Width="1.5" PointX="5.25" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Sale" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.SidebarMenuNav" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.WareHouse" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Banner1" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseSTechModel.Slider" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="66fe5115fa704c47a9275f6e11fea22a" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseSTechModel.Brand" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Cart" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Category" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Customer" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Megamenu" Width="1.5" PointX="10" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.MegamenuItem" Width="1.5" PointX="12.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.OrderDetail" Width="1.5" PointX="8.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Order" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.ProductContent" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.ProductGift" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Product" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.ProductSpecification" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Sale" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.SidebarMenuNav" Width="1.5" PointX="7.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.WareHouse" Width="1.5" PointX="5.25" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Banner1" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseSTechModel.Slider" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <AssociationConnector Association="DatabaseSTechModel.FK_Pro_Brand" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseSTechModel.FK_Cart_Product" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseSTechModel.FK_Pro_Cate" ManuallyRouted="false" />

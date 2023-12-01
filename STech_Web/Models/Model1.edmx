@@ -107,7 +107,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" />
-          <Property Name="Content" Type="text" />
+          <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="ContentImg" Type="nvarchar(max)" />
           <Property Name="ContentVideo" Type="nvarchar(max)" />
         </EntityType>
@@ -159,6 +159,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OriginalPrice" Type="money" />
           <Property Name="SalePrice" Type="money" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
         </EntityType>
         <EntityType Name="SidebarMenuNav">
           <Key>
@@ -549,7 +551,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContentImg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContentVideo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductContents_Products" FromRole="ProductContents" ToRole="Products" />
@@ -615,6 +617,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Sale_Pro" FromRole="Sales" ToRole="Products" />
         </EntityType>
         <EntityType Name="SidebarMenuNav">
@@ -1053,6 +1057,8 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

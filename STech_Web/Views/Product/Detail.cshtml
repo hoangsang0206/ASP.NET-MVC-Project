@@ -129,11 +129,15 @@
                         </div>
                         <div class="product-gift-content">
                             <ul class="product-gift-list">
+                                @{ int i = 1; }
                                 @foreach (var item in ViewBag.ProductGifts)
                                 {
-                                    <li class="product-gift-item">
+                                    <li class="product-gift-item d-flex align-items-center gap-3">
+                                        <span>@i</span>
                                         <a href="@item.GiftID">@item.Product.ProductName</a>
                                     </li>
+
+                                    i++;
                                 }
                             </ul>
                         </div>
@@ -197,7 +201,7 @@
                                 </div>
                                 @if (content.ContentImg != null)
                                 {
-                                    <div class="pro-content-image">
+                                    <div class="pro-content-image d-flex justify-content-center">
                                         <img src="@content.ContentImg" alt="" />
                                     </div>
                                 }

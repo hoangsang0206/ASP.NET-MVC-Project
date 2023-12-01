@@ -210,6 +210,19 @@ button:disabled {
 
 .product-gift-item:hover a {
     color: var(--primary-color);
+    text-decoration:underline;
+}
+
+.product-gift-item span {
+    font-size: 0.7rem;
+    border-radius: 50%;
+    background: #e30019;
+    color: #fff;
+    width: 1.2rem;
+    height: 1.2rem;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
 }
 
 .product-cts-box {
@@ -224,7 +237,7 @@ button:disabled {
 }
 
 .pro-content-image img {
-    width: 100% !important;
+    width: 70% !important;
 }
 
 .pro-ytb-content-video iframe {

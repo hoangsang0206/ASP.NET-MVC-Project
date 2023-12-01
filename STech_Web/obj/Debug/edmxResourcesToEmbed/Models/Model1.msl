@@ -154,6 +154,8 @@
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
           <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

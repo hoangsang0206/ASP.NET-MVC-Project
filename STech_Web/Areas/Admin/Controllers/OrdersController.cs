@@ -61,7 +61,7 @@ namespace STech_Web.Areas.Admin.Controllers
             Order order = db.Orders.FirstOrDefault(t => t.OrderID == orderID);
             if (order != null)
             {
-                order.PaymentStatus = "Thanh toán thành công";
+                order.PaymentStatus = "Đã thanh toán";
                 db.SaveChanges();
                 return Json(new { success = true });
             }

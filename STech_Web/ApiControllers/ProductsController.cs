@@ -219,6 +219,8 @@ namespace STech_Web.ApiControllers
                 List<ProductGift> proGifts = db.ProductGifts.Where(t => t.ProductID == productID).ToList();
                 List<OrderDetail> orderDetailList = product.OrderDetails.ToList();
                 List<Cart> cartList = product.Carts.ToList();
+                List<ProductSpecification> specs = product.ProductSpecifications.ToList();
+                List<ProductContent> contents = product.ProductContents.ToList();
 
                 if (orderDetailList.Count > 0)
                 {
@@ -241,6 +243,14 @@ namespace STech_Web.ApiControllers
                 if (cartList.Count > 0)
                 {
                     db.Carts.RemoveRange(cartList);
+                }
+                if(specs.Count > 0)
+                {
+                    db.ProductSpecifications.RemoveRange(specs);
+                }
+                if (contents.Count > 0)
+                {
+                    db.ProductContents.RemoveRange(contents);
                 }
 
                 //----------------------

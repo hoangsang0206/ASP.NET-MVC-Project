@@ -18,6 +18,8 @@ namespace STech_Web.Models
         public string ProductID { get; set; }
         public Nullable<decimal> OriginalPrice { get; set; }
         public Nullable<decimal> SalePrice { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
     
         public virtual Product Product { get; set; }
     }
