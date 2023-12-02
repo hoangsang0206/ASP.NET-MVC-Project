@@ -2269,20 +2269,8 @@ input[name="pro-search-id"]:checked ~ label {
     padding: 1rem 2rem;
     background: #fff;
     border-radius: 0.3rem;
-}
-
-.user-detail-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #00000075;
-    display: grid;
-    visibility: hidden;
-    place-items: center;
-    z-index: 55;
-    cursor: pointer;
+    overflow: auto;
+    max-height: 45rem;
 }
 
 .create-users-btn {
@@ -2294,16 +2282,103 @@ input[name="pro-search-id"]:checked ~ label {
     font-size: 1.3rem;
 }
 
-.user-detail-box {
+.user-detail-wrapper,
+.delete-user-confirm-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #00000075;
+    display: grid;
+    visibility: hidden;
+    place-items: center;
+    z-index: 55;
+}
+
+.user-detail-box,
+.delete-user-confirm {
     position: relative;
     background: var(--sidebar-color);
-    width: 33rem;
     padding: 2rem 2.5rem;
     border-radius: 0.3rem;
     cursor: auto;
     transform: scale(0);
     opacity: 0;
     transition: var(--tran-03);
+}
+
+.user-detail-box {
+    width: 40rem;
+}
+
+.delete-user-confirm {
+    width: 30rem;
+}
+
+.user-detail-box.show,
+.delete-user-confirm.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.userimg-box {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#userimg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.update-user {
+    background: var(--primary-color);
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.update-user:hover {
+    outline: 2px solid #938afc;
+}
+
+.delete-user-confirm-btn-box {
+    width: 90%;
+    margin-top: 1.5rem;
+}
+
+.delete-user-confirm span {
+     font-size: 1.1rem;
+}
+
+.delete-user-confirm i {
+    font-size: 4rem;
+    color: #ff6606;
+    margin-bottom: 1rem;
+}
+
+.delete-user-confirm-btn-box button {
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 0.2rem;
+    width: 49%;
+    font-weight: 500;
+}
+
+.delete-user-confirm-no:hover {
+    background: #d4d4d4;
+}
+
+.delete-user-confirm-yes {
+    background: var(--primary-color);
+    color: #ffffff;
+}
+
+.delete-user-confirm-yes:hover {
+    outline: 2px solid #938afc;
 }
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/

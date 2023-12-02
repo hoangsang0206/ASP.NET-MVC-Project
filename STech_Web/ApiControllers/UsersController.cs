@@ -22,5 +22,27 @@ namespace STech_Web.ApiControllers
 
             return user;
         }
+
+        public bool Delete(string username)
+        {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var user = userManager.FindByName(username);
+            if(user != null)
+            {
+                if(userManager.IsInRole(user.Id, "admin") || userManager.IsInRole(user.Id, "manager"))
+                {
+                    return false;
+                }
+                IdentityResult result = userManager.Delete(user);
+                if(result.Succeeded)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

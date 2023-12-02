@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using STech_Web.Filters;
 using STech_Web.Identity;
 using STech_Web.Models;
+using STech_Web.ViewModel;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
@@ -25,14 +28,14 @@ namespace STech_Web.Areas.Admin.Controllers
         }
 
         //Kiểm tra SDT đã tồn tại trong Identity User
-        private bool CheckUserPhoneExist(string phone, string userID)
+        private bool CheckUserPhoneExist(string phone, string username)
         {
             var appDbContext = new AppDBContext();
             var userStore = new AppUserStore(appDbContext);
             var userManager = new AppUserManager(userStore);
             var allUsers = userManager.Users.ToList();
 
-            if (allUsers.Any(t => t.Id != userID && t.PhoneNumber == phone))
+            if (allUsers.Any(t => t.UserName != username && t.PhoneNumber == phone))
             {
                 return true;
             }
@@ -40,14 +43,14 @@ namespace STech_Web.Areas.Admin.Controllers
             return false;
         }
         //Kiểm tra Email đã tồn tại trong Identity User
-        private bool CheckUserEmailExist(string email, string userID)
+        private bool CheckUserEmailExist(string email, string username)
         {
             var appDbContext = new AppDBContext();
             var userStore = new AppUserStore(appDbContext);
             var userManager = new AppUserManager(userStore);
             var allUsers = userManager.Users.ToList();
 
-            if (allUsers.Any(t => t.Id != userID && t.Email == email))
+            if (allUsers.Any(t => t.UserName != username && t.Email == email))
             {
                 return true;
             }
@@ -131,12 +134,68 @@ namespace STech_Web.Areas.Admin.Controllers
             }         
         }
 
-        //Xóa tài khoản
+        //Cập nhật thông tin tài khoản
         [HttpPost]
-        public JsonResult DeleteAccount(string UserName)
+        public ActionResult Update(UpdateUserVM update, string userName)
         {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var user = userManager.FindByName(userName);
 
-            return Json(new { success = false });
+            if (user != null)
+            {
+                DateTime oldDate = DateTime.Parse("1930/01/01");
+                if (update.DOB > DateTime.Now || update.DOB <= oldDate || CheckUserEmailExist(update.Email, userName) || CheckUserPhoneExist(update.PhoneNumber, userName))
+                {
+                    return Redirect("/admin/users");
+                }
+
+                //Kiểm tra số điện thoại
+                if (update.PhoneNumber == null || !(update.PhoneNumber.StartsWith("0")) || update.PhoneNumber.Length != 10 || !Regex.IsMatch(update.PhoneNumber, @"^[0-9]+$"))
+                {
+                    return Redirect("/admin/users");
+                }
+
+                //------------------------
+                if (user.DOB != null && update.DOB == null)
+                {
+                    update.DOB = user.DOB;
+                }
+
+                if (user.Email.Length > 0 && update.Email == null)
+                {
+                    update.Email = user.Email;
+                }
+
+                //-----------------------
+                user.UserFullName = update.UserFullName;
+                user.Gender = update.Gender;
+                user.PhoneNumber = update.PhoneNumber;
+                user.Email = update.Email;
+                user.DOB = update.DOB;
+                user.Address = update.Address;
+
+                var updateCheck = userManager.Update(user);
+                if (updateCheck.Succeeded)
+                {
+                    DatabaseSTechEntities db = new DatabaseSTechEntities();
+                    Customer customer = db.Customers.FirstOrDefault(c => c.AccountID == user.Id);
+                    if (customer != null)
+                    {
+                        customer.CustomerName = user.UserFullName;
+                        customer.Gender = user.Gender;
+                        customer.Phone = user.PhoneNumber;
+                        customer.Email = user.Email;
+                        customer.DoB = user.DOB;
+                        customer.Address = user.Address;
+
+                        db.SaveChanges();
+                    }
+                    return Redirect("/admin/users");
+                }
+            }
+            return Redirect("/admin/users");
         }
     }
 }
