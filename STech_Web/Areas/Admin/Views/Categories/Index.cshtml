@@ -41,8 +41,10 @@
             <hr />
             <div class="categories-list">
                 @{
+                    int i = 1;
                     <table class="table">
                         <tr>
+                            <th>STT</th>
                             <th>Mã danh mục</th>
                             <th>Tên danh mục</th>
                             <th>Hình ảnh</th>
@@ -52,6 +54,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>@i</td>
                                 <td>@item.CateID</td>
                                 <td>@item.CateName</td>
                                 <td>
@@ -65,6 +68,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            i++;
                         }
                     </table>
                 }
@@ -79,6 +83,7 @@
             <div class="brand-list">
                 <table class="table">
                     <tr>
+                        <th>STT</th>
                         <th>Mã hãng</th>
                         <th>Tên hãng</th>
                         <th>Số điện thoại</th>
@@ -86,9 +91,11 @@
                         <th>Hình ảnh</th>
                         <th></th>
                     </tr>
+                    @{ int j = 1; }
                     @foreach (var item in ViewBag.Brands)
                     {
                         <tr>
+                            <td>@j</td>
                             <td>@item.BrandID</td>
                             <td>@item.BrandName</td>
                             <td>@item.Phone</td>
@@ -103,6 +110,7 @@
                                 </div>
                             </td>
                         </tr>
+                        j++;
                     }
                 </table>
             </div>

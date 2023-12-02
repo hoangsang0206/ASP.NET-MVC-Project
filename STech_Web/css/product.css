@@ -20,11 +20,7 @@
 .product-gallery img {
     cursor: pointer;
     box-sizing: border-box;
-    border-radius: 0.3rem;
-}
-
-.product-gallery img:not(:last-child) {
-    margin-right: 0.7rem;
+    width: 100%;
 }
 
 .slider-main {
@@ -33,6 +29,19 @@
 
 .slider-nav {
     width: 100%;
+}
+
+.slider-nav .slick-slider-item {
+    border-radius: 0.3rem;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.slider-nav .slick-slider-item:not(:last-child) {
+    margin-right: 0.7rem;
 }
 
 .slider-nav .is-active {

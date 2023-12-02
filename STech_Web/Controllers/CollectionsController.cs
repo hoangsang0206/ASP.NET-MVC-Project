@@ -148,26 +148,24 @@ namespace STech_Web.Controllers
                         filterName = textInfo.ToTitleCase(brand);
                     }
                 }
+            }
 
-
-                if (!string.IsNullOrEmpty(type))
+            if (!string.IsNullOrEmpty(type))
+            {
+                products = products.Where(t => t.Type == type).ToList();
+                if (products.Count > 0)
                 {
-                    //Lọc sản phẩm theo thương hiệu con (dựa vào tên sản phẩm)
-                    products = products.Where(t => t.Brand.BrandID == brand && t.Type == type).ToList();
-                    if (products.Count > 0)
-                    {
-                        Product product = products[0];
-                        Regex regex = new Regex(type.Replace('-', ' '), RegexOptions.IgnoreCase);
-                        Match match = regex.Match(product.ProductName);
-                        filterName = product.Brand.BrandName.ToUpper() + " " + match.Value;
-                    }
-                    else
-                    {
-                        filterName = textInfo.ToTitleCase(brand.Replace('-', ' ')) + " " + textInfo.ToTitleCase(type.Replace('-', ' '));
-                    }
+                    Product product = products[0];
+                    Regex regex = new Regex(type.Replace('-', ' '), RegexOptions.IgnoreCase);
+                    Match match = regex.Match(product.ProductName);
+                    filterName = product.Brand.BrandName.ToUpper() + " " + match.Value;
+                }
+                else
+                {
+                    filterName = textInfo.ToTitleCase(brand.Replace('-', ' ')) + " " + textInfo.ToTitleCase(type.Replace('-', ' '));
                 }
             }
-            
+
             //Lọc sản phẩm theo giá cho trước
             if (minprice == null && maxprice != null)
             {

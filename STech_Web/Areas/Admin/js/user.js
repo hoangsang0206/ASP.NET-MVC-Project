@@ -100,6 +100,9 @@ $(document).on('click', '.user-delete-btn', (e) => {
     $('.delete-user-confirm').addClass('show');
 
     $('.delete-user-confirm-yes').off('click').click(() => {
+        $('.delete-user-confirm-box').css('visibility', 'hidden');
+        $('.delete-user-confirm').removeClass('show');
+
         showLoading();
         $.ajax({
             type: 'delete',

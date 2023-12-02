@@ -520,8 +520,12 @@ $(document).on('click ', '.delete-product-btn', (e) => {
                     }, 620);
                 }
                 else {
-                    $('.fail-delete-notice').css('visibility', 'visible')
-                    $('.fail-delete-notice .fail-notice-box').addClass('showForm');
+                    var interval = setInterval(() => {
+                        $('.fail-delete-notice').css('visibility', 'visible')
+                        $('.fail-delete-notice .fail-notice-box').addClass('showForm');
+                        clearInterval(interval);
+                    }, 620);
+                    
                 }
             },
             error: () => {

@@ -10,6 +10,7 @@ function reloadCategories() {
             if (responses != null) {
                 $('.categories-list table tbody').empty();
                 $('.categories-list table tbody').append(`<tr>
+                            <th>STT</th>
                             <th>Mã danh mục</th>
                             <th>Tên danh mục</th>
                             <th>Hình ảnh</th>
@@ -20,6 +21,7 @@ function reloadCategories() {
                 for (var i = 0; i < categories.length; i++) {
                     var str = `
                         <tr>
+                            <td>${i + 1}</td>
                             <td>${categories[i].CateID}</td>
                             <td>${categories[i].CateName}</td>
                             <td>
@@ -296,6 +298,7 @@ function reloadBrands() {
             if (responses != null) {
                 $('.brand-list table tbody').empty();
                 $('.brand-list table tbody').append(`<tr>
+                            <th>STT</th>
                             <th>Mã hãng</th>
                             <th>Tên hãng</th>
                             <th>Số điện thoại</th>
@@ -307,6 +310,7 @@ function reloadBrands() {
                 for (var i = 0; i < brands.length; i++) {
                     var str = `
                         <tr>
+                            <td>${i + 1}</td>
                             <td>${brands[i].BrandID}</td>
                             <td>${brands[i].BrandName}</td>
                             <td>${brands[i].Phone != null ? brands[i].Phone : ''}</td>
