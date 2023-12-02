@@ -16,6 +16,7 @@ using System.IO;
 using Google.Cloud.Storage.V1;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.Owin.Security.Provider;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace STech_Web.Controllers
 {
@@ -36,6 +37,21 @@ namespace STech_Web.Controllers
 
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 List<Order> orders = db.Orders.Where(t => t.Customer.AccountID == userID).ToList();
+
+                //Cập nhật lại thông tin tài khoản (nếu thông tin khách hàng đã được cập nhật lúc tạo đơn hàng (Admin page)
+                //Do mỗi tài khoản đều liên kết đến 1 khách hàng nếu tài khoản đó đã mua hàng
+                Customer customer = db.Customers.FirstOrDefault(c => c.AccountID == userID);
+                if(customer != null)
+                {
+                    user.UserFullName = customer.CustomerName;
+                    user.Gender = customer.Gender;
+                    user.PhoneNumber = customer.Phone;
+                    user.Email = customer.Email;
+                    user.DOB = customer.DoB;
+                    user.Address = customer.Address;
+
+                    userManager.Update(user);
+                }
 
                 ViewBag.Orders = orders;
                 ViewBag.ActiveBotNav = "account";
@@ -214,6 +230,19 @@ namespace STech_Web.Controllers
                     var updateCheck = userManager.Update(user);
                     if (updateCheck.Succeeded)
                     {
+                        DatabaseSTechEntities db = new DatabaseSTechEntities();
+                        Customer customer = db.Customers.FirstOrDefault(c => c.AccountID == userID);
+                        if (customer != null)
+                        {
+                            customer.CustomerName = user.UserFullName;
+                            customer.Gender = user.Gender;
+                            customer.Phone = user.PhoneNumber;
+                            customer.Email = user.Email;
+                            customer.DoB = user.DOB;
+                            customer.Address = user.Address;
+
+                            db.SaveChanges();
+                        }
                         return Json(new { success = true });
                     }
                 }

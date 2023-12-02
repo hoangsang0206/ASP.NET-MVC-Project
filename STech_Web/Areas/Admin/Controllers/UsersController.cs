@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using STech_Web.Filters;
+using STech_Web.Identity;
 using STech_Web.Models;
 
 namespace STech_Web.Areas.Admin.Controllers
@@ -14,7 +15,67 @@ namespace STech_Web.Areas.Admin.Controllers
         // GET: Admin/Users
         public ActionResult Index()
         {
+            ViewBag.ActiveNav = "users";
             return View();
+        }
+
+        //Kiểm tra SDT đã tồn tại trong Identity User
+        private bool CheckUserPhoneExist(string phone, string userID)
+        {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var allUsers = userManager.Users.ToList();
+
+            if (allUsers.Any(t => t.Id != userID && t.PhoneNumber == phone))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        //Kiểm tra Email đã tồn tại trong Identity User
+        private bool CheckUserEmailExist(string email, string userID)
+        {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            var allUsers = userManager.Users.ToList();
+
+            if (allUsers.Any(t => t.Id != userID && t.Email == email))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //Kiểm tra SDT đã tồn tại trong bảng Customer
+        private bool checkCustomerPhoneExist(string phone)
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Customer> customers = db.Customers.ToList();
+
+            if(customers.Count > 0 && customers.Any(c => c.Phone == phone))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //Kiểm tra Email đã tồn tại trong bảng Customer
+        private bool checkCustomerEmailExist(string email) 
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Customer> customers = db.Customers.ToList();
+
+            if (customers.Count > 0 && customers.Any(c => c.Email == email))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         //Tạo tài khoản
@@ -25,6 +86,15 @@ namespace STech_Web.Areas.Admin.Controllers
         {
             try
             {
+                if(checkCustomerPhoneExist(cus.Phone))
+                {
+                    return Json(new { success = false, error = "Số điện thoại này đã tồn tại. " });
+                }
+                if(checkCustomerEmailExist(cus.Email))
+                {
+                    return Json(new { success = false, error = "Email này đã tồn tại. " });
+                }
+
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 Customer customer = new Customer();
                 List<Customer> customers = db.Customers.OrderByDescending(t => t.CustomerID).ToList();
@@ -38,7 +108,6 @@ namespace STech_Web.Areas.Admin.Controllers
                 string customerID = "KH" + customerNumber.ToString().PadLeft(4, '0');
 
                 customer = new Customer();
-                customer.AccountID = "";
                 customer.CustomerID = customerID;
                 customer.CustomerName = cus.CustomerName;
                 customer.Address = cus.Address;
@@ -53,7 +122,7 @@ namespace STech_Web.Areas.Admin.Controllers
             }
             catch(Exception ex)
             {
-                return Json(new { success = true });
+                return Json(new { success = false });
             }         
         }
     }

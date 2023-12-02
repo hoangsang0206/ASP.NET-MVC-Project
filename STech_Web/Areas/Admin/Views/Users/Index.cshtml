@@ -2,3 +2,24 @@
 @{
    ViewBag.Title = "Quản lý tài khoản";
 }
+
+<div class="users position-relative">
+    @{
+        Html.RenderPartial("WeatherPartial");
+    }
+
+    <h2 class="title">Quản lý tài khoản</h2>
+    <div class="breadcrumb">
+        <ul class="breadcrumb-list d-flex">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                Quản lý tài khoản
+            </li>
+        </ul>
+    </div>
+    <div class="users-main-page">
+
+    </div>
+</div>

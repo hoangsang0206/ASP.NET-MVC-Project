@@ -1,5 +1,5 @@
 ﻿<div class="create-customer-wrapper">
-    <form action="#" method="post" class="create-customer-box position-relative">
+    <form action="#" class="create-customer-box position-relative">
         <div class="close-form close-create-customer position-absolute">
             <i class="fa-solid fa-xmark"></i>
         </div>
@@ -10,15 +10,15 @@
         <div class="form-create-customer">
             <div>
                 <div class="d-flex align-items-center justify-content-between gap-3 my-3">
-                    <label for="cusPhone">Họ tên</label>
+                    <label for="create-cusName">Họ tên</label>
                     <input type="text" name="create-cusName" id="create-cusName" value="" class="form-add-input" required />
                 </div>
                 <div class="d-flex align-items-center justify-content-between gap-3 my-3">
-                    <label for="cusPhone">Số ĐT</label>
+                    <label for="create-cusPhone">Số ĐT</label>
                     <input type="text" name="create-cusPhone" id="create-cusPhone" value="" class="form-add-input" required />
                 </div>
                 <div class="d-flex align-items-center justify-content-between gap-3 my-3">
-                    <label for="cusPhone">Địa chỉ</label>
+                    <label for="create-cusAddress">Địa chỉ</label>
                     <input type="text" name="create-cusAddress" id="create-cusAddress" value="" class="form-add-input" required />
                 </div>
             </div>
@@ -27,26 +27,27 @@
                     <span>Giới tính</span>
                     <div class="d-flex gap-3">
                         <div>
-                            <input type="radio" name="create-cusGender" id="cusGender-Male" value="Nam" required />
-                            <label for="cusGender-Male">Nam</label>
+                            <input type="radio" name="create-cusGender" id="create-cusGender-Male" value="Nam" required />
+                            <label for="create-cusGender-Male">Nam</label>
                         </div>
                         <div>
-                            <input type="radio" name="create-cusGender" id="cusGender-FeMale" value="Nữ" required />
-                            <label for="cusGender-FeMale">Nữ</label>
+                            <input type="radio" name="create-cusGender" id="create-cusGender-FeMale" value="Nữ" required />
+                            <label for="create-cusGender-FeMale">Nữ</label>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between gap-3 my-3">
-                    <label for="cusPhone">Ngày sinh</label>
-                    <input type="text" name="cusPhone" id="cusPhone" value="" class="form-add-input" required />
+                    <label for="create-cusDOB">Ngày sinh</label>
+                    <input type="date" name="create-cusDOB" id="create-cusDOB" value="" class="form-add-input" />
                 </div>
                 <div class="d-flex align-items-center justify-content-between gap-3 my-3">
-                    <label for="cusPhone">Email</label>
-                    <input type="text" name="cusPhone" id="cusPhone" value="" class="form-add-input" required />
+                    <label for="create-cusEmail">Email</label>
+                    <input type="email" name="create-cusEmail" id="create-cusEmail" value="" class="form-add-input" />
                 </div>
             </div>
         </div>
-        <div class="d-flex gap-3 mt-3">
+        <div class="form-error"></div>
+        <div class="d-flex gap-3 mt-4">
             <button type="submit" class="order-btn frm-create-cusomer-btn">
                 TẠO KHÁCH HÀNG
             </button>
