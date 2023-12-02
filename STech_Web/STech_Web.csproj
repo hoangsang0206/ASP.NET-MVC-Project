@@ -386,6 +386,7 @@
     <Compile Include="ApiControllers\OrdersController.cs" />
     <Compile Include="ApiControllers\ProductsController.cs" />
     <Compile Include="ApiControllers\CustomersController.cs" />
+    <Compile Include="ApiControllers\UsersController.cs" />
     <Compile Include="ApiModels\CustomerAPI.cs" />
     <Compile Include="ApiModels\OrderDetailAPI.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

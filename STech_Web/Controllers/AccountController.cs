@@ -16,7 +16,6 @@ using System.IO;
 using Google.Cloud.Storage.V1;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.Owin.Security.Provider;
-using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace STech_Web.Controllers
 {

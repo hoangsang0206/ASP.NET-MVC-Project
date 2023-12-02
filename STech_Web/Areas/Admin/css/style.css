@@ -1888,12 +1888,13 @@ footer span {
     white-space: nowrap;
 }
 
-.order-btn {
+.order-btn, .user-btn {
     border: none;
     border-radius: 0.3rem;
     padding: 0.3rem 0.8rem;
     color: #ffffff;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .accept-paid {
@@ -1915,21 +1916,21 @@ footer span {
     outline: 2px solid #9cf185;
 }
 
-.order-detail-btn {
+.order-detail-btn, .user-detail-btn {
     background: #0652DD;
 }
 
-.order-detail-btn:hover {
+.order-detail-btn:hover, .user-detail-btn:hover {
     outline: 2px solid #4779ff
 }
 
-.delete-order-btn, .order-status-refuse {
+.delete-order-btn, .order-status-refuse, .user-delete-btn {
     background: #e30019;
 }
 
-.delete-order-btn:hover, .order-status-refuse:hover {
-    outline: 2px solid #fe9090;
-}
+    .delete-order-btn:hover, .order-status-refuse:hover, .user-delete-btn:hover {
+        outline: 2px solid #fe9090;
+    }
 
 .order-update-btn {
     background: var(--primary-color);
@@ -2263,6 +2264,47 @@ input[name="pro-search-id"]:checked ~ label {
     grid-gap: 2rem; */
 }
 
+/* ---------Users page ----------------------- --------------*/
+.users-main-content {
+    padding: 1rem 2rem;
+    background: #fff;
+    border-radius: 0.3rem;
+}
+
+.user-detail-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #00000075;
+    display: grid;
+    visibility: hidden;
+    place-items: center;
+    z-index: 55;
+    cursor: pointer;
+}
+
+.create-users-btn {
+    padding: 0.6rem 1rem;
+    white-space: nowrap;
+}
+
+.create-users-btn i {
+    font-size: 1.3rem;
+}
+
+.user-detail-box {
+    position: relative;
+    background: var(--sidebar-color);
+    width: 33rem;
+    padding: 2rem 2.5rem;
+    border-radius: 0.3rem;
+    cursor: auto;
+    transform: scale(0);
+    opacity: 0;
+    transition: var(--tran-03);
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {

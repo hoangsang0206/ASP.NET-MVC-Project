@@ -1,9 +1,11 @@
 ﻿
 @{
-   ViewBag.Title = "Quản lý tài khoản";
+    ViewBag.Title = "Quản lý tài khoản";
 }
 
-<div class="users position-relative">
+@model List<STech_Web.Identity.AppUser>
+
+<section class="users position-relative mb-4">
     @{
         Html.RenderPartial("WeatherPartial");
     }
@@ -20,6 +22,53 @@
         </ul>
     </div>
     <div class="users-main-page">
-
+        <div class="users-main-header mb-3">
+            <button class="page-btn create-users-btn d-flex align-items-center gap-2">
+                <i class="fa-regular fa-square-plus"></i>
+                Tạo tài khoản
+            </button>
+        </div>
+        <div class="users-main-content">
+            <table class="table">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ tên</th>
+                    <th>Số ĐT</th>
+                    <th></th>
+                </tr>
+                @{ int i = 1; }
+                @foreach(var user in Model)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@user.UserName</td>
+                        <td>@user.UserFullName</td>
+                        <td>@user.PhoneNumber</td>
+                        <td>
+                            <div class="user-btn-box d-flex gap-2 justify-content-end">
+                                <button class="user-btn user-detail-btn" data-user-detail="@user.UserName">Chi tiết</button>
+                                <button class="user-btn user-delete-btn" data-user-delete="@user.UserName">Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            </table>
+        </div>
     </div>
-</div>
+
+    <div class="user-detail-wrapper">
+        <div class="user-detail-box position-relative">
+            <div class="close-form close-user-detail position-absolute">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div>
+
+            </div>
+            <div class="d-flex gap-2">
+                <button>Sửa thông tin</button>
+            </div>
+        </div>
+    </div>
+</section>

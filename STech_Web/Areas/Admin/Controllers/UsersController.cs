@@ -9,14 +9,19 @@ using STech_Web.Models;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [ManagerAuthorization]
+    [AdminAuthorization]
     public class UsersController : Controller
     {
         // GET: Admin/Users
         public ActionResult Index()
         {
+            var appDbContext = new AppDBContext();
+            var userStore = new AppUserStore(appDbContext);
+            var userManager = new AppUserManager(userStore);
+            List<AppUser> users = userManager.Users.ToList();
+
             ViewBag.ActiveNav = "users";
-            return View();
+            return View(users);
         }
 
         //Kiểm tra SDT đã tồn tại trong Identity User
@@ -124,6 +129,14 @@ namespace STech_Web.Areas.Admin.Controllers
             {
                 return Json(new { success = false });
             }         
+        }
+
+        //Xóa tài khoản
+        [HttpPost]
+        public JsonResult DeleteAccount(string UserName)
+        {
+
+            return Json(new { success = false });
         }
     }
 }
