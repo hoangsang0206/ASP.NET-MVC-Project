@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using STech_Web.Filters;
 using STech_Web.Identity;
 using STech_Web.Models;
@@ -196,6 +198,53 @@ namespace STech_Web.Areas.Admin.Controllers
                 }
             }
             return Redirect("/admin/users");
+        }
+
+        //Tạo tài khoản ------------------------------
+        [HttpPost]
+        public JsonResult CreateAccount(RegisterVM register)
+        {
+            if (ModelState.IsValid)
+            {
+                var appDbContext = new AppDBContext();
+                var userStore = new AppUserStore(appDbContext);
+                var userManager = new AppUserManager(userStore);
+                var passwordHash = Crypto.HashPassword(register.ResPassword);
+                var user = new AppUser()
+                {
+                    Email = register.Email,
+                    UserName = register.ResUsername,
+                    PasswordHash = passwordHash,
+                    DateCreate = DateTime.Now
+                };
+
+                var existingUser = userManager.FindByName(register.ResUsername);
+                var existingUserEmail = userManager.FindByEmail(register.Email);
+
+                //Kiểm tra xem user đã tồn tại chưa
+                if (existingUser != null)
+                {
+                    return Json(new { success = false, error = "Tài khoản nãy đã tồn tại." });
+                }
+
+                //Kiểm tra xem email đã tồn tại chưa
+                if (existingUserEmail != null)
+                {
+                    return Json(new { success = false, error = "Email này đã tồn tại." });
+                }
+
+                IdentityResult identityResult = userManager.Create(user);
+
+                if (identityResult.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, "Customer");
+                }
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false, error = "Lỗi" });
+            }
         }
     }
 }

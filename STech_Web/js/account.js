@@ -64,9 +64,9 @@ $('.register-form').submit((e) => {
                     <i class="fa-solid fa-circle-exclamation"></i>`
                         + response.error + `</span>`;
 
-                    $('.login .form-error').show();
-                    $('.login .form-error').empty();
-                    $('.login .form-error').append(str);
+                    $('.register .form-error').show();
+                    $('.register .form-error').empty();
+                    $('.register .form-error').append(str);
                 }
             }
         },

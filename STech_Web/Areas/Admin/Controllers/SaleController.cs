@@ -7,12 +7,13 @@ using STech_Web.Filters;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
-    [AdminAuthorization]
+    [ManagerAuthorization]
     public class SaleController : Controller
     {
         // GET: Admin/Sale
         public ActionResult Index()
         {
+            ViewBag.ActiveNav = "sale";
             return View();
         }
     }

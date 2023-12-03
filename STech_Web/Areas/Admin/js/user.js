@@ -75,7 +75,7 @@ $(document).on('click', '.user-detail-btn', (e) => {
                 $('.users #Address').val(data.Address);
                 $('.users #DOB').val(data.DOB != null ? new Date(data.DOB).toLocaleDateString('en-CA') : '');
                 $('.users #userimg').attr('src', data.ImgSrc != null ? data.ImgSrc : "/images/no-user-image-icon.png");
-                data.Gender == 'Nam' ? $('#usergender-m').prop('checked', true) : data.Gender == 'Nam' ? $('#usergender-fm').prop('checked', true) : '';
+                data.Gender == 'Nam' ? $('#usergender-m').prop('checked', true) : data.Gender == 'Nữ' ? $('#usergender-fm').prop('checked', true) : '';
 
                 var timeOut = setTimeout(() => {
                     $('.user-detail-wrapper').css('visibility', 'visible');
@@ -134,4 +134,68 @@ $(document).on('click', '.user-delete-btn', (e) => {
         $('.delete-user-confirm-box').css('visibility', 'hidden');
         $('.delete-user-confirm').removeClass('show');
     })
+})
+
+//--Tạo tài khoản ------------------------------------
+$('.create-users-btn').click(() => {
+    $('.create-account').css('visibility', 'visible');
+    $('.create-account-box').addClass('show');
+})
+
+$('.close-create-account').click(() => {
+    $('.create-account').css('visibility', 'hidden');
+    $('.create-account-box').removeClass('show');
+})
+
+$('.create-account-box').submit((e) => {
+    e.preventDefault();
+    var userName = $('.create-account-box #create-userName').val();
+    var password = $('.create-account-box #create-password').val();
+    var confirmPassword = $('.create-account-box #create-repassword').val();
+    var email = $('.create-account-box #create-Email').val();
+    showLoading();
+    $.ajax({
+        type: 'POST',
+        url: '/admin/users/createaccount',
+        data: {
+            ResUsername: userName,
+            ResPassword: password,
+            ResConfirmPassword: confirmPassword,
+            Email: email
+        },
+        success: (response) => {
+            hideLoading();
+            if (response.success) {
+                $('.create-account-box .form-error').hide();
+                $('.create-account-box .form-error').empty();
+
+                $('.create-account-box #create-userName').val('');
+                $('.create-account-box #create-password').val('');
+                $('.create-account-box #create-repassword').val('');
+                $('.create-account-box #create-Email').val('');
+                var timeOut = setTimeout(() => {
+                    $('.complete-create-notice').css('visibility', 'visible');
+                    $('.complete-create-notice .complete-notice-box ').addClass('showForm');
+                    clearTimeout(timeOut)
+                }, 600);
+            }
+            else {
+                if (response.error.length > 0) {
+                    var str = `<span>
+                    <i class="fa-solid fa-circle-exclamation"></i>`
+                        + response.error + `</span>`;
+
+                    $('.create-account-box .form-error').show();
+                    $('.create-account-box .form-error').empty();
+                    $('.create-account-box .form-error').append(str);
+                }
+            }
+        },
+        error: (err) => {  }
+    })
+})
+
+$('.complete-create-notice button').click(() => {
+    $('.complete-create-notice').css('visibility', 'hidden');
+    $('.complete-create-notice .complete-notice-box ').removeClass('showForm');
 })

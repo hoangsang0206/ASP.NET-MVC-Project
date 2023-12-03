@@ -109,7 +109,7 @@ namespace STech_Web.Controllers
             }
             else
             {
-                return Json(new { success = false, error = "" });
+                return Json(new { success = false, error = "Lỗi" });
             }
         }
 
