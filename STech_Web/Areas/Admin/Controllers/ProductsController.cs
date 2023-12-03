@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using STech_Web.Models;
 using STech_Web.Filters;
+using System.Web.Management;
+using iText.IO.Codec;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
@@ -31,17 +33,23 @@ namespace STech_Web.Areas.Admin.Controllers
             {
                 DatabaseSTechEntities db = new DatabaseSTechEntities();
                 Product product = db.Products.FirstOrDefault(t => t.ProductID == id);
-                if(product == null)
+                if (product == null)
                 {
                     return Redirect("/admin/products");
                 }
 
                 List<Category> categories = db.Categories.OrderBy(t => t.Sort).ToList();
                 List<Brand> brands = db.Brands.ToList();
+                List<ProductGift> gifts = db.ProductGifts.Where(t => t.ProductID == id).ToList();
+                List<ProductSpecification> specs = product.ProductSpecifications.ToList();
+                List<ProductContent> contents = product.ProductContents.ToList();
 
                 ViewBag.ActiveNav = "products";
                 ViewBag.Categories = categories;
                 ViewBag.Brands = brands;
+                ViewBag.Gifts = gifts;
+                ViewBag.Specs = specs;
+                ViewBag.Contents = contents;
                 return View(product);
             }
             catch (Exception ex)
@@ -76,7 +84,7 @@ namespace STech_Web.Areas.Admin.Controllers
             }
 
             //Giá không được bé hơn 0 
-            if(product.Cost < 0)
+            if (product.Cost < 0)
             {
                 return "Giá của sản phẩm phải lớn hơn 0.";
             }
@@ -95,7 +103,7 @@ namespace STech_Web.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult AddProduct(Product product, int quantity)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 string checkValue = checkValidValue(product, quantity);
                 if (checkValue != null)
@@ -118,13 +126,13 @@ namespace STech_Web.Areas.Admin.Controllers
                 {
                     product.Price = product.Cost;
                 }
-                
+
                 //---
-                if(product.CateID == null)
+                if (product.CateID == null)
                 {
                     product.CateID = "khac";
                 }
-                if(product.BrandID == null)
+                if (product.BrandID == null)
                 {
                     product.BrandID = "khac";
                 }
@@ -149,7 +157,7 @@ namespace STech_Web.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult UpdateProduct(Product product, int quantity)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 string checkValue = checkValidValue(product, quantity);
                 if (checkValue != null)
@@ -198,6 +206,108 @@ namespace STech_Web.Areas.Admin.Controllers
             }
 
             return Json(new { success = false, error = "Dữ liệu không hợp lệ." });
+        }
+
+        //--Add product gift
+        [HttpPost]
+        public JsonResult AddGifts(string productID, string strGifts)
+        {
+            try
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
+                if (product != null)
+                {
+                    List<string> gifts = strGifts.Split(';').ToList();
+                    foreach (string g in gifts)
+                    {
+                        if (!string.IsNullOrEmpty(g))
+                        {
+                            ProductGift gift = new ProductGift();
+                            gift.ProductID = product.ProductID;
+                            gift.GiftID = g;
+                            db.ProductGifts.Add(gift);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        //--Add product specification
+        [HttpPost]
+        public JsonResult AddSpecification(string productID, string specifications)
+        {
+            try
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
+                if (product != null)
+                {
+                    List<string> strContent = specifications.Split(';').ToList();
+                    foreach (string str in strContent)
+                    {
+                        if (!string.IsNullOrEmpty(str))
+                        {
+                            string[] parts = str.Split('+');
+                            ProductSpecification spec = new ProductSpecification();
+                            spec.ProductID = product.ProductID;
+                            spec.SpecName = parts[0];
+                            spec.SpecContent = parts[1];
+                            db.ProductSpecifications.Add(spec);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        //--Add product content
+        [HttpPost]
+        public JsonResult AddProductContent(string productID, string contents)
+        {
+            try 
+            {
+                DatabaseSTechEntities db = new DatabaseSTechEntities();
+                Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
+                if (product != null)
+                {
+                    List<string> strContent = contents.Split(';').ToList();
+                    foreach(string str in strContent)
+                    {
+                        if(!string.IsNullOrEmpty(str))
+                        {
+                            string[] parts = str.Split('+');
+                            ProductContent content = new ProductContent();
+                            content.ProductID = product.ProductID;
+                            content.Title = parts[0];
+                            content.Content = parts[1];
+                            content.ContentImg = parts.Length > 2 ? parts[2] : "";
+                            content.ContentVideo = parts.Length > 3 ? parts[3] : "";
+                            db.ProductContents.Add(content);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+                return Json(new { success = true });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false });
+            }
         }
     }
 }

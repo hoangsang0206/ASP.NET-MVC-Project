@@ -2426,7 +2426,7 @@ input[name="pro-search-id"]:checked ~ label {
     grid-gap: 1rem;
 }
 
-.delete-sale-p {
+.delete-sale-p, .delete-p-gift, .delete-p-spec, .delete-p-content {
     border-radius: 0.3rem;
     color: #fff;
     display: grid;
@@ -2435,7 +2435,7 @@ input[name="pro-search-id"]:checked ~ label {
     padding: 0.5rem 0.6rem;
 }
 
-.delete-sale-p i {
+.delete-sale-p i, .delete-p-gift i, .delete-p-spec i, .delete-p-content i {
     pointer-events: none;
 }
 
@@ -2443,6 +2443,52 @@ input[name="pro-search-id"]:checked ~ label {
     border-radius: 0.3rem;
     color: #fff;
     border: none;
+}
+
+/* --------------------------------------- */
+.add-product-gifts,
+.propduct-specifications,
+.product-contents {
+    border-radius: 0.3rem;
+    background: #fff;
+    padding: 2rem 2.5rem;
+    min-height: 30rem;
+}
+
+.p-gift-item {
+    display: grid;
+    grid-template-columns: 35% 65%;
+}
+
+.p-spec-item {
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+.delete-p-gift, .delete-p-spec, .delete-p-content {
+    background: #e30019;
+}
+
+.delete-p-gift:hover, .delete-p-spec:hover, .delete-p-content:hover {
+    outline: 2px solid #fe9090;
+}
+
+.add-new-spec, .add-new-content {
+    display: grid;
+    place-items: center;
+    background: #009432;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.7rem;
+}
+
+.add-new-spec i, .add-new-content i {
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.add-new-spec:hover, .add-new-content:hover {
+    outline: 2px solid #9cf185;
 }
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/

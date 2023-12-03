@@ -218,6 +218,112 @@
             </div>
         </form>
     </div>
+
+
+    <div class="add-product-gifts mt-3">
+        <div class="form-box-header">
+            <h5 class="form-header-text">Sản phẩm tặng kèm</h5>
+        </div>
+        <div class="add-order-products">
+            <div>
+                <h6>Tìm kiếm sản phẩm</h6>
+                <div class="d-flex align-items-stretch justify-content-between my-3 order-search-p position-relative">
+                    <input type="text" id="order-search-p" value="" placeholder="Nhập tên sản phẩm" autocomplete="off" />
+                    <div class="pro-search-auto-complete position-absolute">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="add-gift-box">
+            @foreach (var gift in ViewBag.Gifts)
+            {
+                <div class="p-gift-item">
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Mã SP tặng kèm</label>
+                        <input type="text" name="p-gift-id" value="@gift.GiftID" class="form-add-input" required readonly />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 ps-5 my-3">
+                        <label>Tên SP tặng kèm</label>
+                        <input type="text" name="p-gift-name" value="@gift.Product.ProductName" class="form-add-input" readonly />
+                        <button type="button" class="delete-p-gift">
+                            <i class='bx bx-trash'></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <button type="submit" class="page-btn add-gift-btn mt-5">Cập nhật</button>
+    </div>
+
+    <div class="propduct-specifications mt-3">
+        <div class="form-box-header">
+            <h5 class="form-header-text">Thông số kĩ thuật</h5>
+        </div>
+        <div class="spec-list">
+            @foreach (var spec in ViewBag.Specs)
+            {
+                <div class="p-spec-item">
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Tên thông số</label>
+                        <input type="text" name="p-spec-name" value="@spec.SpecName" class="form-add-input" required />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 ps-5 my-3">
+                        <label>Nội dung</label>
+                        <input type="text" name="p-spec-content" value="@spec.SpecContent" class="form-add-input" />
+                        <button type="button" class="delete-p-spec">
+                            <i class='bx bx-trash'></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="d-flex gap-2 mt-3">
+            <button class="add-new-spec">
+                <i class='bx bx-plus'></i>
+            </button>
+            <button type="submit" class="page-btn add-spec-btn">Cập nhật</button>
+        </div>  
+    </div>
+
+    <div class="product-contents mt-3">
+        <div class="form-box-header">
+            <h5 class="form-header-text">Mô tả sản phẩm</h5>
+        </div>
+        <div class="content-list">
+            @foreach (var content in ViewBag.Contents)
+            {
+                <div class="p-content-item">
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Tiêu đề đoạn</label>
+                        <input type="text" name="p-content-title" value="@content.Title" class="form-add-input" />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Nội dung</label>
+                        <textarea class="form-add-input" name="p-content-main" style="overflow: hidden">@content.Content</textarea>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Hình ảnh</label>
+                        <input type="text" name="p-content-img" value="@content.ContentImg" class="form-add-input" />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Video (nhúng iframe ytb)</label>
+                        <input type="text" name="p-content-video" value="@content.ContentVideo" class="form-add-input" />
+                    </div>
+                    <button type="button" class="delete-p-content">
+                        <i class='bx bx-trash'></i>
+                    </button>
+                    <hr />
+                </div>
+            }
+        </div>
+        <div class="d-flex gap-2 mt-3">
+            <button class="add-new-content">
+                <i class='bx bx-plus'></i>
+            </button>
+            <button type="submit" class="page-btn add-content-btn">Cập nhật</button>
+        </div>
+    </div>
 </div>
 
 <div class="pro-detail-del delete-product-confirm">

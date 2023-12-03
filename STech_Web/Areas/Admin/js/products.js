@@ -589,3 +589,125 @@ $('.fail-delete-notice .fail-notice-box button').click(() => {
     $('.fail-delete-notice').css('visibility', 'hidden')
     $('.fail-delete-notice .fail-notice-box').removeClass('showForm');
 })
+
+
+//---Thêm quà tặng kèm của sản phẩm -----------------------------------
+$(document).on('change', '.add-product-gifts input[name="pro-search-id"]', (e) => {
+    if ($(e.target).prop('checked') == true) {
+        var proID = $(e.target).val();
+        $('.add-product-gifts .pro-search-auto-complete').empty();
+        $('.add-product-gifts .pro-search-auto-complete').hide();
+        $('.add-product-gifts #order-search-p').val('');
+        if (proID.length > 0) {
+            showLoading();
+            $.ajax({
+                type: 'get',
+                url: '/api/products',
+                data: {
+                    productID: proID
+                },
+                success: (data) => {
+                    hideLoading();
+                    var currentPro = $('.add-gift-box input[name="p-gift-id"]').toArray();
+                    var exist = currentPro.some(function (el) {
+                        return $(el).val() === data.ProductID;
+                    });
+
+                    if (exist === false) {
+                        if (data.ProductID != null) {
+                            var str = `<div class="p-gift-item">
+                                <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                                    <label class="text-nowrap">Mã SP tặng kèm</label>
+                                    <input type="text" name="p-gift-id" value="${data.ProductID}" class="form-add-input" required readonly />
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between gap-3 ps-5 my-3">
+                                    <label>Tên SP tặng kèm</label>
+                                    <input type="text" name="p-gift-name" value="${data.ProductName}" class="form-add-input" readonly />
+                                    <button type="button" class="delete-p-gift">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </div>
+                            </div>`;
+
+                            $('.add-gift-box').append(str);
+                        }
+                    }
+                },
+                error: () => { }
+            })
+        }
+    }
+})
+
+// -----------------
+$(document).on('click', '.delete-p-gift', (e) => {
+    $(e.target).closest('.p-gift-item').remove();
+})
+
+$('.add-gift-btn').click(() => {
+    var proID = $('.product-detail #ProductID').val();
+    var strGifts = '';
+    var giftList = $('.add-gift-box input[name="p-gift-id"]').toArray();
+    giftList.forEach(item => {
+        strGifts += $(item).val() + ';';
+    })
+
+
+})
+
+//-- Add new specification
+$(document).on('click', '.delete-p-spec', (e) => {
+    $(e.target).closest('.p-spec-item').remove();
+}) 
+
+$('.add-new-spec').click(() => {
+    var str = `<div class="p-spec-item">
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Tên thông số</label>
+                        <input type="text" name="p-spec-name" value="" class="form-add-input" required />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 ps-5 my-3">
+                        <label>Nội dung</label>
+                        <input type="text" name="p-spec-content" value="" class="form-add-input" />
+                        <button type="button" class="delete-p-spec">
+                            <i class='bx bx-trash'></i>
+                        </button>
+                    </div>
+                </div>`;
+
+    $('.spec-list').append(str);
+})
+
+
+// --Add new content
+$(document).on('click', '.delete-p-content', (e) => {
+    $(e.target).closest('.p-content-item').remove();
+})
+
+$('.add-new-content').click(() => {
+    var str = `<div class="p-content-item">
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Tiêu đề đoạn</label>
+                        <input type="text" name="p-content-title" value="" class="form-add-input" />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Nội dung</label>
+                        <textarea class="form-add-input" name="p-content-main" style="overflow: hidden"></textarea>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Hình ảnh</label>
+                        <input type="text" name="p-content-img" value="" class="form-add-input" />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-3 my-3">
+                        <label class="text-nowrap">Video (nhúng iframe ytb)</label>
+                        <input type="text" name="p-content-video" value="" class="form-add-input" />
+                    </div>
+                    <button type="button" class="delete-p-content">
+                        <i class='bx bx-trash'></i>
+                    </button>
+                    <hr />
+                </div>`;
+
+
+    $('.content-list').append(str);
+})
