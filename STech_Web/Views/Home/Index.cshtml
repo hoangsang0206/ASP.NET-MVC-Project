@@ -93,9 +93,10 @@
     </div>
 </section>
 
-@if (ViewBag.Sales.Count > 0 && ViewBag.CurrentDate >= ViewBag.StartDate
-    && ViewBag.CurrentDate <= ViewBag.EndDate)
+@if (ViewBag.Sale != null && DateTime.Now >= ViewBag.Sale.StartTime
+    && DateTime.Now <= ViewBag.Sale.EndTime)
 {
+    var SaleDetails = ViewBag.Sale.SaleDetails;
     <section class="sale">
         <div class="sale-header">
             <div class="countdown">
@@ -112,7 +113,7 @@
         </div>
         <div class="sale-content">
             <div class="sale-slick-slider">
-                @foreach (var item in ViewBag.Sales)
+                @foreach (var item in SaleDetails)
                 {
                     <div class="slick-slider-item">
                         <div class="product-box">

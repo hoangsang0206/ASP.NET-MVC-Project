@@ -137,6 +137,7 @@ namespace STech_Web.Areas.Admin.Controllers
                 order.PaymentStatus = "Chờ thanh toán";
                 order.Status = "Chờ xác nhận";
                 order.PaymentMethod = paymentMethod;
+                order.ShipAddress = customer.Address;
 
                 //Tạo chi tiết đơn hàng
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -156,6 +157,7 @@ namespace STech_Web.Areas.Admin.Controllers
                         orderDetail.OrderID = orderID;
                         orderDetail.ProductID = product.ProductID;
                         orderDetail.Quantity = qty;
+                        orderDetail.Price = product.Price;
                         orderDetails.Add(orderDetail);
 
                         //Trừ số lượng khỏi kho

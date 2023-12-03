@@ -25,7 +25,7 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Order order in orders)
                 {
-                    ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress));
                 }
             }
 
@@ -40,7 +40,7 @@ namespace STech_Web.ApiControllers
             OrderAPI orderApi = new OrderAPI();
             if(order != null)
             {
-                orderApi = new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod);
+                orderApi = new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress);
 
             }
 
@@ -101,7 +101,7 @@ namespace STech_Web.ApiControllers
                 {
                     foreach (Order order in orders)
                     {
-                        ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                        ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress));
                     }
                 }
             }
@@ -132,7 +132,7 @@ namespace STech_Web.ApiControllers
                 {
                     foreach (Order order in orders)
                     {
-                        ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                        ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress));
                     }
                 }
             }
@@ -164,7 +164,7 @@ namespace STech_Web.ApiControllers
             {
                 foreach (Order order in orders)
                 {
-                    ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    ordersApi.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress));
                 }
             }
             return ordersApi;

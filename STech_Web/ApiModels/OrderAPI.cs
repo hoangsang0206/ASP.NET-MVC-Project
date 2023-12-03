@@ -19,10 +19,11 @@ namespace STech_Web.Models
         public decimal TotalPaymentAmout { get; set; }
         public string ShipMethod { get; set; }
         public string PaymentMethod { get; set; }
+        public string ShipAddress { get; set; }
 
         public OrderAPI() { }
 
-        public OrderAPI(string CustomerID, string CustomerName, string OrderID, DateTime OrderDate, decimal TotalPrice, string PaymentStatus, string Status, string Note, decimal DeliveryFee, decimal TotalPaymentAmout, string ShipMethod, string PaymentMethod)
+        public OrderAPI(string CustomerID, string CustomerName, string OrderID, DateTime OrderDate, decimal TotalPrice, string PaymentStatus, string Status, string Note, decimal DeliveryFee, decimal TotalPaymentAmout, string ShipMethod, string PaymentMethod, string shipAddress)
         {
             this.CustomerID = CustomerID;
             this.CustomerName = CustomerName;
@@ -36,6 +37,7 @@ namespace STech_Web.Models
             this.TotalPaymentAmout = TotalPaymentAmout;
             this.ShipMethod = ShipMethod;
             this.PaymentMethod = PaymentMethod;
+            this.ShipAddress = shipAddress;
         }
     }
 }

@@ -172,6 +172,7 @@ namespace STech_Web.Controllers
                 order.TotalPaymentAmout = totalPrice + (decimal)order.DeliveryFee;
                 order.PaymentStatus = "Chờ thanh toán";
                 order.Status = "Chờ xác nhận";
+                order.ShipAddress = customer1.Address;
 
                 //Tạo chi tiết đơn hàng
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -181,6 +182,7 @@ namespace STech_Web.Controllers
                     orderDetail.OrderID = orderID;
                     orderDetail.ProductID = c.ProductID;
                     orderDetail.Quantity = c.Quantity;
+                    orderDetail.Price = c.Product.Price;
 
                     orderDetails.Add(orderDetail);
 
@@ -401,6 +403,7 @@ namespace STech_Web.Controllers
             order.TotalPaymentAmout = totalPrice + (decimal)order.DeliveryFee;
             order.PaymentStatus = "Chờ thanh toán";
             order.Status = "Chờ xác nhận";
+            order.ShipAddress = customer1.Address;
 
             //Tạo chi tiết đơn hàng
             List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -410,6 +413,7 @@ namespace STech_Web.Controllers
                 orderDetail.OrderID = orderID;
                 orderDetail.ProductID = c.ProductID;
                 orderDetail.Quantity = c.Quantity;
+                orderDetail.Price = c.Product.Price;
 
                 orderDetails.Add(orderDetail);
 
@@ -730,7 +734,7 @@ namespace STech_Web.Controllers
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();
@@ -777,7 +781,7 @@ namespace STech_Web.Controllers
 
                 foreach (var order in orders)
                 {
-                    orderAPI.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod));
+                    orderAPI.Add(new OrderAPI(order.Customer.CustomerID, order.Customer.CustomerName, order.OrderID, (DateTime)order.OrderDate, order.TotalPrice, order.PaymentStatus, order.Status, order.Note, (Decimal)order.DeliveryFee, order.TotalPaymentAmout, order.ShipMethod, order.PaymentMethod, order.ShipAddress));
                 }
 
                 orderAPI = orderAPI.OrderByDescending(t => t.OrderDate).ToList();

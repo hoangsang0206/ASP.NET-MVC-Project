@@ -16,12 +16,7 @@ namespace STech_Web.Controllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
 
-            Sale sale = db.Sales.FirstOrDefault(s => s.StartTime <= DateTime.Now && s.EndTime >= DateTime.Now && s.Status == "Bắt đầu");
-            List<SaleDetail> sales = new List<SaleDetail>();
-            if(sale != null)
-            {
-                sales = sale.SaleDetails.ToList();
-            }    
+            Sale sale = db.Sales.FirstOrDefault(s => s.StartTime <= DateTime.Now && s.EndTime >= DateTime.Now && s.Status == "Bắt đầu");  
 
             List<Product> laptopOSD = db.Products.Where(t => t.CateID == "laptop").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
             List<Product> laptopGamingOSD = db.Products.Where(t => t.CateID == "laptop-gaming").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
@@ -35,13 +30,8 @@ namespace STech_Web.Controllers
             List<Brand> brands = db.Brands.Where(t => t.BrandID != "khac" && t.BrandImgSrc != null).ToList();
             List<Category> categories = db.Categories.Where(t => t.CateID != "khac").ToList();
 
-            //--Countdown -----
-            Countdown countdown = GetCountdown();
-            ViewBag.CurrentDate = DateTime.Now;
-            ViewBag.StartDate = countdown.startDate;
-            ViewBag.EndDate = countdown.endDate;
             //----------
-            ViewBag.Sales = sales;
+            ViewBag.Sale = sale;
             ViewBag.LaptopOSD = laptopOSD;
             ViewBag.LaptopGamingOSD = laptopGamingOSD;
             ViewBag.MouseOSD = mouseOSD;
@@ -108,6 +98,7 @@ namespace STech_Web.Controllers
         //--------------------------------
         public ActionResult About() 
         {
+
             return View();
         }
 

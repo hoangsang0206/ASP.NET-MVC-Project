@@ -77,6 +77,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     </Key>
     <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="money" />
     <Property Name="Quantity" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Orders">
@@ -94,6 +95,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="PaymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="ShipAddress" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="ProductContents">
     <Key>

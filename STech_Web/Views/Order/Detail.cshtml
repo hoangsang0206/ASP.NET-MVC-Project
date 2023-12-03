@@ -69,6 +69,10 @@
                     <span>Tổng tiền: </span>
                     <p>@ViewBag.Order.TotalPaymentAmout.ToString("##,###", ViewBag.cul)đ</p>
                 </div>
+                <div class="order-info-item d-flex gap-2">
+                    <span>ĐC nhận hàng: </span>
+                    <p>@ViewBag.Order.ShipAddress</p>
+                </div>
             </div>
         </div>
         <div class="order-info">
@@ -121,7 +125,7 @@
                                 <a href="/product/@item.Product.ProductID">@item.Product.ProductName</a>
                             </div>
                             <div class="order-product-price">
-                                <h6>@Convert.ToDecimal(item.Product.Price).ToString("##,###", ViewBag.cul)đ</h6>
+                                <h6>@Convert.ToDecimal(item.Price).ToString("##,###", ViewBag.cul)đ</h6>
                             </div>
                         </div>
                     </div>

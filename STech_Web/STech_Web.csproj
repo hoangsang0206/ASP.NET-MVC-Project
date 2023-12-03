@@ -273,6 +273,7 @@
     <Content Include="Areas\Admin\js\dashboard.js" />
     <Content Include="Areas\Admin\js\orders.js" />
     <Content Include="Areas\Admin\js\products.js" />
+    <Content Include="Areas\Admin\js\sale.js" />
     <Content Include="Areas\Admin\js\script.js" />
     <Content Include="Areas\Admin\js\user.js" />
     <Content Include="css\account.css" />
@@ -351,6 +352,8 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Sale\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Sale\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\lehoangsang - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">

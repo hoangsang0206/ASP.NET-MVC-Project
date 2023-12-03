@@ -99,7 +99,7 @@ namespace STech_Web.Models
                 Cell cusCell3 = new Cell(1, 1)
                   .Add(new Paragraph("Địa chỉ:"));
                 Cell cusCell31 = new Cell(1, 2)
-                    .Add(new Paragraph(customer.Address != null ? customer.Address : ""));
+                    .Add(new Paragraph(order.ShipAddress != null ? order.ShipAddress : ""));
 
                 Cell cusCell4 = new Cell(1, 1)
                   .Add(new Paragraph("HT giao hàng:"));
@@ -147,11 +147,11 @@ namespace STech_Web.Models
                     Cell pCell211 = new Cell(1, 1).Add(new Paragraph(orderDetails[i].Product.Warranty.ToString()));
                     Cell pCell2111 = new Cell(1, 1).Add(new Paragraph(orderDetails[i].Quantity.ToString()));
                     Cell pCell21111 = new Cell(1, 1)
-                        .Add(new Paragraph(orderDetails[i].Product.Price > 0 ? 
-                        Convert.ToDecimal(orderDetails[i].Product.Price).ToString("##,###", cul) + "đ" : "0đ"));
+                        .Add(new Paragraph(orderDetails[i].Price > 0 ? 
+                        Convert.ToDecimal(orderDetails[i].Price).ToString("##,###", cul) + "đ" : "0đ"));
                     Cell pCell211111 = new Cell(1, 1)
-                        .Add(new Paragraph(orderDetails[i].Product.Price * orderDetails[i].Quantity > 0 ?
-                        (orderDetails[i].Product.Price * orderDetails[i].Quantity).Value.ToString("##,###", cul) + "đ" : "0đ"));
+                        .Add(new Paragraph(orderDetails[i].Price * orderDetails[i].Quantity > 0 ?
+                        (orderDetails[i].Price * orderDetails[i].Quantity).Value.ToString("##,###", cul) + "đ" : "0đ"));
 
                     productTable.AddCell(pCell2
                         .SetPadding(4)

@@ -562,7 +562,7 @@ $(document).on('change', 'input[name="cus-search-cbx"]', (e) => {
     }
 })
 
-//---Search product by id
+//---Search product by name
 function updateTotal() {
     var total = 0;
     $('.one-p-total').each((index, item) => {
@@ -636,7 +636,7 @@ $(document).on('click', (e) => {
 
 
 //Add product to create order table
-$(document).on('change', 'input[name="pro-search-id"]', (e) => {
+$(document).on('change', '.create-order input[name="pro-search-id"]', (e) => {
     if ($(e.target).prop('checked') == true) {
         var proID = $(e.target).val();
         $('.pro-search-auto-complete').empty();

@@ -71,6 +71,7 @@
         <MappingFragment StoreEntitySet="OrderDetail">
           <ScalarProperty Name="OrderID" ColumnName="OrderID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -89,6 +90,7 @@
           <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
           <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ShipAddress" ColumnName="ShipAddress" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

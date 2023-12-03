@@ -1929,12 +1929,12 @@ footer span {
 }
 
 .delete-order-btn, .order-status-refuse, .user-delete-btn,
-.delete-sale-btn {
+.delete-sale-btn, .delete-sale-p {
     background: #e30019;
 }
 
 .delete-order-btn:hover, .order-status-refuse:hover,
-.user-delete-btn:hover, .delete-sale-btn:hover {
+.user-delete-btn:hover, .delete-sale-btn:hover, .delete-sale-p:hover {
     outline: 2px solid #fe9090;
 }
 
@@ -2244,7 +2244,8 @@ input[name="pro-search-id"]:checked ~ label {
 
 .create-order-btn,
 .frm-create-cusomer-btn,
-.create-user {
+.create-user,
+.submit-create-sale {
     background: var(--primary-color);
     font-size: 1rem;
     font-weight: 600;
@@ -2253,7 +2254,8 @@ input[name="pro-search-id"]:checked ~ label {
 
 .create-order-btn:hover,
 .frm-create-cusomer-btn:hover,
-.create-user:hover {
+.create-user:hover,
+.submit-create-sale:hover {
     outline: 2px solid #b5affa;
 }
 
@@ -2400,7 +2402,8 @@ input[name="pro-search-id"]:checked ~ label {
 
 
 /* -----Sale page ------------------------------------*/
-.sale-list {
+.sale-list,
+.create-sale-content {
     padding: 1rem 2rem;
     background: #fff;
     border-radius: 0.3rem;
@@ -2408,6 +2411,39 @@ input[name="pro-search-id"]:checked ~ label {
     max-height: 45rem;
 }
 
+.create-sale-content {
+    min-height: 40rem;
+}
+
+.create-sale-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.create-sale-detail-item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.delete-sale-p {
+    border-radius: 0.3rem;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    border: none;
+    padding: 0.5rem 0.6rem;
+}
+
+.delete-sale-p i {
+    pointer-events: none;
+}
+
+.submit-create-sale {
+    border-radius: 0.3rem;
+    color: #fff;
+    border: none;
+}
 /*---Responsive --------------------------------------------------------------*/
 /* For mobile (width < 768px) ---------------------------------------------*/
 @media screen and (max-width: 767px) {
