@@ -14,13 +14,18 @@ namespace STech_Web.Models
     
     public partial class Sale
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Sale()
+        {
+            this.SaleDetails = new HashSet<SaleDetail>();
+        }
+    
         public int SaleID { get; set; }
-        public string ProductID { get; set; }
-        public Nullable<decimal> OriginalPrice { get; set; }
-        public Nullable<decimal> SalePrice { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
+        public string Status { get; set; }
     
-        public virtual Product Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SaleDetail> SaleDetails { get; set; }
     }
 }

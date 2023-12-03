@@ -681,9 +681,18 @@ $(document).ready(() => {
     }
 
     getCountdown();
+
     var intervalCd = setInterval(() => {
         if (totalSeconds <= 0) {
             $('.sale').hide();
+
+            $.ajax({
+                type: 'post',
+                url: '/home/endsale',
+                success: () => { },
+                error: () => { }
+            })
+
             clearInterval(intervalCd);
         }
         else { 
@@ -706,3 +715,4 @@ $(document).ready(() => {
     }
     // -------------------------------------
 })
+

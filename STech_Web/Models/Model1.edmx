@@ -151,16 +151,24 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="SpecName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SpecContent" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="SaleDetails">
+          <Key>
+            <PropertyRef Name="SaleID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="SaleID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OriginalPrice" Type="money" />
+          <Property Name="SalePrice" Type="money" />
+        </EntityType>
         <EntityType Name="Sales">
           <Key>
             <PropertyRef Name="SaleID" />
           </Key>
           <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="OriginalPrice" Type="money" />
-          <Property Name="SalePrice" Type="money" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="SidebarMenuNav">
           <Key>
@@ -332,15 +340,27 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sale_Pro">
+        <Association Name="FK_SaleDetails_Pro">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <End Role="SaleDetails" Type="Self.SaleDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="Sales">
+            <Dependent Role="SaleDetails">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleDetails_Sale">
+          <End Role="Sales" Type="Self.Sales" Multiplicity="1" />
+          <End Role="SaleDetails" Type="Self.SaleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="SaleDetails">
+              <PropertyRef Name="SaleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -369,6 +389,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="ProductGifts" EntityType="Self.ProductGifts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleDetails" EntityType="Self.SaleDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
@@ -434,9 +455,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
+          <AssociationSet Name="FK_SaleDetails_Pro" Association="Self.FK_SaleDetails_Pro">
             <End Role="Products" EntitySet="Products" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleDetails_Sale" Association="Self.FK_SaleDetails_Sale">
             <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
             <End Role="Products" EntitySet="Products" />
@@ -596,7 +621,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <NavigationProperty Name="ProductGifts" Relationship="Self.FK_ProductGifts_G_Products" FromRole="Products" ToRole="ProductGifts" />
           <NavigationProperty Name="ProductGifts1" Relationship="Self.FK_ProductGifts_P_Products" FromRole="Products" ToRole="ProductGifts" />
           <NavigationProperty Name="ProductSpecifications" Relationship="Self.FK_ProductSpecifications_Products" FromRole="Products" ToRole="ProductSpecifications" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
+          <NavigationProperty Name="SaleDetails" Relationship="Self.FK_SaleDetails_Pro" FromRole="Products" ToRole="SaleDetails" />
           <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
         </EntityType>
         <EntityType Name="ProductSpecification">
@@ -609,17 +634,27 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <Property Name="SpecContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductSpecifications_Products" FromRole="ProductSpecifications" ToRole="Products" />
         </EntityType>
+        <EntityType Name="SaleDetail">
+          <Key>
+            <PropertyRef Name="SaleID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="SaleID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_SaleDetails_Pro" FromRole="SaleDetails" ToRole="Products" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_SaleDetails_Sale" FromRole="SaleDetails" ToRole="Sales" />
+        </EntityType>
         <EntityType Name="Sale">
           <Key>
             <PropertyRef Name="SaleID" />
           </Key>
           <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Sale_Pro" FromRole="Sales" ToRole="Products" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SaleDetails" Relationship="Self.FK_SaleDetails_Sale" FromRole="Sales" ToRole="SaleDetails" />
         </EntityType>
         <EntityType Name="SidebarMenuNav">
           <Key>
@@ -799,14 +834,14 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sale_Pro">
+        <Association Name="FK_SaleDetails_Pro">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+          <End Role="SaleDetails" Type="Self.SaleDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="Sales">
+            <Dependent Role="SaleDetails">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -823,6 +858,18 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SaleDetails_Sale">
+          <End Role="Sales" Type="Self.Sale" Multiplicity="1" />
+          <End Role="SaleDetails" Type="Self.SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="SaleDetails">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DatabaseSTechEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Carts" EntityType="Self.Cart" />
@@ -836,6 +883,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
           <EntitySet Name="ProductGifts" EntityType="Self.ProductGift" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecification" />
+          <EntitySet Name="SaleDetails" EntityType="Self.SaleDetail" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="SidebarMenuNavs" EntityType="Self.SidebarMenuNav" />
           <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
@@ -889,13 +937,17 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
+          <AssociationSet Name="FK_SaleDetails_Pro" Association="Self.FK_SaleDetails_Pro">
             <End Role="Products" EntitySet="Products" />
-            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
             <End Role="Products" EntitySet="Products" />
             <End Role="WareHouse" EntitySet="WareHouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleDetails_Sale" Association="Self.FK_SaleDetails_Sale">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1050,15 +1102,23 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sales">
-            <EntityTypeMapping TypeName="DatabaseSTechModel.Sale">
-              <MappingFragment StoreEntitySet="Sales">
+          <EntitySetMapping Name="SaleDetails">
+            <EntityTypeMapping TypeName="DatabaseSTechModel.SaleDetail">
+              <MappingFragment StoreEntitySet="SaleDetails">
                 <ScalarProperty Name="SaleID" ColumnName="SaleID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="DatabaseSTechModel.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

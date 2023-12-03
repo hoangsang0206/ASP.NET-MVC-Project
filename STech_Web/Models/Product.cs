@@ -23,7 +23,7 @@ namespace STech_Web.Models
             this.ProductGifts = new HashSet<ProductGift>();
             this.ProductGifts1 = new HashSet<ProductGift>();
             this.ProductSpecifications = new HashSet<ProductSpecification>();
-            this.Sales = new HashSet<Sale>();
+            this.SaleDetails = new HashSet<SaleDetail>();
         }
     
         public string ProductID { get; set; }
@@ -60,7 +60,7 @@ namespace STech_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<SaleDetail> SaleDetails { get; set; }
         public virtual WareHouse WareHouse { get; set; }
     }
 }

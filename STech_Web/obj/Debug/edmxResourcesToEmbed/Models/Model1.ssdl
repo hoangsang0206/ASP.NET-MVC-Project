@@ -146,16 +146,24 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <Property Name="SpecName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="SpecContent" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="SaleDetails">
+    <Key>
+      <PropertyRef Name="SaleID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="SaleID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OriginalPrice" Type="money" />
+    <Property Name="SalePrice" Type="money" />
+  </EntityType>
   <EntityType Name="Sales">
     <Key>
       <PropertyRef Name="SaleID" />
     </Key>
     <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="OriginalPrice" Type="money" />
-    <Property Name="SalePrice" Type="money" />
     <Property Name="StartTime" Type="datetime" />
     <Property Name="EndTime" Type="datetime" />
+    <Property Name="Status" Type="nvarchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="SidebarMenuNav">
     <Key>
@@ -327,15 +335,27 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sale_Pro">
+  <Association Name="FK_SaleDetails_Pro">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
-    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <End Role="SaleDetails" Type="Self.SaleDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
         <PropertyRef Name="ProductID" />
       </Principal>
-      <Dependent Role="Sales">
+      <Dependent Role="SaleDetails">
         <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SaleDetails_Sale">
+    <End Role="Sales" Type="Self.Sales" Multiplicity="1" />
+    <End Role="SaleDetails" Type="Self.SaleDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="SaleID" />
+      </Principal>
+      <Dependent Role="SaleDetails">
+        <PropertyRef Name="SaleID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -364,6 +384,7 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
     <EntitySet Name="ProductGifts" EntityType="Self.ProductGifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SaleDetails" EntityType="Self.SaleDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SidebarMenuNav" EntityType="Self.SidebarMenuNav" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
@@ -429,9 +450,13 @@ warning 6002: The table/view 'D:\VS STUDIO\ASP.NET MVC\DOAN\DOAN_LTWEB\STECH_WEB
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
     </AssociationSet>
-    <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
+    <AssociationSet Name="FK_SaleDetails_Pro" Association="Self.FK_SaleDetails_Pro">
       <End Role="Products" EntitySet="Products" />
+      <End Role="SaleDetails" EntitySet="SaleDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SaleDetails_Sale" Association="Self.FK_SaleDetails_Sale">
       <End Role="Sales" EntitySet="Sales" />
+      <End Role="SaleDetails" EntitySet="SaleDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
       <End Role="Products" EntitySet="Products" />

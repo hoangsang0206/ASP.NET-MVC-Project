@@ -215,7 +215,7 @@ namespace STech_Web.ApiControllers
                     return false;
                 }
                 WareHouse wh = product.WareHouse;
-                Sale productSale = product.Sales.FirstOrDefault(t => t.ProductID == product.ProductID);
+                List<SaleDetail> productSale = product.SaleDetails.ToList();
                 List<ProductGift> proGifts = db.ProductGifts.Where(t => t.ProductID == productID).ToList();
                 List<OrderDetail> orderDetailList = product.OrderDetails.ToList();
                 List<Cart> cartList = product.Carts.ToList();
@@ -236,9 +236,9 @@ namespace STech_Web.ApiControllers
                 {
                     db.ProductGifts.RemoveRange(proGifts);
                 }
-                if (productSale != null)
+                if (productSale.Count > 0)
                 {
-                    db.Sales.Remove(productSale);
+                    db.SaleDetails.RemoveRange(productSale);
                 }
                 if (cartList.Count > 0)
                 {

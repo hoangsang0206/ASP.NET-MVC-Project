@@ -16,7 +16,12 @@ namespace STech_Web.Controllers
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
 
-            List<Sale> sales = db.Sales.ToList();
+            Sale sale = db.Sales.FirstOrDefault(s => s.StartTime <= DateTime.Now && s.EndTime >= DateTime.Now && s.Status == "Bắt đầu");
+            List<SaleDetail> sales = new List<SaleDetail>();
+            if(sale != null)
+            {
+                sales = sale.SaleDetails.ToList();
+            }    
 
             List<Product> laptopOSD = db.Products.Where(t => t.CateID == "laptop").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
             List<Product> laptopGamingOSD = db.Products.Where(t => t.CateID == "laptop-gaming").OrderBy(t => Guid.NewGuid()).Take(15).ToList();
@@ -83,10 +88,14 @@ namespace STech_Web.Controllers
         //--Get countdown time
         Countdown GetCountdown()
         {
-            string filePath = Server.MapPath("~/DataFiles/countdown.json");
-            string json = System.IO.File.ReadAllText(filePath);
-            Countdown countdown = JsonConvert.DeserializeObject<Countdown>(json);
-            
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            Sale sale = db.Sales.FirstOrDefault(s => s.StartTime <= DateTime.Now && s.EndTime >= DateTime.Now);
+            Countdown countdown = new Countdown();
+            if(sale != null)
+            {
+                countdown.startDate = (DateTime)sale.StartTime;
+                countdown.endDate = (DateTime)sale.EndTime;
+            }
             return countdown;
         }
 
@@ -96,11 +105,41 @@ namespace STech_Web.Controllers
             return endDate - DateTime.Now;
         }
 
-
         //--------------------------------
         public ActionResult About() 
         {
             return View();
+        }
+
+        //--Thay đổi giá của sản phẩm sale nếu kết thúc
+        [HttpPost]
+        public JsonResult EndSale()
+        {
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<Sale> sales = db.Sales.ToList();
+            if (sales.Count > 0)
+            {
+                foreach (Sale sale in sales)
+                {
+                    if(sale.EndTime <= DateTime.Now && sale.EndTime <= DateTime.Now && sale.Status == "Bắt đầu")
+                    {
+                        sale.Status = "Kết thúc";
+                        List<SaleDetail> saleDetail = sale.SaleDetails.ToList();
+                        if (saleDetail.Count > 0)
+                        {
+                            foreach (SaleDetail detail in saleDetail)
+                            {
+                                Product product = detail.Product;
+                                product.Price = detail.OriginalPrice;
+                                
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            return Json(true);
         }
     }
 }

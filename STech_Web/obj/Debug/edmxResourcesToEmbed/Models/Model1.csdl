@@ -148,7 +148,7 @@
     <NavigationProperty Name="ProductGifts" Relationship="Self.FK_ProductGifts_G_Products" FromRole="Products" ToRole="ProductGifts" />
     <NavigationProperty Name="ProductGifts1" Relationship="Self.FK_ProductGifts_P_Products" FromRole="Products" ToRole="ProductGifts" />
     <NavigationProperty Name="ProductSpecifications" Relationship="Self.FK_ProductSpecifications_Products" FromRole="Products" ToRole="ProductSpecifications" />
-    <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Pro" FromRole="Products" ToRole="Sales" />
+    <NavigationProperty Name="SaleDetails" Relationship="Self.FK_SaleDetails_Pro" FromRole="Products" ToRole="SaleDetails" />
     <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouse_Pro" FromRole="Products" ToRole="WareHouse" />
   </EntityType>
   <EntityType Name="ProductSpecification">
@@ -161,17 +161,27 @@
     <Property Name="SpecContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Product" Relationship="Self.FK_ProductSpecifications_Products" FromRole="ProductSpecifications" ToRole="Products" />
   </EntityType>
+  <EntityType Name="SaleDetail">
+    <Key>
+      <PropertyRef Name="SaleID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="SaleID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_SaleDetails_Pro" FromRole="SaleDetails" ToRole="Products" />
+    <NavigationProperty Name="Sale" Relationship="Self.FK_SaleDetails_Sale" FromRole="SaleDetails" ToRole="Sales" />
+  </EntityType>
   <EntityType Name="Sale">
     <Key>
       <PropertyRef Name="SaleID" />
     </Key>
     <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="OriginalPrice" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="StartTime" Type="DateTime" Precision="3" />
     <Property Name="EndTime" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_Sale_Pro" FromRole="Sales" ToRole="Products" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SaleDetails" Relationship="Self.FK_SaleDetails_Sale" FromRole="Sales" ToRole="SaleDetails" />
   </EntityType>
   <EntityType Name="SidebarMenuNav">
     <Key>
@@ -351,14 +361,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sale_Pro">
+  <Association Name="FK_SaleDetails_Pro">
     <End Role="Products" Type="Self.Product" Multiplicity="1" />
-    <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+    <End Role="SaleDetails" Type="Self.SaleDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
         <PropertyRef Name="ProductID" />
       </Principal>
-      <Dependent Role="Sales">
+      <Dependent Role="SaleDetails">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -375,6 +385,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SaleDetails_Sale">
+    <End Role="Sales" Type="Self.Sale" Multiplicity="1" />
+    <End Role="SaleDetails" Type="Self.SaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="SaleID" />
+      </Principal>
+      <Dependent Role="SaleDetails">
+        <PropertyRef Name="SaleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DatabaseSTechEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Brands" EntityType="Self.Brand" />
     <EntitySet Name="Carts" EntityType="Self.Cart" />
@@ -388,6 +410,7 @@
     <EntitySet Name="ProductGifts" EntityType="Self.ProductGift" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecification" />
+    <EntitySet Name="SaleDetails" EntityType="Self.SaleDetail" />
     <EntitySet Name="Sales" EntityType="Self.Sale" />
     <EntitySet Name="SidebarMenuNavs" EntityType="Self.SidebarMenuNav" />
     <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
@@ -441,13 +464,17 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
     </AssociationSet>
-    <AssociationSet Name="FK_Sale_Pro" Association="Self.FK_Sale_Pro">
+    <AssociationSet Name="FK_SaleDetails_Pro" Association="Self.FK_SaleDetails_Pro">
       <End Role="Products" EntitySet="Products" />
-      <End Role="Sales" EntitySet="Sales" />
+      <End Role="SaleDetails" EntitySet="SaleDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_WareHouse_Pro" Association="Self.FK_WareHouse_Pro">
       <End Role="Products" EntitySet="Products" />
       <End Role="WareHouse" EntitySet="WareHouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SaleDetails_Sale" Association="Self.FK_SaleDetails_Sale">
+      <End Role="Sales" EntitySet="Sales" />
+      <End Role="SaleDetails" EntitySet="SaleDetails" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -332,7 +332,6 @@
     <Content Include="Areas\Admin\Views\Shared\ProductActionPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Detail.cshtml" />
-    <Content Include="DataFiles\countdown.json" />
     <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
     <Content Include="GoogleCloud\magnetic-music-400416-1df1c9c33391.json" />
     <Content Include="fonts\SFProDisplay\SF-Pro-Display-Bold.woff2" />
@@ -344,6 +343,7 @@
     <Content Include="Areas\Admin\Views\Shared\WeatherPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\CreateCustomerPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Sale\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -351,7 +351,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Sale\Index.cshtml" />
     <None Include="Properties\PublishProfiles\lehoangsang - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
@@ -494,6 +493,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sale.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SaleDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SidebarMenuNav.cs">
