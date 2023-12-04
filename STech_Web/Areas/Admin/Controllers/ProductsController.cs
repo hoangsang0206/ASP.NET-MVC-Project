@@ -296,12 +296,12 @@ namespace STech_Web.Areas.Admin.Controllers
                     List<ProductContent> pContens = product.ProductContents.ToList();
                     if (pContens.Count > 0) db.ProductContents.RemoveRange(pContens);
 
-                    List<string> strContent = contents.Split(';').ToList();
+                    List<string> strContent = contents.Split(new string[] { ";;;;;;;;" }, StringSplitOptions.None).ToList();
                     foreach(string str in strContent)
                     {
                         if(!string.IsNullOrEmpty(str))
                         {
-                            string[] parts = str.Split('+');
+                            string[] parts = str.Split(new string[] { "++++++++" }, StringSplitOptions.None);
                             ProductContent content = new ProductContent();
                             content.ProductID = product.ProductID;
                             content.Title = parts[0];

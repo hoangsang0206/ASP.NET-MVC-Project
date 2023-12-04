@@ -688,7 +688,7 @@ $('.add-new-spec').click(() => {
                     </div>
                     <div class="d-flex align-items-center justify-content-between gap-3 ps-5 my-3">
                         <label>Nội dung</label>
-                        <input type="text" name="p-spec-content" value="" class="form-add-input" />
+                        <input type="text" name="p-spec-content" value="" class="form-add-input" required />
                         <button type="button" class="delete-p-spec">
                             <i class='bx bx-trash'></i>
                         </button>
@@ -766,12 +766,41 @@ $('.add-new-content').click(() => {
     $('.content-list').append(str);
 })
 
-$('. add-content-btn').click(() => {
+$('.add-content-btn').click(() => {
     var proID = $('.product-detail #ProductID').val();
     var strContents = '';
     var contentList = $('.p-content-item').toArray();
 
     contentList.forEach(item => {
+        var title = $(item).find('input[name="p-content-title"]').val();
+        var content = $(item).find('textarea[name="p-content-main"]').val();
+        var img = $(item).find('input[name="p-content-img"]').val();
+        var video = $(item).find('input[name="p-content-video"]').val();
 
+        strContents += title + '++++++++'
+            + content + '++++++++' + img
+            + '++++++++' + video + ';;;;;;;;';
     })
+
+    if (strContents.length > 0) {
+        showLoading();
+        $.ajax({
+            type: 'post',
+            url: '/admin/products/addproductcontent',
+            data: {
+                productID: proID,
+                contents: strContents
+            },
+            success: (res) => {
+                hideLoading();
+                if (res.success) {
+                    var interval = setInterval(() => {
+                        showUpdateOkForm();
+                        clearInterval(interval);
+                    }, 620);
+                }
+            },
+            error: () => {  }
+        })
+    }
 })
