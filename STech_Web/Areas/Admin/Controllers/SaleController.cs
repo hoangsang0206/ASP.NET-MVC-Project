@@ -48,7 +48,7 @@ namespace STech_Web.Areas.Admin.Controllers
 
                 Sale addedSale = db.Sales.FirstOrDefault(t => t.StartTime == sale.StartTime && t.EndTime == sale.EndTime && t.Status == "Chờ");
 
-                List<string> strSale = saleDetails.Split(';').ToList();
+                List<string> strSale = saleDetails.Split(new string[] { ";;;;;;;;" }, StringSplitOptions.None).ToList();
                 foreach (string str in strSale)
                 {
                     if (!string.IsNullOrEmpty(str))

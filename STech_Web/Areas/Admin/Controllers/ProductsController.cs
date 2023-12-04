@@ -218,7 +218,11 @@ namespace STech_Web.Areas.Admin.Controllers
                 Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
                 if (product != null)
                 {
-                    List<string> gifts = strGifts.Split(';').ToList();
+                    //Xóa dữ liệu cũ trước khi thêm dữ liệu mới vào
+                    List<ProductGift> proGifts = db.ProductGifts.Where(t => t.ProductID == product.ProductID).ToList();
+                    if (proGifts.Count > 0) db.ProductGifts.RemoveRange(proGifts);
+
+                    List<string> gifts = strGifts.Split(new string[] { ";;;;;;;;" }, StringSplitOptions.None).ToList();
                     foreach (string g in gifts)
                     {
                         if (!string.IsNullOrEmpty(g))
@@ -228,8 +232,8 @@ namespace STech_Web.Areas.Admin.Controllers
                             gift.GiftID = g;
                             db.ProductGifts.Add(gift);
                         }
-                        db.SaveChanges();
                     }
+                    db.SaveChanges();
                 }
 
                 return Json(new { success = true });
@@ -250,12 +254,16 @@ namespace STech_Web.Areas.Admin.Controllers
                 Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
                 if (product != null)
                 {
-                    List<string> strContent = specifications.Split(';').ToList();
+                    //Xóa dữ liệu cũ trước khi thêm dữ liệu mới vào
+                    List<ProductSpecification> specs = product.ProductSpecifications.ToList();
+                    if(specs.Count > 0) db.ProductSpecifications.RemoveRange(specs);
+
+                    List<string> strContent = specifications.Split(new string[] { ";;;;;;;;" }, StringSplitOptions.None).ToList();
                     foreach (string str in strContent)
                     {
                         if (!string.IsNullOrEmpty(str))
                         {
-                            string[] parts = str.Split('+');
+                            string[] parts = str.Split(new string[] { "++++++++" }, StringSplitOptions.None);
                             ProductSpecification spec = new ProductSpecification();
                             spec.ProductID = product.ProductID;
                             spec.SpecName = parts[0];
@@ -284,6 +292,10 @@ namespace STech_Web.Areas.Admin.Controllers
                 Product product = db.Products.FirstOrDefault(t => t.ProductID == productID);
                 if (product != null)
                 {
+                    //Xóa dữ liệu cũ trước khi thêm dữ liệu mới vào
+                    List<ProductContent> pContens = product.ProductContents.ToList();
+                    if (pContens.Count > 0) db.ProductContents.RemoveRange(pContens);
+
                     List<string> strContent = contents.Split(';').ToList();
                     foreach(string str in strContent)
                     {

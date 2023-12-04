@@ -142,12 +142,12 @@ namespace STech_Web.Areas.Admin.Controllers
                 //Tạo chi tiết đơn hàng
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
 
-                List<string> productString = productStr.Split(';').ToList();
+                List<string> productString = productStr.Split(new string[] { ";;;;;;;;" }, StringSplitOptions.None).ToList();
                 foreach (string str in productString)
                 {
                     if(!String.IsNullOrEmpty(str))
                     {
-                        string[] parts = str.Split('+');
+                        string[] parts = str.Split(new string[] { "++++++++" }, StringSplitOptions.None);
                         string productID = parts[0];
                         int qty = Convert.ToInt32(parts[1]);
 

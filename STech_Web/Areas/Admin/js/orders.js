@@ -750,7 +750,7 @@ $('.create-order-box').submit((e) => {
         const productId = $(row).find('input[name="order-pro-id"]').val();
         const orderQty = $(row).find('input[name="order-pro-qty"]').val();
 
-        strProduct += productId + '+' + orderQty + ';';
+        strProduct += productId + '++++++++' + orderQty + ';;;;;;;;';
     })
 
     if (strProduct.length > 0) {

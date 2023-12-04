@@ -649,10 +649,30 @@ $('.add-gift-btn').click(() => {
     var strGifts = '';
     var giftList = $('.add-gift-box input[name="p-gift-id"]').toArray();
     giftList.forEach(item => {
-        strGifts += $(item).val() + ';';
+        strGifts += $(item).val() + ';;;;;;;;';
     })
 
-
+    if (strGifts.length > 0) {
+        showLoading();
+        $.ajax({
+            type: 'post',
+            url: '/admin/products/addgifts',
+            data: {
+                productID: proID,
+                strGifts: strGifts
+            },
+            success: (res) => {
+                hideLoading();
+                if (res.success) {
+                    var interval = setInterval(() => {
+                        showUpdateOkForm();
+                        clearInterval(interval);
+                    }, 620);
+                }
+            },
+            error: () => {  }
+        })
+    }
 })
 
 //-- Add new specification
@@ -676,6 +696,40 @@ $('.add-new-spec').click(() => {
                 </div>`;
 
     $('.spec-list').append(str);
+})
+
+$('.add-spec-btn').click(() => {
+    var proID = $('.product-detail #ProductID').val();
+    var strSpecs = '';
+    var specList = $('.propduct-specifications .p-spec-item').toArray();
+    specList.forEach(item => {
+        var specName = $(item).find('input[name="p-spec-name"]').val();
+        var specContent = $(item).find('input[name="p-spec-content"]').val();
+
+        strSpecs += specName + '++++++++' + specContent + ';;;;;;;;';
+    })
+
+    if (strSpecs.length > 0) {
+        showLoading();
+        $.ajax({
+            type: 'post',
+            url: '/admin/products/addspecification',
+            data: {
+                productID: proID,
+                specifications: strSpecs
+            },
+            success: (res) => {
+                hideLoading();
+                if (res.success) {
+                    var interval = setInterval(() => {
+                        showUpdateOkForm();
+                        clearInterval(interval);
+                    }, 620);
+                }
+            },
+            error: () => {  }
+        })
+    }
 })
 
 
@@ -710,4 +764,14 @@ $('.add-new-content').click(() => {
 
 
     $('.content-list').append(str);
+})
+
+$('. add-content-btn').click(() => {
+    var proID = $('.product-detail #ProductID').val();
+    var strContents = '';
+    var contentList = $('.p-content-item').toArray();
+
+    contentList.forEach(item => {
+
+    })
 })

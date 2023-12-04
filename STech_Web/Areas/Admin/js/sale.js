@@ -67,7 +67,7 @@ $('.create-sale-frm').submit((e) => {
         var proID = $(item).find('input[name="ProductID"]').val();
         var sPrice = $(item).find('input[name="SalePrice"]').val();
 
-        strSaleDetail += proID + '+' + sPrice + ';';
+        strSaleDetail += proID + '+' + sPrice + ';;;;;;;;';
     })
 
     if (strSaleDetail.length > 0) {
