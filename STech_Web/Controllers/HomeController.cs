@@ -79,7 +79,7 @@ namespace STech_Web.Controllers
         Countdown GetCountdown()
         {
             DatabaseSTechEntities db = new DatabaseSTechEntities();
-            Sale sale = db.Sales.FirstOrDefault(s => s.StartTime <= DateTime.Now && s.EndTime >= DateTime.Now);
+            Sale sale = db.Sales.FirstOrDefault(s => s.StartTime <= DateTime.Now && s.EndTime >= DateTime.Now && s.Status == "Bắt đầu");
             Countdown countdown = new Countdown();
             if(sale != null)
             {

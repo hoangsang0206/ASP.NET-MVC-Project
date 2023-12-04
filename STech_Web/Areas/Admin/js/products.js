@@ -754,7 +754,7 @@ $('.add-new-content').click(() => {
                     </div>
                     <div class="d-flex align-items-center justify-content-between gap-3 my-3">
                         <label class="text-nowrap">Video (nhúng iframe ytb)</label>
-                        <input type="text" name="p-content-video" value="" class="form-add-input" />
+                        <textarea name="p-content-video" class="form-add-input" style="overflow: hidden"></textarea>
                     </div>
                     <button type="button" class="delete-p-content">
                         <i class='bx bx-trash'></i>
@@ -775,8 +775,9 @@ $('.add-content-btn').click(() => {
         var title = $(item).find('input[name="p-content-title"]').val();
         var content = $(item).find('textarea[name="p-content-main"]').val();
         var img = $(item).find('input[name="p-content-img"]').val();
-        var video = $(item).find('input[name="p-content-video"]').val();
+        var video = $(item).find('textarea[name="p-content-video"]').val();
 
+        video = encodeURIComponent(video);
         strContents += title + '++++++++'
             + content + '++++++++' + img
             + '++++++++' + video + ';;;;;;;;';

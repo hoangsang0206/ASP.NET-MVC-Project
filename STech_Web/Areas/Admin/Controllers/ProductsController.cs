@@ -307,7 +307,7 @@ namespace STech_Web.Areas.Admin.Controllers
                             content.Title = parts[0];
                             content.Content = parts[1];
                             content.ContentImg = parts.Length > 2 ? parts[2] : "";
-                            content.ContentVideo = parts.Length > 3 ? parts[3] : "";
+                            content.ContentVideo = parts.Length > 3 ? HttpUtility.UrlDecode(parts[3]) : "";
                             db.ProductContents.Add(content);
                         }
                     }
