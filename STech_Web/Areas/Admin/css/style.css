@@ -2714,6 +2714,23 @@ input[name="pro-search-id"]:checked ~ label {
         width: auto;
     }
 
+    .p-gift-item {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
+    }
+
+    .p-gift-item > div:nth-child(2), .p-spec-item > div:nth-child(2) {
+        padding: 0 !important;
+    }
+
+    .p-gift-item label, .p-spec-item label, .p-content-item label {
+        white-space: normal !important;
+    }
+
+    .p-spec-item {
+        grid-template-columns: 1fr;
+    }
+
     /*------------Order page -------------------------------*/
     .order-infomation,
     .order-cus-info {
@@ -2761,6 +2778,15 @@ input[name="pro-search-id"]:checked ~ label {
     .create-customer-box {
         width: 95vw;
         height: 90vh;
+    }
+
+
+    .create-sale-box {
+        grid-template-columns: 1fr;
+    }
+
+    .create-sale-detail-item {
+        grid-template-columns: 1fr;
     }
 }
 
