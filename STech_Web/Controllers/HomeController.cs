@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using Newtonsoft.Json;
+using iText.IO.Codec;
 
 namespace STech_Web.Controllers
 {
@@ -53,8 +54,31 @@ namespace STech_Web.Controllers
             //List<Product> products = db.Products.ToList();
             //foreach (Product product in products)
             //{
-            //    //product.ImgSrc.Replace("");
+            //    if (product.ImgSrc != null)
+            //        product.ImgSrc = product.ImgSrc.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc1 != null)
+            //        product.ImgSrc1 = product.ImgSrc1.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc2 != null)
+            //        product.ImgSrc2 = product.ImgSrc2.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc3 != null)
+            //        product.ImgSrc3 = product.ImgSrc3.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc4 != null)
+            //        product.ImgSrc4 = product.ImgSrc4.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc5 != null)
+            //        product.ImgSrc5 = product.ImgSrc5.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc6 != null)
+            //        product.ImgSrc6 = product.ImgSrc6.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    if (product.ImgSrc7 != null)
+            //        product.ImgSrc7 = product.ImgSrc7.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+
+            //    foreach (var item in product.ProductContents)
+            //    {
+            //        if (item.ContentImg != null)
+            //           item.ContentImg = item.ContentImg.Replace("https://storage.googleapis.com/stech-product-images/", "https://stech-web-images.s3.ap-southeast-1.amazonaws.com/");
+            //    }
             //}
+
+            //db.SaveChanges();
 
             return View();
         }
