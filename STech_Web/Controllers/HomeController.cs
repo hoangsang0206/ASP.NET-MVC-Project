@@ -48,6 +48,14 @@ namespace STech_Web.Controllers
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             ViewBag.cul = cul;
 
+
+
+            //List<Product> products = db.Products.ToList();
+            //foreach (Product product in products)
+            //{
+            //    //product.ImgSrc.Replace("");
+            //}
+
             return View();
         }
 

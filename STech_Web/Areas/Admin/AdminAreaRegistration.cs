@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.WebSockets;
 
 namespace STech_Web.Areas.Admin
 {
@@ -14,6 +15,12 @@ namespace STech_Web.Areas.Admin
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+            context.MapRoute(
+                "OtherSettings",
+                "admin/other",
+                new { controller = "OtherSettings", action = "Index", id = UrlParameter.Optional }
+            );
+
             context.MapRoute(
                 "ProductDetail",
                 "admin/product/{id}",

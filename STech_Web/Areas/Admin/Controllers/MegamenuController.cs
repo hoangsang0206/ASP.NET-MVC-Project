@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using STech_Web.Filters;
+using STech_Web.Models;
 
 namespace STech_Web.Areas.Admin.Controllers
 {
@@ -13,7 +14,10 @@ namespace STech_Web.Areas.Admin.Controllers
         // GET: Admin/Megamenu
         public ActionResult Index()
         {
-            return View();
+            DatabaseSTechEntities db = new DatabaseSTechEntities();
+            List<SidebarMenuNav> sidebar = db.SidebarMenuNavs.ToList();
+
+            return View(sidebar);
         }
     }
 }

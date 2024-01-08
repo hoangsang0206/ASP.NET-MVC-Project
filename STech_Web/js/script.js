@@ -482,7 +482,7 @@ $("#search").keyup(function () {
                 url: '/api/products',
                 type: 'GET',
                 data: {
-                    name: searchText
+                    proName: searchText
                 },
                 success: function (responses) {
                     var maxItems = window.innerWidth < 768 ? 25 : 6
